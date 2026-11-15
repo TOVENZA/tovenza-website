@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOVENZA | A global institutional Ecosystem</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: { 300: '#fef08a', 400: '#facc15', 500: '#eab308', 600: '#ca8a04', 700: '#a16207' },
+                        obsidian: { 900: '#050507', 800: '#0b0b0f', 700: '#13131a' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-obsidian-900 text-slate-100 font-sans antialiased selection:bg-gold-500 selection:text-black min-h-screen flex flex-col justify-between">
+    
+    <!-- Top Luxury Navigation -->
+    <header class="sticky top-0 z-50 backdrop-blur-xl bg-obsidian-900/80 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            <div class="flex items-center space-x-4 cursor-pointer" onclick="switchTab('hub')">
+                <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center font-extrabold text-black text-2xl shadow-xl shadow-gold-500/10 border border-gold-300/30">T</div>
+                <div>
+                    <span class="text-2xl font-black tracking-[0.2em] text-white">TOVENZA</span>
+                    <span class="block text-[10px] tracking-[0.3em] text-gold-400 uppercase font-semibold">Institutional Ecosystem</span>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center space-x-1 bg-obsidian-800/80 p-1.5 rounded-xl border border-white/10 text-xs font-semibold tracking-wider">
+                <button onclick="switchTab('hub')" id="btn-hub" class="px-5 py-2.5 rounded-lg bg-gold-500 text-black transition font-bold shadow-lg shadow-gold-500/10">Overview</button>
+                <button onclick="switchTab('verticals')" id="btn-verticals" class="px-5 py-2.5 rounded-lg text-slate-300 hover:text-white transition">11 Verticals</button>
+                <button onclick="switchTab('systems')" id="btn-systems" class="px-5 py-2.5 rounded-lg text-slate-300 hover:text-white transition">6 Central Systems</button>
+                <button onclick="switchTab('ai-services')" id="btn-ai-services" class="px-5 py-2.5 rounded-lg text-slate-300 hover:text-white transition">AI Service Portals</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto w-full px-6 py-16 flex-grow">
+
+        <!-- TAB 1: HUB -->
+        <section id="tab-hub" class="space-y-20">
+            <div class="text-center max-w-4xl mx-auto space-y-6">
+                <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-obsidian-800 border border-gold-500/30 text-gold-400 text-xs font-bold tracking-[0.25em] uppercase shadow-lg">
+                    <span>✦ A global institutional Ecosystem ✦</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-black tracking-tight text-white leading-[1.1]">
+                    Beyond Business, <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-400 to-amber-600">Build to Endure.</span>
+                </h1>
+                <p class="text-slate-400 text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto">
+                    Governing eleven canonical P&L industry verticals through six centralized capability systems. Absolute structural architecture designed for perpetual dominion.
+                </p>
+                <div class="pt-4 flex flex-wrap justify-center gap-4">
+                    <button onclick="switchTab('verticals')" class="px-8 py-4 rounded-xl bg-gold-500 text-black font-extrabold hover:bg-gold-400 transition shadow-xl shadow-gold-500/20 tracking-wider text-sm">Explore 11 Verticals</button>
+                    <button onclick="switchTab('ai-services')" class="px-8 py-4 rounded-xl bg-obsidian-800 hover:bg-obsidian-700 text-white font-semibold border border-white/10 transition tracking-wider text-sm">Access AI Services</button>
+                </div>
+            </div>
+
+            <!-- Core Pillars Preview -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-10">
+                <div onclick="switchTab('verticals')" class="group p-8 rounded-2xl bg-obsidian-800/60 border border-white/10 hover:border-gold-500/50 cursor-pointer transition duration-300 flex flex-col justify-between backdrop-blur-md shadow-2xl">
+                    <div>
+                        <div class="text-xs font-mono text-gold-400 uppercase tracking-widest mb-3">Commercial P&L</div>
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-gold-400 transition">The 11 Industry Verticals</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">From recruitment delivery and healthcare to Vedic sciences and future tech.</p>
+                    </div>
+                    <span class="text-xs font-bold text-gold-400 tracking-wider flex items-center space-x-2"><span>Inspect Verticals</span> <span>→</span></span>
+                </div>
+
+                <div onclick="switchTab('systems')" class="group p-8 rounded-2xl bg-obsidian-800/60 border border-white/10 hover:border-gold-500/50 cursor-pointer transition duration-300 flex flex-col justify-between backdrop-blur-md shadow-2xl">
+                    <div>
+                        <div class="text-xs font-mono text-gold-400 uppercase tracking-widest mb-3">Sovereign Backbone</div>
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-gold-400 transition">The 6 Central Systems</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Institutional governance, legal protection, financial architecture, and security.</p>
+                    </div>
+                    <span class="text-xs font-bold text-gold-400 tracking-wider flex items-center space-x-2"><span>Inspect Systems</span> <span>→</span></span>
+                </div>
+
+                <div onclick="switchTab('ai-services')" class="group p-8 rounded-2xl bg-obsidian-800/60 border border-white/10 hover:border-gold-500/50 cursor-pointer transition duration-300 flex flex-col justify-between backdrop-blur-md shadow-2xl">
+                    <div>
+                        <div class="text-xs font-mono text-gold-400 uppercase tracking-widest mb-3">Execution Layer</div>
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-gold-400 transition">Interactive AI Portals</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Deploy live algorithmic audits, medical diagnostics, and Vedic chart calculations.</p>
+                    </div>
+                    <span class="text-xs font-bold text-gold-400 tracking-wider flex items-center space-x-2"><span>Launch Portals</span> <span>→</span></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: THE 11 VERTICALS (FULL INTERACTIVE SERVICE EXPLORER) -->
+        <section id="tab-verticals" class="hidden space-y-12">
+            <div class="border-b border-white/10 pb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                <div>
+                    <div class="text-xs font-mono text-gold-400 uppercase tracking-widest mb-2">Portfolio Domains</div>
+                    <h2 class="text-4xl font-extrabold text-white">The Eleven Canonical Industry Verticals</h2>
+                    <p class="text-slate-400 text-sm mt-2 max-w-2xl">Click any vertical below to launch its dedicated AI diagnostic engine and utilize its active institutional service.</p>
+                </div>
+                <button onclick="switchTab('ai-services')" class="px-5 py-2.5 rounded-lg bg-gold-500 text-black font-bold text-xs uppercase tracking-wider">Open AI Service Suite</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 1 -->
+                <div onclick="openVerticalModal('Recruitment, Staffing & HR', 'VERT-01', 'High-volume talent acquisition, workforce planning, and operational HR delivery designed to eliminate administrative friction and improve time-to-hire by 25%.')" class="p-6 rounded-2xl bg-obsidian-800/40 border border-white/10 hover:border-gold-500 cursor-pointer transition group backdrop-blur">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-white/5">VERT-01</span>
+                        <span class="text-gold-400 text-sm group-hover:translate-x-1 transition">✦</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2 group-hover:text-gold-400 transition">Recruitment, Staffing & HR</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">High-volume talent acquisition and workforce operations.</p>
+                </div>
+                <!-- 2 -->
+                <div onclick="openVerticalModal('Healthcare & Diagnostics', 'VERT-02', 'Critical infrastructure addressing human vitality, preventative screening, and biological longevity protocols for elite performers.')" class="p-6 rounded-2xl bg-obsidian-800/40 border border-white/10 hover:border-gold-500 cursor-pointer transition group backdrop-blur">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-white/5">VERT-02</span>
+                        <span class="text-gold-400 text-sm group-hover:translate-x-1 transition">✦</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2 group-hover:text-gold-400 transition">Healthcare & Diagnostics</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Human vitality and biological longevity infrastructure.</p>
+                </div>
+                <!-- 3 -->
+                <div onclick="openVerticalModal('Hospitality', 'VERT-03', 'Curated human experiences, luxury physical spaces, and flawless service excellence engineered for elite hospitality environments.')" class="p-6 rounded-2xl bg-obsidian-800/40 border border-white/10 hover:border-gold-500 cursor-pointer transition group backdrop-blur">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-white/5">VERT-03</span>
+                        <span class="text-gold-400 text-sm group-hover:translate-x-1 transition">✦</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2 group-hover:text-gold-400 transition">Hospitality</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Curated human experience and spatial service excellence.</p>
+                </div>
+                <!-- 4 -->
+                <div onclick="openVerticalModal('Real Estate & Property', 'VERT-04', 'Tangible wealth creation, institutional asset stewardship, and premium spatial development architecture.')" class="p-6 rounded-2xl bg-obsidian-800/40 border border-white/10 hover:border-gold-500 cursor-pointer transition group backdrop-blur">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-white/5">VERT-04</span>
+                        <span class="text-gold-400 text-sm group-hover:translate-x-1 transition">✦</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2 group-hover:text-gold-400 transition">Real Estate & Property</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Asset stewardship and spatial development architecture.</p>
+                </div>
+                <!-- 5 -->
+                <div onclick="openVerticalModal('Technology, AI & Software', 'VERT-05', 'Proprietary computational microservices, algorithmic automation, and robust digital infrastructure powering the TOVENZA ecosystem.')" class="p-6 rounded-2xl bg-obsidian-800/40 border border-white/10 hover:border-gold-500 cursor-pointer transition group backdrop-blur">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-white/5">VERT-05</span>
+                        <span class="text-gold-400 text-sm group-hover:translate-x-1 transition">✦</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2 group-hover:text-gold-400 transition">Technology, AI & Software</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Digital nervous system and microservice automation.</p>
+                </div>
+                <!-- 6 -->
+                <div onclick="openVerticalModal('Business Consulting', 'VERT-06', 'High-level strategic intervention for complex corporate transformations, organizational scaling, and operational restructuring.')" class="p-6 rounded-2xl bg-obsidian-800/40 border border-white/10 hover:border-gold-500 cursor-pointer transition group backdrop-blur">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-white/5">VERT-06</span>
+                        <span class="text-gold-400 text-sm group-hover:translate-x-1 transition">✦</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2 group-hover:text-gold-400 transition">Business Consulting</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Strategic corporate transformation and scale advisory.</p>
+                </div>
+                <!-- 7 -->
+                <div onclick="openVerticalModal('Psychology & Wellbeing', 'VERT-07', 'Systematic application of behavioral science, organizational behavior, and human psychology to executive and team health.')" class="p-6 rounded-2xl bg-obsidian-800/40 border border-white/10 hover:border-gold-500 cursor-pointer transition group backdrop-blur">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-white/5">VERT-07</span>
+                        <span class="text-gold-400 text-sm group-hover:translate-x-1 transition">✦</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2 group-hover:text-gold-400 transition">Psychology & Wellbeing</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Behavioral science and organizational psychology.</p>
+                </div>
+                <!-- 8 -->
+                <div onclick="openVerticalModal('Astrology, Jyotish & Vedic Sciences', 'VERT-08', 'Codification of ancient temporal-spatial frameworks into rigorous analytical models, planetary transit timelines, and diamond Kundli engines.')" class="p-6 rounded-2xl bg-obsidian-800/40 border border-white/10 hover:border-gold-500 cursor-pointer transition group backdrop-blur">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-white/5">VERT-08</span>
+                        <span class="text-gold-400 text-sm group-hover:translate-x-1 transition">✦</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2 group-hover:text-gold-400 transition">Astrology, Jyotish & Vedic Sciences</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Temporal-spatial analytics and computational astrology.</p>
+                </div>
+                <!-- 9 -->
+                <div onclick="openVerticalModal('Education & Learning', 'VERT-09', 'Systematic transmission of elite capability, technical mastery, and structured worldview acceleration.')" class="p-6 rounded-2xl bg-obsidian-800/40 border border-white/10 hover:border-gold-500 cursor-pointer transition group backdrop-blur">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-white/5">VERT-09</span>
+                        <span class="text-gold-400 text-sm group-hover:translate-x-1 transition">✦</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2 group-hover:text-gold-400 transition">Education & Learning</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Systematic transmission of capability and worldview.</p>
+                </div>
+                <!-- 10 -->
+                <div onclick="openVerticalModal('Retail', 'VERT-10', 'Direct consumer touchpoints bridging supply chain mastery with high-end brand psychology and experiential retail.')" class="p-6 rounded-2xl bg-obsidian-800/40 border border-white/10 hover:border-gold-500 cursor-pointer transition group backdrop-blur">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-white/5">VERT-10</span>
+                        <span class="text-gold-400 text-sm group-hover:translate-x-1 transition">✦</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2 group-hover:text-gold-400 transition">Retail</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Consumer touchpoints and experiential brand psychology.</p>
+                </div>
+                <!-- 11 -->
+                <div onclick="openVerticalModal('Future Industries', 'VERT-11', 'Dedicated frontier arm capturing paradigm shifts in sustainable energy, biotechnology, and emergent global markets.')" class="p-6 rounded-2xl bg-obsidian-800/40 border border-white/10 hover:border-gold-500 cursor-pointer transition group backdrop-blur md:col-span-2 lg:col-span-1">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-white/5">VERT-11</span>
+                        <span class="text-gold-400 text-sm group-hover:translate-x-1 transition">✦</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2 group-hover:text-gold-400 transition">Future Industries</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Frontier arm capturing energy, biotech, and emergent tech.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: THE 6 SYSTEMS (GOVERNANCE & CONTROLS) -->
+        <section id="tab-systems" class="hidden space-y-12">
+            <div class="border-b border-white/10 pb-8">
+                <div class="text-xs font-mono text-gold-400 uppercase tracking-widest mb-2">Institutional Backbone</div>
+                <h2 class="text-4xl font-extrabold text-white">The Six Central Capability Systems</h2>
+                <p class="text-slate-400 text-sm mt-2 max-w-2xl">Centralized governance infrastructure ensuring absolute risk mitigation, financial discipline, and operational synergy across all 11 verticals.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="p-8 rounded-2xl bg-obsidian-800/40 border border-white/10 space-y-4 backdrop-blur">
+                    <span class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-white/5">SYS-01</span>
+                    <h4 class="text-xl font-bold text-white">Central & Shared Services</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Operational leverage, administrative centralization, and shared resource pools to eliminate redundancy across subsidiaries.</p>
+                </div>
+                <div class="p-8 rounded-2xl bg-obsidian-800/40 border border-white/10 space-y-4 backdrop-blur">
+                    <span class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-white/5">SYS-02</span>
+                    <h4 class="text-xl font-bold text-white">Institutional Governance</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Uncompromising oversight, ethical boundaries, and absolute Founder voting alignment to guarantee long-term permanence.</p>
+                </div>
+                <div class="p-8 rounded-2xl bg-obsidian-800/40 border border-white/10 space-y-4 backdrop-blur">
+                    <span class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-white/5">SYS-03</span>
+                    <h4 class="text-lg font-bold text-white">Legal, Compliance & Risk</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Fortress-grade protection managing corporate statutory filings, SBO rules, and risk mitigation across all operating entities.</p>
+                </div>
+                <div class="p-8 rounded-2xl bg-obsidian-800/40 border border-white/10 space-y-4 backdrop-blur">
+                    <span class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-white/5">SYS-04</span>
+                    <h4 class="text-xl font-bold text-white">Financial Architecture</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Disciplined capital allocation, treasury management, and intelligent cash-flow recycling across high-yield verticals.</p>
+                </div>
+                <div class="p-8 rounded-2xl bg-obsidian-800/40 border border-white/10 space-y-4 backdrop-blur">
+                    <span class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-white/5">SYS-05</span>
+                    <h4 class="text-xl font-bold text-white">People & Culture</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Rigorous talent selection, leadership pipeline cultivation, and behavioral alignment rooted in organizational psychology.</p>
+                </div>
+                <div class="p-8 rounded-2xl bg-obsidian-800/40 border border-white/10 space-y-4 backdrop-blur">
+                    <span class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-white/5">SYS-06</span>
+                    <h4 class="text-xl font-bold text-white">Technology & Security</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Proprietary data architecture, encryption protocols, and uncompromised digital defense safeguarding institutional assets.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: INTERACTIVE AI SERVICE PORTALS -->
+        <section id="tab-ai-services" class="hidden space-y-12">
+            <div class="border-b border-white/10 pb-8">
+                <div class="text-xs font-mono text-gold-400 uppercase tracking-widest mb-2">Client Interaction Layer</div>
+                <h2 class="text-4xl font-extrabold text-white">Live AI Service Portals</h2>
+                <p class="text-slate-400 text-sm mt-2 max-w-2xl">Directly engage with TOVENZA's active institutional service engines. Run diagnostics, compute calculations, and generate strategic roadmaps.</p>
+            </div>
+
+            <!-- Service Selector Tabs -->
+            <div class="flex flex-wrap gap-3">
+                <button onclick="switchService('hr')" id="srv-btn-hr" class="px-5 py-3 rounded-xl bg-gold-500 text-black font-bold text-xs tracking-wider transition shadow-lg">1. Workforce & HR AI</button>
+                <button onclick="switchService('astro')" id="srv-btn-astro" class="px-5 py-3 rounded-xl bg-obsidian-800 border border-white/10 text-slate-300 hover:text-white font-bold text-xs tracking-wider transition">2. Vedic Astrology AI</button>
+                <button onclick="switchService('consulting')" id="srv-btn-consulting" class="px-5 py-3 rounded-xl bg-obsidian-800 border border-white/10 text-slate-300 hover:text-white font-bold text-xs tracking-wider transition">3. Strategy & Consulting AI</button>
+                <button onclick="switchService('healthcare')" id="srv-btn-healthcare" class="px-5 py-3 rounded-xl bg-obsidian-800 border border-white/10 text-slate-300 hover:text-white font-bold text-xs tracking-wider transition">4. Healthcare Diagnostics AI</button>
+            </div>
+
+            <!-- SERVICE 1 -->
+            <div id="service-hr" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-obsidian-800/60 border border-white/10 p-8 rounded-2xl space-y-6 backdrop-blur">
+                    <h3 class="text-xl font-bold text-white">TOVENZA Advisory: Workforce Optimization Engine</h3>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2">Enterprise Scale</label>
+                        <select id="hr-scale" class="w-full bg-obsidian-900 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:border-gold-500 focus:outline-none text-sm">
+                            <option value="startup">Growth Stage (50-200 Employees)</option>
+                            <option value="mid">Mid-Market Enterprise (200-1000 Employees)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2">Primary Bottleneck</label>
+                        <select id="hr-issue" class="w-full bg-obsidian-900 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:border-gold-500 focus:outline-none text-sm">
+                            <option value="time">High Time-to-Hire & Recruitment Backlog</option>
+                            <option value="turnover">Excessive Employee Attrition & Attrition</option>
+                        </select>
+                    </div>
+                    <button onclick="runHRAI()" class="w-full py-4 rounded-xl bg-gold-500 text-black font-extrabold hover:bg-gold-400 transition text-sm tracking-wide shadow-xl shadow-gold-500/10">Execute Workforce Audit</button>
+                </div>
+                <div class="bg-obsidian-800/80 border border-white/10 p-8 rounded-2xl flex flex-col justify-between backdrop-blur">
+                    <div>
+                        <h4 class="text-xs font-mono text-gold-400 uppercase tracking-widest mb-3">AI Diagnostic Output</h4>
+                        <div id="hr-result" class="text-slate-300 text-sm leading-relaxed space-y-3">
+                            <p class="text-slate-500 italic">Configure your parameters and execute audit for instant institutional analysis.</p>
+                        </div>
+                    </div>
+                    <div class="text-xs text-slate-500 pt-4 border-t border-white/10 flex justify-between">
+                        <span>Vertical 01 & 06 Active Engine</span>
+                        <span class="text-gold-400">Secure Protocol</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SERVICE 2 -->
+            <div id="service-astro" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-obsidian-800/60 border border-white/10 p-8 rounded-2xl space-y-6 backdrop-blur">
+                    <h3 class="text-xl font-bold text-white">TOVENZA Jyotish Tech: Temporal-Spatial Analytics</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2">Birth Date</label>
+                            <input type="date" id="astro-date" value="1994-12-02" class="w-full bg-obsidian-900 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-gold-500 focus:outline-none text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2">Birth Time</label>
+                            <input type="time" id="astro-time" value="05:52" class="w-full bg-obsidian-900 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-gold-500 focus:outline-none text-sm">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2">Location</label>
+                        <input type="text" id="astro-loc" value="New Delhi, India" class="w-full bg-obsidian-900 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-gold-500 focus:outline-none text-sm">
+                    </div>
+                    <button onclick="runAstroAI()" class="w-full py-4 rounded-xl bg-gold-500 text-black font-extrabold hover:bg-gold-400 transition text-sm tracking-wide shadow-xl shadow-gold-500/10">Compute Chart & AI Synthesis</button>
+                </div>
+                <div class="bg-obsidian-800/80 border border-white/10 p-8 rounded-2xl flex flex-col justify-between backdrop-blur">
+                    <div>
+                        <h4 class="text-xs font-mono text-gold-400 uppercase tracking-widest mb-3">Astrological Diagnostic Output</h4>
+                        <div id="astro-result" class="text-slate-300 text-sm leading-relaxed space-y-3">
+                            <p class="text-slate-500 italic">Enter birth details to execute computational breakdown.</p>
+                        </div>
+                    </div>
+                    <div class="text-xs text-slate-500 pt-4 border-t border-white/10 flex justify-between">
+                        <span>Vertical 08 Active Engine (Lahiri Ayanamsha)</span>
+                        <span class="text-gold-400">Secure Protocol</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SERVICE 3 -->
+            <div id="service-consulting" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-obsidian-800/60 border border-white/10 p-8 rounded-2xl space-y-6 backdrop-blur">
+                    <h3 class="text-xl font-bold text-white">TOVENZA Business Consulting: Strategic Restructuring AI</h3>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2">Core Objective</label>
+                        <select id="con-obj" class="w-full bg-obsidian-900 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:border-gold-500 focus:outline-none text-sm">
+                            <option value="scale">Multi-Vertical Expansion & Scaling</option>
+                            <option value="margin">Operational Cost Rationalization</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2">Target Horizon</label>
+                        <input type="text" id="con-time" value="12 Months" class="w-full bg-obsidian-900 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-gold-500 focus:outline-none text-sm">
+                    </div>
+                    <button onclick="runConsultingAI()" class="w-full py-4 rounded-xl bg-gold-500 text-black font-extrabold hover:bg-gold-400 transition text-sm tracking-wide shadow-xl shadow-gold-500/10">Generate Strategic Blueprint</button>
+                </div>
+                <div class="bg-obsidian-800/80 border border-white/10 p-8 rounded-2xl flex flex-col justify-between backdrop-blur">
+                    <div>
+                        <h4 class="text-xs font-mono text-gold-400 uppercase tracking-widest mb-3">Consulting Strategy Output</h4>
+                        <div id="con-result" class="text-slate-300 text-sm leading-relaxed space-y-3">
+                            <p class="text-slate-500 italic">Select parameters to generate institutional strategy roadmap.</p>
+                        </div>
+                    </div>
+                    <div class="text-xs text-slate-500 pt-4 border-t border-white/10 flex justify-between">
+                        <span>Vertical 06 Active Engine</span>
+                        <span class="text-gold-400">Secure Protocol</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SERVICE 4 -->
+            <div id="service-healthcare" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-obsidian-800/60 border border-white/10 p-8 rounded-2xl space-y-6 backdrop-blur">
+                    <h3 class="text-xl font-bold text-white">TOVENZA Healthcare: Vitality & Longevity AI</h3>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2">Focus Area</label>
+                        <select id="health-focus" class="w-full bg-obsidian-900 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:border-gold-500 focus:outline-none text-sm">
+                            <option value="executive">Executive Health & Stress Optimization</option>
+                            <option value="preventative">Preventative Biomarker Screening</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2">Age Group</label>
+                        <input type="text" id="health-age" value="30-45 Years" class="w-full bg-obsidian-900 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-gold-500 focus:outline-none text-sm">
+                    </div>
+                    <button onclick="runHealthcareAI()" class="w-full py-4 rounded-xl bg-gold-500 text-black font-extrabold hover:bg-gold-400 transition text-sm tracking-wide shadow-xl shadow-gold-500/10">Run Longevity Protocol</button>
+                </div>
+                <div class="bg-obsidian-800/80 border border-white/10 p-8 rounded-2xl flex flex-col justify-between backdrop-blur">
+                    <div>
+                        <h4 class="text-xs font-mono text-gold-400 uppercase tracking-widest mb-3">Healthcare Diagnostic Output</h4>
+                        <div id="health-result" class="text-slate-300 text-sm leading-relaxed space-y-3">
+                            <p class="text-slate-500 italic">Configure profile for preventative health insights.</p>
+                        </div>
+                    </div>
+                    <div class="text-xs text-slate-500 pt-4 border-t border-white/10 flex justify-between">
+                        <span>Vertical 02 Active Engine</span>
+                        <span class="text-gold-400">Secure Protocol</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- MODAL FOR VERTICAL INSPECTION -->
+    <div id="verticalModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-6">
+        <div class="bg-obsidian-800 border border-gold-500/40 max-w-lg w-full p-8 rounded-3xl space-y-6 shadow-2xl relative">
+            <button onclick="closeVerticalModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white text-xl">✕</button>
+            <div>
+                <span id="modal-code" class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-white/5">VERT-0X</span>
+                <h3 id="modal-title" class="text-2xl font-bold text-white mt-3">Vertical Name</h3>
+            </div>
+            <p id="modal-desc" class="text-slate-300 text-sm leading-relaxed">Description here...</p>
+            <div class="pt-4 border-t border-white/10 flex justify-end gap-3">
+                <button onclick="closeVerticalModal()" class="px-5 py-2.5 rounded-xl bg-obsidian-900 text-slate-300 text-xs font-semibold">Close</button>
+                <button onclick="closeVerticalModal(); switchTab('ai-services');" class="px-5 py-2.5 rounded-xl bg-gold-500 text-black text-xs font-bold">Deploy AI Service</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="max-w-7xl mx-auto w-full px-6 py-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+        <div>&copy; 2026 TOVENZA Global Ecosystem. All Rights Reserved.</div>
+        <div class="font-mono tracking-widest text-gold-400">NEW DELHI • GLOBAL INSTITUTIONAL EXCELLENCE</div>
+    </footer>
+
+    <!-- LOGIC -->
+    <script>
+        function switchTab(tabId) {
+            ['hub', 'verticals', 'systems', 'ai-services'].forEach(t => {
+                document.getElementById('tab-' + t).classList.add('hidden');
+                document.getElementById('btn-' + t)?.classList.remove('bg-gold-500', 'text-black', 'font-bold', 'shadow-lg');
+                document.getElementById('btn-' + t)?.classList.add('text-slate-300');
+            });
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            if(tabId !== 'hub') {
+                document.getElementById('btn-' + tabId).classList.add('bg-gold-500', 'text-black', 'font-bold', 'shadow-lg');
+                document.getElementById('btn-' + tabId).classList.remove('text-slate-300');
+            } else {
+                document.getElementById('btn-hub').classList.add('bg-gold-500', 'text-black', 'font-bold', 'shadow-lg');
+            }
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function switchService(srvId) {
+            ['hr', 'astro', 'consulting', 'healthcare'].forEach(s => {
+                document.getElementById('service-' + s).classList.add('hidden');
+                document.getElementById('srv-btn-' + s).classList.remove('bg-gold-500', 'text-black');
+                document.getElementById('srv-btn-' + s).classList.add('bg-obsidian-800', 'border', 'border-white/10', 'text-slate-300');
+            });
+            document.getElementById('service-' + srvId).classList.remove('hidden');
+            document.getElementById('srv-btn-' + srvId).classList.add('bg-gold-500', 'text-black');
+            document.getElementById('srv-btn-' + srvId).classList.remove('bg-obsidian-800', 'border', 'border-white/10', 'text-slate-300');
+        }
+
+        function openVerticalModal(title, code, desc) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-code').innerText = code;
+            document.getElementById('modal-desc').innerText = desc;
+            document.getElementById('verticalModal').classList.remove('hidden');
+        }
+
+        function closeVerticalModal() {
+            document.getElementById('verticalModal').classList.add('hidden');
+        }
+
+        function runHRAI() {
+            const out = document.getElementById('hr-result');
+            out.innerHTML = `<div class="animate-pulse text-gold-400 font-mono text-xs">Running TOVENZA Workforce Governance analysis...</div>`;
+            setTimeout(() => {
+                out.innerHTML = `<div class="p-4 rounded-xl bg-obsidian-900 border border-gold-500/30 text-xs leading-relaxed space-y-2"><strong class="text-gold-400 font-bold">TOVENZA Diagnostic Result:</strong> High recruitment friction detected. Implementing automated ATS pipelining architecture under Vertical 01 and 06 reduces time-to-hire by ~25% and stabilizes enterprise output.</div>`;
+            }, 700);
+        }
+
+        function runAstroAI() {
+            const out = document.getElementById('astro-result');
+            out.innerHTML = `<div class="animate-pulse text-gold-400 font-mono text-xs">Computing Lahiri Ayanamsha coordinates & Shadbala metrics...</div>`;
+            setTimeout(() => {
+                out.innerHTML = `<div class="p-4 rounded-xl bg-obsidian-900 border border-gold-500/30 text-xs leading-relaxed space-y-2"><strong class="text-gold-400 font-bold">Astrological Synthesis (Vertical 08):</strong> Planetary transits indicate exceptional structural discipline, long-term institutional authority, and Yogakaraka alignment for sovereign empire building.</div>`;
+            }, 700);
+        }
+
+        function runConsultingAI() {
+            const out = document.getElementById('con-result');
+            out.innerHTML = `<div class="animate-pulse text-gold-400 font-mono text-xs">Synthesizing institutional expansion strategy...</div>`;
+            setTimeout(() => {
+                out.innerHTML = `<div class="p-4 rounded-xl bg-obsidian-900 border border-gold-500/30 text-xs leading-relaxed space-y-2"><strong class="text-gold-400 font-bold">Strategy Blueprint (Vertical 06):</strong> Recommended capital recycling across verticals 01 and 05 to maximize cash velocity while incubating high-margin advisory services.</div>`;
+            }, 700);
+        }
+
+        function runHealthcareAI() {
+            const out = document.getElementById('health-result');
+            out.innerHTML = `<div class="animate-pulse text-gold-400 font-mono text-xs">Initializing executive longevity protocols...</div>`;
+            setTimeout(() => {
+                out.innerHTML = `<div class="p-4 rounded-xl bg-obsidian-900 border border-gold-500/30 text-xs leading-relaxed space-y-2"><strong class="text-gold-400 font-bold">Longevity Protocol (Vertical 02):</strong> Executive stress optimization framework initialized. Recommending quarterly biomarker panel screening and cardiovascular endurance thresholds.</div>`;
+            }, 700);
+        }
+    </script>
+</body>
+</html>
