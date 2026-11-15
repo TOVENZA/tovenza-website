@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TOVENZA | Global Institutional Ecosystem</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -12,7 +13,8 @@
                     colors: {
                         burgundy: { 900: '#2b070a', 800: '#420b10', 700: '#5a1015', 600: '#75171e', 500: '#94222a' },
                         beige: { 100: '#fcfbfa', 200: '#f7f4ee', 300: '#eee8dc', 400: '#dfd5c2', 500: '#c5bda9' },
-                        gold: { 400: '#facc15', 500: '#eab308', 600: '#ca8a04' },
+                        gold: { 400: '#facc15', 500: '#eab308', 600: '#ca8a04', 300: '#fef08a' },
+                        obsidian: '#050507',
                         charcoal: '#221b18'
                     }
                 }
@@ -22,39 +24,57 @@
     <style>
         @keyframes floatSlow {
             0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-20px) scale(1.05); }
+            50% { transform: translateY(-25px) scale(1.06); }
         }
         @keyframes floatReverse {
             0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(25px) scale(0.95); }
+            50% { transform: translateY(30px) scale(0.94); }
         }
-        .vfx-orb-1 { animation: floatSlow 12s ease-in-out infinite; }
-        .vfx-orb-2 { animation: floatReverse 15s ease-in-out infinite; }
+        .vfx-orb-1 { animation: floatSlow 14s ease-in-out infinite; }
+        .vfx-orb-2 { animation: floatReverse 18s ease-in-out infinite; }
         .glass-luxury {
-            background: rgba(252, 251, 250, 0.85);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(90, 16, 21, 0.12);
+            background: rgba(247, 244, 238, 0.88);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(90, 16, 21, 0.15);
+            box-shadow: 0 20px 40px rgba(43, 7, 10, 0.08);
+        }
+        .glass-dark {
+            background: rgba(5, 5, 7, 0.85);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(234, 179, 8, 0.2);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+        #webgl-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
         }
     </style>
 </head>
 <body class="bg-beige-200 text-charcoal font-sans antialiased selection:bg-burgundy-700 selection:text-white min-h-screen flex flex-col justify-between relative overflow-x-hidden">
     
-    <!-- LUXURY 3D BACKGROUND VFX ORBS -->
+    <!-- WEBGL 3D BACKGROUND CANVAS -->
+    <canvas id="webgl-canvas"></canvas>
+
+    <!-- AMBIENT 3D LIGHT ORBS -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div class="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-burgundy-700/10 blur-[120px] vfx-orb-1"></div>
-        <div class="absolute top-1/3 -right-40 w-[500px] h-[500px] rounded-full bg-gold-500/10 blur-[150px] vfx-orb-2"></div>
-        <div class="absolute -bottom-40 left-1/4 w-[450px] h-[450px] rounded-full bg-burgundy-900/15 blur-[140px] vfx-orb-1"></div>
-        <div class="absolute inset-0 bg-[linear-gradient(to_right,#5a101508_1px,transparent_1px),linear-gradient(to_bottom,#5a101508_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
+        <div class="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-burgundy-700/12 blur-[130px] vfx-orb-1"></div>
+        <div class="absolute top-1/3 -right-40 w-[600px] h-[600px] rounded-full bg-gold-500/10 blur-[160px] vfx-orb-2"></div>
+        <div class="absolute -bottom-40 left-1/4 w-[550px] h-[550px] rounded-full bg-burgundy-900/15 blur-[150px] vfx-orb-1"></div>
     </div>
 
-    <!-- Top Luxury Navigation -->
-    <header class="sticky top-0 z-50 backdrop-blur-2xl bg-beige-200/90 border-b border-burgundy-900/10 shadow-sm">
+    <!-- Top Cinematic Navigation -->
+    <header class="sticky top-0 z-50 backdrop-blur-2xl bg-beige-200/90 border-b border-burgundy-900/10 shadow-md">
         <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between relative z-10">
             <div class="flex items-center space-x-4 cursor-pointer group" onclick="switchTab('hub')">
-                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-burgundy-700 to-burgundy-900 flex items-center justify-center font-extrabold text-beige-100 text-2xl shadow-xl shadow-burgundy-900/20 border border-gold-500/30 group-hover:scale-105 transition">T</div>
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-burgundy-700 to-burgundy-900 flex items-center justify-center font-extrabold text-beige-100 text-2xl shadow-xl shadow-burgundy-900/30 border border-gold-500/40 group-hover:scale-105 transition">T</div>
                 <div>
                     <span class="text-2xl font-black tracking-[0.25em] text-burgundy-900">TOVENZA</span>
-                    <span class="block text-[10px] tracking-[0.35em] text-burgundy-700 uppercase font-bold">Institutional Ecosystem</span>
+                    <span class="block text-[10px] tracking-[0.35em] text-burgundy-700 uppercase font-bold">Global Institutional Ecosystem</span>
                 </div>
             </div>
             <nav class="hidden md:flex items-center space-x-1.5 bg-beige-300/80 p-1.5 rounded-2xl border border-burgundy-900/10 text-xs font-semibold tracking-wider shadow-inner">
@@ -69,92 +89,155 @@
     <!-- MAIN CONTAINER -->
     <main class="max-w-7xl mx-auto w-full px-6 py-16 flex-grow relative z-10">
 
-        <!-- TAB 1: HUB -->
-        <section id="tab-hub" class="space-y-20">
-            <div class="text-center max-w-4xl mx-auto space-y-6">
-                <div class="inline-flex items-center space-x-2 px-5 py-2 rounded-full glass-luxury border border-burgundy-700/20 text-burgundy-800 text-xs font-bold tracking-[0.3em] uppercase shadow-lg">
-                    <span>✦ Sovereign Heritage & Modernity Unified ✦</span>
+        <!-- TAB 1: HUB / CINEMATIC HERO -->
+        <section id="tab-hub" class="space-y-24">
+            <div class="text-center max-w-4xl mx-auto space-y-8 pt-6">
+                <div class="inline-flex items-center space-x-2 px-6 py-2 rounded-full glass-luxury border border-burgundy-700/20 text-burgundy-800 text-xs font-bold tracking-[0.3em] uppercase shadow-xl">
+                    <span>✦ World 04 — Global Ecosystem & Institutional Architecture ✦</span>
                 </div>
                 <h1 class="text-5xl md:text-7xl font-black tracking-tight text-burgundy-900 leading-[1.1]">
-                    Beyond Business, <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-burgundy-700 via-burgundy-600 to-amber-700">Build to Endure.</span>
+                    BUILDING BEYOND <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-burgundy-700 via-burgundy-600 to-amber-700">BOUNDARIES.</span>
                 </h1>
-                <p class="text-charcoal/80 text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto">
-                    Governing eleven canonical P&L industry verticals through six centralized capability systems. Absolute structural architecture designed for perpetual dominion.
+                <p class="text-charcoal/80 text-lg md:text-xl font-light leading-relaxed max-w-3xl mx-auto">
+                    An integrated institutional ecosystem designed to create, develop and manage opportunities across multiple sectors through a unified vision, disciplined governance and shared capabilities.
                 </p>
-                <div class="pt-4 flex flex-wrap justify-center gap-4">
-                    <button onclick="switchTab('astro')" class="px-8 py-4 rounded-xl bg-burgundy-700 text-beige-100 font-extrabold hover:bg-burgundy-800 transition shadow-2xl shadow-burgundy-900/30 tracking-wider text-sm border border-gold-500/30">Launch Custom Jyotish AI Engine</button>
-                    <button onclick="switchTab('verticals')" class="px-8 py-4 rounded-xl glass-luxury hover:bg-beige-300 text-burgundy-900 font-semibold border border-burgundy-900/10 transition tracking-wider text-sm shadow-lg">Explore All 11 Verticals</button>
+                <div class="pt-4 flex flex-wrap justify-center gap-5">
+                    <button onclick="switchTab('astro')" class="px-9 py-4 rounded-xl bg-burgundy-700 text-beige-100 font-extrabold hover:bg-burgundy-800 transition shadow-2xl shadow-burgundy-900/40 tracking-wider text-sm border border-gold-500/40">Launch Custom Jyotish AI Engine</button>
+                    <button onclick="switchTab('verticals')" class="px-9 py-4 rounded-xl glass-luxury hover:bg-beige-300 text-burgundy-900 font-semibold border border-burgundy-900/10 transition tracking-wider text-sm shadow-xl">Explore All 11 Verticals</button>
                 </div>
             </div>
 
-            <!-- Core Pillars Preview -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-10">
-                <div onclick="switchTab('astro')" class="group p-8 rounded-3xl glass-luxury border border-burgundy-700/30 hover:border-burgundy-700 cursor-pointer transition duration-300 flex flex-col justify-between shadow-xl hover:-translate-y-1">
+            <!-- The Four Signature Visual Worlds Showcase -->
+            <div class="space-y-8 pt-10">
+                <div class="border-b border-burgundy-900/10 pb-4 flex justify-between items-end">
                     <div>
-                        <div class="text-xs font-mono text-burgundy-600 uppercase tracking-widest mb-3">Featured Engine • V-08</div>
-                        <h3 class="text-2xl font-bold text-burgundy-900 mb-3 group-hover:text-burgundy-600 transition">Universal Jyotish AI</h3>
-                        <p class="text-charcoal/70 text-sm leading-relaxed mb-6">Input any birth profile to instantly compute a deep 5-page temporal audit covering past, present, and future.</p>
+                        <span class="text-xs font-mono text-burgundy-600 uppercase tracking-widest">Architectural Identity</span>
+                        <h2 class="text-3xl font-extrabold text-burgundy-900">The Four Signature Visual Worlds</h2>
                     </div>
-                    <span class="text-xs font-bold text-burgundy-700 tracking-wider flex items-center space-x-2"><span>Open Custom Analytics</span> <span>→</span></span>
+                    <span class="text-xs font-mono text-charcoal/60 hidden md:block">Unreal Engine 5 & Octane Render Standards</span>
                 </div>
 
-                <div onclick="switchTab('verticals')" class="group p-8 rounded-3xl glass-luxury border border-burgundy-900/10 hover:border-burgundy-700/50 cursor-pointer transition duration-300 flex flex-col justify-between shadow-xl hover:-translate-y-1">
-                    <div>
-                        <div class="text-xs font-mono text-burgundy-600 uppercase tracking-widest mb-3">Commercial P&L</div>
-                        <h3 class="text-2xl font-bold text-burgundy-900 mb-3 group-hover:text-burgundy-600 transition">The 11 Industry Verticals</h3>
-                        <p class="text-charcoal/70 text-sm leading-relaxed mb-6">Recruitment delivery, healthcare, consulting, and technological ecosystems.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="p-8 rounded-3xl glass-luxury border border-burgundy-700/30 space-y-4 shadow-2xl group hover:border-burgundy-700 transition">
+                        <span class="text-xs font-mono text-burgundy-600 font-bold bg-burgundy-700/10 px-3 py-1 rounded">WORLD 01</span>
+                        <h3 class="text-2xl font-bold text-burgundy-900 group-hover:text-burgundy-600 transition">Obsidian Luxury</h3>
+                        <p class="text-charcoal/80 text-sm leading-relaxed">Institutional power through minimalism. Monumental geometric structures carved from polished black stone with champagne-gold metallic detailing and volumetric atmospheric haze.</p>
                     </div>
-                    <span class="text-xs font-bold text-burgundy-700 tracking-wider flex items-center space-x-2"><span>Inspect Verticals</span> <span>→</span></span>
-                </div>
-
-                <div onclick="switchTab('systems')" class="group p-8 rounded-3xl glass-luxury border border-burgundy-900/10 hover:border-burgundy-700/50 cursor-pointer transition duration-300 flex flex-col justify-between shadow-xl hover:-translate-y-1">
-                    <div>
-                        <div class="text-xs font-mono text-burgundy-600 uppercase tracking-widest mb-3">Sovereign Backbone</div>
-                        <h3 class="text-2xl font-bold text-burgundy-900 mb-3 group-hover:text-burgundy-600 transition">The 6 Central Systems</h3>
-                        <p class="text-charcoal/70 text-sm leading-relaxed mb-6">Institutional governance, legal protection, financial architecture, and security.</p>
+                    <div class="p-8 rounded-3xl glass-luxury border border-burgundy-900/10 space-y-4 shadow-2xl group hover:border-burgundy-700 transition">
+                        <span class="text-xs font-mono text-burgundy-600 font-bold bg-burgundy-700/10 px-3 py-1 rounded">WORLD 02</span>
+                        <h3 class="text-2xl font-bold text-burgundy-900 group-hover:text-burgundy-600 transition">Architectural Authority</h3>
+                        <p class="text-charcoal/80 text-sm leading-relaxed">Permanence, scale and institutional strength. Breathtaking modern headquarters combining dark glass, black marble, brushed titanium and warm accents.</p>
                     </div>
-                    <span class="text-xs font-bold text-burgundy-700 tracking-wider flex items-center space-x-2"><span>Inspect Systems</span> <span>→</span></span>
+                    <div class="p-8 rounded-3xl glass-luxury border border-burgundy-900/10 space-y-4 shadow-2xl group hover:border-burgundy-700 transition">
+                        <span class="text-xs font-mono text-burgundy-600 font-bold bg-burgundy-700/10 px-3 py-1 rounded">WORLD 03</span>
+                        <h3 class="text-2xl font-bold text-burgundy-900 group-hover:text-burgundy-600 transition">Financial Sophistication</h3>
+                        <p class="text-charcoal/80 text-sm leading-relaxed">Financial intelligence and strategic discipline. Extraordinary private financial interiors, floating geometric structures, and precision-engineered architectural elements.</p>
+                    </div>
+                    <div class="p-8 rounded-3xl glass-luxury border border-burgundy-700/30 space-y-4 shadow-2xl group hover:border-burgundy-700 transition">
+                        <span class="text-xs font-mono text-burgundy-600 font-bold bg-burgundy-700/10 px-3 py-1 rounded">WORLD 04</span>
+                        <h3 class="text-2xl font-bold text-burgundy-900 group-hover:text-burgundy-600 transition">Global Ecosystem</h3>
+                        <p class="text-charcoal/80 text-sm leading-relaxed">One connected institution operating through multiple verticals. A breathtaking illuminated globe with interconnected golden pathways connecting nodes across continents.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- TAB 2: THE 11 VERTICALS -->
+        <!-- TAB 2: THE 11 BUSINESS VERTICALS -->
         <section id="tab-verticals" class="hidden space-y-12">
-            <div class="border-b border-burgundy-900/10 pb-8 flex justify-between items-end">
+            <div class="border-b border-burgundy-900/10 pb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                 <div>
-                    <div class="text-xs font-mono text-burgundy-600 uppercase tracking-widest mb-2">Portfolio Domains</div>
+                    <div class="text-xs font-mono text-burgundy-600 uppercase tracking-widest mb-2">Immersive 3D Gallery</div>
                     <h2 class="text-4xl font-extrabold text-burgundy-900">The Eleven Canonical Industry Verticals</h2>
+                    <p class="text-charcoal/80 text-sm mt-1 max-w-2xl">Click any vertical to inspect its dedicated P&L operational structure and active AI service portals.</p>
                 </div>
-                <button onclick="switchTab('astro')" class="px-5 py-2.5 rounded-xl bg-burgundy-700 text-beige-100 font-bold text-xs uppercase tracking-wider shadow-md">Open Jyotish AI</button>
+                <button onclick="switchTab('astro')" class="px-5 py-2.5 rounded-xl bg-burgundy-700 text-beige-100 font-bold text-xs uppercase tracking-wider shadow-lg">Open Jyotish AI Engine</button>
             </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="p-6 rounded-2xl glass-luxury border border-burgundy-900/10 shadow-lg"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-01</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Recruitment, Staffing & HR</h4><p class="text-charcoal/70 text-xs mt-1">High-volume talent acquisition and workforce operations.</p></div>
-                <div class="p-6 rounded-2xl glass-luxury border border-burgundy-900/10 shadow-lg"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-02</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Healthcare & Diagnostics</h4><p class="text-charcoal/70 text-xs mt-1">Human vitality and biological longevity infrastructure.</p></div>
-                <div class="p-6 rounded-2xl glass-luxury border border-burgundy-900/10 shadow-lg"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-03</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Hospitality</h4><p class="text-charcoal/70 text-xs mt-1">Curated human experience and spatial service excellence.</p></div>
-                <div class="p-6 rounded-2xl glass-luxury border border-burgundy-900/10 shadow-lg"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-04</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Real Estate & Property</h4><p class="text-charcoal/70 text-xs mt-1">Asset stewardship and spatial development architecture.</p></div>
-                <div class="p-6 rounded-2xl glass-luxury border border-burgundy-900/10 shadow-lg"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-05</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Technology, AI & Software</h4><p class="text-charcoal/70 text-xs mt-1">Digital nervous system and microservice automation.</p></div>
-                <div class="p-6 rounded-2xl glass-luxury border border-burgundy-900/10 shadow-lg"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-06</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Business Consulting</h4><p class="text-charcoal/70 text-xs mt-1">Strategic corporate transformation and scale advisory.</p></div>
-                <div class="p-6 rounded-2xl glass-luxury border border-burgundy-900/10 shadow-lg"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-07</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Psychology & Wellbeing</h4><p class="text-charcoal/70 text-xs mt-1">Behavioral science and organizational psychology.</p></div>
-                <div onclick="switchTab('astro')" class="p-6 rounded-2xl glass-luxury border-2 border-burgundy-700 cursor-pointer shadow-xl hover:bg-beige-300 transition"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-08 (FEATURED)</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Astrology & Vedic Sciences →</h4><p class="text-charcoal/70 text-xs mt-1">Open 5-Page Deep AI Temporal Analytics Report.</p></div>
-                <div class="p-6 rounded-2xl glass-luxury border border-burgundy-900/10 shadow-lg"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-09</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Education & Learning</h4><p class="text-charcoal/70 text-xs mt-1">Systematic transmission of capability and worldview.</p></div>
-                <div class="p-6 rounded-2xl glass-luxury border border-burgundy-900/10 shadow-lg"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-10</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Retail</h4><p class="text-charcoal/70 text-xs mt-1">Consumer touchpoints and experiential brand psychology.</p></div>
-                <div class="p-6 rounded-2xl glass-luxury border border-burgundy-900/10 shadow-lg md:col-span-2 lg:col-span-1"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-11</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Future Industries</h4><p class="text-charcoal/70 text-xs mt-1">Frontier arm capturing energy, biotech, and emergent tech.</p></div>
+                <!-- 1 -->
+                <div onclick="openVerticalModal('Recruitment, Staffing & HR', 'VERT-01', 'High-volume talent acquisition, workforce planning, and operational HR delivery designed to eliminate administrative friction and improve time-to-hire by 25%.')" class="p-6 rounded-3xl glass-luxury border border-burgundy-900/10 hover:border-burgundy-700 cursor-pointer transition shadow-xl group">
+                    <div class="flex justify-between items-start mb-4"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-01</span><span class="text-gold-600 group-hover:translate-x-1 transition">✦</span></div>
+                    <h4 class="text-xl font-bold text-burgundy-900 mb-2 group-hover:text-burgundy-700 transition">Recruitment, Staffing & HR</h4>
+                    <p class="text-charcoal/70 text-xs leading-relaxed">High-volume talent acquisition and workforce operations.</p>
+                </div>
+                <!-- 2 -->
+                <div onclick="openVerticalModal('Healthcare & Diagnostics', 'VERT-02', 'Critical infrastructure addressing human vitality, preventative screening, and biological longevity protocols for elite performers.')" class="p-6 rounded-3xl glass-luxury border border-burgundy-900/10 hover:border-burgundy-700 cursor-pointer transition shadow-xl group">
+                    <div class="flex justify-between items-start mb-4"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-02</span><span class="text-gold-600 group-hover:translate-x-1 transition">✦</span></div>
+                    <h4 class="text-xl font-bold text-burgundy-900 mb-2 group-hover:text-burgundy-700 transition">Healthcare & Diagnostics</h4>
+                    <p class="text-charcoal/70 text-xs leading-relaxed">Human vitality and biological longevity infrastructure.</p>
+                </div>
+                <!-- 3 -->
+                <div onclick="openVerticalModal('Hospitality', 'VERT-03', 'Curated human experiences, luxury physical spaces, and flawless service excellence engineered for elite hospitality environments.')" class="p-6 rounded-3xl glass-luxury border border-burgundy-900/10 hover:border-burgundy-700 cursor-pointer transition shadow-xl group">
+                    <div class="flex justify-between items-start mb-4"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-03</span><span class="text-gold-600 group-hover:translate-x-1 transition">✦</span></div>
+                    <h4 class="text-xl font-bold text-burgundy-900 mb-2 group-hover:text-burgundy-700 transition">Hospitality</h4>
+                    <p class="text-charcoal/70 text-xs leading-relaxed">Curated human experience and spatial service excellence.</p>
+                </div>
+                <!-- 4 -->
+                <div onclick="openVerticalModal('Real Estate & Property', 'VERT-04', 'Tangible wealth creation, institutional asset stewardship, and premium spatial development architecture.')" class="p-6 rounded-3xl glass-luxury border border-burgundy-900/10 hover:border-burgundy-700 cursor-pointer transition shadow-xl group">
+                    <div class="flex justify-between items-start mb-4"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-04</span><span class="text-gold-600 group-hover:translate-x-1 transition">✦</span></div>
+                    <h4 class="text-xl font-bold text-burgundy-900 mb-2 group-hover:text-burgundy-700 transition">Real Estate & Property</h4>
+                    <p class="text-charcoal/70 text-xs leading-relaxed">Asset stewardship and spatial development architecture.</p>
+                </div>
+                <!-- 5 -->
+                <div onclick="openVerticalModal('Technology, AI & Software', 'VERT-05', 'Proprietary computational microservices, algorithmic automation, and robust digital infrastructure powering the TOVENZA ecosystem.')" class="p-6 rounded-3xl glass-luxury border border-burgundy-900/10 hover:border-burgundy-700 cursor-pointer transition shadow-xl group">
+                    <div class="flex justify-between items-start mb-4"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-05</span><span class="text-gold-600 group-hover:translate-x-1 transition">✦</span></div>
+                    <h4 class="text-xl font-bold text-burgundy-900 mb-2 group-hover:text-burgundy-700 transition">Technology, AI & Software</h4>
+                    <p class="text-charcoal/70 text-xs leading-relaxed">Digital nervous system and microservice automation.</p>
+                </div>
+                <!-- 6 -->
+                <div onclick="openVerticalModal('Business Consulting', 'VERT-06', 'High-level strategic intervention for complex corporate transformations, organizational scaling, and operational restructuring.')" class="p-6 rounded-3xl glass-luxury border border-burgundy-900/10 hover:border-burgundy-700 cursor-pointer transition shadow-xl group">
+                    <div class="flex justify-between items-start mb-4"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-06</span><span class="text-gold-600 group-hover:translate-x-1 transition">✦</span></div>
+                    <h4 class="text-xl font-bold text-burgundy-900 mb-2 group-hover:text-burgundy-700 transition">Business Consulting</h4>
+                    <p class="text-charcoal/70 text-xs leading-relaxed">Strategic corporate transformation and scale advisory.</p>
+                </div>
+                <!-- 7 -->
+                <div onclick="openVerticalModal('Psychology & Wellbeing', 'VERT-07', 'Systematic application of behavioral science, organizational behavior, and human psychology to executive and team health.')" class="p-6 rounded-3xl glass-luxury border border-burgundy-900/10 hover:border-burgundy-700 cursor-pointer transition shadow-xl group">
+                    <div class="flex justify-between items-start mb-4"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-07</span><span class="text-gold-600 group-hover:translate-x-1 transition">✦</span></div>
+                    <h4 class="text-xl font-bold text-burgundy-900 mb-2 group-hover:text-burgundy-700 transition">Psychology & Wellbeing</h4>
+                    <p class="text-charcoal/70 text-xs leading-relaxed">Behavioral science and organizational psychology.</p>
+                </div>
+                <!-- 8 -->
+                <div onclick="switchTab('astro')" class="p-6 rounded-3xl glass-luxury border-2 border-burgundy-700 cursor-pointer transition shadow-xl group hover:bg-beige-300">
+                    <div class="flex justify-between items-start mb-4"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-08 (FEATURED)</span><span class="text-gold-600 group-hover:translate-x-1 transition">✦</span></div>
+                    <h4 class="text-xl font-bold text-burgundy-900 mb-2 group-hover:text-burgundy-700 transition">Astrology, Jyotish & Vedic Sciences</h4>
+                    <p class="text-charcoal/70 text-xs leading-relaxed">Temporal analytics and AI Kundli generation engine.</p>
+                </div>
+                <!-- 9 -->
+                <div onclick="openVerticalModal('Education & Learning', 'VERT-09', 'Systematic transmission of elite capability, technical mastery, and structured worldview acceleration.')" class="p-6 rounded-3xl glass-luxury border border-burgundy-900/10 hover:border-burgundy-700 cursor-pointer transition shadow-xl group">
+                    <div class="flex justify-between items-start mb-4"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-09</span><span class="text-gold-600 group-hover:translate-x-1 transition">✦</span></div>
+                    <h4 class="text-xl font-bold text-burgundy-900 mb-2 group-hover:text-burgundy-700 transition">Education & Learning</h4>
+                    <p class="text-charcoal/70 text-xs leading-relaxed">Systematic transmission of capability and worldview.</p>
+                </div>
+                <!-- 10 -->
+                <div onclick="openVerticalModal('Retail', 'VERT-10', 'Direct consumer touchpoints bridging supply chain mastery with high-end brand psychology and experiential retail.')" class="p-6 rounded-3xl glass-luxury border border-burgundy-900/10 hover:border-burgundy-700 cursor-pointer transition shadow-xl group">
+                    <div class="flex justify-between items-start mb-4"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-10</span><span class="text-gold-600 group-hover:translate-x-1 transition">✦</span></div>
+                    <h4 class="text-xl font-bold text-burgundy-900 mb-2 group-hover:text-burgundy-700 transition">Retail</h4>
+                    <p class="text-charcoal/70 text-xs leading-relaxed">Consumer touchpoints and experiential brand psychology.</p>
+                </div>
+                <!-- 11 -->
+                <div onclick="openVerticalModal('Future Industries', 'VERT-11', 'Dedicated frontier arm capturing paradigm shifts in sustainable energy, biotechnology, and emergent global markets.')" class="p-6 rounded-3xl glass-luxury border border-burgundy-900/10 hover:border-burgundy-700 cursor-pointer transition shadow-xl group md:col-span-2 lg:col-span-1">
+                    <div class="flex justify-between items-start mb-4"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-11</span><span class="text-gold-600 group-hover:translate-x-1 transition">✦</span></div>
+                    <h4 class="text-xl font-bold text-burgundy-900 mb-2 group-hover:text-burgundy-700 transition">Future Industries</h4>
+                    <p class="text-charcoal/70 text-xs leading-relaxed">Frontier arm capturing energy, biotech, and emergent tech.</p>
+                </div>
             </div>
         </section>
 
-        <!-- TAB 3: THE 6 SYSTEMS -->
+        <!-- TAB 3: THE 6 CENTRAL CAPABILITY SYSTEMS -->
         <section id="tab-systems" class="hidden space-y-12">
             <div class="border-b border-burgundy-900/10 pb-8">
-                <div class="text-xs font-mono text-burgundy-600 uppercase tracking-widest mb-2">Institutional Backbone</div>
+                <div class="text-xs font-mono text-burgundy-600 uppercase tracking-widest mb-2">Central Institutional Backbone</div>
                 <h2 class="text-4xl font-extrabold text-burgundy-900">The Six Central Capability Systems</h2>
+                <p class="text-charcoal/80 text-sm mt-1 max-w-2xl">Centralized governance infrastructure ensuring absolute risk mitigation and financial discipline across all subsidiaries.</p>
             </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="p-8 rounded-3xl glass-luxury border border-burgundy-900/10 space-y-3 shadow-lg"><span class="text-xs font-mono text-burgundy-600 font-bold">SYS-01</span><h4 class="text-xl font-bold text-burgundy-900">Central & Shared Services</h4><p class="text-charcoal/70 text-xs">Operational leverage and administrative centralization across subsidiaries.</p></div>
-                <div class="p-8 rounded-3xl glass-luxury border border-burgundy-900/10 space-y-3 shadow-lg"><span class="text-xs font-mono text-burgundy-600 font-bold">SYS-02</span><h4 class="text-xl font-bold text-burgundy-900">Institutional Governance</h4><p class="text-charcoal/70 text-xs">Uncompromising oversight and Founder voting alignment for permanence.</p></div>
-                <div class="p-8 rounded-3xl glass-luxury border border-burgundy-900/10 space-y-3 shadow-lg"><span class="text-xs font-mono text-burgundy-600 font-bold">SYS-03</span><h4 class="text-xl font-bold text-burgundy-900">Legal, Compliance & Risk</h4><p class="text-charcoal/70 text-xs">Statutory filings, SBO rules, and fortress-grade protection.</p></div>
-                <div class="p-8 rounded-3xl glass-luxury border border-burgundy-900/10 space-y-3 shadow-lg"><span class="text-xs font-mono text-burgundy-600 font-bold">SYS-04</span><h4 class="text-xl font-bold text-burgundy-900">Financial Architecture</h4><p class="text-charcoal/70 text-xs">Disciplined capital allocation and intelligent cash recycling.</p></div>
-                <div class="p-8 rounded-3xl glass-luxury border border-burgundy-900/10 space-y-3 shadow-lg"><span class="text-xs font-mono text-burgundy-600 font-bold">SYS-05</span><h4 class="text-xl font-bold text-burgundy-900">People & Culture</h4><p class="text-charcoal/70 text-xs">Rigorous talent selection rooted in organizational psychology.</p></div>
-                <div class="p-8 rounded-3xl glass-luxury border border-burgundy-900/10 space-y-3 shadow-lg"><span class="text-xs font-mono text-burgundy-600 font-bold">SYS-06</span><h4 class="text-xl font-bold text-burgundy-900">Technology & Security</h4><p class="text-charcoal/70 text-xs">Proprietary data architecture and uncompromised digital defense.</p></div>
+                <div class="p-8 rounded-3xl glass-luxury border border-burgundy-900/10 space-y-3 shadow-xl"><span class="text-xs font-mono text-burgundy-600 font-bold">SYS-01</span><h4 class="text-xl font-bold text-burgundy-900">Central & Shared Services</h4><p class="text-charcoal/70 text-xs leading-relaxed">Operational leverage and administrative centralization across subsidiaries.</p></div>
+                <div class="p-8 rounded-3xl glass-luxury border border-burgundy-900/10 space-y-3 shadow-xl"><span class="text-xs font-mono text-burgundy-600 font-bold">SYS-02</span><h4 class="text-xl font-bold text-burgundy-900">Institutional Governance</h4><p class="text-charcoal/70 text-xs leading-relaxed">Uncompromising oversight and Founder voting alignment for permanence.</p></div>
+                <div class="p-8 rounded-3xl glass-luxury border border-burgundy-900/10 space-y-3 shadow-xl"><span class="text-xs font-mono text-burgundy-600 font-bold">SYS-03</span><h4 class="text-xl font-bold text-burgundy-900">Legal, Compliance & Risk</h4><p class="text-charcoal/70 text-xs leading-relaxed">Statutory filings, SBO rules, and fortress-grade protection.</p></div>
+                <div class="p-8 rounded-3xl glass-luxury border border-burgundy-900/10 space-y-3 shadow-xl"><span class="text-xs font-mono text-burgundy-600 font-bold">SYS-04</span><h4 class="text-xl font-bold text-burgundy-900">Financial Architecture</h4><p class="text-charcoal/70 text-xs leading-relaxed">Disciplined capital allocation and intelligent cash recycling.</p></div>
+                <div class="p-8 rounded-3xl glass-luxury border border-burgundy-900/10 space-y-3 shadow-xl"><span class="text-xs font-mono text-burgundy-600 font-bold">SYS-05</span><h4 class="text-xl font-bold text-burgundy-900">People & Culture</h4><p class="text-charcoal/70 text-xs leading-relaxed">Rigorous talent selection rooted in organizational psychology.</p></div>
+                <div class="p-8 rounded-3xl glass-luxury border border-burgundy-900/10 space-y-3 shadow-xl"><span class="text-xs font-mono text-burgundy-600 font-bold">SYS-06</span><h4 class="text-xl font-bold text-burgundy-900">Technology & Security</h4><p class="text-charcoal/70 text-xs leading-relaxed">Proprietary data architecture and uncompromised digital defense.</p></div>
             </div>
         </section>
 
@@ -354,14 +437,104 @@
 
     </main>
 
+    <!-- MODAL FOR VERTICAL INSPECTION -->
+    <div id="verticalModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-6">
+        <div class="glass-dark max-w-lg w-full p-8 rounded-3xl space-y-6 shadow-2xl relative text-beige-100 border border-gold-500/30">
+            <button onclick="closeVerticalModal()" class="absolute top-6 right-6 text-gold-400 hover:text-white text-xl">✕</button>
+            <div>
+                <span id="modal-code" class="text-xs font-mono text-gold-400 bg-obsidian px-3 py-1 rounded border border-gold-500/20">VERT-0X</span>
+                <h3 id="modal-title" class="text-2xl font-bold text-white mt-3">Vertical Name</h3>
+            </div>
+            <p id="modal-desc" class="text-beige-300 text-sm leading-relaxed">Description here...</p>
+            <div class="pt-4 border-t border-white/10 flex justify-end gap-3">
+                <button onclick="closeVerticalModal()" class="px-5 py-2.5 rounded-xl bg-obsidian text-beige-300 text-xs font-semibold border border-white/10">Close</button>
+                <button onclick="closeVerticalModal(); switchTab('astro');" class="px-5 py-2.5 rounded-xl bg-gold-500 text-black text-xs font-bold shadow-lg">Access AI Service Suite</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="max-w-7xl mx-auto w-full px-6 py-10 border-t border-burgundy-900/10 flex justify-between items-center text-xs text-charcoal/60 relative z-10">
         <div>&copy; 2026 TOVENZA Global Ecosystem. All Rights Reserved.</div>
-        <div class="font-mono tracking-widest text-burgundy-800 font-bold">MATTE BURGUNDY & BEIGE 3D VFX EDITION</div>
+        <div class="font-mono tracking-widest text-burgundy-800 font-bold">CINEMATIC 3D VFX GLOBAL HEADQUARTERS</div>
     </footer>
 
-    <!-- Logic -->
+    <!-- THREE.JS 3D BACKGROUND ENGINE -->
     <script>
+        // Three.js Background Particle Globe / Architectural Grid
+        const canvas = document.getElementById('webgl-canvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // Create Floating Golden Particles
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 1200;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 15;
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.025,
+            color: 0x94222a, // Burgundy tint
+            transparent: true,
+            opacity: 0.6
+        });
+
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        // Create Wireframe Globe (World 04 Global Ecosystem representation)
+        const globeGeometry = new THREE.IcosahedronGeometry(3.5, 2);
+        const globeMaterial = new THREE.MeshBasicMaterial({
+            color: 0x5a1015,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.15
+        });
+        const globeMesh = new THREE.Mesh(globeGeometry, globeMaterial);
+        scene.add(globeMesh);
+
+        camera.position.z = 6;
+
+        // Mouse interaction
+        let mouseX = 0;
+        let mouseY = 0;
+        document.addEventListener('mousemove', (event) => {
+            mouseX = event.clientX / window.innerWidth - 0.5;
+            mouseY = event.clientY / window.innerHeight - 0.5;
+        });
+
+        // Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            particlesMesh.rotation.y += 0.001;
+            particlesMesh.rotation.x += 0.0005;
+            
+            globeMesh.rotation.y += 0.002;
+            globeMesh.rotation.z += 0.001;
+
+            camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY * 0.5 - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // UI Controllers
         function switchTab(tabId) {
             ['hub', 'verticals', 'systems', 'astro'].forEach(t => {
                 document.getElementById('tab-' + t).classList.add('hidden');
@@ -402,6 +575,17 @@
 
             alert(`AI Temporal Analytics successfully re-calibrated for ${name} (${loc} at ${date} ${time}). Reports updated across all 5 pages.`);
             switchReportPage(1);
+        }
+
+        function openVerticalModal(title, code, desc) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-code').innerText = code;
+            document.getElementById('modal-desc').innerText = desc;
+            document.getElementById('verticalModal').classList.remove('hidden');
+        }
+
+        function closeVerticalModal() {
+            document.getElementById('verticalModal').classList.add('hidden');
         }
     </script>
 </body>
