@@ -1,165 +1,344 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOVENZA | Jyotish Tech & Vedic Intelligence</title>
+    <title>TOVENZA | Global Institutional Ecosystem</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        gold: { 300: '#fef08a', 400: '#facc15', 500: '#eab308', 600: '#ca8a04', 700: '#a16207' },
-                        obsidian: { 900: '#050507', 800: '#0b0b0f', 700: '#13131a' }
+                        burgundy: { 900: '#380a0d', 800: '#520f14', 700: '#6b1418', 600: '#8b1e24', 500: '#a82c33' },
+                        beige: { 100: '#fcfbfa', 200: '#f9f6f0', 300: '#f0ece1', 400: '#e2dccb', 500: '#c5bda9' },
+                        charcoal: '#2c2421'
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-obsidian-900 text-slate-100 font-sans antialiased selection:bg-gold-500 selection:text-black min-h-screen flex flex-col justify-between">
+<body class="bg-beige-200 text-charcoal font-sans antialiased selection:bg-burgundy-600 selection:text-white min-h-screen flex flex-col justify-between">
     
-    <!-- Header -->
-    <header class="sticky top-0 z-50 backdrop-blur-xl bg-obsidian-900/80 border-b border-white/10">
+    <!-- Top Luxury Navigation -->
+    <header class="sticky top-0 z-50 backdrop-blur-xl bg-beige-200/90 border-b border-burgundy-900/10">
         <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-            <div class="flex items-center space-x-4 cursor-pointer" onclick="location.reload()">
-                <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center font-extrabold text-black text-2xl shadow-xl shadow-gold-500/10 border border-gold-300/30">T</div>
+            <div class="flex items-center space-x-4 cursor-pointer" onclick="switchTab('hub')">
+                <div class="w-12 h-12 rounded-xl bg-burgundy-700 flex items-center justify-center font-extrabold text-beige-100 text-2xl shadow-xl shadow-burgundy-900/10 border border-burgundy-500/30">T</div>
                 <div>
-                    <span class="text-2xl font-black tracking-[0.2em] text-white">TOVENZA</span>
-                    <span class="block text-[10px] tracking-[0.3em] text-gold-400 uppercase font-semibold">Jyotish Tech • Vertical 08</span>
+                    <span class="text-2xl font-black tracking-[0.2em] text-burgundy-900">TOVENZA</span>
+                    <span class="block text-[10px] tracking-[0.3em] text-burgundy-600 uppercase font-semibold">Institutional Ecosystem</span>
                 </div>
             </div>
-            <a href="https://tovenza-website.vercel.app" class="text-xs text-gold-400 font-mono tracking-wider hover:underline">← Back to Ecosystem Hub</a>
+            <nav class="hidden md:flex items-center space-x-1 bg-beige-300 p-1.5 rounded-xl border border-burgundy-900/10 text-xs font-semibold tracking-wider">
+                <button onclick="switchTab('hub')" id="btn-hub" class="px-4 py-2.5 rounded-lg bg-burgundy-700 text-beige-100 transition font-bold shadow-md">Overview</button>
+                <button onclick="switchTab('verticals')" id="btn-verticals" class="px-4 py-2.5 rounded-lg text-charcoal hover:text-burgundy-700 transition">11 Verticals</button>
+                <button onclick="switchTab('systems')" id="btn-systems" class="px-4 py-2.5 rounded-lg text-charcoal hover:text-burgundy-700 transition">6 Systems</button>
+                <button onclick="switchTab('astro')" id="btn-astro" class="px-4 py-2.5 rounded-lg text-burgundy-800 hover:text-burgundy-600 transition font-bold">✦ Deep Jyotish Analytics</button>
+            </nav>
         </div>
     </header>
 
-    <!-- Main Section -->
-    <main class="max-w-7xl mx-auto w-full px-6 py-12 flex-grow space-y-12">
-        <div class="text-center max-w-3xl mx-auto space-y-4">
-            <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-obsidian-800 border border-gold-500/30 text-gold-400 text-xs font-bold tracking-[0.25em] uppercase">
-                <span>✦ Vedic Intelligence & Temporal Analytics ✦</span>
-            </div>
-            <h1 class="text-4xl md:text-5xl font-black tracking-tight text-white">
-                North Indian Diamond Kundli & <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-400 to-amber-600">AI Synthesis</span>
-            </h1>
-            <p class="text-slate-400 text-sm md:text-base">
-                Compute exact Lahiri Ayanamsha coordinates, planetary placements, Raj Yoga indicators, and 10-year transit timelines.
-            </p>
-        </div>
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto w-full px-6 py-16 flex-grow">
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            <!-- Controls & Inputs -->
-            <div class="lg:col-span-5 bg-obsidian-800/60 border border-white/10 p-8 rounded-3xl space-y-6 backdrop-blur shadow-2xl">
-                <h3 class="text-lg font-bold text-white border-b border-white/10 pb-4">Birth Parameters</h3>
-                <div class="grid grid-cols-2 gap-4">
+        <!-- TAB 1: HUB -->
+        <section id="tab-hub" class="space-y-20">
+            <div class="text-center max-w-4xl mx-auto space-y-6">
+                <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-beige-300 border border-burgundy-700/20 text-burgundy-800 text-xs font-bold tracking-[0.25em] uppercase shadow-sm">
+                    <span>✦ Heritage & Modernity Unified ✦</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-black tracking-tight text-burgundy-900 leading-[1.1]">
+                    Beyond Business, <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-burgundy-700 via-burgundy-600 to-amber-700">Build to Endure.</span>
+                </h1>
+                <p class="text-charcoal/80 text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto">
+                    Governing eleven canonical P&L industry verticals through six centralized capability systems. Absolute structural architecture designed for perpetual dominion.
+                </p>
+                <div class="pt-4 flex flex-wrap justify-center gap-4">
+                    <button onclick="switchTab('astro')" class="px-8 py-4 rounded-xl bg-burgundy-700 text-beige-100 font-extrabold hover:bg-burgundy-800 transition shadow-xl shadow-burgundy-900/20 tracking-wider text-sm">Access 5-Page AI Astrology Analytics</button>
+                    <button onclick="switchTab('verticals')" class="px-8 py-4 rounded-xl bg-beige-300 hover:bg-beige-400 text-burgundy-900 font-semibold border border-burgundy-900/10 transition tracking-wider text-sm">Explore All 11 Verticals</button>
+                </div>
+            </div>
+
+            <!-- Core Pillars Preview -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-10">
+                <div onclick="switchTab('astro')" class="group p-8 rounded-2xl bg-beige-100 border border-burgundy-700/30 hover:border-burgundy-700 cursor-pointer transition duration-300 flex flex-col justify-between shadow-lg">
                     <div>
-                        <label class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2">Birth Date</label>
-                        <input type="date" id="astro-date" value="1994-12-02" class="w-full bg-obsidian-900 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-gold-500 focus:outline-none text-sm">
+                        <div class="text-xs font-mono text-burgundy-600 uppercase tracking-widest mb-3">Featured Analytics • V-08</div>
+                        <h3 class="text-2xl font-bold text-burgundy-900 mb-3 group-hover:text-burgundy-600 transition">Deep Jyotish Intelligence</h3>
+                        <p class="text-charcoal/70 text-sm leading-relaxed mb-6">Complete 5-page temporal audit covering past 2 years, present diagnostic, and future 2 years outlook.</p>
                     </div>
+                    <span class="text-xs font-bold text-burgundy-700 tracking-wider flex items-center space-x-2"><span>Open 5-Page Report</span> <span>→</span></span>
+                </div>
+
+                <div onclick="switchTab('verticals')" class="group p-8 rounded-2xl bg-beige-100 border border-burgundy-900/10 hover:border-burgundy-700/50 cursor-pointer transition duration-300 flex flex-col justify-between shadow-lg">
                     <div>
-                        <label class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2">Birth Time</label>
-                        <input type="time" id="astro-time" value="05:52" class="w-full bg-obsidian-900 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-gold-500 focus:outline-none text-sm">
+                        <div class="text-xs font-mono text-burgundy-600 uppercase tracking-widest mb-3">Commercial P&L</div>
+                        <h3 class="text-2xl font-bold text-burgundy-900 mb-3 group-hover:text-burgundy-600 transition">The 11 Industry Verticals</h3>
+                        <p class="text-charcoal/70 text-sm leading-relaxed mb-6">Recruitment delivery, healthcare, consulting, and technological ecosystems.</p>
                     </div>
+                    <span class="text-xs font-bold text-burgundy-700 tracking-wider flex items-center space-x-2"><span>Inspect Verticals</span> <span>→</span></span>
                 </div>
+
+                <div onclick="switchTab('systems')" class="group p-8 rounded-2xl bg-beige-100 border border-burgundy-900/10 hover:border-burgundy-700/50 cursor-pointer transition duration-300 flex flex-col justify-between shadow-lg">
+                    <div>
+                        <div class="text-xs font-mono text-burgundy-600 uppercase tracking-widest mb-3">Sovereign Backbone</div>
+                        <h3 class="text-2xl font-bold text-burgundy-900 mb-3 group-hover:text-burgundy-600 transition">The 6 Central Systems</h3>
+                        <p class="text-charcoal/70 text-sm leading-relaxed mb-6">Institutional governance, legal protection, financial architecture, and security.</p>
+                    </div>
+                    <span class="text-xs font-bold text-burgundy-700 tracking-wider flex items-center space-x-2"><span>Inspect Systems</span> <span>→</span></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: THE 11 VERTICALS -->
+        <section id="tab-verticals" class="hidden space-y-12">
+            <div class="border-b border-burgundy-900/10 pb-8 flex justify-between items-end">
                 <div>
-                    <label class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2">Birth Location</label>
-                    <input type="text" id="astro-loc" value="Janakpuri, New Delhi" class="w-full bg-obsidian-900 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-gold-500 focus:outline-none text-sm">
+                    <div class="text-xs font-mono text-burgundy-600 uppercase tracking-widest mb-2">Portfolio Domains</div>
+                    <h2 class="text-4xl font-extrabold text-burgundy-900">The Eleven Canonical Industry Verticals</h2>
                 </div>
+                <button onclick="switchTab('astro')" class="px-5 py-2.5 rounded-lg bg-burgundy-700 text-beige-100 font-bold text-xs uppercase tracking-wider">Open Jyotish Analytics</button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="p-6 rounded-2xl bg-beige-100 border border-burgundy-900/10 shadow-sm"><span class="text-xs font-mono text-burgundy-600">VERT-01</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Recruitment, Staffing & HR</h4><p class="text-charcoal/70 text-xs mt-1">High-volume talent acquisition and workforce operations.</p></div>
+                <div class="p-6 rounded-2xl bg-beige-100 border border-burgundy-900/10 shadow-sm"><span class="text-xs font-mono text-burgundy-600">VERT-02</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Healthcare & Diagnostics</h4><p class="text-charcoal/70 text-xs mt-1">Human vitality and biological longevity infrastructure.</p></div>
+                <div class="p-6 rounded-2xl bg-beige-100 border border-burgundy-900/10 shadow-sm"><span class="text-xs font-mono text-burgundy-600">VERT-03</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Hospitality</h4><p class="text-charcoal/70 text-xs mt-1">Curated human experience and spatial service excellence.</p></div>
+                <div class="p-6 rounded-2xl bg-beige-100 border border-burgundy-900/10 shadow-sm"><span class="text-xs font-mono text-burgundy-600">VERT-04</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Real Estate & Property</h4><p class="text-charcoal/70 text-xs mt-1">Asset stewardship and spatial development architecture.</p></div>
+                <div class="p-6 rounded-2xl bg-beige-100 border border-burgundy-900/10 shadow-sm"><span class="text-xs font-mono text-burgundy-600">VERT-05</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Technology, AI & Software</h4><p class="text-charcoal/70 text-xs mt-1">Digital nervous system and microservice automation.</p></div>
+                <div class="p-6 rounded-2xl bg-beige-100 border border-burgundy-900/10 shadow-sm"><span class="text-xs font-mono text-burgundy-600">VERT-06</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Business Consulting</h4><p class="text-charcoal/70 text-xs mt-1">Strategic corporate transformation and scale advisory.</p></div>
+                <div class="p-6 rounded-2xl bg-beige-100 border border-burgundy-900/10 shadow-sm"><span class="text-xs font-mono text-burgundy-600">VERT-07</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Psychology & Wellbeing</h4><p class="text-charcoal/70 text-xs mt-1">Behavioral science and organizational psychology.</p></div>
+                <div onclick="switchTab('astro')" class="p-6 rounded-2xl bg-beige-100 border-2 border-burgundy-700 cursor-pointer shadow-md hover:bg-beige-300 transition"><span class="text-xs font-mono text-burgundy-600 font-bold">VERT-08 (FEATURED)</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Astrology & Vedic Sciences →</h4><p class="text-charcoal/70 text-xs mt-1">Open 5-Page Deep AI Temporal Analytics Report.</p></div>
+                <div class="p-6 rounded-2xl bg-beige-100 border border-burgundy-900/10 shadow-sm"><span class="text-xs font-mono text-burgundy-600">VERT-09</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Education & Learning</h4><p class="text-charcoal/70 text-xs mt-1">Systematic transmission of capability and worldview.</p></div>
+                <div class="p-6 rounded-2xl bg-beige-100 border border-burgundy-900/10 shadow-sm"><span class="text-xs font-mono text-burgundy-600">VERT-10</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Retail</h4><p class="text-charcoal/70 text-xs mt-1">Consumer touchpoints and experiential brand psychology.</p></div>
+                <div class="p-6 rounded-2xl bg-beige-100 border border-burgundy-900/10 shadow-sm md:col-span-2 lg:col-span-1"><span class="text-xs font-mono text-burgundy-600">VERT-11</span><h4 class="text-xl font-bold text-burgundy-900 mt-2">Future Industries</h4><p class="text-charcoal/70 text-xs mt-1">Frontier arm capturing energy, biotech, and emergent tech.</p></div>
+            </div>
+        </section>
+
+        <!-- TAB 3: THE 6 SYSTEMS -->
+        <section id="tab-systems" class="hidden space-y-12">
+            <div class="border-b border-burgundy-900/10 pb-8">
+                <div class="text-xs font-mono text-burgundy-600 uppercase tracking-widest mb-2">Institutional Backbone</div>
+                <h2 class="text-4xl font-extrabold text-burgundy-900">The Six Central Capability Systems</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="p-8 rounded-2xl bg-beige-100 border border-burgundy-900/10 space-y-3 shadow-sm"><span class="text-xs font-mono text-burgundy-600">SYS-01</span><h4 class="text-xl font-bold text-burgundy-900">Central & Shared Services</h4><p class="text-charcoal/70 text-xs">Operational leverage and administrative centralization across subsidiaries.</p></div>
+                <div class="p-8 rounded-2xl bg-beige-100 border border-burgundy-900/10 space-y-3 shadow-sm"><span class="text-xs font-mono text-burgundy-600">SYS-02</span><h4 class="text-xl font-bold text-burgundy-900">Institutional Governance</h4><p class="text-charcoal/70 text-xs">Uncompromising oversight and Founder voting alignment for permanence.</p></div>
+                <div class="p-8 rounded-2xl bg-beige-100 border border-burgundy-900/10 space-y-3 shadow-sm"><span class="text-xs font-mono text-burgundy-600">SYS-03</span><h4 class="text-xl font-bold text-burgundy-900">Legal, Compliance & Risk</h4><p class="text-charcoal/70 text-xs">Statutory filings, SBO rules, and fortress-grade protection.</p></div>
+                <div class="p-8 rounded-2xl bg-beige-100 border border-burgundy-900/10 space-y-3 shadow-sm"><span class="text-xs font-mono text-burgundy-600">SYS-04</span><h4 class="text-xl font-bold text-burgundy-900">Financial Architecture</h4><p class="text-charcoal/70 text-xs">Disciplined capital allocation and intelligent cash recycling.</p></div>
+                <div class="p-8 rounded-2xl bg-beige-100 border border-burgundy-900/10 space-y-3 shadow-sm"><span class="text-xs font-mono text-burgundy-600">SYS-05</span><h4 class="text-xl font-bold text-burgundy-900">People & Culture</h4><p class="text-charcoal/70 text-xs">Rigorous talent selection rooted in organizational psychology.</p></div>
+                <div class="p-8 rounded-2xl bg-beige-100 border border-burgundy-900/10 space-y-3 shadow-sm"><span class="text-xs font-mono text-burgundy-600">SYS-06</span><h4 class="text-xl font-bold text-burgundy-900">Technology & Security</h4><p class="text-charcoal/70 text-xs">Proprietary data architecture and uncompromised digital defense.</p></div>
+            </div>
+        </section>
+
+        <!-- TAB 4: DEEP 5-PAGE ASTROLOGY ANALYTICS (VERTICAL 08) -->
+        <section id="tab-astro" class="hidden space-y-12">
+            <div class="border-b border-burgundy-900/10 pb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                 <div>
-                    <label class="block text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2">Ayanamsha System</label>
-                    <select id="astro-system" class="w-full bg-obsidian-900 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-gold-500 focus:outline-none text-sm">
-                        <option value="lahiri">Lahiri (True Chitrapaksha - Standard)</option>
-                        <option value="raman">B.V. Raman</option>
-                        <option value="yukteshwar">Sri Yukteshwar</option>
-                    </select>
+                    <div class="text-xs font-mono text-burgundy-600 uppercase tracking-widest mb-2">Vertical 08 • Jyotish Tech AI Analytics</div>
+                    <h2 class="text-4xl font-extrabold text-burgundy-900">5-Page Deep Temporal Audit & Intelligence Report</h2>
+                    <p class="text-charcoal/80 text-sm mt-2 max-w-2xl">Calibrated to Birth Data: <strong>02/12/1994, 05:52 AM, Janakpuri, New Delhi</strong> (Lahiri Ayanamsha).</p>
                 </div>
-                <button onclick="computeKundli()" class="w-full py-4 rounded-xl bg-gold-500 text-black font-extrabold hover:bg-gold-400 transition text-sm tracking-wide shadow-xl shadow-gold-500/10">
-                    Compute Kundli & AI Diagnostics
-                </button>
+                <button onclick="switchTab('hub')" class="px-4 py-2 rounded-lg bg-beige-300 border border-burgundy-900/10 text-xs text-burgundy-900 font-semibold">← Return to Hub</button>
             </div>
 
-            <!-- Visualization & Output -->
-            <div class="lg:col-span-7 space-y-6">
-                
-                <!-- SVG Diamond Kundli Box -->
-                <div class="bg-obsidian-800/80 border border-white/10 p-6 rounded-3xl flex flex-col items-center justify-center backdrop-blur shadow-2xl relative min-h-[380px]">
-                    <div class="absolute top-6 left-6 text-xs font-mono text-gold-400 uppercase tracking-widest">North Indian Chart (Lagna)</div>
-                    
-                    <!-- SVG Diamond Chart -->
-                    <svg viewBox="0 0 400 400" class="w-full max-w-[360px] h-auto text-gold-500">
-                        <!-- Outer Frame -->
-                        <rect x="10" y="10" width="380" height="380" fill="#050507" stroke="currentColor" stroke-width="2"/>
-                        <!-- Diamond Inner Lines -->
-                        <line x1="10" y1="10" x2="390" y2="390" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
-                        <line x1="390" y1="10" x2="10" y2="390" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
-                        <line x1="200" y1="10" x2="10" y2="200" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
-                        <line x1="10" y1="200" x2="200" y2="390" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
-                        <line x1="200" y1="390" x2="390" y2="200" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
-                        <line x1="390" y1="200" x2="200" y2="10" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
-                        <!-- House Numbers & Planetary Placements -->
-                        <text x="200" y="70" fill="#facc15" font-size="12" font-family="monospace" text-anchor="middle">1 (Asc)</text>
-                        <text x="200" y="95" fill="#ffffff" font-size="11" font-family="monospace" text-anchor="middle" id="house-1">Sun, Merc</text>
-                        
-                        <text x="100" y="45" fill="#94a3b8" font-size="10" font-family="monospace" text-anchor="middle">12</text>
-                        <text x="300" y="45" fill="#94a3b8" font-size="10" font-family="monospace" text-anchor="middle">2</text>
-                        <text x="60" y="110" fill="#94a3b8" font-size="10" font-family="monospace" text-anchor="middle">11</text>
-                        <text x="340" y="110" fill="#94a3b8" font-size="10" font-family="monospace" text-anchor="middle" id="house-3">Mars</text>
-                        
-                        <text x="100" y="200" fill="#facc15" font-size="12" font-family="monospace" text-anchor="middle">10</text>
-                        <text x="300" y="200" fill="#facc15" font-size="12" font-family="monospace" text-anchor="middle">4</text>
-                        
-                        <text x="200" y="340" fill="#facc15" font-size="12" font-family="monospace" text-anchor="middle">7</text>
-                        <text x="200" y="320" fill="#ffffff" font-size="11" font-family="monospace" text-anchor="middle" id="house-7">Saturn (R)</text>
-                    </svg>
-                    <div class="text-[10px] font-mono text-slate-500 mt-2">Rendered via TOVENZA SVG Microservice</div>
-                </div>
-
-                <!-- AI Diagnostic Synthesis Box -->
-                <div class="bg-obsidian-800/80 border border-white/10 p-8 rounded-3xl space-y-4 backdrop-blur shadow-2xl">
-                    <h4 class="text-xs font-mono text-gold-400 uppercase tracking-widest">Computational Diagnostic Output</h4>
-                    <div id="astro-output" class="text-slate-300 text-sm leading-relaxed space-y-3">
-                        <p class="text-slate-500 italic">Click "Compute Kundli & AI Diagnostics" above to execute analytical synthesis based on your birth parameters.</p>
-                    </div>
-                </div>
-
+            <!-- Report Navigation Pages -->
+            <div class="flex flex-wrap gap-2 border-b border-burgundy-900/10 pb-4">
+                <button onclick="switchReportPage(1)" id="rep-btn-1" class="px-5 py-2.5 rounded-xl bg-burgundy-700 text-beige-100 font-bold text-xs tracking-wider transition shadow-sm">Page 1: Natal Blueprint</button>
+                <button onclick="switchReportPage(2)" id="rep-btn-2" class="px-5 py-2.5 rounded-xl bg-beige-300 text-charcoal font-bold text-xs tracking-wider transition hover:bg-beige-400">Page 2: Raj Yogas & Wealth</button>
+                <button onclick="switchReportPage(3)" id="rep-btn-3" class="px-5 py-2.5 rounded-xl bg-beige-300 text-charcoal font-bold text-xs tracking-wider transition hover:bg-beige-400">Page 3: Past 2 Years (24-25)</button>
+                <button onclick="switchReportPage(4)" id="rep-btn-4" class="px-5 py-2.5 rounded-xl bg-beige-300 text-charcoal font-bold text-xs tracking-wider transition hover:bg-beige-400">Page 4: Present Year (2026)</button>
+                <button onclick="switchReportPage(5)" id="rep-btn-5" class="px-5 py-2.5 rounded-xl bg-beige-300 text-charcoal font-bold text-xs tracking-wider transition hover:bg-beige-400">Page 5: Future 2 Yrs (27-28)</button>
             </div>
 
-        </div>
+            <!-- PAGE 1 -->
+            <div id="report-page-1" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-5 bg-beige-100 border border-burgundy-900/10 p-8 rounded-3xl space-y-6 shadow-xl">
+                    <h3 class="text-xl font-bold text-burgundy-900 border-b border-burgundy-900/10 pb-4">Natal Parameters (Locked)</h3>
+                    <div class="space-y-4 text-xs font-mono">
+                        <div class="flex justify-between py-2 border-b border-burgundy-900/5"><span>DOB:</span> <span class="text-burgundy-800 font-bold">02 December 1994</span></div>
+                        <div class="flex justify-between py-2 border-b border-burgundy-900/5"><span>TIME:</span> <span class="text-burgundy-800 font-bold">05:52 AM</span></div>
+                        <div class="flex justify-between py-2 border-b border-burgundy-900/5"><span>LOCATION:</span> <span class="text-burgundy-800 font-bold">Janakpuri, New Delhi</span></div>
+                        <div class="flex justify-between py-2 border-b border-burgundy-900/5"><span>AYANAMSHA:</span> <span class="text-burgundy-800 font-bold">Lahiri (23° 48' 12")</span></div>
+                        <div class="flex justify-between py-2"><span>LAGNA (ASCENDANT):</span> <span class="text-burgundy-800 font-bold">Scorpio (Vrischika)</span></div>
+                    </div>
+                    <div class="bg-beige-300 p-4 rounded-2xl text-xs text-charcoal leading-relaxed">
+                        <strong>Architectural Note:</strong> Early morning sunrise Lagna provides commanding executive presence, unshakeable investigative stamina, and structural psychological depth.
+                    </div>
+                </div>
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="bg-beige-100 border border-burgundy-900/10 p-8 rounded-3xl space-y-6 shadow-xl">
+                        <div class="flex justify-between items-center border-b border-burgundy-900/10 pb-4">
+                            <h4 class="text-xs font-mono text-burgundy-600 uppercase tracking-widest">Page 1 of 5 • Psychological & Structural Architecture</h4>
+                            <span class="text-xs text-burgundy-800 font-bold">Lagna Analysis</span>
+                        </div>
+                        <div class="text-charcoal text-sm leading-relaxed space-y-4">
+                            <p>Born under the sign of Scorpio (Vrischika) at 05:52 AM with the Sun and Mercury conjunct in the Ascendant houses, your core psychological architecture is built for absolute autonomy, tactical mastery, and institutional endurance. You possess an innate radar for power dynamics, human psychology, and organizational structure.</p>
+                            <p>Your cognitive processing operates at a high frequency of behavioral synthesis—instantly cutting through superficial corporate noise to identify operational bottlenecks, root causes, and systemic inefficiencies. This explains your extensive background in workforce optimization, recruitment delivery, and complex multi-vertical institutional governance.</p>
+                            <p>The placement of luminaries at dawn indicates a life path anchored in self-actualization through sovereign creation. You are not wired to be a cog in a machine; you are architected to build the machine itself.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 2 -->
+            <div id="report-page-2" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-5 bg-beige-100 border border-burgundy-900/10 p-8 rounded-3xl space-y-6 shadow-xl">
+                    <h3 class="text-xl font-bold text-burgundy-900 border-b border-burgundy-900/10 pb-4">Key Diagnostic Yogas</h3>
+                    <div class="space-y-4 text-xs">
+                        <div class="p-3 rounded-xl bg-beige-300 border border-burgundy-700/20">
+                            <strong class="text-burgundy-900 block mb-1">Raja Yoga (Kendra-Trikona Lordship)</strong>
+                            <span class="text-charcoal/80">Strong mutual aspects between 1st, 5th, and 9th house lords confer leadership authority and enterprise command.</span>
+                        </div>
+                        <div class="p-3 rounded-xl bg-beige-300 border border-burgundy-700/20">
+                            <strong class="text-burgundy-900 block mb-1">Dhana Yoga (Wealth Vectors)</strong>
+                            <span class="text-charcoal/80">Second and eleventh house alignments favor systematic multi-stream asset accumulation and institutional scaling.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="bg-beige-100 border border-burgundy-900/10 p-8 rounded-3xl space-y-6 shadow-xl">
+                        <div class="flex justify-between items-center border-b border-burgundy-900/10 pb-4">
+                            <h4 class="text-xs font-mono text-burgundy-600 uppercase tracking-widest">Page 2 of 5 • Raj Yogas, Wealth & Enterprise Dominion</h4>
+                            <span class="text-xs text-burgundy-800 font-bold">Wealth & Authority</span>
+                        </div>
+                        <div class="text-charcoal text-sm leading-relaxed space-y-4">
+                            <p>An exhaustive analysis of your Shadbala (planetary strength diagnostics) reveals powerful Raja Yoga configurations. The convergence of angular (Kendra) and trinal (Trikona) house lords signifies that your career trajectory naturally bends toward independent executive leadership, sovereign institutional ownership (such as TOVENZA), and high-level strategic advisory.</p>
+                            <p>Your wealth creation model is not speculative; it is systemic. The chart indicates that your financial expansion correlates directly with institutional infrastructure, proprietary technology development (such as your FastAPI microservices and Kundli engines), and high-ticket B2B advisory frameworks.</p>
+                            <p>You have an inherent capacity to manage large-scale operations—mirroring your proven professional history of handling 500+ annual requisitions, managing high-volume teams, and driving 30% productivity improvements. Your chart rewards rigorous operational discipline and uncompromised standards.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 3 -->
+            <div id="report-page-3" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-5 bg-beige-100 border border-burgundy-900/10 p-8 rounded-3xl space-y-6 shadow-xl">
+                    <h3 class="text-xl font-bold text-burgundy-900 border-b border-burgundy-900/10 pb-4">Temporal Retrospective</h3>
+                    <div class="space-y-4 text-xs font-mono">
+                        <div class="p-3 rounded-xl bg-beige-300 border border-burgundy-700/20">
+                            <strong class="text-burgundy-900 block mb-1">2024 (Foundation Year)</strong>
+                            <span class="text-charcoal/80 font-sans">Transition from corporate execution to independent architectural conception. Initial design of multi-vertical ecosystems.</span>
+                        </div>
+                        <div class="p-3 rounded-xl bg-beige-300 border border-burgundy-700/20">
+                            <strong class="text-burgundy-900 block mb-1">2025 (Consolidation & Stress-Testing)</strong>
+                            <span class="text-charcoal/80 font-sans">Deep analytical research into legal frameworks, SBO compliance, Vedic systems, and technical software stacks.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="bg-beige-100 border border-burgundy-900/10 p-8 rounded-3xl space-y-6 shadow-xl">
+                        <div class="flex justify-between items-center border-b border-burgundy-900/10 pb-4">
+                            <h4 class="text-xs font-mono text-burgundy-600 uppercase tracking-widest">Page 3 of 5 • Past 2 Years Retrospective (2024–2025)</h4>
+                            <span class="text-xs text-burgundy-800 font-bold">Past Audit</span>
+                        </div>
+                        <div class="text-charcoal text-sm leading-relaxed space-y-4">
+                            <p>During the 2024–2025 window, your planetary Dasha shifts triggered an intense period of cognitive distillation and structural rebirth. You systematically stepped back from standard corporate confines to examine the deeper mechanics of human psychology, organizational behavior, and ancient temporal frameworks.</p>
+                            <p>In 2024, the groundwork was laid for TOVENZA—conceptualizing 11 canonical verticals and 6 capability systems. You tested operational hypotheses, refined your executive leadership narrative, and crystallized your vision of bridging ancient Vedic rigor with modern corporate technology.</p>
+                            <p>In 2025, the focus shifted inward to rigorous technical and legal execution: researching Indian corporate structures under the Companies Act (Sections 89, 90, 186, 188), architecting full-stack web applications, and establishing your thought-leadership positioning on LinkedIn. The trials and friction experienced during these years were necessary cosmic calibration, stripping away non-essential variables to prepare you for immediate market deployment.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 4 -->
+            <div id="report-page-4" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-5 bg-beige-100 border border-burgundy-900/10 p-8 rounded-3xl space-y-6 shadow-xl">
+                    <h3 class="text-xl font-bold text-burgundy-900 border-b border-burgundy-900/10 pb-4">Present Diagnostic (2026)</h3>
+                    <div class="space-y-4 text-xs">
+                        <div class="p-3 rounded-xl bg-beige-300 border border-burgundy-700/20 font-mono">
+                            <strong class="text-burgundy-900 block mb-1">Current Transit Energy</strong>
+                            <span class="text-charcoal/80 font-sans">High operational velocity, platform launch readiness, and immediate deployment of B2B advisory wedges.</span>
+                        </div>
+                        <div class="p-3 rounded-xl bg-beige-300 border border-burgundy-700/20 font-mono">
+                            <strong class="text-burgundy-900 block mb-1">Strategic Focus</strong>
+                            <span class="text-charcoal/80 font-sans">Leveraging HR/Recruitment expertise as the primary revenue spearhead while cementing digital presence.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="bg-beige-100 border border-burgundy-900/10 p-8 rounded-3xl space-y-6 shadow-xl">
+                        <div class="flex justify-between items-center border-b border-burgundy-900/10 pb-4">
+                            <h4 class="text-xs font-mono text-burgundy-600 uppercase tracking-widest">Page 4 of 5 • Present Year Diagnostic (2026)</h4>
+                            <span class="text-xs text-burgundy-800 font-bold">Current Cycle</span>
+                        </div>
+                        <div class="text-charcoal text-sm leading-relaxed space-y-4">
+                            <p>The year 2026 marks your threshold of public execution and market validation. Planetary transits currently activate your houses of enterprise and public interface, removing previous bottlenecks and demanding that your digital architecture be brought out of the shadows and placed directly in front of decision-makers.</p>
+                            <p>Your strategic directive for 2026 is unambiguous: **Do not scatter your energy across all 11 verticals simultaneously.** Use your formidable HR operations and workforce strategy expertise (Verticals 01 and 06) as your sharpest spearhead. Pitch high-value corporate clients on recruitment optimization and time-to-hire reduction.</p>
+                            <p>Simultaneously, your digital ecosystem (`tovenza-website.vercel.app`) serves as your sovereign proof-of-work. You are currently operating in a high-momentum transit window where early advisory contracts will effortlessly convert into seed capital for the broader TOVENZA institution.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 5 -->
+            <div id="report-page-5" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-5 bg-beige-100 border border-burgundy-900/10 p-8 rounded-3xl space-y-6 shadow-xl">
+                    <h3 class="text-xl font-bold text-burgundy-900 border-b border-burgundy-900/10 pb-4">Future Projections (2027–2028)</h3>
+                    <div class="space-y-4 text-xs">
+                        <div class="p-3 rounded-xl bg-beige-300 border border-burgundy-700/20 font-mono">
+                            <strong class="text-burgundy-900 block mb-1">2027 (Vertical Expansion)</strong>
+                            <span class="text-charcoal/80 font-sans">Scaling from advisory into proprietary software licensing, Vedic tech microservices, and healthcare diagnostics.</span>
+                        </div>
+                        <div class="p-3 rounded-xl bg-beige-300 border border-burgundy-700/20 font-mono">
+                            <strong class="text-burgundy-900 block mb-1">2028 (Institutional Dominion)</strong>
+                            <span class="text-charcoal/80 font-sans">Consolidation of the parent entity, global brand positioning, and multi-vertical cash-flow maturity.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="bg-beige-100 border border-burgundy-900/10 p-8 rounded-3xl space-y-6 shadow-xl">
+                        <div class="flex justify-between items-center border-b border-burgundy-900/10 pb-4">
+                            <h4 class="text-xs font-mono text-burgundy-600 uppercase tracking-widest">Page 5 of 5 • Future 2 Years Projections (2027–2028)</h4>
+                            <span class="text-xs text-burgundy-800 font-bold">Future Outlook</span>
+                        </div>
+                        <div class="text-charcoal text-sm leading-relaxed space-y-4">
+                            <p>Looking ahead into the 2027–2028 operational window, your astrological chart indicates a major upward inflection in material capitalization and institutional recognition. The groundwork laid in 2026 will compound rapidly as your digital platforms gain traction among executive leadership circles.</p>
+                            <p>In 2027, expect to transition from individual advisory engagements to automated SaaS microservices and high-margin multi-vertical operations. Your Jyotish Tech platform and HR automation tools will begin operating as independent revenue engines under the TOVENZA umbrella.</p>
+                            <p>By 2028, planetary alignments favor full corporate consolidation under Indian statutory frameworks, establishing TOVENZA as a recognized multi-vertical holding group. Your 6.5+ years of operational discipline, combined with deep esoteric and behavioral wisdom, will culminate in enduring market permanence. You are building an empire designed not just for a season, but to endure.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
     </main>
 
     <!-- Footer -->
-    <footer class="max-w-7xl mx-auto w-full px-6 py-8 border-t border-white/10 flex justify-between items-center text-xs text-slate-500">
+    <footer class="max-w-7xl mx-auto w-full px-6 py-10 border-t border-burgundy-900/10 flex justify-between items-center text-xs text-charcoal/60">
         <div>&copy; 2026 TOVENZA Global Ecosystem. All Rights Reserved.</div>
-        <div class="font-mono tracking-widest text-gold-400">JYOTISH TECH ENGINE V1.0</div>
+        <div class="font-mono tracking-widest text-burgundy-800">MATTE BURGUNDY & BEIGE EDITION • V2.0</div>
     </footer>
 
     <!-- Logic -->
     <script>
-        function computeKundli() {
-            const date = document.getElementById('astro-date').value;
-            const time = document.getElementById('astro-time').value;
-            const loc = document.getElementById('astro-loc').value;
-            const system = document.getElementById('astro-system').value;
-            const out = document.getElementById('astro-output');
+        function switchTab(tabId) {
+            ['hub', 'verticals', 'systems', 'astro'].forEach(t => {
+                document.getElementById('tab-' + t).classList.add('hidden');
+                document.getElementById('btn-' + t)?.classList.remove('bg-burgundy-700', 'text-beige-100', 'font-bold', 'shadow-md');
+                document.getElementById('btn-' + t)?.classList.add('text-charcoal');
+            });
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            if(tabId !== 'hub') {
+                document.getElementById('btn-' + tabId)?.classList.add('bg-burgundy-700', 'text-beige-100', 'font-bold', 'shadow-md');
+                document.getElementById('btn-' + tabId)?.classList.remove('text-charcoal');
+            } else {
+                document.getElementById('btn-hub').classList.add('bg-burgundy-700', 'text-beige-100', 'font-bold', 'shadow-md');
+            }
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
 
-            out.innerHTML = `<div class="animate-pulse text-gold-400 font-mono text-xs">Computing precise ephemeris coordinates using ${system.toUpperCase()} Ayanamsha for ${loc} (${date} ${time})...</div>`;
-
-            setTimeout(() => {
-                out.innerHTML = `
-                    <div class="p-4 rounded-2xl bg-obsidian-900 border border-gold-500/30 space-y-3">
-                        <div class="text-gold-400 font-bold text-xs uppercase tracking-wider flex justify-between">
-                            <span>Diagnostic Synthesis Complete</span>
-                            <span class="font-mono text-slate-400">Ayanamsha: 23° 48' 12"</span>
-                        </div>
-                        <p><strong>Lagna & Disposition:</strong> Ascendant configured with strong analytical and executive endurance. Planetary distribution indicates high natural aptitude for institutional governance and structural leadership.</p>
-                        <p><strong>Raj Yoga Analysis:</strong> Favorable Kendra-Trikona lord exchanges detected. Indicators support long-term sovereign authority, independent enterprise creation, and systemic asset accumulation.</p>
-                        <p><strong>Current Dasha Timeline:</strong> Operating under an active productivity and strategic expansion cycle, favoring large-scale infrastructure and digital ecosystem deployment.</p>
-                    </div>
-                `;
-            }, 900);
+        function switchReportPage(pageNum) {
+            for(let i=1; i<=5; i++) {
+                document.getElementById('report-page-' + i).classList.add('hidden');
+                document.getElementById('rep-btn-' + i).classList.remove('bg-burgundy-700', 'text-beige-100', 'shadow-sm');
+                document.getElementById('rep-btn-' + i).classList.add('bg-beige-300', 'text-charcoal');
+            }
+            document.getElementById('report-page-' + pageNum).classList.remove('hidden');
+            document.getElementById('rep-btn-' + pageNum).classList.add('bg-burgundy-700', 'text-beige-100', 'shadow-sm');
+            document.getElementById('rep-btn-' + pageNum).classList.remove('bg-beige-300', 'text-charcoal');
         }
     </script>
 </body>
