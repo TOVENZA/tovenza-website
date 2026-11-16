@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TOVENZA — The Digital Empire</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js & GSAP CDNs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- Google Fonts: Cormorant Garamond & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
@@ -46,6 +50,7 @@
             transform: translateY(20px);
             transition: opacity 1s ease, transform 1s ease;
             position: absolute;
+            width: 100%;
         }
         .gateway-step.active {
             opacity: 1;
@@ -53,13 +58,13 @@
         }
 
         .glass-panel {
-            background: rgba(8, 9, 9, 0.82);
+            background: rgba(8, 9, 9, 0.85);
             backdrop-filter: blur(32px);
             border: 1px solid rgba(185, 157, 107, 0.2);
             box-shadow: 0 40px 90px rgba(0, 0, 0, 0.95), inset 0 0 50px rgba(185, 157, 107, 0.03);
         }
         .glass-card {
-            background: rgba(20, 20, 31, 0.7);
+            background: rgba(20, 20, 31, 0.75);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.06);
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -85,37 +90,37 @@
 </head>
 <body class="bg-obsidian-950 text-[#E9E4D9] font-sans antialiased selection:bg-gold-500 selection:text-black min-h-screen flex flex-col justify-between relative overflow-x-hidden">
     
-    <!-- CINEMATIC GATEWAY (15-SECOND OPENING SEQUENCE) -->
+    <!-- CINEMATIC 7D-STYLE OPENING EXPERIENCE -->
     <div id="cinematic-gateway" class="fixed inset-0 z-50 bg-[#030305] flex flex-col items-center justify-center p-8 text-center">
         <div class="absolute top-8 right-8 z-50">
             <button onclick="skipGateway()" class="px-5 py-2 rounded-full border border-gold-500/30 text-gold-500 text-xs font-mono tracking-widest uppercase hover:bg-gold-500 hover:text-black transition">Skip Gateway →</button>
         </div>
 
         <div class="relative max-w-3xl w-full flex items-center justify-center min-h-[300px]">
-            <!-- Step 1: The Void (0-3s) -->
+            <!-- Scene 1: The Void (0-3s) -->
             <div id="step-1" class="gateway-step active space-y-3">
                 <div class="w-2 h-2 rounded-full bg-gold-500 mx-auto animate-ping"></div>
-                <p class="text-xs font-mono tracking-[0.5em] text-slate-500 uppercase">Entering The Void</p>
+                <p class="text-xs font-mono tracking-[0.5em] text-slate-500 uppercase">Scene 01 — The Void</p>
             </div>
 
-            <!-- Step 2: The Emergence (3-6s) -->
+            <!-- Scene 2: The Emergence (3-6s) -->
             <div id="step-2" class="gateway-step space-y-3">
-                <h2 class="text-2xl font-serif text-gold-400 tracking-widest uppercase">Architectural Emergence</h2>
+                <h2 class="text-2xl font-serif text-gold-400 tracking-widest uppercase">Scene 02 — Architectural Emergence</h2>
                 <div class="w-32 h-[1px] bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto"></div>
             </div>
 
-            <!-- Step 3: The Insignia (6-9s) -->
+            <!-- Scene 3: The Insignia (6-9s) -->
             <div id="step-3" class="gateway-step space-y-4">
                 <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center font-bold text-obsidian-950 text-3xl shadow-2xl shadow-gold-500/40 border border-gold-300/40 mx-auto">T</div>
-                <p class="text-xs font-mono tracking-[0.4em] text-gold-500 uppercase">Obsidian Sovereignty</p>
+                <p class="text-xs font-mono tracking-[0.4em] text-gold-500 uppercase">Scene 03 — Obsidian Sovereignty</p>
             </div>
 
-            <!-- Step 4: The Reveal (9-12s) -->
+            <!-- Scene 4: The Reveal (9-12s) -->
             <div id="step-4" class="gateway-step space-y-3">
-                <p class="text-lg font-serif italic text-slate-300">"When someone has nowhere to turn, there should be somewhere they can begin."</p>
+                <p class="text-xl font-serif italic text-slate-300">"When someone has nowhere to turn, there should be somewhere they can begin."</p>
             </div>
 
-            <!-- Step 5: The Identity (12-15s) -->
+            <!-- Scene 5 & 6: Brand Reveal & Enter (12-15s) -->
             <div id="step-5" class="gateway-step space-y-6">
                 <h1 class="text-4xl md:text-6xl font-serif text-white tracking-widest">TOVENZA</h1>
                 <p class="text-xs font-mono tracking-[0.5em] text-gold-500 uppercase">Beyond Business. Built to Endure.</p>
@@ -160,13 +165,12 @@
     <!-- MAIN EDITORIAL CONTAINER -->
     <main class="max-w-7xl mx-auto w-full px-8 py-16 flex-grow relative z-10 space-y-32">
 
-        <!-- VIEW 1: HOMEPAGE (GATEWAY, PHILOSOPHY, FOUNDATIONS, GOVERNANCE) -->
+        <!-- VIEW 1: HOMEPAGE (ENVIRONMENTS 01, 02, 03, 06) -->
         <div id="view-home" class="space-y-32">
             
-            <!-- SECTION 01 — THE GATEWAY (CINEMATIC HERO) -->
+            <!-- SECTION 01 — THE GATEWAY -->
             <section class="relative rounded-2xl overflow-hidden border border-gold-500/30 shadow-2xl p-10 md:p-20 flex flex-col justify-end min-h-[680px] glass-panel">
                 <div class="absolute inset-0 z-0">
-                    <img src="world2.png" alt="Architectural Gateway" class="w-full h-full object-cover opacity-40 mix-blend-luminosity hover:mix-blend-normal transition duration-1000">
                     <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-obsidian-950/70 to-transparent"></div>
                 </div>
                 <div class="relative z-10 max-w-4xl space-y-8">
@@ -177,10 +181,10 @@
                         The Digital <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-500 to-amber-600 font-normal">Empire.</span>
                     </h1>
                     <p class="text-slate-300 text-lg md:text-xl font-light leading-relaxed max-w-3xl font-sans">
-                        TOVENZA — THE NAME OF A LASTING INSTITUTION. An emerging digital headquarters engineered to create, develop, and structure generational opportunities across eleven canonical industry horizons.
+                        An institutional vision shaped by ambition, architecture and long-term thinking across eleven canonical industry horizons.
                     </p>
                     <div class="pt-4 flex flex-wrap gap-5">
-                        <a href="#foundations" class="px-8 py-4 rounded-lg bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 font-semibold text-xs tracking-widest uppercase shadow-2xl hover:scale-105 transition">Explore Foundations</a>
+                        <a href="#foundations" class="px-8 py-4 rounded-lg bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 font-semibold text-xs tracking-widest uppercase shadow-2xl hover:scale-105 transition">Explore the Institution</a>
                         <button onclick="toggleEcosystem()" class="px-8 py-4 rounded-lg glass-card text-white font-semibold text-xs tracking-widest uppercase hover:bg-obsidian-800 transition">View Ecosystem Directory</button>
                     </div>
                 </div>
@@ -190,7 +194,7 @@
             <section id="philosophy" class="glass-panel p-10 md:p-16 rounded-2xl border border-gold-500/20 space-y-8">
                 <div class="max-w-3xl space-y-4">
                     <span class="text-xs font-mono text-gold-500 uppercase tracking-[0.4em]">Institutional Philosophy</span>
-                    <h2 class="text-4xl font-serif font-light text-white">When someone has nowhere to turn, there should be somewhere they can begin.</h2>
+                    <h2 class="text-4xl md:text-5xl font-serif font-light text-white leading-tight">"When someone has nowhere to turn, there should be somewhere they can begin."</h2>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10 text-slate-300 font-light text-base leading-relaxed">
                     <p>
@@ -202,7 +206,7 @@
                 </div>
             </section>
 
-            <!-- SECTION 03 — FOUR PUBLIC BRAND FOUNDATIONS -->
+            <!-- SECTION 03 — THE FOUR FOUNDATIONS -->
             <section id="foundations" class="space-y-10">
                 <div class="border-b border-white/10 pb-6 flex justify-between items-end">
                     <div>
@@ -213,59 +217,35 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Foundation 1 -->
-                    <div onclick="openFoundationModal(1)" class="glass-card rounded-2xl overflow-hidden shadow-2xl group cursor-pointer p-3">
-                        <div class="h-60 overflow-hidden relative rounded-xl">
-                            <img src="world2.png" alt="Sovereign Identity" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-transparent to-transparent"></div>
-                            <span class="absolute top-4 left-4 text-xs font-mono text-gold-500 font-semibold bg-obsidian-900/90 px-3 py-1 rounded-md border border-gold-500/30">FOUNDATION 01</span>
-                        </div>
-                        <div class="p-8 space-y-4">
-                            <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition">Sovereign Identity</h3>
-                            <p class="text-slate-300 text-sm font-light leading-relaxed">Absolute digital and physical environments that eliminate market noise, strip away superficial clutter, and radiate uncompromised executive authority.</p>
-                            <span class="inline-block pt-2 text-xs font-mono text-gold-500 tracking-wider flex items-center space-x-2"><span>Inspect Intelligence</span> <span>→</span></span>
-                        </div>
+                    <div onclick="openFoundationModal(1)" class="glass-card rounded-2xl overflow-hidden shadow-2xl group cursor-pointer p-8 space-y-4 border border-gold-500/20">
+                        <span class="text-xs font-mono text-gold-500 font-semibold bg-obsidian-900 px-3 py-1 rounded-md border border-gold-500/30">FOUNDATION 01</span>
+                        <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition">Sovereign Identity</h3>
+                        <p class="text-slate-300 text-sm font-light leading-relaxed">Absolute digital and physical environments that eliminate market noise, strip away superficial clutter, and radiate uncompromised executive authority.</p>
+                        <span class="inline-block pt-2 text-xs font-mono text-gold-500 tracking-wider flex items-center space-x-2"><span>Inspect Intelligence</span> <span>→</span></span>
                     </div>
 
                     <!-- Foundation 2 -->
-                    <div onclick="openFoundationModal(2)" class="glass-card rounded-2xl overflow-hidden shadow-2xl group cursor-pointer p-3">
-                        <div class="h-60 overflow-hidden relative rounded-xl">
-                            <img src="world3.png" alt="Architectural Authority" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-transparent to-transparent"></div>
-                            <span class="absolute top-4 left-4 text-xs font-mono text-gold-500 font-semibold bg-obsidian-900/90 px-3 py-1 rounded-md border border-white/20">FOUNDATION 02</span>
-                        </div>
-                        <div class="p-8 space-y-4">
-                            <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition">Architectural Authority</h3>
-                            <p class="text-slate-300 text-sm font-light leading-relaxed">Monumental institutional infrastructure and governance frameworks engineered to command generational respect and endure macroeconomic shifts.</p>
-                            <span class="inline-block pt-2 text-xs font-mono text-gold-500 tracking-wider flex items-center space-x-2"><span>Inspect Intelligence</span> <span>→</span></span>
-                        </div>
+                    <div onclick="openFoundationModal(2)" class="glass-card rounded-2xl overflow-hidden shadow-2xl group cursor-pointer p-8 space-y-4 border border-gold-500/20">
+                        <span class="text-xs font-mono text-gold-500 font-semibold bg-obsidian-900 px-3 py-1 rounded-md border border-white/20">FOUNDATION 02</span>
+                        <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition">Architectural Authority</h3>
+                        <p class="text-slate-300 text-sm font-light leading-relaxed">Monumental institutional infrastructure and governance frameworks engineered to command generational respect and endure macroeconomic shifts.</p>
+                        <span class="inline-block pt-2 text-xs font-mono text-gold-500 tracking-wider flex items-center space-x-2"><span>Inspect Intelligence</span> <span>→</span></span>
                     </div>
 
                     <!-- Foundation 3 -->
-                    <div onclick="openFoundationModal(3)" class="glass-card rounded-2xl overflow-hidden shadow-2xl group cursor-pointer p-3">
-                        <div class="h-60 overflow-hidden relative rounded-xl">
-                            <img src="world3.png" alt="Financial Sophistication" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-transparent to-transparent"></div>
-                            <span class="absolute top-4 left-4 text-xs font-mono text-gold-500 font-semibold bg-obsidian-900/90 px-3 py-1 rounded-md border border-white/20">FOUNDATION 03</span>
-                        </div>
-                        <div class="p-8 space-y-4">
-                            <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition">Financial Sophistication</h3>
-                            <p class="text-slate-300 text-sm font-light leading-relaxed">Disciplined capital allocation frameworks and intelligent cash-recycling models built to ensure sovereign financial independence.</p>
-                            <span class="inline-block pt-2 text-xs font-mono text-gold-500 tracking-wider flex items-center space-x-2"><span>Inspect Intelligence</span> <span>→</span></span>
-                        </div>
+                    <div onclick="openFoundationModal(3)" class="glass-card rounded-2xl overflow-hidden shadow-2xl group cursor-pointer p-8 space-y-4 border border-gold-500/20">
+                        <span class="text-xs font-mono text-gold-500 font-semibold bg-obsidian-900 px-3 py-1 rounded-md border border-white/20">FOUNDATION 03</span>
+                        <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition">Financial Sophistication</h3>
+                        <p class="text-slate-300 text-sm font-light leading-relaxed">Disciplined capital allocation frameworks and intelligent cash-recycling models built to ensure sovereign financial independence.</p>
+                        <span class="inline-block pt-2 text-xs font-mono text-gold-500 tracking-wider flex items-center space-x-2"><span>Inspect Intelligence</span> <span>→</span></span>
                     </div>
 
                     <!-- Foundation 4 -->
-                    <div onclick="openFoundationModal(4)" class="glass-card rounded-2xl overflow-hidden shadow-2xl group cursor-pointer p-3">
-                        <div class="h-60 overflow-hidden relative rounded-xl">
-                            <img src="world1.png" alt="Global Ecosystem" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-transparent to-transparent"></div>
-                            <span class="absolute top-4 left-4 text-xs font-mono text-gold-500 font-semibold bg-obsidian-900/90 px-3 py-1 rounded-md border border-gold-500/30">FOUNDATION 04</span>
-                        </div>
-                        <div class="p-8 space-y-4">
-                            <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition">Global Ecosystem</h3>
-                            <p class="text-slate-300 text-sm font-light leading-relaxed">An interconnected multi-vertical network uniting eleven P&L domains and six central capability systems under one unified vision.</p>
-                            <span class="inline-block pt-2 text-xs font-mono text-gold-500 tracking-wider flex items-center space-x-2"><span>Inspect Intelligence</span> <span>→</span></span>
-                        </div>
+                    <div onclick="openFoundationModal(4)" class="glass-card rounded-2xl overflow-hidden shadow-2xl group cursor-pointer p-8 space-y-4 border border-gold-500/20">
+                        <span class="text-xs font-mono text-gold-500 font-semibold bg-obsidian-900 px-3 py-1 rounded-md border border-gold-500/30">FOUNDATION 04</span>
+                        <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition">Global Ecosystem</h3>
+                        <p class="text-slate-300 text-sm font-light leading-relaxed">An interconnected multi-vertical network uniting eleven P&L domains and six central capability systems under one unified vision.</p>
+                        <span class="inline-block pt-2 text-xs font-mono text-gold-500 tracking-wider flex items-center space-x-2"><span>Inspect Intelligence</span> <span>→</span></span>
                     </div>
                 </div>
             </section>
@@ -280,12 +260,12 @@
             </section>
         </div>
 
-        <!-- VIEW 2: FULL ECOSYSTEM (CAPABILITY SYSTEMS & INDUSTRY HORIZONS) -->
+        <!-- VIEW 2: FULL ECOSYSTEM (SECTIONS 04 & 05) -->
         <div id="view-ecosystem" class="hidden space-y-20">
             <div class="border-b border-white/10 pb-8 flex justify-between items-end">
                 <div>
                     <span class="text-xs font-mono text-gold-500 uppercase tracking-widest">Complete Institutional Directory</span>
-                    <h2 class="text-4xl font-serif font-light text-white mt-1">Capability Systems & Industry Horizons</h2>
+                    <h2 class="text-4xl font-serif font-light text-white mt-1">11 Industry Horizons & 6 Capability Systems</h2>
                 </div>
                 <button onclick="switchView('home')" class="px-5 py-2.5 rounded-lg bg-obsidian-800 border border-white/20 text-xs text-slate-300 hover:text-white transition">← Return to Overview</button>
             </div>
@@ -344,11 +324,11 @@
         </div>
     </div>
 
-    <!-- SECTION 07 — INSTITUTIONAL GATEWAY & CUSTOMER SUPPORT FOOTER -->
+    <!-- SECTION 07 — THE INSTITUTIONAL GATEWAY (CONTACT & FOOTER) -->
     <footer class="max-w-7xl mx-auto w-full px-8 py-20 border-t border-white/10 relative z-10 space-y-12">
         <div class="glass-panel p-10 md:p-16 rounded-2xl border border-gold-500/30 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
             <div class="space-y-4 max-w-xl">
-                <span class="text-xs font-mono text-gold-500 uppercase tracking-[0.4em]">We Value Your Perspective</span>
+                <span class="text-xs font-mono text-gold-500 uppercase tracking-[0.4em]">The Institutional Gateway</span>
                 <h3 class="text-3xl font-serif font-light text-white">Connect with the TOVENZA Team</h3>
                 <p class="text-slate-300 text-sm leading-relaxed font-light">
                     For feedback, suggestions, enquiries or assistance, connect with the TOVENZA team. We value every interaction and continuously strive to improve.
@@ -370,7 +350,7 @@
         </div>
     </footer>
 
-    <!-- THREE.JS 3D BACKGROUND ENGINE & CINEMATIC GATEWAY CONTROLLER -->
+    <!-- THREE.JS 3D BACKGROUND & CINEMATIC GATEWAY CONTROLLER -->
     <script>
         // Cinematic Gateway Sequence Controller
         let currentStep = 1;
