@@ -11,687 +11,330 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
     
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
     <!-- Three.js CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-    <!-- Master Consolidated CSS Architecture -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        obsidian: { 950: '#030305', 900: '#080909', 800: '#14141f', 700: '#202321' },
+                        gold: { 300: '#fef08a', 400: '#facc15', 500: '#B99D6B', 600: '#aa820a', 700: '#856505' },
+                        ivory: '#E9E4D9'
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        :root {
-            --obsidian-950: #030305;
-            --obsidian-900: #080909;
-            --obsidian-800: #14141f;
-            --graphite-700: #202321;
-            --champagne-500: #B99D6B;
-            --champagne-400: #fef08a;
-            --amber-600: #aa820a;
-            --warm-ivory: #E9E4D9;
-            --slate-muted: #94a3b8;
-            
-            --glass-bg: rgba(8, 9, 9, 0.82);
-            --glass-border: rgba(185, 157, 107, 0.18);
-            --glass-card-bg: rgba(20, 20, 31, 0.70);
-            --glass-card-border: rgba(255, 255, 255, 0.06);
-            
-            --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+        .glass-panel {
+            background: rgba(8, 9, 9, 0.85);
+            backdrop-filter: blur(32px);
+            border: 1px solid rgba(185, 157, 107, 0.2);
+            box-shadow: 0 40px 90px rgba(0, 0, 0, 0.95), inset 0 0 50px rgba(185, 157, 107, 0.03);
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        .glass-card {
+            background: rgba(20, 20, 31, 0.75);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
-        html, body {
-            width: 100%;
-            min-height: 100vh;
-            font-family: 'Inter', sans-serif;
-            color: var(--warm-ivory);
-            background-color: var(--obsidian-950);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+        .glass-card:hover {
+            border-color: rgba(185, 157, 107, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px rgba(185, 157, 107, 0.15);
         }
-
-        .font-serif, .gw-serif-title, .gw-brand-title, .hero-headline, .page-title {
-            font-family: 'Cormorant Garamond', serif;
-        }
-
-        .technical-label, .brand-subtitle, .hero-badge span, .footer-contact {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            letter-spacing: 0.35em;
-            text-transform: uppercase;
-            color: var(--champagne-500);
-        }
-
         #webgl-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: 0;
             pointer-events: none;
+            z-index: 0;
         }
-
-        .webgl-fallback-bg {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle at 50% 30%, #14141f 0%, #080909 70%, #030305 100%);
-            z-index: -1;
-            display: none;
-        }
-
-        .app-hidden {
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1.2s var(--transition-smooth);
-        }
-
-        .app-visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .sovereign-header {
-            position: sticky;
-            top: 0;
-            z-index: 40;
-            background: rgba(8, 9, 9, 0.85);
-            backdrop-filter: blur(24px);
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .header-inner {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2.5rem;
-            height: 96px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .page-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 6rem 2.5rem;
-            flex-grow: 1;
-            position: relative;
-            z-index: 10;
-            min-height: calc(100vh - 192px);
-        }
-
-        .sovereign-footer {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2.5rem;
-            width: 100%;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            position: relative;
-            z-index: 10;
-        }
-
-        .footer-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--slate-muted);
-        }
+        .app-hidden { opacity: 0; visibility: hidden; transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .app-visible { opacity: 1; visibility: visible; }
 
         /* Cinematic Gateway */
         #cinematic-gateway {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: var(--obsidian-950);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 1.2s var(--transition-smooth), transform 1.2s var(--transition-smooth);
+            position: fixed; inset: 0; z-index: 9999; background: #030305;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
-        .gateway-controls {
-            position: absolute;
-            top: 2rem;
-            right: 2.5rem;
-            z-index: 50;
+        .gateway-step {
+            opacity: 0; transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+            position: absolute; width: 100%;
         }
-
-        .gateway-viewport {
-            position: relative;
-            width: 100%;
-            max-width: 900px;
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0 2rem;
-        }
-
-        .gw-slide {
-            position: absolute;
-            opacity: 0;
-            transform: translateY(25px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-            pointer-events: none;
-        }
-
-        .gw-slide.active {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-
-        .void-pulse {
-            width: 6px;
-            height: 6px;
-            background-color: var(--champagne-500);
-            border-radius: 50%;
-            margin: 0 auto 1.5rem auto;
-            box-shadow: 0 0 25px var(--champagne-500);
-            animation: pulseCore 2s infinite ease-in-out;
-        }
-
+        .gateway-step.active { opacity: 1; transform: translateY(0); }
         @keyframes pulseCore {
             0%, 100% { transform: scale(1); opacity: 0.4; }
             50% { transform: scale(2.2); opacity: 1; }
         }
-
-        .gw-serif-title {
-            font-size: 2.5rem;
-            font-weight: 300;
-            color: var(--warm-ivory);
-            letter-spacing: 0.1em;
-            margin-bottom: 1rem;
+        .void-pulse {
+            width: 6px; height: 6px; background-color: #B99D6B; border-radius: 50%;
+            margin: 0 auto 1.5rem auto; box-shadow: 0 0 25px #B99D6B;
+            animation: pulseCore 2s infinite ease-in-out;
         }
-
-        .gold-rule {
-            width: 100px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--champagne-500), transparent);
-            margin: 0 auto;
-        }
-
-        .insignia-crest {
-            width: 72px;
-            height: 72px;
-            background: linear-gradient(135deg, var(--champagne-500), var(--amber-600));
-            color: var(--obsidian-950);
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.5rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            margin: 0 auto 1.5rem auto;
-            box-shadow: 0 20px 40px rgba(185, 157, 107, 0.25);
-        }
-
-        .gw-quote {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2rem;
-            font-style: italic;
-            color: #cbd5e1;
-            max-width: 750px;
-            line-height: 1.4;
-        }
-
-        .gw-brand-title {
-            font-size: 4rem;
-            font-weight: 300;
-            letter-spacing: 0.3em;
-            color: #ffffff;
-            margin-bottom: 0.75rem;
-        }
-
-        .gw-statement {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 0.5em;
-            color: var(--champagne-500);
-        }
-
-        /* Brand Group */
-        .brand-group {
-            display: flex;
-            align-items: center;
-            gap: 1.25rem;
-            text-decoration: none;
-        }
-
-        .brand-crest {
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, var(--champagne-500), var(--amber-600));
-            color: var(--obsidian-950);
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(185, 157, 107, 0.2);
-        }
-
-        .brand-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .brand-name {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
-            font-weight: 600;
-            letter-spacing: 0.25em;
-            color: #ffffff;
-        }
-
-        /* Navigation */
-        .sovereign-nav {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .nav-link {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 0.25em;
-            color: #cbd5e1;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            color: var(--champagne-500);
-        }
-
-        /* Buttons & Cards */
-        .technical-btn, .technical-btn-primary {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            background: var(--obsidian-900);
-            color: var(--champagne-500);
-            border: 1px solid var(--glass-border);
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-
-        .technical-btn:hover, .technical-btn-primary:hover {
-            background: var(--champagne-500);
-            color: var(--obsidian-950);
-            border-color: var(--champagne-500);
-        }
-
-        .glass-panel {
-            background: rgba(8, 9, 9, 0.85);
-            backdrop-filter: blur(32px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 40px 90px rgba(0, 0, 0, 0.95), inset 0 0 50px rgba(185, 157, 107, 0.03);
-            padding: 4rem;
-            border-radius: 1rem;
-        }
-
-        .glass-card {
-            background: var(--glass-card-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-card-border);
-            padding: 2.5rem;
-            border-radius: 1rem;
-            transition: all 0.5s var(--transition-smooth);
-            text-decoration: none;
-            display: block;
-            color: inherit;
-        }
-
-        .glass-card:hover {
-            border-color: rgba(185, 157, 107, 0.5);
-            transform: translateY(-4px);
-            box-shadow: 0 25px 50px rgba(185, 157, 107, 0.15);
-        }
-
-        .hero-headline {
-            font-size: clamp(3.5rem, 7vw, 6.5rem);
-            font-weight: 300;
-            line-height: 1.05;
-            letter-spacing: -0.02em;
-            color: #ffffff;
-            margin-bottom: 1.5rem;
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, var(--champagne-400) 0%, var(--champagne-500) 50%, var(--amber-600) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .footer-email {
-            color: #ffffff;
-            text-decoration: underline;
-            transition: color 0.3s ease;
-        }
-
-        .footer-email:hover {
-            color: var(--champagne-500);
-        }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #030305; }
+        ::-webkit-scrollbar-thumb { background: #B99D6B; border-radius: 2px; }
     </style>
 </head>
-<body>
-
+<body class="bg-[#030305] text-[#E9E4D9] font-sans antialiased selection:bg-[#B99D6B] selection:text-black min-h-screen flex flex-col justify-between relative overflow-x-hidden">
+    
     <!-- CINEMATIC 7D GATEWAY OVERLAY -->
-    <div id="cinematic-gateway" aria-label="Cinematic Opening Sequence">
-        <div class="gateway-controls">
-            <button id="skip-gateway-btn" class="technical-btn">SKIP GATEWAY →</button>
+    <div id="cinematic-gateway" class="flex flex-col items-center justify-center p-8 text-center">
+        <div class="absolute top-8 right-8 z-50">
+            <button onclick="skipGateway()" class="px-5 py-2 rounded-full border border-gold-500/30 text-gold-500 text-xs font-mono tracking-widest uppercase hover:bg-gold-500 hover:text-black transition">Skip Gateway →</button>
         </div>
-        <div class="gateway-viewport">
-            <div id="gw-scene-1" class="gw-slide active">
+        <div class="relative max-w-3xl w-full flex items-center justify-center min-h-[300px]">
+            <div id="step-1" class="gateway-step active space-y-3">
                 <div class="void-pulse"></div>
-                <span class="technical-label">SCENE 01 — THE VOID</span>
+                <p class="text-xs font-mono tracking-[0.5em] text-slate-500 uppercase">Scene 01 — The Void</p>
             </div>
-            <div id="gw-scene-2" class="gw-slide">
-                <h2 class="gw-serif-title">Architectural Emergence</h2>
-                <div class="gold-rule"></div>
+            <div id="step-2" class="gateway-step space-y-3">
+                <h2 class="text-2xl font-serif text-gold-400 tracking-widest uppercase">Scene 02 — Architectural Emergence</h2>
+                <div class="w-32 h-[1px] bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto"></div>
             </div>
-            <div id="gw-scene-3" class="gw-slide">
-                <div class="insignia-crest">T</div>
-                <span class="technical-label">OBSIDIAN SOVEREIGNTY</span>
+            <div id="step-3" class="gateway-step space-y-4">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center font-bold text-obsidian-950 text-3xl shadow-2xl shadow-gold-500/40 border border-gold-300/40 mx-auto">T</div>
+                <p class="text-xs font-mono tracking-[0.4em] text-gold-500 uppercase">Scene 03 — Obsidian Sovereignty</p>
             </div>
-            <div id="gw-scene-4" class="gw-slide">
-                <p class="gw-quote">"When someone has nowhere to turn, there should be somewhere they can begin."</p>
+            <div id="step-4" class="gateway-step space-y-3">
+                <p class="text-xl font-serif italic text-slate-300">"When someone has nowhere to turn, there should be somewhere they can begin."</p>
             </div>
-            <div id="gw-scene-5" class="gw-slide">
-                <h1 class="gw-brand-title">TOVENZA</h1>
-                <p class="gw-statement">BEYOND BUSINESS. BUILT TO ENDURE.</p>
+            <div id="step-5" class="gateway-step space-y-6">
+                <h1 class="text-4xl md:text-6xl font-serif text-white tracking-widest">TOVENZA</h1>
+                <p class="text-xs font-mono tracking-[0.5em] text-gold-500 uppercase">Beyond Business. Built to Endure.</p>
+                <div class="pt-4">
+                    <button onclick="skipGateway()" class="px-8 py-3.5 rounded-lg bg-gradient-to-r from-gold-400 to-gold-600 text-obsidian-950 font-semibold text-xs tracking-widest uppercase shadow-2xl hover:scale-105 transition">Enter Headquarters</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- THREE.JS WEBGL RENDER CANVAS -->
-    <canvas id="webgl-canvas" aria-hidden="true"></canvas>
-    <div id="webgl-fallback" class="webgl-fallback-bg"></div>
+    <!-- THREE.JS 3D BACKGROUND -->
+    <canvas id="webgl-canvas"></canvas>
 
     <!-- MAIN APP CONTAINER -->
-    <div id="app-container" class="app-hidden">
+    <div id="app-container" class="app-hidden flex flex-col min-h-screen justify-between relative z-10">
         
-        <!-- SOVEREIGN HEADER -->
-        <header class="sovereign-header">
-            <div class="header-inner">
-                <a href="/" data-link class="brand-group">
-                    <div class="brand-crest">T</div>
-                    <div class="brand-text">
-                        <span class="brand-name">TOVENZA</span>
-                        <span class="brand-subtitle">THE DIGITAL EMPIRE</span>
+        <!-- HEADER -->
+        <header class="sticky top-0 z-40 backdrop-blur-2xl bg-[#080909]/85 border-b border-[#B99D6B]/15 shadow-2xl">
+            <div class="max-w-7xl mx-auto px-8 h-24 flex items-center justify-between">
+                <a href="/" data-link class="flex items-center space-x-5 group">
+                    <div class="w-11 h-11 rounded-lg bg-gradient-to-br from-[#facc15] to-[#B99D6B] flex items-center justify-center font-bold text-[#030305] text-xl shadow-xl shadow-[#B99D6B]/20 border border-[#fef08a]/40">T</div>
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-serif tracking-[0.3em] text-white font-semibold">TOVENZA</span>
+                        <span class="text-[9px] tracking-[0.45em] text-[#B99D6B] uppercase font-mono">The Digital Empire</span>
                     </div>
                 </a>
-
-                <nav class="sovereign-nav">
-                    <a href="/institution" data-link class="nav-link">INSTITUTION</a>
-                    <a href="/foundations/sovereign-identity" data-link class="nav-link">FOUNDATIONS</a>
-                    <a href="/horizons/astrology-jyotish" data-link class="nav-link">HORIZONS</a>
-                    <a href="/capabilities" data-link class="nav-link">CAPABILITIES</a>
-                    <a href="/governance" data-link class="nav-link">GOVERNANCE</a>
-                    <a href="/gateway" data-link class="technical-btn-primary">✦ CONCIERGE</a>
+                <nav class="hidden md:flex items-center space-x-8 text-xs font-mono tracking-widest text-slate-300">
+                    <a href="/institution" data-link class="hover:text-[#facc15] transition">INSTITUTION</a>
+                    <a href="/foundations/sovereign-identity" data-link class="hover:text-[#facc15] transition">FOUNDATIONS</a>
+                    <a href="/horizons/astrology-jyotish" data-link class="hover:text-[#facc15] transition">HORIZONS</a>
+                    <a href="/capabilities" data-link class="hover:text-[#facc15] transition">CAPABILITIES</a>
+                    <a href="/governance" data-link class="hover:text-[#facc15] transition">GOVERNANCE</a>
+                    <a href="/gateway" data-link class="px-5 py-2.5 rounded-lg bg-[#14141f] border border-[#B99D6B]/30 text-[#facc15] font-semibold uppercase hover:bg-[#B99D6B] hover:text-black transition shadow-lg">
+                        ✦ Institutional Enquiries
+                    </a>
                 </nav>
             </div>
         </header>
 
-        <!-- DYNAMIC ROUTE CONTAINER -->
-        <div id="router-view"></div>
+        <!-- DYNAMIC ROUTING VIEW CONTAINER -->
+        <div id="router-view" class="flex-grow"></div>
 
-        <!-- SOVEREIGN FOOTER -->
-        <footer class="sovereign-footer">
-            <div class="footer-inner">
-                <div class="footer-copy">
-                    <span>&copy; 2026 TOVENZA. Beyond Business. Built to Endure.</span>
+        <!-- FOOTER -->
+        <footer class="max-w-7xl mx-auto w-full px-8 py-20 border-t border-white/10 relative z-10 space-y-12">
+            <div class="glass-panel p-10 md:p-16 rounded-2xl border border-[#B99D6B]/30 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                <div class="space-y-4 max-w-xl">
+                    <span class="text-xs font-mono text-[#B99D6B] uppercase tracking-[0.4em]">The Institutional Gateway</span>
+                    <h3 class="text-3xl font-serif font-light text-white">Connect with the TOVENZA Team</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed font-light">
+                        For feedback, suggestions, enquiries or assistance, connect with the TOVENZA team. We value every interaction and continuously strive to improve.
+                    </p>
                 </div>
-                <div class="footer-contact">
-                    <span class="technical-label">OFFICIAL CONCIERGE:</span>
-                    <a href="mailto:support.tovenza@gmail.com" class="footer-email">support.tovenza@gmail.com</a>
+                <div>
+                    <a href="mailto:support.tovenza@gmail.com" class="px-8 py-4 rounded-lg bg-gradient-to-r from-[#facc15] to-[#B99D6B] text-[#030305] font-semibold text-xs uppercase tracking-widest shadow-2xl hover:scale-105 transition flex items-center space-x-3">
+                        <span>✉ support.tovenza@gmail.com</span>
+                    </a>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center text-xs text-slate-400 gap-4 font-mono">
+                <div>&copy; 2026 TOVENZA. Beyond Business. Built to Endure.</div>
+                <div class="tracking-wider text-[#B99D6B] flex items-center space-x-2">
+                    <span>Institutional Enquiries:</span>
+                    <a href="mailto:support.tovenza@gmail.com" class="text-white underline hover:text-[#facc15]">support.tovenza@gmail.com</a>
                 </div>
             </div>
         </footer>
 
     </div>
 
-    <!-- MASTER CONSOLIDATED JAVASCRIPT LOGIC -->
+    <!-- JAVASCRIPT: GATEWAY, THREE.JS & 21 ROUTE SPA ROUTER -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Cinematic Gateway Controller
-            const gateway = document.getElementById('cinematic-gateway');
-            const skipBtn = document.getElementById('skip-gateway-btn');
-            const slides = document.querySelectorAll('.gw-slide');
-            const appContainer = document.getElementById('app-container');
-            
-            const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const isReturningVisitor = localStorage.getItem('tovenza_visited') === 'true';
-
-            let currentStep = 0;
-            const totalSteps = slides.length;
-            let gatewayTimer = null;
-
-            if (isReducedMotion || isReturningVisitor) {
-                dismissGateway();
-            } else {
-                localStorage.setItem('tovenza_visited', 'true');
-                gatewayTimer = setInterval(() => {
-                    currentStep++;
-                    if (currentStep >= totalSteps) {
-                        dismissGateway();
-                    } else {
-                        slides.forEach((slide, i) => {
-                            slide.classList.toggle('active', i === currentStep);
-                        });
-                    }
-                }, 2300);
+        // 1. Cinematic Gateway Controller
+        let currentStep = 1;
+        const totalSteps = 5;
+        function updateGateway() {
+            for (let i = 1; i <= totalSteps; i++) {
+                const el = document.getElementById(`step-${i}`);
+                if (el) el.classList.toggle('active', i === currentStep);
             }
+        }
+        const gatewayTimer = setInterval(() => {
+            currentStep++;
+            if (currentStep > totalSteps) { skipGateway(); } else { updateGateway(); }
+        }, 2500);
 
-            skipBtn.addEventListener('click', dismissGateway);
-
-            function dismissGateway() {
-                if (gatewayTimer) clearInterval(gatewayTimer);
-                gateway.style.opacity = '0';
-                gateway.style.transform = 'scale(1.03)';
-                setTimeout(() => {
-                    gateway.style.display = 'none';
-                    appContainer.classList.remove('app-hidden');
-                    appContainer.classList.add('app-visible');
-                }, 1200);
+        function skipGateway() {
+            clearInterval(gatewayTimer);
+            const gw = document.getElementById('cinematic-gateway');
+            if (gw) {
+                gw.style.opacity = '0';
+                gw.style.transform = 'scale(1.05)';
+                setTimeout(() => { gw.style.display = 'none'; }, 1200);
             }
+            const app = document.getElementById('app-container');
+            if (app) { app.classList.remove('app-hidden'); app.classList.add('app-visible'); }
+        }
 
-            // 2. Three.js Architectural Scene Engine
-            const canvas = document.getElementById('webgl-canvas');
-            const fallbackBg = document.getElementById('webgl-fallback');
-            
-            let renderer;
-            try {
-                renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
-            } catch (e) {
-                canvas.style.display = 'none';
-                fallbackBg.style.display = 'block';
+        // 2. Three.js Architectural Background Engine
+        const canvas = document.getElementById('webgl-canvas');
+        if (canvas) {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            const group = new THREE.Group();
+            const colGeo = new THREE.BoxGeometry(0.8, 12, 0.8);
+            const colMat = new THREE.MeshStandardMaterial({ color: 0x14141f, roughness: 0.4, metalness: 0.85 });
+            for (let i = -6; i <= 6; i += 3) {
+                if (i === 0) continue;
+                const c1 = new THREE.Mesh(colGeo, colMat); c1.position.set(i, 0, -4); group.add(c1);
+                const c2 = new THREE.Mesh(colGeo, colMat); c2.position.set(i, 0, 4); group.add(c2);
             }
+            scene.add(group);
+            scene.add(new THREE.AmbientLight(0x080909, 2.5));
+            const light = new THREE.PointLight(0xB99D6B, 4, 25);
+            light.position.set(0, 3, 2);
+            scene.add(light);
+            camera.position.z = 9;
 
-            if (renderer) {
-                const scene = new THREE.Scene();
-                const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
-                
+            function animate() {
+                requestAnimationFrame(animate);
+                group.rotation.y += 0.001;
+                renderer.render(scene, camera);
+            }
+            animate();
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
                 renderer.setSize(window.innerWidth, window.innerHeight);
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-                const architecturalGroup = new THREE.Group();
-                const columnGeo = new THREE.BoxGeometry(0.8, 12, 0.8);
-                const graphiteMat = new THREE.MeshStandardMaterial({ color: 0x14141f, roughness: 0.4, metalness: 0.85 });
-
-                for (let i = -6; i <= 6; i += 3) {
-                    if (i === 0) continue;
-                    const colLeft = new THREE.Mesh(columnGeo, graphiteMat);
-                    colLeft.position.set(i, 0, -4);
-                    architecturalGroup.add(colLeft);
-
-                    const colRight = new THREE.Mesh(columnGeo, graphiteMat);
-                    colRight.position.set(i, 0, 4);
-                    architecturalGroup.add(colRight);
-                }
-
-                const slabGeo = new THREE.BoxGeometry(20, 0.4, 14);
-                const glassMat = new THREE.MeshPhysicalMaterial({ color: 0x080909, metalness: 0.9, roughness: 0.1, transmission: 0.3, transparent: true, opacity: 0.9 });
-
-                const floorSlab = new THREE.Mesh(slabGeo, glassMat);
-                floorSlab.position.set(0, -6.2, 0);
-                architecturalGroup.add(floorSlab);
-
-                const ceilingSlab = new THREE.Mesh(slabGeo, glassMat);
-                ceilingSlab.position.set(0, 6.2, 0);
-                architecturalGroup.add(ceilingSlab);
-
-                scene.add(architecturalGroup);
-                scene.add(new THREE.AmbientLight(0x080909, 2.5));
-                const champagneLight = new THREE.PointLight(0xB99D6B, 4, 25);
-                champagneLight.position.set(0, 3, 2);
-                scene.add(champagneLight);
-
-                camera.position.z = 9;
-
-                let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
-                if (!isReducedMotion) {
-                    window.addEventListener('mousemove', (event) => {
-                        mouseX = (event.clientX / window.innerWidth) - 0.5;
-                        mouseY = (event.clientY / window.innerHeight) - 0.5;
-                    });
-                }
-
-                const clock = new THREE.Clock();
-                function animate() {
-                    requestAnimationFrame(animate);
-                    if (!isReducedMotion) {
-                        targetX += (mouseX - targetX) * 0.05;
-                        targetY += (mouseY - targetY) * 0.05;
-                        camera.position.x = targetX * 1.5;
-                        camera.position.y = -targetY * 1.5;
-                        camera.lookAt(scene.position);
-                        architecturalGroup.rotation.y = Math.sin(clock.getElapsedTime() * 0.15) * 0.03;
-                    }
-                    renderer.render(scene, camera);
-                }
-                animate();
-
-                window.addEventListener('resize', () => {
-                    camera.aspect = window.innerWidth / window.innerHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                });
-            }
-
-            // 3. Master SPA Client-Side Router (Handling all 21 Routes)
-            const routes = {
-                '/': renderHome,
-                '/institution': renderInstitution,
-                '/foundations/sovereign-identity': () => renderFoundation('Sovereign Identity', 'FOUNDATION 01', 'Establishing uncompromised digital and physical sovereign environments designed to eliminate market noise and radiate executive authority.'),
-                '/foundations/architectural-authority': () => renderFoundation('Architectural Authority', 'FOUNDATION 02', 'Monumental institutional infrastructure and proposed governance frameworks engineered to command generational respect and endure long-term shifts.'),
-                '/foundations/financial-sophistication': () => renderFoundation('Financial Sophistication', 'FOUNDATION 03', 'Disciplined capital allocation frameworks and intelligent resource architecture built to ensure long-term financial resilience.'),
-                '/foundations/global-ecosystem': () => renderFoundation('Global Ecosystem', 'FOUNDATION 04', 'A long-term vision for an interconnected ecosystem spanning eleven strategic industry horizons, supported by a unified institutional philosophy.'),
-                '/horizons/recruitment-hr': () => renderHorizon('Recruitment & HR / Human Capital', 'VERT-01', 'Strategic workforce planning and human capital development frameworks.'),
-                '/horizons/healthcare-diagnostics': () => renderHorizon('Healthcare & Diagnostics', 'VERT-02', 'Biological longevity and health infrastructure research.'),
-                '/horizons/hospitality': () => renderHorizon('Hospitality', 'VERT-03', 'Curated human experience and spatial service frameworks.'),
-                '/horizons/real-estate': () => renderHorizon('Real Estate & Property', 'VERT-04', 'Asset stewardship and spatial development architecture.'),
-                '/horizons/technology-ai': () => renderHorizon('Technology, AI & Software', 'VERT-05', 'Digital nervous system and automated microservice architectures.'),
-                '/horizons/business-consulting': () => renderHorizon('Business Consulting', 'VERT-06', 'Strategic corporate transformation and scale advisory.'),
-                '/horizons/psychology-wellbeing': () => renderHorizon('Psychology & Wellbeing', 'VERT-07', 'Behavioral science and organizational psychology frameworks.'),
-                '/horizons/astrology-jyotish': () => renderHorizon('Astrology & Jyotish Sciences / Jyotish Tech', 'VERT-08 (FEATURED)', 'Temporal analytics and systemic pattern audits.'),
-                '/horizons/education-learning': () => renderHorizon('Education & Learning', 'VERT-09', 'Systematic transmission of capability and worldview.'),
-                '/horizons/retail': () => renderHorizon('Retail', 'VERT-10', 'Consumer touchpoints and experiential brand psychology.'),
-                '/horizons/future-industries': () => renderHorizon('Future Industries', 'VERT-11', 'Frontier exploration capturing energy, biotech, and emergent tech.'),
-                '/capabilities': renderCapabilities,
-                '/governance': renderGovernance,
-                '/gateway': renderGateway,
-                '/legal': renderLegal
-            };
-
-            function handleRoute() {
-                let path = window.location.pathname;
-                if (path === '' || path === undefined) path = '/';
-                const viewContainer = document.getElementById('router-view');
-                const renderFunc = routes[path] || renderNotFound;
-                viewContainer.innerHTML = renderFunc();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-
-            window.addEventListener('popstate', handleRoute);
-
-            document.body.addEventListener('click', (e) => {
-                const link = e.target.closest('[data-link]');
-                if (link) {
-                    e.preventDefault();
-                    const href = link.getAttribute('href');
-                    window.history.pushState({}, '', href);
-                    handleRoute();
-                }
             });
+        }
 
-            handleRoute();
-        });
+        // 3. Master Client-Side SPA Router (All 21 Approved Routes with AST Image Mappings)
+        const routes = {
+            '/': () => renderHome(),
+            '/institution': () => renderPage('The Architecture of Permanence', 'THE INSTITUTION', 'TOVENZA is an emerging institutional vision built around long-term thinking, structural integrity, responsible stewardship, and the creation of enduring opportunities.', 'institution_page_mockup.png'),
+            '/foundations/sovereign-identity': () => renderPage('Sovereign Identity', 'FOUNDATION 01', 'Establishing uncompromised digital and physical sovereign environments designed to eliminate market noise and radiate executive authority.', 'sovereign_identity_mockup.png'),
+            '/foundations/architectural-authority': () => renderPage('Architectural Authority', 'FOUNDATION 02', 'Monumental institutional infrastructure and proposed governance frameworks engineered to command generational respect.', 'architectural_authority_mockup.png'),
+            '/foundations/financial-sophistication': () => renderPage('Financial Sophistication', 'FOUNDATION 03', 'Disciplined capital allocation frameworks and intelligent resource architecture built to ensure long-term financial resilience.', 'financial_sophistication_mockup.png'),
+            '/foundations/global-ecosystem': () => renderPage('Global Ecosystem', 'FOUNDATION 04', 'A long-term vision for an interconnected ecosystem spanning eleven strategic industry horizons, supported by a unified philosophy.', 'global_ecosystem_mockup.png'),
+            '/horizons/recruitment-hr': () => renderPage('Recruitment & HR / Human Capital', 'STRATEGIC HORIZON — VERT-01', 'Strategic workforce planning and human capital development frameworks under exploratory development.', 'recruitment_hr_mockup.png'),
+            '/horizons/healthcare-diagnostics': () => renderPage('Healthcare & Diagnostics', 'STRATEGIC HORIZON — VERT-02', 'Biological longevity and health infrastructure research frameworks.', 'healthcare_diagnostics_mockup.png'),
+            '/horizons/hospitality': () => renderPage('Hospitality', 'STRATEGIC HORIZON — VERT-03', 'Curated human experience and spatial service frameworks.', 'hospitality_mockup.png'),
+            '/horizons/real-estate': () => renderPage('Real Estate & Property', 'STRATEGIC HORIZON — VERT-04', 'Asset stewardship and spatial development architecture.', 'real_estate_mockup.png'),
+            '/horizons/technology-ai': () => renderPage('Technology, AI & Software', 'STRATEGIC HORIZON — VERT-05', 'Digital nervous system and automated microservice architectures.', 'tech_horizon_mockup.png'),
+            '/horizons/business-consulting': () => renderPage('Business Consulting', 'STRATEGIC HORIZON — VERT-06', 'Strategic corporate transformation and scale advisory.', 'business_consulting_mockup.png'),
+            '/horizons/psychology-wellbeing': () => renderPage('Psychology & Wellbeing', 'STRATEGIC HORIZON — VERT-07', 'Behavioral science and organizational psychology frameworks.', 'psychology_wellbeing_mockup.png'),
+            '/horizons/astrology-jyotish': () => renderPage('Astrology & Jyotish Sciences / Jyotish Tech', 'STRATEGIC HORIZON — VERT-08 (FEATURED)', 'Temporal analytics and systemic pattern audits bridging ancient wisdom with advanced technological auditing.', 'jyotish_horizon_mockup.png'),
+            '/horizons/education-learning': () => renderPage('Education & Learning', 'STRATEGIC HORIZON — VERT-09', 'Systematic transmission of capability and worldview.', 'education_learning_mockup.png'),
+            '/horizons/retail': () => renderPage('Retail', 'STRATEGIC HORIZON — VERT-10', 'Consumer touchpoints and experiential brand psychology.', 'retail_mockup.png'),
+            '/horizons/future-industries': () => renderPage('Future Industries', 'STRATEGIC HORIZON — VERT-11', 'Frontier exploration capturing energy, biotech, and emergent tech.', 'future_industries_mockup.png'),
+            '/capabilities': () => renderPage('Six Institutional Capability Systems', 'CAPABILITY SYSTEMS', 'Collective structural capabilities under exploratory development, designed to support the long-term expansion of the digital empire.', 'capability_systems_mockup.png'),
+            '/governance': () => renderPage('Governance & Stewardship', 'GOVERNANCE', 'TOVENZA is guided by principles of accountability, transparency, disciplined decision-making, and responsible long-term stewardship.', 'governance_page_mockup.png'),
+            '/gateway': () => renderPage('Institutional Enquiries Gateway', 'CONTACT', 'For feedback, suggestions, enquiries or assistance, connect with the TOVENZA team at support.tovenza@gmail.com.', 'contact_gateway_mockup.png'),
+            '/legal': () => renderPage('Legal & Privacy Framework', 'STATUTORY', 'Statutory compliance and terms of sovereign digital use. (Pending actual policy content drafting and professional jurisdictional review).', null)
+        };
 
-        // Template Render Functions
         function renderHome() {
             return `
-                <main class="page-container" style="display: flex; flex-direction: column; gap: 8rem;">
-                  <section style="min-height: 80vh; display: flex; flex-direction: column; justify-content: center;">
-                    <div style="display: inline-flex; padding: 0.5rem 1.25rem; background: rgba(8,9,9,0.8); border: 1px solid var(--glass-border); border-radius: 9999px; width: fit-content; margin-bottom: 2rem;">
-                      <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.35em; color: var(--champagne-500);">✦ BEYOND BUSINESS. BUILT TO ENDURE. ✦</span>
+                <main class="max-w-7xl mx-auto w-full px-8 py-16 space-y-32 relative z-10">
+                  <section class="relative rounded-2xl overflow-hidden border border-[#B99D6B]/30 shadow-2xl p-10 md:p-20 flex flex-col justify-end min-h-[680px] glass-panel">
+                    <div class="absolute inset-0 z-0">
+                      <img src="/assets/images/homepage_desktop_mockup.png" alt="The Digital Empire" class="w-full h-full object-cover opacity-45 mix-blend-luminosity">
+                      <div class="absolute inset-0 bg-gradient-to-t from-[#030305] via-[#030305]/70 to-transparent"></div>
                     </div>
-                    <h1 class="hero-headline">The Digital <br><span class="gradient-text">Empire.</span></h1>
-                    <p style="font-size: 1.125rem; font-weight: 300; line-height: 1.7; color: #cbd5e1; max-width: 680px; margin-bottom: 2.5rem;">
-                      An emerging institutional vision shaped by ambition, architecture and long-term strategic thinking across eleven canonical industry horizons.
-                    </p>
-                    <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
-                      <a href="/foundations/sovereign-identity" data-link class="technical-btn-primary" style="padding: 1rem 2.25rem;">EXPLORE THE INSTITUTION</a>
-                      <a href="/capabilities" data-link class="technical-btn" style="padding: 1rem 2.25rem;">VIEW CAPABILITIES</a>
+                    <div class="relative z-10 max-w-4xl space-y-8">
+                      <div class="inline-flex items-center space-x-3 px-4 py-2 rounded-full bg-[#080909]/90 border border-[#B99D6B]/30 text-[#B99D6B] text-xs font-mono tracking-[0.35em] uppercase shadow-lg">
+                        <span>✦ BEYOND BUSINESS. BUILT TO ENDURE. ✦</span>
+                      </div>
+                      <h1 class="text-5xl md:text-7xl font-serif font-light tracking-tight text-white leading-[1.08]">
+                        The Digital <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-[#fef08a] via-[#B99D6B] to-[#aa820a] font-normal">Empire.</span>
+                      </h1>
+                      <p class="text-slate-300 text-lg md:text-xl font-light leading-relaxed max-w-3xl">
+                        An emerging institutional vision shaped by ambition, architecture, and long-term strategic thinking across eleven canonical industry horizons.
+                      </p>
+                      <div class="pt-4 flex flex-wrap gap-5">
+                        <a href="/institution" data-link class="px-8 py-4 rounded-lg bg-gradient-to-r from-[#facc15] to-[#B99D6B] text-[#030305] font-semibold text-xs tracking-widest uppercase shadow-2xl hover:scale-105 transition">Explore the Institution</a>
+                        <a href="/capabilities" data-link class="px-8 py-4 rounded-lg glass-card text-white font-semibold text-xs tracking-widest uppercase hover:bg-[#14141f] transition">View Capabilities</a>
+                      </div>
                     </div>
                   </section>
 
-                  <section class="glass-panel">
-                    <span class="technical-label">INSTITUTIONAL PHILOSOPHY</span>
-                    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; margin-top: 1rem; margin-bottom: 2rem; color: #ffffff;">"When someone has nowhere to turn, there should be somewhere they can begin."</h2>
-                    <p style="color: #cbd5e1; line-height: 1.7; font-weight: 300; max-width: 800px;">
+                  <section class="glass-panel p-10 md:p-16 rounded-2xl border border-[#B99D6B]/20 space-y-8">
+                    <span class="text-xs font-mono text-[#B99D6B] uppercase tracking-[0.4em]">Institutional Philosophy</span>
+                    <h2 class="text-4xl md:text-5xl font-serif font-light text-white leading-tight">"When someone has nowhere to turn, there should be somewhere they can begin."</h2>
+                    <p class="text-slate-300 font-light text-base leading-relaxed max-w-3xl">
                       TOVENZA represents an emerging institutional vision focused on building, developing, and structuring long-term opportunities. Guided by uncompromised structural integrity and long-term financial intelligence.
                     </p>
                   </section>
 
-                  <section>
-                    <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1.5rem; margin-bottom: 3rem;">
-                      <span class="technical-label">CORE ARCHITECTURE</span>
-                      <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; margin-top: 0.5rem; color: #ffffff;">Four Public Brand Foundations</h2>
+                  <section class="space-y-10">
+                    <div class="border-b border-white/10 pb-6 flex justify-between items-end">
+                      <div>
+                        <span class="text-xs font-mono text-[#B99D6B] uppercase tracking-widest">Core Architecture</span>
+                        <h2 class="text-3xl font-serif font-light text-white mt-1">Four Public Brand Foundations</h2>
+                      </div>
                     </div>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
-                      <a href="/foundations/sovereign-identity" data-link class="glass-card">
-                        <span class="technical-label">FOUNDATION 01</span>
-                        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; font-weight: 400; margin: 1rem 0; color: #ffffff;">Sovereign Identity</h3>
-                        <p style="color: #94a3b8; font-size: 0.95rem; font-weight: 300;">Establishing uncompromised digital and physical sovereign environments.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <a href="/foundations/sovereign-identity" data-link class="glass-card p-8 space-y-4">
+                        <span class="text-xs font-mono text-[#B99D6B] bg-[#080909] px-3 py-1 rounded border border-[#B99D6B]/30">FOUNDATION 01</span>
+                        <h3 class="text-2xl font-serif text-white">Sovereign Identity</h3>
+                        <p class="text-slate-300 text-sm font-light">Establishing uncompromised digital and physical sovereign environments.</p>
                       </a>
-                      <a href="/foundations/architectural-authority" data-link class="glass-card">
-                        <span class="technical-label">FOUNDATION 02</span>
-                        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; font-weight: 400; margin: 1rem 0; color: #ffffff;">Architectural Authority</h3>
-                        <p style="color: #94a3b8; font-size: 0.95rem; font-weight: 300;">Monumental infrastructure engineered for generational scale.</p>
+                      <a href="/foundations/architectural-authority" data-link class="glass-card p-8 space-y-4">
+                        <span class="text-xs font-mono text-[#B99D6B] bg-[#080909] px-3 py-1 rounded border border-white/20">FOUNDATION 02</span>
+                        <h3 class="text-2xl font-serif text-white">Architectural Authority</h3>
+                        <p class="text-slate-300 text-sm font-light">Monumental infrastructure engineered for generational scale.</p>
                       </a>
-                      <a href="/foundations/financial-sophistication" data-link class="glass-card">
-                        <span class="technical-label">FOUNDATION 03</span>
-                        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; font-weight: 400; margin: 1rem 0; color: #ffffff;">Financial Sophistication</h3>
-                        <p style="color: #94a3b8; font-size: 0.95rem; font-weight: 300;">Disciplined capital allocation frameworks and resource architecture.</p>
+                      <a href="/foundations/financial-sophistication" data-link class="glass-card p-8 space-y-4">
+                        <span class="text-xs font-mono text-[#B99D6B] bg-[#080909] px-3 py-1 rounded border border-white/20">FOUNDATION 03</span>
+                        <h3 class="text-2xl font-serif text-white">Financial Sophistication</h3>
+                        <p class="text-slate-300 text-sm font-light">Disciplined capital allocation frameworks and resource architecture.</p>
                       </a>
-                      <a href="/foundations/global-ecosystem" data-link class="glass-card">
-                        <span class="technical-label">FOUNDATION 04</span>
-                        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; font-weight: 400; margin: 1rem 0; color: #ffffff;">Global Ecosystem</h3>
-                        <p style="color: #94a3b8; font-size: 0.95rem; font-weight: 300;">An interconnected network uniting eleven strategic horizons.</p>
+                      <a href="/foundations/global-ecosystem" data-link class="glass-card p-8 space-y-4">
+                        <span class="text-xs font-mono text-[#B99D6B] bg-[#080909] px-3 py-1 rounded border border-[#B99D6B]/30">FOUNDATION 04</span>
+                        <h3 class="text-2xl font-serif text-white">Global Ecosystem</h3>
+                        <p class="text-slate-300 text-sm font-light">An interconnected network uniting eleven strategic horizons.</p>
                       </a>
                     </div>
                   </section>
@@ -699,129 +342,58 @@
             `;
         }
 
-        function renderInstitution() {
+        function renderPage(title, category, description, imageAsset) {
             return `
-                <main class="page-container">
-                  <div class="glass-panel" style="display: flex; flex-direction: column; gap: 2rem;">
-                    <span class="technical-label">THE INSTITUTION</span>
-                    <h1 class="page-title" style="font-size: 4rem; font-weight: 300; color: #ffffff;">The Architecture of Permanence</h1>
-                    <p style="font-size: 1.25rem; color: #cbd5e1; font-weight: 300; line-height: 1.7;">
-                      TOVENZA is an emerging institutional vision built around long-term thinking, structural integrity, responsible stewardship, and the creation of enduring opportunities.
-                    </p>
-                    <div style="display: flex; gap: 1.5rem; margin-top: 2rem;">
-                      <a href="/governance" data-link class="technical-btn-primary">VIEW GOVERNANCE</a>
-                      <a href="/gateway" data-link class="technical-btn">INSTITUTIONAL CONCIERGE</a>
-                    </div>
-                  </div>
-                </main>
-            `;
-        }
-
-        function renderFoundation(title, code, desc) {
-            return `
-                <main class="page-container">
-                  <div class="glass-panel" style="display: flex; flex-direction: column; gap: 2rem;">
-                    <span class="technical-label">${code} • FOUNDATION ARCHITECTURE</span>
-                    <h1 class="page-title" style="font-size: 4rem; font-weight: 300; color: #ffffff;">${title}</h1>
-                    <p style="font-size: 1.25rem; color: #cbd5e1; font-weight: 300; line-height: 1.7;">${desc}</p>
-                    <div style="margin-top: 2rem;">
-                      <a href="/" data-link class="technical-btn">← RETURN TO HOME</a>
-                    </div>
-                  </div>
-                </main>
-            `;
-        }
-
-        function renderHorizon(title, code, desc) {
-            return `
-                <main class="page-container">
-                  <div class="glass-panel" style="display: flex; flex-direction: column; gap: 2rem;">
-                    <span class="technical-label">STRATEGIC HORIZON — ${code}</span>
-                    <h1 class="page-title" style="font-size: 4rem; font-weight: 300; color: #ffffff;">${title}</h1>
-                    <p style="font-size: 1.25rem; color: #cbd5e1; font-weight: 300; line-height: 1.7;">${desc}</p>
-                    <p style="font-size: 0.9rem; color: var(--champagne-500); font-family: 'JetBrains Mono', monospace; margin-top: 1rem;">
-                      Note: This represents a long-term strategic horizon under exploration rather than an active operating subsidiary.
-                    </p>
-                    <div style="margin-top: 2rem;">
-                      <a href="/" data-link class="technical-btn">← RETURN TO HOME</a>
-                    </div>
-                  </div>
-                </main>
-            `;
-        }
-
-        function renderCapabilities() {
-            return `
-                <main class="page-container">
-                  <div class="glass-panel" style="display: flex; flex-direction: column; gap: 2rem;">
-                    <span class="technical-label">CAPABILITY SYSTEMS</span>
-                    <h1 class="page-title" style="font-size: 4rem; font-weight: 300; color: #ffffff;">Six Institutional Capability Systems</h1>
-                    <p style="font-size: 1.25rem; color: #cbd5e1; font-weight: 300; line-height: 1.7;">
-                      Collective structural capabilities under exploratory development, designed to support the long-term expansion of the digital empire.
-                    </p>
-                  </div>
-                </main>
-            `;
-        }
-
-        function renderGovernance() {
-            return `
-                <main class="page-container">
-                  <div class="glass-panel" style="display: flex; flex-direction: column; gap: 2rem;">
-                    <span class="technical-label">GOVERNANCE & STEWARDSHIP</span>
-                    <h1 class="page-title" style="font-size: 4rem; font-weight: 300; color: #ffffff;">Institutional Accountability</h1>
-                    <p style="font-size: 1.25rem; color: #cbd5e1; font-weight: 300; line-height: 1.7;">
-                      TOVENZA is guided by principles of accountability, transparency, disciplined decision-making, and responsible long-term stewardship. <em style="color: var(--champagne-500);">Beyond Business. Built to Endure.</em>
-                    </p>
-                  </div>
-                </main>
-            `;
-        }
-
-        function renderGateway() {
-            return `
-                <main class="page-container">
-                  <div class="glass-panel" style="display: flex; flex-direction: column; gap: 2rem; max-width: 800px; margin: 0 auto;">
-                    <span class="technical-label">THE INSTITUTIONAL GATEWAY</span>
-                    <h1 class="page-title" style="font-size: 3.5rem; font-weight: 300; color: #ffffff;">Connect with Concierge</h1>
-                    <p style="font-size: 1.125rem; color: #cbd5e1; font-weight: 300; line-height: 1.7;">
-                      For feedback, suggestions, enquiries or assistance, connect with the TOVENZA team. We value every interaction and continuously strive to improve.
-                    </p>
-                    <div style="padding: 2rem; background: var(--obsidian-900); border: 1px solid var(--glass-border); border-radius: 8px; margin-top: 1rem;">
-                      <span class="technical-label">OFFICIAL CONCIERGE EMAIL:</span>
-                      <div style="margin-top: 0.75rem;">
-                        <a href="mailto:support.tovenza@gmail.com" style="font-family: 'JetBrains Mono', monospace; font-size: 1.25rem; color: #ffffff; text-decoration: underline;">support.tovenza@gmail.com</a>
+                <main class="max-w-7xl mx-auto px-8 py-16 space-y-12 relative z-10">
+                  <div class="glass-panel p-10 md:p-16 rounded-2xl border border-[#B99D6B]/30 space-y-6">
+                    <span class="text-xs font-mono text-[#B99D6B] uppercase tracking-[0.4em]">${category}</span>
+                    <h1 class="text-4xl md:text-6xl font-serif text-white font-light">${title}</h1>
+                    <p class="text-slate-300 text-lg font-light leading-relaxed max-w-3xl">${description}</p>
+                    
+                    ${imageAsset ? `
+                      <div class="rounded-xl overflow-hidden border border-[#B99D6B]/20 my-8 shadow-2xl">
+                        <img src="/assets/images/${imageAsset}" alt="${title}" class="w-full h-[450px] object-cover opacity-90 hover:opacity-100 transition duration-700">
                       </div>
+                    ` : ''}
+
+                    <div class="pt-6">
+                      <a href="/" data-link class="px-6 py-3 rounded-lg bg-[#14141f] border border-white/20 text-xs font-mono text-slate-300 hover:text-white transition">
+                        ← Return to Gateway
+                      </a>
                     </div>
                   </div>
                 </main>
             `;
         }
 
-        function renderLegal() {
-            return `
-                <main class="page-container">
-                  <div class="glass-panel" style="display: flex; flex-direction: column; gap: 2rem;">
-                    <span class="technical-label">STATUTORY FRAMEWORK</span>
-                    <h1 class="page-title" style="font-size: 4rem; font-weight: 300; color: #ffffff;">Legal & Privacy Framework</h1>
-                    <p style="font-size: 1.25rem; color: #cbd5e1; font-weight: 300; line-height: 1.7;">
-                      Statutory compliance and terms of sovereign digital use. (Pending actual policy content drafting and professional jurisdictional review).
-                    </p>
-                  </div>
+        function handleRoute() {
+            let path = window.location.pathname;
+            if (path === '' || path === undefined) path = '/';
+            const viewContainer = document.getElementById('router-view');
+            const renderFunc = routes[path] || (() => `
+                <main class="max-w-7xl mx-auto px-8 py-32 text-center relative z-10">
+                  <span class="text-xs font-mono text-[#B99D6B]">SECTOR 404</span>
+                  <h1 class="text-4xl font-serif text-white mt-4 mb-2">Architectural Sector Not Found</h1>
+                  <p class="text-slate-400 mb-8">The requested coordinate does not exist within the digital empire.</p>
+                  <a href="/" data-link class="px-6 py-3 bg-[#B99D6B] text-black font-mono text-xs uppercase rounded">Return to Gateway</a>
                 </main>
-            `;
+            `);
+            if (viewContainer) viewContainer.innerHTML = renderFunc();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function renderNotFound() {
-            return `
-                <main class="page-container" style="text-align: center; padding-top: 10rem;">
-                  <span class="technical-label">SECTOR 404</span>
-                  <h1 class="page-title" style="font-size: 4rem; font-weight: 300; color: #ffffff; margin: 1rem 0;">Architectural Sector Not Found</h1>
-                  <p style="color: #94a3b8; margin-bottom: 2rem;">The requested coordinate does not exist within the digital empire.</p>
-                  <a href="/" data-link class="technical-btn-primary">RETURN TO GATEWAY</a>
-                </main>
-            `;
-        }
+        window.addEventListener('popstate', handleRoute);
+        document.body.addEventListener('click', (e) => {
+            const link = e.target.closest('[data-link]');
+            if (link) {
+                e.preventDefault();
+                const href = link.getAttribute('href');
+                window.history.pushState({}, '', href);
+                handleRoute();
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', handleRoute);
     </script>
 </body>
 </html>
