@@ -59,18 +59,20 @@
         <div class="absolute top-1/3 -right-40 w-[600px] h-[600px] rounded-full bg-burgundy-900/20 blur-[170px] vfx-orb-2"></div>
     </div>
 
-    <!-- Minimalist Sovereign Brand Header -->
+    <!-- Sovereign Header with Ecosystem Toggle -->
     <header class="sticky top-0 z-50 backdrop-blur-2xl bg-obsidian-900/90 border-b border-white/10 shadow-2xl">
         <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between relative z-10">
-            <div class="flex items-center space-x-4 cursor-pointer group" onclick="switchTab('hub')">
+            <div class="flex items-center space-x-4 cursor-pointer group" onclick="switchView('home')">
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center font-extrabold text-black text-2xl shadow-xl shadow-gold-500/20 border border-gold-300/40 group-hover:scale-105 transition">T</div>
                 <div>
                     <span class="text-2xl font-black tracking-[0.25em] text-white">TOVENZA</span>
                     <span class="block text-[10px] tracking-[0.35em] text-gold-400 uppercase font-bold">Global Institutional Headquarters</span>
                 </div>
             </div>
-            <div class="text-xs font-mono text-gold-400/80 tracking-widest uppercase hidden md:block">
-                Sovereign Empire Overview
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleEcosystem()" id="ecosystem-toggle-btn" class="px-6 py-2.5 rounded-xl bg-obsidian-800 border border-gold-500/40 text-gold-400 font-bold text-xs tracking-wider uppercase hover:bg-gold-500 hover:text-black transition shadow-lg">
+                    ✦ Explore 11 Verticals & Services
+                </button>
             </div>
         </div>
     </header>
@@ -78,11 +80,11 @@
     <!-- MAIN CONTAINER -->
     <main class="max-w-7xl mx-auto w-full px-6 py-16 flex-grow relative z-10">
 
-        <!-- HOMEPAGE OVERVIEW (HUB) -->
-        <section id="tab-hub" class="space-y-24">
+        <!-- VIEW 1: HOME (FOUNDATIONS OVERVIEW) -->
+        <div id="view-home" class="space-y-24">
             
-            <!-- Hero Section: Pure Empire Overview -->
-            <div class="relative rounded-3xl overflow-hidden border border-gold-500/30 shadow-2xl p-8 md:p-16 flex flex-col justify-end min-h-[550px]">
+            <!-- Hero Section -->
+            <div class="relative rounded-3xl overflow-hidden border border-gold-500/30 shadow-2xl p-8 md:p-16 flex flex-col justify-end min-h-[500px]">
                 <div class="absolute inset-0 z-0">
                     <img src="world2.png" alt="Obsidian Luxury Hero" class="w-full h-full object-cover opacity-60">
                     <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900 via-obsidian-900/60 to-transparent"></div>
@@ -92,93 +94,132 @@
                         BUILDING BEYOND <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-400 to-amber-600">BOUNDARIES.</span>
                     </h1>
                     <p class="text-slate-300 text-lg md:text-xl font-light leading-relaxed max-w-3xl">
-                        An integrated institutional ecosystem designed to create, develop, and manage generational opportunities across eleven canonical verticals and six centralized capability systems. Absolute structural architecture engineered for enduring dominion.
+                        An integrated institutional ecosystem designed to create, develop, and manage generational opportunities across eleven canonical verticals and six centralized capability systems. Click into our foundational pillars below to explore the architecture of absolute permanence.
                     </p>
                 </div>
             </div>
 
-            <!-- The Four Foundational Pillars Showcase -->
+            <!-- The Four Interactive Foundation Cards -->
             <div class="space-y-8 pt-10">
                 <div class="border-b border-white/10 pb-4 flex justify-between items-end">
                     <div>
-                        <span class="text-xs font-mono text-gold-400 uppercase tracking-widest">Architectural Identity</span>
-                        <h2 class="text-3xl font-extrabold text-white">Our Four Foundational Pillars</h2>
+                        <span class="text-xs font-mono text-gold-400 uppercase tracking-widest">Interactive Architectural Identity</span>
+                        <h2 class="text-3xl font-extrabold text-white">Click a Foundation to Enter Deep Intelligence</h2>
                     </div>
                     <span class="text-xs font-mono text-slate-500 hidden md:block">Unreal Engine 5 & Octane Render Standards</span>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Foundation 1: Sovereign Identity & Minimalist Authority -->
-                    <div class="rounded-3xl glass-obsidian border border-gold-500/30 overflow-hidden shadow-2xl group flex flex-col justify-between">
-                        <div>
-                            <div class="h-64 overflow-hidden relative">
-                                <img src="world2.png" alt="Sovereign Identity" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-                                <span class="absolute top-4 left-4 text-xs font-mono text-gold-400 font-bold bg-obsidian-900/90 px-3 py-1 rounded border border-gold-500/30">FOUNDATION 01</span>
-                            </div>
-                            <div class="p-8 space-y-4">
-                                <h3 class="text-2xl font-bold text-white group-hover:text-gold-400 transition">Sovereign Identity & Minimalist Authority</h3>
-                                <div class="space-y-3 text-slate-300 text-sm leading-relaxed">
-                                    <p><strong class="text-gold-400">What We Do:</strong> We architect absolute digital and physical sovereign environments that eliminate noise and radiate uncompromised executive power.</p>
-                                    <p><strong class="text-gold-400">Why We Are Here:</strong> To protect leaders and high-net-worth institutions from the psychological exhaustion of modern transience, establishing permanent sanctuaries of trust.</p>
-                                    <p><strong class="text-gold-400">Services Provided:</strong> Elite brand architecture, hyper-securitized digital presence, and structural prestige positioning.</p>
-                                    <p><strong class="text-gold-400">Why Customers Need Us:</strong> In high-stakes arenas, uncertainty is the enemy of capital. Clients partner with us because human behavior is inherently drawn to visual and structural permanence. We anchor your legacy in immutable prestige, ensuring stakeholders feel absolute, instinctive trust at first glance.</p>
-                                </div>
-                            </div>
+                    <!-- Foundation 1 -->
+                    <div onclick="openFoundationModal(1)" class="rounded-3xl glass-obsidian border border-gold-500/30 overflow-hidden shadow-2xl group cursor-pointer hover:border-gold-500 transition duration-500">
+                        <div class="h-64 overflow-hidden relative">
+                            <img src="world2.png" alt="Sovereign Identity" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                            <span class="absolute top-4 left-4 text-xs font-mono text-gold-400 font-bold bg-obsidian-900/90 px-3 py-1 rounded border border-gold-500/30">FOUNDATION 01 (CLICK TO EXPLORE)</span>
+                        </div>
+                        <div class="p-8 space-y-3">
+                            <h3 class="text-2xl font-bold text-white group-hover:text-gold-400 transition">Sovereign Identity & Minimalist Authority</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed">Discover how absolute digital and physical sovereign environments eliminate executive friction and establish permanent sanctuaries of trust.</p>
+                            <span class="inline-block pt-2 text-xs font-bold text-gold-400 tracking-wider">Inspect Deep Intelligence →</span>
                         </div>
                     </div>
 
-                    <!-- Foundation 2: Architectural Authority & Institutional Scale -->
-                    <div class="rounded-3xl glass-obsidian border border-white/10 overflow-hidden shadow-2xl group flex flex-col justify-between">
-                        <div>
-                            <div class="h-64 overflow-hidden relative">
-                                <img src="world3.png" alt="Architectural Authority" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-                                <span class="absolute top-4 left-4 text-xs font-mono text-gold-400 font-bold bg-obsidian-900/90 px-3 py-1 rounded border border-white/20">FOUNDATION 02</span>
-                            </div>
-                            <div class="p-8 space-y-4">
-                                <h3 class="text-2xl font-bold text-white group-hover:text-gold-400 transition">Architectural Authority & Institutional Scale</h3>
-                                <div class="space-y-3 text-slate-300 text-sm leading-relaxed">
-                                    <p><strong class="text-gold-400">What We Do:</strong> We construct monumental institutional infrastructure and governance frameworks engineered to command generational respect.</p>
-                                    <p><strong class="text-gold-400">Why We Are Here:</strong> To alleviate the immense psychological burden of organizational growth by transforming structural complexity into seamless, self-sustaining order.</p>
-                                    <p><strong class="text-gold-400">Services Provided:</strong> Real estate asset stewardship, multi-vertical operational headquarters design, and fortress-grade risk governance.</p>
-                                    <p><strong class="text-gold-400">Why Customers Need Us:</strong> Scale breeds vulnerability; rapid expansion without discipline creates internal chaos. Visionary leaders experience profound cognitive load when managing multi-tier assets. We relieve this operational anxiety, engineering absolute structural certainty so you can govern with complete peace of mind.</p>
-                                </div>
-                            </div>
+                    <!-- Foundation 2 -->
+                    <div onclick="openFoundationModal(2)" class="rounded-3xl glass-obsidian border border-white/10 overflow-hidden shadow-2xl group cursor-pointer hover:border-gold-500 transition duration-500">
+                        <div class="h-64 overflow-hidden relative">
+                            <img src="world3.png" alt="Architectural Authority" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                            <span class="absolute top-4 left-4 text-xs font-mono text-gold-400 font-bold bg-obsidian-900/90 px-3 py-1 rounded border border-white/20">FOUNDATION 02 (CLICK TO EXPLORE)</span>
+                        </div>
+                        <div class="p-8 space-y-3">
+                            <h3 class="text-2xl font-bold text-white group-hover:text-gold-400 transition">Architectural Authority & Institutional Scale</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed">Explore how we transform organizational complexity and operational anxiety into seamless, self-sustaining sovereign order.</p>
+                            <span class="inline-block pt-2 text-xs font-bold text-gold-400 tracking-wider">Inspect Deep Intelligence →</span>
                         </div>
                     </div>
 
                     <!-- Foundation 3 -->
-                    <div class="rounded-3xl glass-obsidian border border-white/10 overflow-hidden shadow-2xl group">
-                        <div class="h-56 overflow-hidden relative">
+                    <div onclick="openFoundationModal(3)" class="rounded-3xl glass-obsidian border border-white/10 overflow-hidden shadow-2xl group cursor-pointer hover:border-gold-500 transition duration-500">
+                        <div class="h-64 overflow-hidden relative">
                             <img src="world3.png" alt="Financial Sophistication" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-                            <span class="absolute top-4 left-4 text-xs font-mono text-gold-400 font-bold bg-obsidian-900/90 px-3 py-1 rounded border border-white/20">FOUNDATION 03</span>
+                            <span class="absolute top-4 left-4 text-xs font-mono text-gold-400 font-bold bg-obsidian-900/90 px-3 py-1 rounded border border-white/20">FOUNDATION 03 (CLICK TO EXPLORE)</span>
                         </div>
                         <div class="p-8 space-y-3">
                             <h3 class="text-2xl font-bold text-white group-hover:text-gold-400 transition">Financial Sophistication</h3>
-                            <p class="text-slate-300 text-sm leading-relaxed">Financial intelligence and strategic discipline. Extraordinary private financial interiors, floating geometric structures, and precision-engineered architectural elements.</p>
+                            <p class="text-slate-300 text-sm leading-relaxed">Uncover disciplined capital allocation, intelligent cash recycling, and wealth architectures built to endure across generations.</p>
+                            <span class="inline-block pt-2 text-xs font-bold text-gold-400 tracking-wider">Inspect Deep Intelligence →</span>
                         </div>
                     </div>
 
                     <!-- Foundation 4 -->
-                    <div class="rounded-3xl glass-obsidian border border-gold-500/30 overflow-hidden shadow-2xl group">
-                        <div class="h-56 overflow-hidden relative">
+                    <div onclick="openFoundationModal(4)" class="rounded-3xl glass-obsidian border border-gold-500/30 overflow-hidden shadow-2xl group cursor-pointer hover:border-gold-500 transition duration-500">
+                        <div class="h-64 overflow-hidden relative">
                             <img src="world1.png" alt="Global Ecosystem" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-                            <span class="absolute top-4 left-4 text-xs font-mono text-gold-400 font-bold bg-obsidian-900/90 px-3 py-1 rounded border border-gold-500/30">FOUNDATION 04</span>
+                            <span class="absolute top-4 left-4 text-xs font-mono text-gold-400 font-bold bg-obsidian-900/90 px-3 py-1 rounded border border-gold-500/30">FOUNDATION 04 (CLICK TO EXPLORE)</span>
                         </div>
                         <div class="p-8 space-y-3">
                             <h3 class="text-2xl font-bold text-white group-hover:text-gold-400 transition">Global Ecosystem</h3>
-                            <p class="text-slate-300 text-sm leading-relaxed">One connected institution operating through multiple verticals. A breathtaking illuminated globe with interconnected golden pathways connecting nodes across continents.</p>
+                            <p class="text-slate-300 text-sm leading-relaxed">Examine our interconnected multi-vertical network uniting eleven P&L domains and six central capability systems under one vision.</p>
+                            <span class="inline-block pt-2 text-xs font-bold text-gold-400 tracking-wider">Inspect Deep Intelligence →</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+
+        <!-- VIEW 2: FULL ECOSYSTEM & 11 VERTICALS (TOGGLED) -->
+        <div id="view-ecosystem" class="hidden space-y-16">
+            <div class="border-b border-white/10 pb-8 flex justify-between items-end">
+                <div>
+                    <span class="text-xs font-mono text-gold-400 uppercase tracking-widest">Complete Institutional Directory</span>
+                    <h2 class="text-4xl font-extrabold text-white mt-1">The 11 Verticals & 6 Capability Systems</h2>
+                </div>
+                <button onclick="switchView('home')" class="px-5 py-2.5 rounded-xl bg-obsidian-800 border border-white/20 text-xs text-slate-300 hover:text-white">← Return to Foundations Overview</button>
+            </div>
+
+            <!-- Verticals Grid -->
+            <div class="space-y-6">
+                <h3 class="text-xl font-bold text-gold-400">The Eleven Canonical Industry Verticals</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-01</span><h4 class="text-xl font-bold text-white mt-2">Recruitment, Staffing & HR</h4><p class="text-slate-400 text-xs mt-1">High-volume talent acquisition and workforce operations.</p></div>
+                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-02</span><h4 class="text-xl font-bold text-white mt-2">Healthcare & Diagnostics</h4><p class="text-slate-400 text-xs mt-1">Human vitality and biological longevity infrastructure.</p></div>
+                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-03</span><h4 class="text-xl font-bold text-white mt-2">Hospitality</h4><p class="text-slate-400 text-xs mt-1">Curated human experience and spatial service excellence.</p></div>
+                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-04</span><h4 class="text-xl font-bold text-white mt-2">Real Estate & Property</h4><p class="text-slate-400 text-xs mt-1">Asset stewardship and spatial development architecture.</p></div>
+                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-05</span><h4 class="text-xl font-bold text-white mt-2">Technology, AI & Software</h4><p class="text-slate-400 text-xs mt-1">Digital nervous system and microservice automation.</p></div>
+                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-06</span><h4 class="text-xl font-bold text-white mt-2">Business Consulting</h4><p class="text-slate-400 text-xs mt-1">Strategic corporate transformation and scale advisory.</p></div>
+                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-07</span><h4 class="text-xl font-bold text-white mt-2">Psychology & Wellbeing</h4><p class="text-slate-400 text-xs mt-1">Behavioral science and organizational psychology.</p></div>
+                    <div class="p-6 rounded-3xl glass-obsidian border-2 border-gold-500 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-08 (FEATURED)</span><h4 class="text-xl font-bold text-white mt-2">Jyotish Tech & AI Astrology</h4><p class="text-slate-400 text-xs mt-1">Temporal analytics and Kundli audit engine.</p></div>
+                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-09</span><h4 class="text-xl font-bold text-white mt-2">Education & Learning</h4><p class="text-slate-400 text-xs mt-1">Systematic transmission of capability and worldview.</p></div>
+                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-10</span><h4 class="text-xl font-bold text-white mt-2">Retail</h4><p class="text-slate-400 text-xs mt-1">Consumer touchpoints and experiential brand psychology.</p></div>
+                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl md:col-span-2 lg:col-span-1"><span class="text-xs font-mono text-gold-400 font-bold">VERT-11</span><h4 class="text-xl font-bold text-white mt-2">Future Industries</h4><p class="text-slate-400 text-xs mt-1">Frontier arm capturing energy, biotech, and emergent tech.</p></div>
+                </div>
+            </div>
+        </div>
 
     </main>
+
+    <!-- DEEP DIVE FOUNDATION MODAL -->
+    <div id="foundationModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl hidden flex items-center justify-center p-4 md:p-10 overflow-y-auto">
+        <div class="glass-obsidian max-w-4xl w-full p-8 md:p-12 rounded-3xl space-y-8 relative text-slate-100 border border-gold-500/50 shadow-2xl my-auto">
+            <button onclick="closeFoundationModal()" class="absolute top-6 right-6 text-gold-400 hover:text-white text-2xl font-bold">✕</button>
+            <div>
+                <span id="modal-tag" class="text-xs font-mono text-gold-400 bg-obsidian-900 px-3 py-1 rounded border border-gold-500/30 uppercase tracking-widest">Foundation 01</span>
+                <h2 id="modal-title" class="text-3xl md:text-4xl font-extrabold text-white mt-3">Title Here</h2>
+            </div>
+            
+            <div id="modal-content" class="space-y-6 text-slate-300 text-base leading-relaxed">
+                <!-- Dynamically injected deep description -->
+            </div>
+
+            <div class="pt-6 border-t border-white/10 flex justify-between items-center">
+                <span class="text-xs font-mono text-gold-400">TOVENZA INSTITUTIONAL STANDARD</span>
+                <button onclick="closeFoundationModal()" class="px-6 py-3 rounded-xl bg-gold-500 text-black font-bold text-xs uppercase tracking-wider">Close & Return</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="max-w-7xl mx-auto w-full px-6 py-10 border-t border-white/10 flex justify-between items-center text-xs text-slate-500 relative z-10">
         <div>&copy; 2026 TOVENZA Global Ecosystem. All Rights Reserved.</div>
-        <div class="font-mono tracking-widest text-gold-400 font-bold">OBSIDIAN LUXURY & CINEMATIC 3D HEADQUARTERS</div>
+        <div class="font-mono tracking-widest text-gold-400 font-bold">SOVEREIGN ARCHITECTURE & PERMANENCE</div>
     </footer>
 
     <!-- THREE.JS 3D BACKGROUND ENGINE -->
@@ -250,8 +291,124 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        function switchTab(tabId) {
-            // Main navigation logic placeholder
+        // Toggle Ecosystem View
+        let isEcosystemOpen = false;
+        function toggleEcosystem() {
+            isEcosystemOpen = !isEcosystemOpen;
+            if(isEcosystemOpen) {
+                document.getElementById('view-home').classList.add('hidden');
+                document.getElementById('view-ecosystem').classList.remove('hidden');
+                document.getElementById('ecosystem-toggle-btn').innerText = "← Return to Home Overview";
+            } else {
+                switchView('home');
+            }
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function switchView(viewName) {
+            isEcosystemOpen = false;
+            document.getElementById('view-ecosystem').classList.add('hidden');
+            document.getElementById('view-home').classList.remove('hidden');
+            document.getElementById('ecosystem-toggle-btn').innerText = "✦ Explore 11 Verticals & Services";
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // Deep Intelligence Modal Data & Functions
+        const foundationData = {
+            1: {
+                tag: "Foundation 01 • Sovereign Identity",
+                title: "Sovereign Identity & Minimalist Authority",
+                html: `
+                    <p class="text-lg text-gold-300 font-light italic">"Throughout your professional and executive life, you have felt the exhausting friction of noisy digital environments, transient branding, and shallow corporate presence. You were missing an absolute sanctuary of prestige."</p>
+                    <div class="space-y-4 pt-4 border-t border-white/10">
+                        <h4 class="text-white font-bold text-lg">What We Do</h4>
+                        <p>We architect absolute digital and physical sovereign environments that eliminate market noise, strip away superficial corporate clutter, and radiate uncompromised executive power. Every touchpoint is meticulously engineered to command instantaneous respect.</p>
+                        
+                        <h4 class="text-white font-bold text-lg pt-2">Why We Are Here</h4>
+                        <p>To protect leaders, visionaries, and high-net-worth institutions from the psychological fatigue of modern transience. We establish permanent sanctuaries of trust where your legacy is preserved in immutable stone and pristine digital architecture.</p>
+                        
+                        <h4 class="text-white font-bold text-lg pt-2">Services Provided</h4>
+                        <p>Elite brand architecture, hyper-securitized digital presence, executive thought-leadership positioning, and monumental visual identity governance.</p>
+                        
+                        <h4 class="text-white font-bold text-lg pt-2">Why Customers Desperately Need Us (The Human & Behavioral Connection)</h4>
+                        <p>In high-stakes arenas, uncertainty is the silent killer of capital and partnership. Human psychology is hardwired to seek safety in visual permanence—when stakeholders encounter amateurish or chaotic branding, their nervous systems register risk. Clients partner with us because we bridge that psychological gap. We engineer absolute structural prestige so that when partners, investors, or boards look at your institution, their cognitive reaction is immediate, instinctive, and unshakable trust.</p>
+                    </div>
+                `
+            },
+            2: {
+                tag: "Foundation 02 • Architectural Authority",
+                title: "Architectural Authority & Institutional Scale",
+                html: `
+                    <p class="text-lg text-gold-300 font-light italic">"Scaling an empire without disciplined infrastructure breeds internal chaos, operational bottlenecks, and profound cognitive fatigue. You needed an institutional backbone that breathes stability."</p>
+                    <div class="space-y-4 pt-4 border-t border-white/10">
+                        <h4 class="text-white font-bold text-lg">What We Do</h4>
+                        <p>We construct monumental institutional infrastructure, multi-vertical holding frameworks, and governance systems engineered to command generational respect and endure economic shifts.</p>
+                        
+                        <h4 class="text-white font-bold text-lg pt-2">Why We Are Here</h4>
+                        <p>To alleviate the immense psychological burden of organizational expansion by transforming complex regulatory, legal, and operational hurdles into seamless, self-sustaining sovereign order.</p>
+                        
+                        <h4 class="text-white font-bold text-lg pt-2">Services Provided</h4>
+                        <p>Real estate asset stewardship, multi-vertical operational headquarters design, corporate legal governance (Companies Act compliance, SBO structuring), and fortress-grade risk mitigation.</p>
+                        
+                        <h4 class="text-white font-bold text-lg pt-2">Why Customers Desperately Need Us (The Human & Behavioral Connection)</h4>
+                        <p>Growth without structural foundation creates executive burnout. Leaders find themselves trapped managing firefighting operations instead of vision. We relieve this operational anxiety entirely. We step in as your sovereign architectural shield, allowing you to govern from a place of absolute clarity, knowing your entire enterprise is protected by uncompromised, generational engineering.</p>
+                    </div>
+                `
+            },
+            3: {
+                tag: "Foundation 03 • Financial Sophistication",
+                title: "Financial Sophistication",
+                html: `
+                    <p class="text-lg text-gold-300 font-light italic">"Traditional capital management is short-sighted, reactive, and vulnerable. You needed an intelligent, self-sustaining financial architecture designed for generational permanence."</p>
+                    <div class="space-y-4 pt-4 border-t border-white/10">
+                        <h4 class="text-white font-bold text-lg">What We Do</h4>
+                        <p>We engineer disciplined capital allocation frameworks, intelligent cash-recycling models, and multi-stream asset accumulation strategies across our eleven canonical verticals.</p>
+                        
+                        <h4 class="text-white font-bold text-lg pt-2">Why We Are Here</h4>
+                        <p>To ensure that accumulated wealth and institutional resources are never left exposed to market volatility, ensuring perpetual compounding and sovereign financial independence.</p>
+                        
+                        <h4 class="text-white font-bold text-lg pt-2">Services Provided</h4>
+                        <p>Treasury optimization, private financial architecture advisory, cross-subsidiary cash-flow management, and long-term liquidity engineering.</p>
+                        
+                        <h4 class="text-white font-bold text-lg pt-2">Why Customers Desperately Need Us (The Human & Behavioral Connection)</h4>
+                        <p>Financial anxiety paralyzes bold decision-making. When capital is managed through disjointed, reactive systems, leaders constantly look over their shoulders. Our financial architecture provides absolute peace of mind—replacing monetary uncertainty with rigorous mathematical and structural certainty.</p>
+                    </div>
+                `
+            },
+            4: {
+                tag: "Foundation 04 • Global Ecosystem",
+                title: "Global Ecosystem",
+                html: `
+                    <p class="text-lg text-gold-300 font-light italic">"Operating in isolated silos limits your institutional leverage. You needed a unified global network where every vertical strengthens the whole."</p>
+                    <div class="space-y-4 pt-4 border-t border-white/10">
+                        <h4 class="text-white font-bold text-lg">What We Do</h4>
+                        <p>We unite eleven distinct P&L industry verticals and six central capability systems into a breathtaking, interconnected global organism operating with unified vision and shared resources.</p>
+                        
+                        <h4 class="text-white font-bold text-lg pt-2">Why We Are Here</h4>
+                        <p>To eradicate administrative redundancy and maximize cross-industry synergies, allowing our ecosystem to compound capabilities faster than any standalone enterprise.</p>
+                        
+                        <h4 class="text-white font-bold text-lg pt-2">Services Provided</h4>
+                        <p>Centralized shared services, cross-vertical workforce deployment, unified technology infrastructure, and global strategic expansion oversight.</p>
+                        
+                        <h4 class="text-white font-bold text-lg pt-2">Why Customers Desperately Need Us (The Human & Behavioral Connection)</h4>
+                        <p>Modern enterprises often feel fragmented and disconnected. Leaders struggle to align disparate divisions. We offer a singular, harmonious ecosystem where every node supports every other node, providing the ultimate sense of coordinated, unstoppable global momentum.</p>
+                    </div>
+                `
+            }
+        };
+
+        function openFoundationModal(id) {
+            const data = foundationData[id];
+            document.getElementById('modal-tag').innerText = data.tag;
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-content').innerHTML = data.html;
+            document.getElementById('foundationModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFoundationModal() {
+            document.getElementById('foundationModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
         }
     </script>
 </body>
