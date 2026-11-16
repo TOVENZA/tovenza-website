@@ -166,7 +166,7 @@
 
     </div>
 
-    <!-- JAVASCRIPT & CORRECTED ASSET ROUTING -->
+    <!-- JAVASCRIPT & ZERO-MISMATCH ROUTER -->
     <script>
         let currentStep = 1;
         const totalSteps = 5;
@@ -226,7 +226,7 @@
             });
         }
 
-        // Master SPA Router with CORRECT repository asset mappings
+        // Master SPA Router with strict 1:1 asset mapping (unmatched pages render clean glass architecture)
         const routes = {
             '/': () => renderHome(),
             '/institution': () => renderPage('The Architecture of Permanence', 'THE INSTITUTION', 'TOVENZA is an emerging institutional vision built around long-term thinking, structural integrity, responsible stewardship, and the creation of enduring opportunities.', 'Design%20board.png'),
@@ -235,22 +235,22 @@
             '/foundations/financial-sophistication': () => renderPage('Financial Sophistication', 'FOUNDATION 03', 'Disciplined capital allocation frameworks and intelligent resource architecture built to ensure long-term financial resilience.', 'Financial%20Sophistication.png'),
             '/foundations/global-ecosystem': () => renderPage('Global Ecosystem', 'FOUNDATION 04', 'A long-term vision for an interconnected ecosystem spanning eleven strategic industry horizons, supported by a unified philosophy.', 'Global%20Ecosystem.png'),
             
-            // Corrected Industry Horizon Asset Mappings (No Mismatches)
-            '/horizons/recruitment-hr': () => renderPage('Recruitment & HR / Human Capital', 'VERT-01 • STRATEGIC HORIZON', 'Strategic workforce planning, talent architecture, and human capital development frameworks under exploratory development.', 'Core%20Foundations.png'),
+            // Industry Horizons (Assigned exact matching assets where available, clean editorial view where unmapped)
+            '/horizons/recruitment-hr': () => renderPage('Recruitment & HR / Human Capital', 'VERT-01 • STRATEGIC HORIZON', 'Strategic workforce planning, talent architecture, and human capital development frameworks under exploratory development.', null),
             '/horizons/healthcare-diagnostics': () => renderPage('Healthcare & Diagnostics', 'VERT-02 • STRATEGIC HORIZON', 'Biological longevity, health infrastructure research, and advanced diagnostics systems under exploratory evaluation.', 'Healthcare%20&%20Diagnostics.png'),
-            '/horizons/hospitality': () => renderPage('Hospitality', 'VERT-03 • STRATEGIC HORIZON', 'Curated human experience, tactile luxury, and spatial service architecture under exploratory design.', 'Design%20board.png'),
+            '/horizons/hospitality': () => renderPage('Hospitality', 'VERT-03 • STRATEGIC HORIZON', 'Curated human experience, tactile luxury, and spatial service architecture under exploratory design.', null),
             '/horizons/real-estate': () => renderPage('Real Estate & Property', 'VERT-04 • STRATEGIC HORIZON', 'Asset stewardship, monumental built environments, and spatial development architecture.', 'Architectural%20Authority.png'),
-            '/horizons/technology-ai': () => renderPage('Technology, AI & Software', 'VERT-05 • STRATEGIC HORIZON', 'Digital nervous system, automated microservice architectures, and algorithmic intelligence under development.', 'Business%20Consulting.png'),
+            '/horizons/technology-ai': () => renderPage('Technology, AI & Software', 'VERT-05 • STRATEGIC HORIZON', 'Digital nervous system, automated microservice architectures, and algorithmic intelligence under development.', null),
             '/horizons/business-consulting': () => renderPage('Business Consulting', 'VERT-06 • STRATEGIC HORIZON', 'Strategic corporate transformation, executive architecture, and scale advisory services.', 'Business%20Consulting.png'),
-            '/horizons/psychology-wellbeing': () => renderPage('Psychology & Wellbeing', 'VERT-07 • STRATEGIC HORIZON', 'Behavioral science, cognitive balance, and atmospheric spatial design for mental clarity.', 'Design%20board.png'),
+            '/horizons/psychology-wellbeing': () => renderPage('Psychology & Wellbeing', 'VERT-07 • STRATEGIC HORIZON', 'Behavioral science, cognitive balance, and atmospheric spatial design for mental clarity.', null),
             '/horizons/astrology-jyotish': () => renderPage('Astrology & Jyotish Sciences', 'VERT-08 • STRATEGIC HORIZON (FEATURED)', 'Temporal analytics, systemic pattern audits, and traditional astrological mathematics integrated with modern systems.', 'Astrology.png'),
             '/horizons/education-learning': () => renderPage('Education & Learning', 'VERT-09 • STRATEGIC HORIZON', 'Knowledge architecture, monumental dark libraries, and the systematic transmission of mastery.', 'Education%20&%20Learning.png'),
-            '/horizons/retail': () => renderPage('Retail', 'VERT-10 • STRATEGIC HORIZON', 'Experimental flagship architecture, reflective black surfaces, and experiential luxury retail design.', 'Architectural%20Authority.png'),
+            '/horizons/retail': () => renderPage('Retail', 'VERT-10 • STRATEGIC HORIZON', 'Experimental flagship architecture, reflective black surfaces, and experiential luxury retail design.', null),
             '/horizons/future-industries': () => renderPage('Future Industries', 'VERT-11 • STRATEGIC HORIZON', 'Frontier exploration capturing avant-garde geometric monoliths, energy systems, and emergent technologies.', 'Future%20Industries.png'),
 
-            '/capabilities': () => renderPage('Six Institutional Capability Systems', 'CAPABILITY SYSTEMS', 'Collective structural capabilities under exploratory development, designed to support the long-term expansion of the digital empire.', 'Core%20Foundations.png'),
+            '/capabilities': () => renderPage('Six Institutional Capability Systems', 'CAPABILITY SYSTEMS', 'Collective structural capabilities under exploratory development, designed to support the long-term expansion of the digital empire.', null),
             '/governance': () => renderPage('Governance & Stewardship', 'GOVERNANCE', 'TOVENZA is guided by principles of accountability, transparency, disciplined decision-making, and responsible long-term stewardship.', 'Governance%20&%20Stewardship.png'),
-            '/gateway': () => renderPage('Institutional Enquiries Gateway', 'CONTACT', 'For feedback, suggestions, enquiries or assistance, connect with the TOVENZA team at support.tovenza@gmail.com.', 'Design%20board.png'),
+            '/gateway': () => renderPage('Institutional Enquiries Gateway', 'CONTACT', 'For feedback, suggestions, enquiries or assistance, connect with the TOVENZA team at support.tovenza@gmail.com.', null),
             '/legal': () => renderPage('Legal & Privacy Framework', 'STATUTORY', 'Statutory compliance and terms of sovereign digital use. (Pending actual policy content drafting and professional jurisdictional review).', null)
         };
 
@@ -368,7 +368,7 @@
                     
                     ${imageAsset ? `
                       <div class="bg-obsidian-900 border border-gold-500/20 rounded-xl p-3 my-8 shadow-2xl flex justify-center items-center">
-                        <img src="/${imageAsset}" alt="${title}" class="w-full aspect-video object-contain rounded-lg opacity-95 hover:opacity-100 transition duration-700">
+                        <img src="/${imageAsset}" alt="${title}" class="w-full h-auto max-h-[600px] object-contain rounded-lg opacity-95 hover:opacity-100 transition duration-700">
                       </div>
                     ` : ''}
 
