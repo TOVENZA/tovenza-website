@@ -69,6 +69,9 @@
         .gateway-step.active { opacity: 1; transform: translateY(0); }
         @keyframes pulseCore { 0%, 100% { transform: scale(1); opacity: 0.4; } 50% { transform: scale(2.2); opacity: 1; } }
         .void-pulse { width: 6px; height: 6px; background-color: #B99D6B; border-radius: 50%; margin: 0 auto 1.5rem auto; box-shadow: 0 0 25px #B99D6B; animation: pulseCore 2s infinite ease-in-out; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #030305; }
+        ::-webkit-scrollbar-thumb { background: #B99D6B; border-radius: 2px; }
     </style>
 </head>
 <body class="bg-[#030305] text-[#E9E4D9] font-sans antialiased selection:bg-[#B99D6B] selection:text-black min-h-screen flex flex-col justify-between relative overflow-x-hidden">
@@ -163,7 +166,7 @@
 
     </div>
 
-    <!-- JAVASCRIPT & REPOSITORY EXACT-MATCH ROUTING -->
+    <!-- JAVASCRIPT & ALL 11 HORIZONS ROUTER -->
     <script>
         let currentStep = 1;
         const totalSteps = 5;
@@ -223,7 +226,7 @@
             });
         }
 
-        // SPA Router mapped precisely to your repository's exact image filenames
+        // Master SPA Router mapped to all 21 Routes and all 11 Industry Horizons
         const routes = {
             '/': () => renderHome(),
             '/institution': () => renderPage('The Architecture of Permanence', 'THE INSTITUTION', 'TOVENZA is an emerging institutional vision built around long-term thinking, structural integrity, responsible stewardship, and the creation of enduring opportunities.', 'Design%20board.png'),
@@ -231,17 +234,20 @@
             '/foundations/architectural-authority': () => renderPage('Architectural Authority', 'FOUNDATION 02', 'Monumental institutional infrastructure and proposed governance frameworks engineered to command generational respect.', 'Architectural%20Authority.png'),
             '/foundations/financial-sophistication': () => renderPage('Financial Sophistication', 'FOUNDATION 03', 'Disciplined capital allocation frameworks and intelligent resource architecture built to ensure long-term financial resilience.', 'Financial%20Sophistication.png'),
             '/foundations/global-ecosystem': () => renderPage('Global Ecosystem', 'FOUNDATION 04', 'A long-term vision for an interconnected ecosystem spanning eleven strategic industry horizons, supported by a unified philosophy.', 'Global%20Ecosystem.png'),
-            '/horizons/recruitment-hr': () => renderPage('Recruitment & HR / Human Capital', 'STRATEGIC HORIZON — VERT-01', 'Strategic workforce planning and human capital development frameworks under exploratory development.', 'Core%20Foundations.png'),
-            '/horizons/healthcare-diagnostics': () => renderPage('Healthcare & Diagnostics', 'STRATEGIC HORIZON — VERT-02', 'Biological longevity and health infrastructure research frameworks.', 'Healthcare%20&%20Diagnostics.png'),
-            '/horizons/hospitality': () => renderPage('Hospitality', 'STRATEGIC HORIZON — VERT-03', 'Curated human experience and spatial service frameworks.', 'Core%20Foundations.png'),
-            '/horizons/real-estate': () => renderPage('Real Estate & Property', 'STRATEGIC HORIZON — VERT-04', 'Asset stewardship and spatial development architecture.', 'Architectural%20Authority.png'),
-            '/horizons/technology-ai': () => renderPage('Technology, AI & Software', 'STRATEGIC HORIZON — VERT-05', 'Digital nervous system and automated microservice architectures.', 'Future%20Industries.png'),
-            '/horizons/business-consulting': () => renderPage('Business Consulting', 'STRATEGIC HORIZON — VERT-06', 'Strategic corporate transformation and scale advisory.', 'Business%20Consulting.png'),
-            '/horizons/psychology-wellbeing': () => renderPage('Psychology & Wellbeing', 'STRATEGIC HORIZON — VERT-07', 'Behavioral science and organizational psychology frameworks.', 'Astrology.png'),
-            '/horizons/astrology-jyotish': () => renderPage('Astrology & Jyotish Sciences / Jyotish Tech', 'STRATEGIC HORIZON — VERT-08 (FEATURED)', 'Temporal analytics and systemic pattern audits bridging ancient wisdom with advanced technological auditing.', 'Astrology.png'),
-            '/horizons/education-learning': () => renderPage('Education & Learning', 'STRATEGIC HORIZON — VERT-09', 'Systematic transmission of capability and worldview.', 'Education%20&%20Learning.png'),
-            '/horizons/retail': () => renderPage('Retail', 'STRATEGIC HORIZON — VERT-10', 'Consumer touchpoints and experiential brand psychology.', 'Business%20Consulting.png'),
-            '/horizons/future-industries': () => renderPage('Future Industries', 'STRATEGIC HORIZON — VERT-11', 'Frontier exploration capturing energy, biotech, and emergent tech.', 'Future%20Industries.png'),
+            
+            // All 11 Industry Horizons Mapped
+            '/horizons/recruitment-hr': () => renderPage('Recruitment & HR / Human Capital', 'VERT-01 • STRATEGIC HORIZON', 'Strategic workforce planning, talent architecture, and human capital development frameworks under exploratory development.', 'Core%20Foundations.png'),
+            '/horizons/healthcare-diagnostics': () => renderPage('Healthcare & Diagnostics', 'VERT-02 • STRATEGIC HORIZON', 'Biological longevity, health infrastructure research, and advanced diagnostics systems under exploratory evaluation.', 'Healthcare%20&%20Diagnostics.png'),
+            '/horizons/hospitality': () => renderPage('Hospitality', 'VERT-03 • STRATEGIC HORIZON', 'Curated human experience, tactile luxury, and spatial service architecture under exploratory design.', 'Design%20board.png'),
+            '/horizons/real-estate': () => renderPage('Real Estate & Property', 'VERT-04 • STRATEGIC HORIZON', 'Asset stewardship, monumental built environments, and spatial development architecture.', 'Architectural%20Authority.png'),
+            '/horizons/technology-ai': () => renderPage('Technology, AI & Software', 'VERT-05 • STRATEGIC HORIZON', 'Digital nervous system, automated microservice architectures, and algorithmic intelligence under development.', 'Future%20Industries.png'),
+            '/horizons/business-consulting': () => renderPage('Business Consulting', 'VERT-06 • STRATEGIC HORIZON', 'Strategic corporate transformation, executive architecture, and scale advisory services.', 'Business%20Consulting.png'),
+            '/horizons/psychology-wellbeing': () => renderPage('Psychology & Wellbeing', 'VERT-07 • STRATEGIC HORIZON', 'Behavioral science, cognitive balance, and atmospheric spatial design for mental clarity.', 'Astrology.png'),
+            '/horizons/astrology-jyotish': () => renderPage('Astrology & Jyotish Sciences', 'VERT-08 • STRATEGIC HORIZON (FEATURED)', 'Temporal analytics, systemic pattern audits, and traditional astrological mathematics integrated with modern systems.', 'Astrology.png'),
+            '/horizons/education-learning': () => renderPage('Education & Learning', 'VERT-09 • STRATEGIC HORIZON', 'Knowledge architecture, monumental dark libraries, and the systematic transmission of mastery.', 'Education%20&%20Learning.png'),
+            '/horizons/retail': () => renderPage('Retail', 'VERT-10 • STRATEGIC HORIZON', 'Experimental flagship architecture, reflective black surfaces, and experiential luxury retail design.', 'Business%20Consulting.png'),
+            '/horizons/future-industries': () => renderPage('Future Industries', 'VERT-11 • STRATEGIC HORIZON', 'Frontier exploration capturing avant-garde geometric monoliths, energy systems, and emergent technologies.', 'Future%20Industries.png'),
+
             '/capabilities': () => renderPage('Six Institutional Capability Systems', 'CAPABILITY SYSTEMS', 'Collective structural capabilities under exploratory development, designed to support the long-term expansion of the digital empire.', 'Core%20Foundations.png'),
             '/governance': () => renderPage('Governance & Stewardship', 'GOVERNANCE', 'TOVENZA is guided by principles of accountability, transparency, disciplined decision-making, and responsible long-term stewardship.', 'Governance%20&%20Stewardship.png'),
             '/gateway': () => renderPage('Institutional Enquiries Gateway', 'CONTACT', 'For feedback, suggestions, enquiries or assistance, connect with the TOVENZA team at support.tovenza@gmail.com.', 'Design%20board.png'),
@@ -281,33 +287,70 @@
                     </p>
                   </section>
 
+                  <!-- ELEVEN INDUSTRY HORIZONS SECTION -->
                   <section class="space-y-10">
                     <div class="border-b border-white/10 pb-6 flex justify-between items-end">
                       <div>
-                        <span class="text-xs font-mono text-[#B99D6B] uppercase tracking-widest">Core Architecture</span>
-                        <h2 class="text-3xl font-serif font-light text-white mt-1">Four Public Brand Foundations</h2>
+                        <span class="text-xs font-mono text-[#B99D6B] uppercase tracking-widest">Strategic Horizons</span>
+                        <h2 class="text-3xl font-serif font-light text-white mt-1">Eleven Industry Horizons</h2>
                       </div>
+                      <span class="text-xs font-mono text-slate-400">Explore All Verticals</span>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      <a href="/foundations/sovereign-identity" data-link class="glass-card p-8 space-y-4">
-                        <span class="text-xs font-mono text-[#B99D6B] bg-[#080909] px-3 py-1 rounded border border-[#B99D6B]/30">FOUNDATION 01</span>
-                        <h3 class="text-2xl font-serif text-white">Sovereign Identity</h3>
-                        <p class="text-slate-300 text-sm font-light">Establishing uncompromised digital and physical sovereign environments.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      <a href="/horizons/recruitment-hr" data-link class="glass-card p-6 space-y-3">
+                        <span class="text-[10px] font-mono text-[#B99D6B] bg-[#080909] px-2.5 py-1 rounded border border-[#B99D6B]/30">VERT-01</span>
+                        <h3 class="text-xl font-serif text-white">Recruitment & HR / Human Capital</h3>
+                        <p class="text-slate-400 text-xs font-light">Strategic workforce planning and human capital development frameworks.</p>
                       </a>
-                      <a href="/foundations/architectural-authority" data-link class="glass-card p-8 space-y-4">
-                        <span class="text-xs font-mono text-[#B99D6B] bg-[#080909] px-3 py-1 rounded border border-white/20">FOUNDATION 02</span>
-                        <h3 class="text-2xl font-serif text-white">Architectural Authority</h3>
-                        <p class="text-slate-300 text-sm font-light">Monumental infrastructure engineered for generational scale.</p>
+                      <a href="/horizons/healthcare-diagnostics" data-link class="glass-card p-6 space-y-3">
+                        <span class="text-[10px] font-mono text-[#B99D6B] bg-[#080909] px-2.5 py-1 rounded border border-[#B99D6B]/30">VERT-02</span>
+                        <h3 class="text-xl font-serif text-white">Healthcare & Diagnostics</h3>
+                        <p class="text-slate-400 text-xs font-light">Biological longevity and health infrastructure research.</p>
                       </a>
-                      <a href="/foundations/financial-sophistication" data-link class="glass-card p-8 space-y-4">
-                        <span class="text-xs font-mono text-[#B99D6B] bg-[#080909] px-3 py-1 rounded border border-white/20">FOUNDATION 03</span>
-                        <h3 class="text-2xl font-serif text-white">Financial Sophistication</h3>
-                        <p class="text-slate-300 text-sm font-light">Disciplined capital allocation frameworks and resource architecture.</p>
+                      <a href="/horizons/hospitality" data-link class="glass-card p-6 space-y-3">
+                        <span class="text-[10px] font-mono text-[#B99D6B] bg-[#080909] px-2.5 py-1 rounded border border-[#B99D6B]/30">VERT-03</span>
+                        <h3 class="text-xl font-serif text-white">Hospitality</h3>
+                        <p class="text-slate-400 text-xs font-light">Curated human experience and spatial service architecture.</p>
                       </a>
-                      <a href="/foundations/global-ecosystem" data-link class="glass-card p-8 space-y-4">
-                        <span class="text-xs font-mono text-[#B99D6B] bg-[#080909] px-3 py-1 rounded border border-[#B99D6B]/30">FOUNDATION 04</span>
-                        <h3 class="text-2xl font-serif text-white">Global Ecosystem</h3>
-                        <p class="text-slate-300 text-sm font-light">An interconnected network uniting eleven strategic horizons.</p>
+                      <a href="/horizons/real-estate" data-link class="glass-card p-6 space-y-3">
+                        <span class="text-[10px] font-mono text-[#B99D6B] bg-[#080909] px-2.5 py-1 rounded border border-[#B99D6B]/30">VERT-04</span>
+                        <h3 class="text-xl font-serif text-white">Real Estate & Property</h3>
+                        <p class="text-slate-400 text-xs font-light">Asset stewardship and monumental built environments.</p>
+                      </a>
+                      <a href="/horizons/technology-ai" data-link class="glass-card p-6 space-y-3">
+                        <span class="text-[10px] font-mono text-[#B99D6B] bg-[#080909] px-2.5 py-1 rounded border border-[#B99D6B]/30">VERT-05</span>
+                        <h3 class="text-xl font-serif text-white">Technology, AI & Software</h3>
+                        <p class="text-slate-400 text-xs font-light">Digital nervous system and automated microservice architectures.</p>
+                      </a>
+                      <a href="/horizons/business-consulting" data-link class="glass-card p-6 space-y-3">
+                        <span class="text-[10px] font-mono text-[#B99D6B] bg-[#080909] px-2.5 py-1 rounded border border-[#B99D6B]/30">VERT-06</span>
+                        <h3 class="text-xl font-serif text-white">Business Consulting</h3>
+                        <p class="text-slate-400 text-xs font-light">Strategic corporate transformation and scale advisory.</p>
+                      </a>
+                      <a href="/horizons/psychology-wellbeing" data-link class="glass-card p-6 space-y-3">
+                        <span class="text-[10px] font-mono text-[#B99D6B] bg-[#080909] px-2.5 py-1 rounded border border-[#B99D6B]/30">VERT-07</span>
+                        <h3 class="text-xl font-serif text-white">Psychology & Wellbeing</h3>
+                        <p class="text-slate-400 text-xs font-light">Behavioral science and organizational psychology frameworks.</p>
+                      </a>
+                      <a href="/horizons/astrology-jyotish" data-link class="glass-card p-6 space-y-3 border-gold-500/50 bg-[#14141f]/90">
+                        <span class="text-[10px] font-mono text-black bg-gold-500 px-2.5 py-1 rounded font-bold">VERT-08 • FEATURED</span>
+                        <h3 class="text-xl font-serif text-white">Astrology & Jyotish Sciences</h3>
+                        <p class="text-slate-300 text-xs font-light">Temporal analytics and systemic pattern audits.</p>
+                      </a>
+                      <a href="/horizons/education-learning" data-link class="glass-card p-6 space-y-3">
+                        <span class="text-[10px] font-mono text-[#B99D6B] bg-[#080909] px-2.5 py-1 rounded border border-[#B99D6B]/30">VERT-09</span>
+                        <h3 class="text-xl font-serif text-white">Education & Learning</h3>
+                        <p class="text-slate-400 text-xs font-light">Systematic transmission of capability and worldview.</p>
+                      </a>
+                      <a href="/horizons/retail" data-link class="glass-card p-6 space-y-3">
+                        <span class="text-[10px] font-mono text-[#B99D6B] bg-[#080909] px-2.5 py-1 rounded border border-[#B99D6B]/30">VERT-10</span>
+                        <h3 class="text-xl font-serif text-white">Retail</h3>
+                        <p class="text-slate-400 text-xs font-light">Consumer touchpoints and experiential brand psychology.</p>
+                      </a>
+                      <a href="/horizons/future-industries" data-link class="glass-card p-6 space-y-3">
+                        <span class="text-[10px] font-mono text-[#B99D6B] bg-[#080909] px-2.5 py-1 rounded border border-[#B99D6B]/30">VERT-11</span>
+                        <h3 class="text-xl font-serif text-white">Future Industries</h3>
+                        <p class="text-slate-400 text-xs font-light">Frontier exploration capturing energy, biotech, and emergent tech.</p>
                       </a>
                     </div>
                   </section>
@@ -352,7 +395,7 @@
                 </main>
             `);
             if (viewContainer) viewContainer.innerHTML = renderFunc();
-            window.scrollTo({ top: `0`, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         window.addEventListener('popstate', handleRoute);
