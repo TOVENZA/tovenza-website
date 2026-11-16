@@ -22,20 +22,26 @@
     </script>
     <style>
         @keyframes floatSlow {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-20px) scale(1.05); }
+            0%, 100% { transform: translateY(0px) scale(1) rotate(0deg); }
+            50% { transform: translateY(-25px) scale(1.08) rotate(1deg); }
         }
         @keyframes floatReverse {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(25px) scale(0.95); }
+            0%, 100% { transform: translateY(0px) scale(1) rotate(0deg); }
+            50% { transform: translateY(30px) scale(0.92) rotate(-1deg); }
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
         }
         .vfx-orb-1 { animation: floatSlow 14s ease-in-out infinite; }
         .vfx-orb-2 { animation: floatReverse 18s ease-in-out infinite; }
+        .vfx-pulse { animation: pulseGlow 8s ease-in-out infinite; }
+        
         .glass-obsidian {
-            background: rgba(11, 11, 15, 0.92);
-            backdrop-filter: blur(28px);
-            border: 1px solid rgba(234, 179, 8, 0.25);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9);
+            background: rgba(11, 11, 15, 0.94);
+            backdrop-filter: blur(32px);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.95), inset 0 0 40px rgba(234, 179, 8, 0.03);
         }
         #webgl-canvas {
             position: fixed;
@@ -46,6 +52,10 @@
             pointer-events: none;
             z-index: 0;
         }
+        /* Custom Luxury Scrollbar for Modals */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050507; }
+        ::-webkit-scrollbar-thumb { background: #ca8a04; border-radius: 3px; }
     </style>
 </head>
 <body class="bg-obsidian-900 text-slate-100 font-sans antialiased selection:bg-gold-500 selection:text-black min-h-screen flex flex-col justify-between relative overflow-x-hidden">
@@ -53,10 +63,11 @@
     <!-- WEBGL 3D BACKGROUND CANVAS -->
     <canvas id="webgl-canvas"></canvas>
 
-    <!-- AMBIENT LIGHT ORBS -->
+    <!-- AMBIENT 5D LIGHT ORBS -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div class="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-gold-500/10 blur-[140px] vfx-orb-1"></div>
-        <div class="absolute top-1/3 -right-40 w-[600px] h-[600px] rounded-full bg-burgundy-900/20 blur-[170px] vfx-orb-2"></div>
+        <div class="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-gold-500/10 blur-[160px] vfx-orb-1"></div>
+        <div class="absolute top-1/3 -right-40 w-[700px] h-[700px] rounded-full bg-burgundy-900/20 blur-[190px] vfx-orb-2"></div>
+        <div class="absolute bottom-0 left-1/3 w-[500px] h-[500px] rounded-full bg-gold-600/5 blur-[150px] vfx-pulse"></div>
     </div>
 
     <!-- Sovereign Header with Logo & Ecosystem Toggle -->
@@ -192,7 +203,7 @@
 
     <!-- ULTRA-LUXURY DEEP DIVE FOUNDATION MODAL -->
     <div id="foundationModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl hidden flex items-center justify-center p-4 md:p-10 overflow-y-auto">
-        <div class="glass-obsidian max-w-4xl w-full p-8 md:p-14 rounded-3xl space-y-8 relative text-slate-100 border-2 border-gold-500/60 shadow-[0_0_100px_rgba(234,179,8,0.15)] my-auto">
+        <div class="glass-obsidian max-w-4xl w-full p-8 md:p-14 rounded-3xl space-y-8 relative text-slate-100 border-2 border-gold-500/60 shadow-[0_0_120px_rgba(234,179,8,0.2)] my-auto">
             <button onclick="closeFoundationModal()" class="absolute top-6 right-6 text-gold-400 hover:text-white text-3xl font-light transition">✕</button>
             <div>
                 <span id="modal-tag" class="text-xs font-mono text-gold-400 bg-obsidian-900 px-4 py-1.5 rounded-full border border-gold-500/40 uppercase tracking-[0.25em]">Foundation Intelligence</span>
@@ -216,7 +227,7 @@
         <div class="font-mono tracking-widest text-gold-400 font-bold uppercase">Architectural Permanence. Sovereign Dominion.</div>
     </footer>
 
-    <!-- THREE.JS 3D BACKGROUND ENGINE -->
+    <!-- THREE.JS 3D BACKGROUND ENGINE WITH 5D HOLOGRAPHIC DYNAMICS -->
     <script>
         const canvas = document.getElementById('webgl-canvas');
         const scene = new THREE.Scene();
@@ -226,34 +237,42 @@
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
         const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 1500;
+        const particlesCount = 2000;
         const posArray = new Float32Array(particlesCount * 3);
 
         for(let i = 0; i < particlesCount * 3; i++) {
-            posArray[i] = (Math.random() - 0.5) * 16;
+            posArray[i] = (Math.random() - 0.5) * 18;
         }
 
         particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 
         const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.028,
+            size: 0.032,
             color: 0xfacc15,
             transparent: true,
-            opacity: 0.7
+            opacity: 0.75
         });
 
         const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
         scene.add(particlesMesh);
 
-        const globeGeometry = new THREE.IcosahedronGeometry(4, 2);
+        // 5D Holographic Globe Matrix (Representing Global Ecosystem & Nodes)
+        const globeGeometry = new THREE.IcosahedronGeometry(4.2, 3);
         const globeMaterial = new THREE.MeshBasicMaterial({
             color: 0xeab308,
             wireframe: true,
             transparent: true,
-            opacity: 0.18
+            opacity: 0.22
         });
         const globeMesh = new THREE.Mesh(globeGeometry, globeMaterial);
         scene.add(globeMesh);
+
+        // Inner Core Ring for 5D Depth
+        const coreGeometry = new THREE.TorusGeometry(5.5, 0.02, 16, 100);
+        const coreMaterial = new THREE.MeshBasicMaterial({ color: 0xfef08a, transparent: true, opacity: 0.15 });
+        const coreRing = new THREE.Mesh(coreGeometry, coreMaterial);
+        coreRing.rotation.x = Math.PI / 3;
+        scene.add(coreRing);
 
         camera.position.z = 6;
 
@@ -266,13 +285,14 @@
 
         function animate() {
             requestAnimationFrame(animate);
-            particlesMesh.rotation.y += 0.001;
-            particlesMesh.rotation.x += 0.0005;
-            globeMesh.rotation.y += 0.002;
+            particlesMesh.rotation.y += 0.0012;
+            particlesMesh.rotation.x += 0.0006;
+            globeMesh.rotation.y += 0.0025;
             globeMesh.rotation.z += 0.001;
+            coreRing.rotation.z -= 0.0015;
 
-            camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.05;
-            camera.position.y += (-mouseY * 0.5 - camera.position.y) * 0.05;
+            camera.position.x += (mouseX * 0.6 - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY * 0.6 - camera.position.y) * 0.05;
             camera.lookAt(scene.position);
 
             renderer.render(scene, camera);
@@ -307,29 +327,34 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // Deep Intelligence Ultra-Luxury Modal Data
+        // Deep Intelligence Ultra-Luxury Modal Data (Featuring Globe Matrix & Behavioral Authority)
         const foundationData = {
             1: {
-                tag: "Foundation 01 • Sovereign Identity",
+                tag: "Foundation 01 • Sovereign Identity & Global Authority",
                 title: "Sovereign Identity & Minimalist Authority",
                 html: `
-                    <p class="text-xl text-gold-300 font-serif italic border-l-2 border-gold-500 pl-4 py-1">"Throughout your executive journey, you have felt the exhausting friction of noisy digital environments, transient branding, and shallow corporate presence. You were missing an absolute sanctuary of prestige."</p>
+                    <p class="text-xl text-gold-300 font-serif italic border-l-2 border-gold-500 pl-4 py-1">"Throughout your executive and entrepreneurial journey across continents, you have felt the exhausting friction of noisy digital environments, transient branding, and shallow corporate presentation. You were missing an absolute sanctuary of global prestige."</p>
                     <div class="space-y-6 pt-4 text-slate-300">
                         <div>
                             <h4 class="text-white font-bold text-lg uppercase tracking-wider text-gold-400 mb-1">What We Do</h4>
-                            <p>We architect absolute digital and physical sovereign environments that eliminate market noise, strip away superficial corporate clutter, and radiate uncompromised executive power. Every touchpoint is meticulously engineered to command instantaneous respect.</p>
+                            <p>We architect absolute digital and physical sovereign environments that unify global operational nodes into a single, unbreakable monogram of authority. We eliminate market noise, strip away superficial corporate clutter, and radiate uncompromised executive power across international borders.</p>
                         </div>
                         <div>
                             <h4 class="text-white font-bold text-lg uppercase tracking-wider text-gold-400 mb-1">Why We Are Here</h4>
-                            <p>To protect leaders, visionaries, and high-net-worth institutions from the psychological fatigue of modern transience. We establish permanent sanctuaries of trust where your legacy is preserved in immutable stone and pristine digital architecture.</p>
+                            <p>To protect leaders, visionaries, and multi-vertical institutions from the psychological vulnerability of modern transience. Powered by our global institutional matrix, we establish permanent sanctuaries of trust where your brand legacy is preserved in immutable permanence.</p>
                         </div>
                         <div>
                             <h4 class="text-white font-bold text-lg uppercase tracking-wider text-gold-400 mb-1">Services Provided</h4>
-                            <p>Elite brand architecture, hyper-securitized digital presence, executive thought-leadership positioning, and monumental visual identity governance.</p>
+                            <p>Global brand architecture, hyper-securitized digital presence, cross-border executive positioning, and monumental visual identity governance spanning all eleven institutional verticals.</p>
                         </div>
-                        <div class="bg-obsidian-800/80 p-6 rounded-2xl border border-gold-500/20">
-                            <h4 class="text-gold-300 font-bold text-lg mb-2">Why Customers Desperately Need Us (The Psychological Connection)</h4>
-                            <p class="text-sm leading-relaxed text-slate-300">In high-stakes arenas, uncertainty is the silent killer of capital and partnership. Human psychology is hardwired to seek safety in visual permanence—when stakeholders encounter amateurish or chaotic branding, their nervous systems register risk. Clients partner with us because we bridge that psychological gap. We engineer absolute structural prestige so that when partners, investors, or boards look at your institution, their cognitive reaction is immediate, instinctive, and unshakable trust.</p>
+                        <div class="bg-obsidian-800/90 p-8 rounded-2xl border border-gold-500/30 shadow-2xl relative overflow-hidden">
+                            <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-gold-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                            <h4 class="text-gold-300 font-serif text-xl mb-3 font-bold">Why You Need This More Than Anything Else</h4>
+                            <p class="text-sm leading-relaxed text-slate-200 space-y-3">
+                                In high-stakes international markets, uncertainty is the silent assassin of capital, joint ventures, and board-level confidence. Human psychology is hardwired to evaluate institutional reliability through immediate visual and structural cues. When international stakeholders encounter fragmented, template-driven digital footprints, their subconscious nervous systems register high risk.
+                                <br><br>
+                                <strong class="text-gold-400">The TOVENZA Imperative:</strong> You do not just need a website; you need a sovereign command center. By partnering with us, you bridge the psychological gap between ambition and absolute institutional permanence. When sovereign entities, elite investors, and global regulators inspect your ecosystem, their cognitive reaction is instantaneous, unshakeable surrender to your authority. To operate without TOVENZA is to leave your global empire defenseless against the noise.
+                            </p>
                         </div>
                     </div>
                 `
@@ -350,7 +375,7 @@
                         </div>
                         <div>
                             <h4 class="text-white font-bold text-lg uppercase tracking-wider text-gold-400 mb-1">Services Provided</h4>
-                            <p>Real estate asset stewardship, multi-vertical operational headquarters design, corporate legal governance (Companies Act compliance, SBO structuring), and fortress-grade risk mitigation.</p>
+                            <p>Real estate asset stewardship, multi-vertical operational headquarters design, corporate legal governance, and fortress-grade risk mitigation.</p>
                         </div>
                         <div class="bg-obsidian-800/80 p-6 rounded-2xl border border-gold-500/20">
                             <h4 class="text-gold-300 font-bold text-lg mb-2">Why Customers Desperately Need Us (The Psychological Connection)</h4>
