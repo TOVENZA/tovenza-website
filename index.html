@@ -12,8 +12,8 @@
             theme: {
                 extend: {
                     colors: {
-                        obsidian: { 900: '#050507', 800: '#0b0b0f', 700: '#13131a', 600: '#1c1c26' },
-                        gold: { 300: '#fef08a', 400: '#facc15', 500: '#eab308', 600: '#ca8a04' },
+                        obsidian: { 900: '#030305', 800: '#08080c', 700: '#121218', 600: '#1a1a24' },
+                        gold: { 300: '#fef08a', 400: '#facc15', 500: '#eab308', 600: '#ca8a04', 700: '#a16207' },
                         burgundy: { 900: '#380a0d', 700: '#6b1418', 500: '#a82c33' }
                     }
                 }
@@ -23,25 +23,31 @@
     <style>
         @keyframes floatSlow {
             0%, 100% { transform: translateY(0px) scale(1) rotate(0deg); }
-            50% { transform: translateY(-25px) scale(1.08) rotate(1deg); }
-        }
-        @keyframes floatReverse {
-            0%, 100% { transform: translateY(0px) scale(1) rotate(0deg); }
-            50% { transform: translateY(30px) scale(0.92) rotate(-1deg); }
+            50% { transform: translateY(-20px) scale(1.05) rotate(0.5deg); }
         }
         @keyframes pulseGlow {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.05); }
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.08); }
         }
-        .vfx-orb-1 { animation: floatSlow 14s ease-in-out infinite; }
-        .vfx-orb-2 { animation: floatReverse 18s ease-in-out infinite; }
-        .vfx-pulse { animation: pulseGlow 8s ease-in-out infinite; }
+        .vfx-orb-1 { animation: floatSlow 12s ease-in-out infinite; }
+        .vfx-pulse { animation: pulseGlow 6s ease-in-out infinite; }
         
         .glass-obsidian {
-            background: rgba(11, 11, 15, 0.94);
-            backdrop-filter: blur(32px);
-            border: 1px solid rgba(234, 179, 8, 0.3);
-            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.95), inset 0 0 40px rgba(234, 179, 8, 0.03);
+            background: rgba(8, 8, 12, 0.90);
+            backdrop-filter: blur(36px);
+            border: 1px solid rgba(234, 179, 8, 0.35);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.98), inset 0 0 50px rgba(234, 179, 8, 0.04);
+        }
+        .glass-card {
+            background: rgba(12, 12, 18, 0.75);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(234, 179, 8, 0.6);
+            box-shadow: 0 20px 40px rgba(234, 179, 8, 0.15);
+            transform: translateY(-4px);
         }
         #webgl-canvas {
             position: fixed;
@@ -52,9 +58,8 @@
             pointer-events: none;
             z-index: 0;
         }
-        /* Custom Luxury Scrollbar for Modals */
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #050507; }
+        ::-webkit-scrollbar-track { background: #030305; }
         ::-webkit-scrollbar-thumb { background: #ca8a04; border-radius: 3px; }
     </style>
 </head>
@@ -63,24 +68,30 @@
     <!-- WEBGL 3D BACKGROUND CANVAS -->
     <canvas id="webgl-canvas"></canvas>
 
-    <!-- AMBIENT 5D LIGHT ORBS -->
+    <!-- 5D AMBIENT LIGHT FIELD -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div class="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-gold-500/10 blur-[160px] vfx-orb-1"></div>
-        <div class="absolute top-1/3 -right-40 w-[700px] h-[700px] rounded-full bg-burgundy-900/20 blur-[190px] vfx-orb-2"></div>
-        <div class="absolute bottom-0 left-1/3 w-[500px] h-[500px] rounded-full bg-gold-600/5 blur-[150px] vfx-pulse"></div>
+        <div class="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full bg-gold-500/15 blur-[180px] vfx-orb-1"></div>
+        <div class="absolute top-1/2 -right-40 w-[800px] h-[800px] rounded-full bg-burgundy-900/20 blur-[200px] vfx-orb-1" style="animation-delay: -6s;"></div>
+        <div class="absolute bottom-10 left-1/4 w-[600px] h-[600px] rounded-full bg-gold-600/10 blur-[160px] vfx-pulse"></div>
     </div>
 
-    <!-- Sovereign Header with Logo & Ecosystem Toggle -->
-    <header class="sticky top-0 z-50 backdrop-blur-2xl bg-obsidian-900/90 border-b border-white/10 shadow-2xl">
+    <!-- FUTURISTIC SOVEREIGN HEADER -->
+    <header class="sticky top-0 z-50 backdrop-blur-3xl bg-obsidian-900/90 border-b border-gold-500/20 shadow-2xl">
         <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between relative z-10">
-            <div class="flex items-center space-x-3 cursor-pointer group" onclick="switchView('home')">
+            <div class="flex items-center space-x-4 cursor-pointer group" onclick="switchView('home')">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center font-extrabold text-black text-xl shadow-lg shadow-gold-500/30">T</div>
                 <div class="flex flex-col">
-                    <span class="text-2xl font-serif tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-400 to-amber-600 font-bold">TOVENZA</span>
-                    <span class="text-[9px] tracking-[0.4em] text-slate-400 uppercase font-mono">Global Institutional Headquarters</span>
+                    <span class="text-2xl font-serif tracking-[0.25em] text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-400 to-amber-500 font-bold">TOVENZA</span>
+                    <span class="text-[9px] tracking-[0.4em] text-slate-400 uppercase font-mono">Global Institutional Command</span>
                 </div>
             </div>
-            <div class="flex items-center space-x-4">
-                <button onclick="toggleEcosystem()" id="ecosystem-toggle-btn" class="px-6 py-2.5 rounded-xl bg-obsidian-800 border border-gold-500/40 text-gold-400 font-bold text-xs tracking-wider uppercase hover:bg-gold-500 hover:text-black transition shadow-lg">
+            
+            <div class="flex items-center space-x-6">
+                <div class="hidden lg:flex items-center space-x-3 text-xs font-mono text-gold-400 bg-obsidian-800/80 px-4 py-2 rounded-xl border border-gold-500/20">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-ping"></span>
+                    <span>11 VERTICALS ACTIVE • 6 SYSTEMS ONLINE</span>
+                </div>
+                <button onclick="toggleEcosystem()" id="ecosystem-toggle-btn" class="px-6 py-3 rounded-xl bg-gradient-to-r from-gold-500 to-amber-600 text-black font-extrabold text-xs tracking-wider uppercase hover:scale-105 transition shadow-xl shadow-gold-500/20">
                     ✦ Explore 11 Verticals & Services
                 </button>
             </div>
@@ -88,82 +99,126 @@
     </header>
 
     <!-- MAIN CONTAINER -->
-    <main class="max-w-7xl mx-auto w-full px-6 py-16 flex-grow relative z-10">
+    <main class="max-w-7xl mx-auto w-full px-6 py-16 flex-grow relative z-10 space-y-24">
 
-        <!-- VIEW 1: HOME (FOUNDATIONS OVERVIEW) -->
+        <!-- VIEW 1: HOME (COMMAND & FOUNDATIONS OVERVIEW) -->
         <div id="view-home" class="space-y-24">
             
-            <!-- Hero Section -->
-            <div class="relative rounded-3xl overflow-hidden border border-gold-500/30 shadow-2xl p-8 md:p-16 flex flex-col justify-end min-h-[550px]">
+            <!-- CINEMATIC HERO SECTION -->
+            <div class="relative rounded-3xl overflow-hidden border border-gold-500/40 shadow-2xl p-8 md:p-16 flex flex-col justify-end min-h-[600px] glass-obsidian">
                 <div class="absolute inset-0 z-0">
-                    <img src="world2.png" alt="Obsidian Luxury Hero" class="w-full h-full object-cover opacity-60">
-                    <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900 via-obsidian-900/60 to-transparent"></div>
+                    <img src="world2.png" alt="Obsidian Luxury Hero" class="w-full h-full object-cover opacity-50 mix-blend-luminosity hover:mix-blend-normal transition duration-1000">
+                    <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900 via-obsidian-900/70 to-transparent"></div>
                 </div>
                 <div class="relative z-10 max-w-4xl space-y-6">
-                    <h1 class="text-4xl md:text-6xl font-black tracking-tight text-white leading-[1.1]">
+                    <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-obsidian-800/90 border border-gold-500/40 text-gold-400 text-xs font-mono tracking-[0.3em] uppercase shadow-lg">
+                        <span>✦ THE ARCHITECTURE OF PERMANENCE ✦</span>
+                    </div>
+                    <h1 class="text-4xl md:text-7xl font-black tracking-tight text-white leading-[1.05]">
                         BUILDING BEYOND <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-400 to-amber-600">BOUNDARIES.</span>
                     </h1>
                     <p class="text-slate-300 text-lg md:text-xl font-light leading-relaxed max-w-3xl">
-                        An integrated institutional ecosystem designed to create, develop, and manage generational opportunities across eleven canonical verticals and six centralized capability systems. Select any foundation below to inspect our core architecture.
+                        Welcome to <strong class="text-white">TOVENZA</strong>—a multi-billion-dollar global institutional ecosystem. We manage 11 high-impact industries and 6 security systems to provide elite leaders with absolute structural power, financial stability, and psychological safety.
                     </p>
                 </div>
             </div>
 
-            <!-- The Four Interactive Foundation Cards -->
-            <div class="space-y-8 pt-10">
+            <!-- HOW TOVENZA WORKS (RADIAL SIMPLICITY FOR EVERYONE) -->
+            <div class="space-y-8 glass-obsidian p-8 md:p-12 rounded-3xl border border-gold-500/30">
+                <div class="text-center max-w-2xl mx-auto space-y-3">
+                    <span class="text-xs font-mono text-gold-400 uppercase tracking-[0.3em]">Institutional Clarity</span>
+                    <h2 class="text-3xl font-extrabold text-white">How TOVENZA Works in 3 Simple Steps</h2>
+                    <p class="text-slate-400 text-sm">Designed so any partner or client can immediately leverage our global services with total confidence.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+                    <div class="glass-card p-8 rounded-2xl space-y-4 relative overflow-hidden">
+                        <span class="text-4xl font-black font-mono text-gold-500/30 absolute top-4 right-4">01</span>
+                        <div class="w-12 h-12 rounded-xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 font-bold">I</div>
+                        <h3 class="text-xl font-bold text-white">Inspect Our Foundations</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Click into our 4 core pillars below to understand how we secure your identity, scale your operations, and safeguard your wealth.</p>
+                    </div>
+
+                    <div class="glass-card p-8 rounded-2xl space-y-4 relative overflow-hidden">
+                        <span class="text-4xl font-black font-mono text-gold-500/30 absolute top-4 right-4">02</span>
+                        <div class="w-12 h-12 rounded-xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 font-bold">II</div>
+                        <h3 class="text-xl font-bold text-white">Explore the 11 Verticals</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Use the toggle button above to open our complete institutional directory covering HR, AI, Healthcare, Real Estate, and more.</p>
+                    </div>
+
+                    <div class="glass-card p-8 rounded-2xl space-y-4 relative overflow-hidden">
+                        <span class="text-4xl font-black font-mono text-gold-500/30 absolute top-4 right-4">03</span>
+                        <div class="w-12 h-12 rounded-xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 font-bold">III</div>
+                        <h3 class="text-xl font-bold text-white">Deploy Sovereign Strategy</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Engage our ecosystem to eliminate business friction, remove executive anxiety, and anchor your institutional legacy.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- THE FOUR FOUNDATIONAL PILLARS -->
+            <div class="space-y-8">
                 <div class="border-b border-white/10 pb-4 flex justify-between items-end">
                     <div>
-                        <span class="text-xs font-mono text-gold-400 uppercase tracking-widest">Architectural Identity</span>
-                        <h2 class="text-3xl font-extrabold text-white mt-1">Architectural Permanence. Sovereign Dominion.</h2>
+                        <span class="text-xs font-mono text-gold-400 uppercase tracking-widest">Core Architecture</span>
+                        <h2 class="text-3xl font-extrabold text-white mt-1">The Four Foundational Pillars</h2>
                     </div>
+                    <span class="text-xs font-mono text-slate-500 hidden md:block">Click any pillar to enter deep intelligence</span>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Foundation 1 -->
-                    <div onclick="openFoundationModal(1)" class="rounded-3xl glass-obsidian border border-gold-500/30 overflow-hidden shadow-2xl group cursor-pointer hover:border-gold-500 transition duration-500">
-                        <div class="h-64 overflow-hidden relative">
+                    <div onclick="openFoundationModal(1)" class="glass-card rounded-3xl overflow-hidden shadow-2xl group cursor-pointer p-2">
+                        <div class="h-64 overflow-hidden relative rounded-2xl">
                             <img src="world2.png" alt="Sovereign Identity" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900 via-transparent to-transparent"></div>
+                            <span class="absolute top-4 left-4 text-xs font-mono text-gold-400 font-bold bg-obsidian-900/90 px-3 py-1 rounded-full border border-gold-500/30">FOUNDATION 01</span>
                         </div>
                         <div class="p-8 space-y-3">
                             <h3 class="text-2xl font-bold text-white group-hover:text-gold-400 transition">Sovereign Identity & Minimalist Authority</h3>
                             <p class="text-slate-300 text-sm leading-relaxed">Discover how absolute digital and physical sovereign environments eliminate executive friction and establish permanent sanctuaries of trust.</p>
-                            <span class="inline-block pt-2 text-xs font-bold text-gold-400 tracking-wider">Inspect Deep Intelligence →</span>
+                            <span class="inline-block pt-2 text-xs font-bold text-gold-400 tracking-wider flex items-center space-x-2"><span>Inspect Deep Intelligence</span> <span>→</span></span>
                         </div>
                     </div>
 
                     <!-- Foundation 2 -->
-                    <div onclick="openFoundationModal(2)" class="rounded-3xl glass-obsidian border border-white/10 overflow-hidden shadow-2xl group cursor-pointer hover:border-gold-500 transition duration-500">
-                        <div class="h-64 overflow-hidden relative">
+                    <div onclick="openFoundationModal(2)" class="glass-card rounded-3xl overflow-hidden shadow-2xl group cursor-pointer p-2">
+                        <div class="h-64 overflow-hidden relative rounded-2xl">
                             <img src="world3.png" alt="Architectural Authority" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900 via-transparent to-transparent"></div>
+                            <span class="absolute top-4 left-4 text-xs font-mono text-gold-400 font-bold bg-obsidian-900/90 px-3 py-1 rounded-full border border-white/20">FOUNDATION 02</span>
                         </div>
                         <div class="p-8 space-y-3">
                             <h3 class="text-2xl font-bold text-white group-hover:text-gold-400 transition">Architectural Authority & Institutional Scale</h3>
                             <p class="text-slate-300 text-sm leading-relaxed">Explore how we transform organizational complexity and operational anxiety into seamless, self-sustaining sovereign order.</p>
-                            <span class="inline-block pt-2 text-xs font-bold text-gold-400 tracking-wider">Inspect Deep Intelligence →</span>
+                            <span class="inline-block pt-2 text-xs font-bold text-gold-400 tracking-wider flex items-center space-x-2"><span>Inspect Deep Intelligence</span> <span>→</span></span>
                         </div>
                     </div>
 
                     <!-- Foundation 3 -->
-                    <div onclick="openFoundationModal(3)" class="rounded-3xl glass-obsidian border border-white/10 overflow-hidden shadow-2xl group cursor-pointer hover:border-gold-500 transition duration-500">
-                        <div class="h-64 overflow-hidden relative">
+                    <div onclick="openFoundationModal(3)" class="glass-card rounded-3xl overflow-hidden shadow-2xl group cursor-pointer p-2">
+                        <div class="h-64 overflow-hidden relative rounded-2xl">
                             <img src="world3.png" alt="Financial Sophistication" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900 via-transparent to-transparent"></div>
+                            <span class="absolute top-4 left-4 text-xs font-mono text-gold-400 font-bold bg-obsidian-900/90 px-3 py-1 rounded-full border border-white/20">FOUNDATION 03</span>
                         </div>
                         <div class="p-8 space-y-3">
                             <h3 class="text-2xl font-bold text-white group-hover:text-gold-400 transition">Financial Sophistication</h3>
                             <p class="text-slate-300 text-sm leading-relaxed">Uncover disciplined capital allocation, intelligent cash recycling, and wealth architectures built to endure across generations.</p>
-                            <span class="inline-block pt-2 text-xs font-bold text-gold-400 tracking-wider">Inspect Deep Intelligence →</span>
+                            <span class="inline-block pt-2 text-xs font-bold text-gold-400 tracking-wider flex items-center space-x-2"><span>Inspect Deep Intelligence</span> <span>→</span></span>
                         </div>
                     </div>
 
                     <!-- Foundation 4 -->
-                    <div onclick="openFoundationModal(4)" class="rounded-3xl glass-obsidian border border-gold-500/30 overflow-hidden shadow-2xl group cursor-pointer hover:border-gold-500 transition duration-500">
-                        <div class="h-64 overflow-hidden relative">
+                    <div onclick="openFoundationModal(4)" class="glass-card rounded-3xl overflow-hidden shadow-2xl group cursor-pointer p-2">
+                        <div class="h-64 overflow-hidden relative rounded-2xl">
                             <img src="world1.png" alt="Global Ecosystem" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900 via-transparent to-transparent"></div>
+                            <span class="absolute top-4 left-4 text-xs font-mono text-gold-400 font-bold bg-obsidian-900/90 px-3 py-1 rounded-full border border-gold-500/30">FOUNDATION 04</span>
                         </div>
                         <div class="p-8 space-y-3">
                             <h3 class="text-2xl font-bold text-white group-hover:text-gold-400 transition">Global Ecosystem</h3>
                             <p class="text-slate-300 text-sm leading-relaxed">Examine our interconnected multi-vertical network uniting eleven P&L domains and six central capability systems under one vision.</p>
-                            <span class="inline-block pt-2 text-xs font-bold text-gold-400 tracking-wider">Inspect Deep Intelligence →</span>
+                            <span class="inline-block pt-2 text-xs font-bold text-gold-400 tracking-wider flex items-center space-x-2"><span>Inspect Deep Intelligence</span> <span>→</span></span>
                         </div>
                     </div>
                 </div>
@@ -184,17 +239,17 @@
             <div class="space-y-6">
                 <h3 class="text-xl font-bold text-gold-400">The Eleven Canonical Industry Verticals</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-01</span><h4 class="text-xl font-bold text-white mt-2">Recruitment, Staffing & HR</h4><p class="text-slate-400 text-xs mt-1">High-volume talent acquisition and workforce operations.</p></div>
-                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-02</span><h4 class="text-xl font-bold text-white mt-2">Healthcare & Diagnostics</h4><p class="text-slate-400 text-xs mt-1">Human vitality and biological longevity infrastructure.</p></div>
-                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-03</span><h4 class="text-xl font-bold text-white mt-2">Hospitality</h4><p class="text-slate-400 text-xs mt-1">Curated human experience and spatial service excellence.</p></div>
-                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-04</span><h4 class="text-xl font-bold text-white mt-2">Real Estate & Property</h4><p class="text-slate-400 text-xs mt-1">Asset stewardship and spatial development architecture.</p></div>
-                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-05</span><h4 class="text-xl font-bold text-white mt-2">Technology, AI & Software</h4><p class="text-slate-400 text-xs mt-1">Digital nervous system and microservice automation.</p></div>
-                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-06</span><h4 class="text-xl font-bold text-white mt-2">Business Consulting</h4><p class="text-slate-400 text-xs mt-1">Strategic corporate transformation and scale advisory.</p></div>
-                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-07</span><h4 class="text-xl font-bold text-white mt-2">Psychology & Wellbeing</h4><p class="text-slate-400 text-xs mt-1">Behavioral science and organizational psychology.</p></div>
-                    <div class="p-6 rounded-3xl glass-obsidian border-2 border-gold-500 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-08 (FEATURED)</span><h4 class="text-xl font-bold text-white mt-2">Jyotish Tech & AI Astrology</h4><p class="text-slate-400 text-xs mt-1">Temporal analytics and Kundli audit engine.</p></div>
-                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-09</span><h4 class="text-xl font-bold text-white mt-2">Education & Learning</h4><p class="text-slate-400 text-xs mt-1">Systematic transmission of capability and worldview.</p></div>
-                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-10</span><h4 class="text-xl font-bold text-white mt-2">Retail</h4><p class="text-slate-400 text-xs mt-1">Consumer touchpoints and experiential brand psychology.</p></div>
-                    <div class="p-6 rounded-3xl glass-obsidian border border-white/10 shadow-xl md:col-span-2 lg:col-span-1"><span class="text-xs font-mono text-gold-400 font-bold">VERT-11</span><h4 class="text-xl font-bold text-white mt-2">Future Industries</h4><p class="text-slate-400 text-xs mt-1">Frontier arm capturing energy, biotech, and emergent tech.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-01</span><h4 class="text-xl font-bold text-white mt-2">Recruitment, Staffing & HR</h4><p class="text-slate-400 text-xs mt-1">High-volume talent acquisition and workforce operations.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-02</span><h4 class="text-xl font-bold text-white mt-2">Healthcare & Diagnostics</h4><p class="text-slate-400 text-xs mt-1">Human vitality and biological longevity infrastructure.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-03</span><h4 class="text-xl font-bold text-white mt-2">Hospitality</h4><p class="text-slate-400 text-xs mt-1">Curated human experience and spatial service excellence.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-04</span><h4 class="text-xl font-bold text-white mt-2">Real Estate & Property</h4><p class="text-slate-400 text-xs mt-1">Asset stewardship and spatial development architecture.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-05</span><h4 class="text-xl font-bold text-white mt-2">Technology, AI & Software</h4><p class="text-slate-400 text-xs mt-1">Digital nervous system and microservice automation.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-06</span><h4 class="text-xl font-bold text-white mt-2">Business Consulting</h4><p class="text-slate-400 text-xs mt-1">Strategic corporate transformation and scale advisory.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-07</span><h4 class="text-xl font-bold text-white mt-2">Psychology & Wellbeing</h4><p class="text-slate-400 text-xs mt-1">Behavioral science and organizational psychology.</p></div>
+                    <div class="glass-card p-6 rounded-3xl border-2 border-gold-500 shadow-xl bg-obsidian-800/90"><span class="text-xs font-mono text-gold-400 font-bold">VERT-08 (FEATURED)</span><h4 class="text-xl font-bold text-white mt-2">Jyotish Tech & AI Astrology</h4><p class="text-slate-400 text-xs mt-1">Temporal analytics and Kundli audit engine.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-09</span><h4 class="text-xl font-bold text-white mt-2">Education & Learning</h4><p class="text-slate-400 text-xs mt-1">Systematic transmission of capability and worldview.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-10</span><h4 class="text-xl font-bold text-white mt-2">Retail</h4><p class="text-slate-400 text-xs mt-1">Consumer touchpoints and experiential brand psychology.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl md:col-span-2 lg:col-span-1"><span class="text-xs font-mono text-gold-400 font-bold">VERT-11</span><h4 class="text-xl font-bold text-white mt-2">Future Industries</h4><p class="text-slate-400 text-xs mt-1">Frontier arm capturing energy, biotech, and emergent tech.</p></div>
                 </div>
             </div>
         </div>
@@ -203,7 +258,7 @@
 
     <!-- ULTRA-LUXURY DEEP DIVE FOUNDATION MODAL -->
     <div id="foundationModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl hidden flex items-center justify-center p-4 md:p-10 overflow-y-auto">
-        <div class="glass-obsidian max-w-4xl w-full p-8 md:p-14 rounded-3xl space-y-8 relative text-slate-100 border-2 border-gold-500/60 shadow-[0_0_120px_rgba(234,179,8,0.2)] my-auto">
+        <div class="glass-obsidian max-w-4xl w-full p-8 md:p-14 rounded-3xl space-y-8 relative text-slate-100 border-2 border-gold-500/60 shadow-[0_0_150px_rgba(234,179,8,0.25)] my-auto">
             <button onclick="closeFoundationModal()" class="absolute top-6 right-6 text-gold-400 hover:text-white text-3xl font-light transition">✕</button>
             <div>
                 <span id="modal-tag" class="text-xs font-mono text-gold-400 bg-obsidian-900 px-4 py-1.5 rounded-full border border-gold-500/40 uppercase tracking-[0.25em]">Foundation Intelligence</span>
@@ -221,7 +276,7 @@
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer class="max-w-7xl mx-auto w-full px-6 py-10 border-t border-white/10 flex justify-between items-center text-xs text-slate-500 relative z-10">
         <div>&copy; 2026 TOVENZA Global Ecosystem. All Rights Reserved.</div>
         <div class="font-mono tracking-widest text-gold-400 font-bold uppercase">Architectural Permanence. Sovereign Dominion.</div>
@@ -237,39 +292,39 @@
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
         const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 2000;
+        const particlesCount = 2500;
         const posArray = new Float32Array(particlesCount * 3);
 
         for(let i = 0; i < particlesCount * 3; i++) {
-            posArray[i] = (Math.random() - 0.5) * 18;
+            posArray[i] = (Math.random() - 0.5) * 20;
         }
 
         particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 
         const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.032,
+            size: 0.035,
             color: 0xfacc15,
             transparent: true,
-            opacity: 0.75
+            opacity: 0.8
         });
 
         const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
         scene.add(particlesMesh);
 
-        // 5D Holographic Globe Matrix (Representing Global Ecosystem & Nodes)
-        const globeGeometry = new THREE.IcosahedronGeometry(4.2, 3);
+        // 5D Holographic Globe Matrix (Global Ecosystem)
+        const globeGeometry = new THREE.IcosahedronGeometry(4.5, 3);
         const globeMaterial = new THREE.MeshBasicMaterial({
             color: 0xeab308,
             wireframe: true,
             transparent: true,
-            opacity: 0.22
+            opacity: 0.25
         });
         const globeMesh = new THREE.Mesh(globeGeometry, globeMaterial);
         scene.add(globeMesh);
 
         // Inner Core Ring for 5D Depth
-        const coreGeometry = new THREE.TorusGeometry(5.5, 0.02, 16, 100);
-        const coreMaterial = new THREE.MeshBasicMaterial({ color: 0xfef08a, transparent: true, opacity: 0.15 });
+        const coreGeometry = new THREE.TorusGeometry(6, 0.025, 16, 100);
+        const coreMaterial = new THREE.MeshBasicMaterial({ color: 0xfef08a, transparent: true, opacity: 0.2 });
         const coreRing = new THREE.Mesh(coreGeometry, coreMaterial);
         coreRing.rotation.x = Math.PI / 3;
         scene.add(coreRing);
@@ -285,14 +340,14 @@
 
         function animate() {
             requestAnimationFrame(animate);
-            particlesMesh.rotation.y += 0.0012;
-            particlesMesh.rotation.x += 0.0006;
-            globeMesh.rotation.y += 0.0025;
-            globeMesh.rotation.z += 0.001;
-            coreRing.rotation.z -= 0.0015;
+            particlesMesh.rotation.y += 0.0015;
+            particlesMesh.rotation.x += 0.0008;
+            globeMesh.rotation.y += 0.003;
+            globeMesh.rotation.z += 0.0012;
+            coreRing.rotation.z -= 0.002;
 
-            camera.position.x += (mouseX * 0.6 - camera.position.x) * 0.05;
-            camera.position.y += (-mouseY * 0.6 - camera.position.y) * 0.05;
+            camera.position.x += (mouseX * 0.7 - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY * 0.7 - camera.position.y) * 0.05;
             camera.lookAt(scene.position);
 
             renderer.render(scene, camera);
