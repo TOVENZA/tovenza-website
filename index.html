@@ -75,7 +75,7 @@
         <div class="absolute bottom-10 left-1/4 w-[600px] h-[600px] rounded-full bg-gold-600/15 blur-[160px] vfx-pulse"></div>
     </div>
 
-    <!-- CLEAN SOVEREIGN HEADER WITH EXACT LOGO -->
+    <!-- SOVEREIGN HEADER -->
     <header class="sticky top-0 z-50 backdrop-blur-3xl bg-obsidian-900/90 border-b border-gold-500/20 shadow-2xl">
         <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between relative z-10">
             <div class="flex items-center space-x-4 cursor-pointer group" onclick="switchView('home')">
@@ -85,16 +85,21 @@
                     <span class="text-[9px] tracking-[0.35em] text-gold-400 uppercase font-bold">Global Institutional Headquarters</span>
                 </div>
             </div>
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleEcosystem()" id="ecosystem-toggle-btn" class="px-6 py-2.5 rounded-xl bg-obsidian-800 border border-gold-500/40 text-gold-400 font-bold text-xs tracking-wider uppercase hover:bg-gold-500 hover:text-black transition shadow-lg">
+                    ✦ Explore 11 Verticals & Systems
+                </button>
+            </div>
         </div>
     </header>
 
     <!-- MAIN CONTAINER -->
     <main class="max-w-7xl mx-auto w-full px-6 py-16 flex-grow relative z-10 space-y-24">
 
-        <!-- VIEW 1: HOME (FOUNDATIONS OVERVIEW) -->
+        <!-- VIEW 1: HOME (GRAND ENTRANCE & FOUR PUBLIC FOUNDATIONS) -->
         <div id="view-home" class="space-y-24">
             
-            <!-- CINEMATIC HERO SECTION -->
+            <!-- 1. GRAND ENTRANCE / CINEMATIC HERO -->
             <div class="relative rounded-3xl overflow-hidden border border-gold-500/40 shadow-2xl p-8 md:p-16 flex flex-col justify-end min-h-[600px] glass-obsidian">
                 <div class="absolute inset-0 z-0">
                     <img src="world2.png" alt="Obsidian Luxury Hero" class="w-full h-full object-cover opacity-50 mix-blend-luminosity hover:mix-blend-normal transition duration-1000">
@@ -102,23 +107,32 @@
                 </div>
                 <div class="relative z-10 max-w-4xl space-y-6">
                     <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-obsidian-800/90 border border-gold-500/40 text-gold-400 text-xs font-mono tracking-[0.3em] uppercase shadow-lg">
-                        <span>✦ THE ARCHITECTURE OF PERMANENCE ✦</span>
+                        <span>✦ TOVENZA 2051 — THE NEXT-GENERATION DIGITAL INSTITUTION ✦</span>
                     </div>
                     <h1 class="text-4xl md:text-7xl font-black tracking-tight text-white leading-[1.05]">
                         BUILDING BEYOND <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-400 to-amber-600">BOUNDARIES.</span>
                     </h1>
                     <p class="text-slate-300 text-lg md:text-xl font-light leading-relaxed max-w-3xl">
-                        Welcome to <strong class="text-white">TOVENZA</strong>—a global institutional ecosystem. We manage 11 high-impact industries and 6 security systems to provide elite leaders with absolute structural power, financial stability, and psychological safety.
+                        An integrated institutional ecosystem designed to create, develop, and manage generational opportunities across eleven canonical industry verticals and six centralized capability systems.
                     </p>
                 </div>
             </div>
 
-            <!-- THE FOUR FOUNDATIONAL PILLARS -->
+            <!-- 2. THE INSTITUTION (PHILOSOPHY & VISION) -->
+            <div class="glass-obsidian p-8 md:p-12 rounded-3xl border border-gold-500/30 space-y-6">
+                <span class="text-xs font-mono text-gold-400 uppercase tracking-[0.3em]">Institutional Philosophy</span>
+                <h2 class="text-3xl font-extrabold text-white">Sovereignty, Governance & Perpetual Scale</h2>
+                <p class="text-slate-300 text-base leading-relaxed font-light">
+                    TOVENZA operates as a unified global institution governed by uncompromised structural integrity, rigorous psychological safety, and long-term financial intelligence. Our mission is to engineer systems that eliminate systemic friction, providing elite leaders and partners with absolute operational permanence.
+                </p>
+            </div>
+
+            <!-- 3. FOUR PUBLIC BRAND FOUNDATIONS -->
             <div class="space-y-8">
                 <div class="border-b border-white/10 pb-4 flex justify-between items-end">
                     <div>
                         <span class="text-xs font-mono text-gold-400 uppercase tracking-widest">Core Architecture</span>
-                        <h2 class="text-3xl font-extrabold text-white mt-1">The Four Foundational Pillars</h2>
+                        <h2 class="text-3xl font-extrabold text-white mt-1">Four Public Brand Foundations</h2>
                     </div>
                 </div>
 
@@ -182,6 +196,48 @@
             </div>
         </div>
 
+        <!-- VIEW 2: FULL ECOSYSTEM (11 HORIZONS & 6 CAPABILITY SYSTEMS) -->
+        <div id="view-ecosystem" class="hidden space-y-16">
+            <div class="border-b border-white/10 pb-8 flex justify-between items-end">
+                <div>
+                    <span class="text-xs font-mono text-gold-400 uppercase tracking-widest">Complete Institutional Directory</span>
+                    <h2 class="text-4xl font-extrabold text-white mt-1">11 Industry Horizons & 6 Capability Systems</h2>
+                </div>
+                <button onclick="switchView('home')" class="px-5 py-2.5 rounded-xl bg-obsidian-800 border border-white/20 text-xs text-slate-300 hover:text-white">← Return to Overview</button>
+            </div>
+
+            <!-- Six Institutional Capability Systems -->
+            <div class="space-y-6">
+                <h3 class="text-xl font-bold text-gold-400">Six Institutional Capability Systems</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">SYS-01</span><h4 class="text-xl font-bold text-white mt-2">Central & Shared Services</h4><p class="text-slate-400 text-xs mt-1">Operational leverage and administrative centralization.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">SYS-02</span><h4 class="text-xl font-bold text-white mt-2">Institutional Governance</h4><p class="text-slate-400 text-xs mt-1">Uncompromising oversight and Founder alignment.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">SYS-03</span><h4 class="text-xl font-bold text-white mt-2">Legal, Compliance & Risk</h4><p class="text-slate-400 text-xs mt-1">Statutory filings, SBO rules, and fortress protection.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">SYS-04</span><h4 class="text-xl font-bold text-white mt-2">Financial Architecture</h4><p class="text-slate-400 text-xs mt-1">Disciplined capital allocation and cash recycling.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">SYS-05</span><h4 class="text-xl font-bold text-white mt-2">People & Culture</h4><p class="text-slate-400 text-xs mt-1">Rigorous talent selection rooted in psychology.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">SYS-06</span><h4 class="text-xl font-bold text-white mt-2">Technology & Security</h4><p class="text-slate-400 text-xs mt-1">Proprietary data architecture and digital defense.</p></div>
+                </div>
+            </div>
+
+            <!-- Eleven Industry Horizons -->
+            <div class="space-y-6 pt-8">
+                <h3 class="text-xl font-bold text-gold-400">Eleven Industry Horizons</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-01</span><h4 class="text-xl font-bold text-white mt-2">Recruitment, Staffing & HR</h4><p class="text-slate-400 text-xs mt-1">High-volume talent acquisition and workforce operations.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-02</span><h4 class="text-xl font-bold text-white mt-2">Healthcare & Diagnostics</h4><p class="text-slate-400 text-xs mt-1">Human vitality and biological longevity infrastructure.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-03</span><h4 class="text-xl font-bold text-white mt-2">Hospitality</h4><p class="text-slate-400 text-xs mt-1">Curated human experience and spatial service excellence.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-04</span><h4 class="text-xl font-bold text-white mt-2">Real Estate & Property</h4><p class="text-slate-400 text-xs mt-1">Asset stewardship and spatial development architecture.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-05</span><h4 class="text-xl font-bold text-white mt-2">Technology, AI & Software</h4><p class="text-slate-400 text-xs mt-1">Digital nervous system and microservice automation.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-06</span><h4 class="text-xl font-bold text-white mt-2">Business Consulting</h4><p class="text-slate-400 text-xs mt-1">Strategic corporate transformation and scale advisory.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-07</span><h4 class="text-xl font-bold text-white mt-2">Psychology & Wellbeing</h4><p class="text-slate-400 text-xs mt-1">Behavioral science and organizational psychology.</p></div>
+                    <div class="glass-card p-6 rounded-3xl border-2 border-gold-500 shadow-xl bg-obsidian-800/90"><span class="text-xs font-mono text-gold-400 font-bold">VERT-08 (FEATURED)</span><h4 class="text-xl font-bold text-white mt-2">Jyotish Tech & AI Astrology</h4><p class="text-slate-400 text-xs mt-1">Temporal analytics and Kundli audit engine.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-09</span><h4 class="text-xl font-bold text-white mt-2">Education & Learning</h4><p class="text-slate-400 text-xs mt-1">Systematic transmission of capability and worldview.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl"><span class="text-xs font-mono text-gold-400 font-bold">VERT-10</span><h4 class="text-xl font-bold text-white mt-2">Retail</h4><p class="text-slate-400 text-xs mt-1">Consumer touchpoints and experiential brand psychology.</p></div>
+                    <div class="glass-card p-6 rounded-3xl shadow-xl md:col-span-2 lg:col-span-1"><span class="text-xs font-mono text-gold-400 font-bold">VERT-11</span><h4 class="text-xl font-bold text-white mt-2">Future Industries</h4><p class="text-slate-400 text-xs mt-1">Frontier arm capturing energy, biotech, and emergent tech.</p></div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <!-- ULTRA-LUXURY DEEP DIVE FOUNDATION MODAL WITH 5D HOLOGRAPHIC BACKDROP -->
@@ -204,7 +260,7 @@
         </div>
     </div>
 
-    <!-- FOOTER WITH CUSTOMER SERVICE & OFFICIAL EMAIL -->
+    <!-- FOOTER -->
     <footer class="max-w-7xl mx-auto w-full px-6 py-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs text-slate-400 relative z-10 gap-4">
         <div>&copy; 2026 TOVENZA Global Ecosystem. All Rights Reserved.</div>
         <div class="font-mono tracking-wider text-gold-400 flex items-center space-x-2">
@@ -222,7 +278,6 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        // 5D Holographic Particle Matrix
         const particlesGeometry = new THREE.BufferGeometry();
         const particlesCount = 3500;
         const posArray = new Float32Array(particlesCount * 3);
@@ -243,7 +298,6 @@
         const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
         scene.add(particlesMesh);
 
-        // Multi-Layered 5D Holographic Globe
         const globeGeometry = new THREE.IcosahedronGeometry(4.8, 3);
         const globeMaterial = new THREE.MeshBasicMaterial({
             color: 0xeab308,
@@ -254,7 +308,6 @@
         const globeMesh = new THREE.Mesh(globeGeometry, globeMaterial);
         scene.add(globeMesh);
 
-        // Secondary Outer Orbit Ring
         const ringGeo = new THREE.TorusGeometry(6.8, 0.03, 16, 100);
         const ringMat = new THREE.MeshBasicMaterial({ color: 0xfef08a, transparent: true, opacity: 0.25 });
         const outerRing = new THREE.Mesh(ringGeo, ringMat);
@@ -292,7 +345,27 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Ultra-Luxury Deep Intelligence Modal Data (Foundation 01 with Globe & Behavioral Authority)
+        let isEcosystemOpen = false;
+        function toggleEcosystem() {
+            isEcosystemOpen = !isEcosystemOpen;
+            if(isEcosystemOpen) {
+                document.getElementById('view-home').classList.add('hidden');
+                document.getElementById('view-ecosystem').classList.remove('hidden');
+                document.getElementById('ecosystem-toggle-btn').innerText = "← Return to Overview";
+            } else {
+                switchView('home');
+            }
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function switchView(viewName) {
+            isEcosystemOpen = false;
+            document.getElementById('view-ecosystem').classList.add('hidden');
+            document.getElementById('view-home').classList.remove('hidden');
+            document.getElementById('ecosystem-toggle-btn').innerText = "✦ Explore 11 Verticals & Systems";
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
         const foundationData = {
             1: {
                 tag: "Foundation 01 • Sovereign Identity & Global Authority",
