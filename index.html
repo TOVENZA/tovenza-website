@@ -1,1910 +1,943 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOVENZA • Career, Founder Ops, Decision Timing &amp; Life OS</title>
+    <title>TOVENZA — Institutional Decision &amp; Systems Flagship</title>
+    <meta name="description" content="An institutional digital flagship exploring structured human decision systems, architectural clarity, quantitative research, and long-horizon operational resilience.">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        /* =====================================================================
+           TOVENZA INSTITUTIONAL DESIGN TOKENS & ARCHITECTURAL STYLES
+           Palette: Obsidian Void (#050507), Basalt (#0B0C10),
+           Warm Ivory (#EFECE6), Champagne Brass (#DFC288), Muted Bronze (#9A8152)
+           ===================================================================== */
         :root {
-            --bg-void: #040406;
-            --bg-panel: #090A0E;
-            --bg-elevated: #10121A;
-            --ink-ivory: #ECE8DF;
-            --gold-champagne: #E5C687;
-            --gold-antique: #B99D6B;
+            --tvz-obsidian: #050507;
+            --tvz-basalt: #0B0C10;
+            --tvz-slate: #11131A;
+            --tvz-ivory: #EFECE6;
+            --tvz-muted: #9D9990;
+            --tvz-gold: #DFC288;
+            --tvz-gold-dim: rgba(223, 194, 136, 0.28);
+            --tvz-hairline: rgba(239, 236, 230, 0.11);
         }
-        * { box-sizing: border-box; }
-        body {
-            background-color: var(--bg-void);
-            color: var(--ink-ivory);
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            background-color: var(--tvz-obsidian);
+            color: var(--tvz-ivory);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
             margin: 0;
+            background-color: var(--tvz-obsidian);
+            color: var(--tvz-ivory);
             overflow-x: hidden;
         }
-        .editorial-title { font-family: 'Cormorant Garamond', Georgia, serif; }
-        .mono-micro { font-family: 'JetBrains Mono', monospace; }
-        .room-section {
-            display: none;
-            contain: layout style;
-            overflow-anchor: none;
+
+        .font-display {
+            font-family: 'Cormorant Garamond', Georgia, serif;
         }
-        .room-section.active {
-            display: block;
-            animation: tvzFadeLift 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+
+        .font-mono-tech {
+            font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
         }
-        @keyframes tvzFadeLift {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        /* Architectural hairlines & precision framing */
+        .hairline-t { border-top: 1px solid var(--tvz-hairline); }
+        .hairline-b { border-bottom: 1px solid var(--tvz-hairline); }
+        .hairline-box { border: 1px solid var(--tvz-hairline); }
+
+        .monumental-panel {
+            background: linear-gradient(180deg, rgba(17, 19, 26, 0.72) 0%, rgba(11, 12, 16, 0.92) 100%);
+            border: 1px solid var(--tvz-hairline);
+            position: relative;
         }
-        .tvz-surface {
-            background: linear-gradient(180deg, rgba(16, 18, 26, 0.88) 0%, rgba(9, 10, 14, 0.92) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: inset 0 1px 0 0 rgba(229, 198, 135, 0.08), 0 18px 40px -24px rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(12px);
+
+        .monumental-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 1.5rem;
+            right: 1.5rem;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(223, 194, 136, 0.35), transparent);
+            pointer-events: none;
         }
-        .tvz-card-hover {
-            transition: transform 0.22s ease, border-color 0.22s ease, background-color 0.22s ease;
+
+        /* Controlled scroll-reveal transition */
+        .reveal-block {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        .tvz-card-hover:hover {
-            transform: translateY(-2px);
-            border-color: rgba(229, 198, 135, 0.38);
+
+        .reveal-block.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
-        button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
-            outline: 2px solid var(--gold-champagne);
-            outline-offset: 2px;
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .reveal-block {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+            .scroll-drift {
+                animation: none !important;
+            }
         }
-        #seven-d-canvas {
-            position: fixed;
+
+        @keyframes subtlePulseLine {
+            0%, 100% { transform: translateY(0); opacity: 0.45; }
+            50% { transform: translateY(6px); opacity: 0.95; }
+        }
+
+        .scroll-drift {
+            animation: subtlePulseLine 2.8s ease-in-out infinite;
+        }
+
+        /* 3D Hero Canvas Container */
+        #hero-webgl-stage {
+            position: absolute;
             inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            background: radial-gradient(circle at 65% 42%, rgba(223, 194, 136, 0.08) 0%, rgba(5, 5, 7, 0.96) 62%, #050507 100%);
+        }
+
+        #hero-webgl-stage canvas {
+            display: block;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.92;
+        }
+
+        /* Custom subtle range slider for impact / horizon explorer */
+        input[type="range"].tvz-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 2px;
+            background: rgba(239, 236, 230, 0.18);
+            outline: none;
+            cursor: pointer;
+        }
+
+        input[type="range"].tvz-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 9999px;
+            background: #DFC288;
+            border: 2px solid #050507;
+            cursor: pointer;
+        }
+
+        input[type="range"].tvz-slider::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            border-radius: 9999px;
+            background: #DFC288;
+            border: 2px solid #050507;
+            cursor: pointer;
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible {
+            outline: 1.5px solid var(--tvz-gold);
+            outline-offset: 3px;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-[#E5C687]/30 selection:text-[#ECE8DF]">
-    <!-- Live 7D sacred geometry background canvas -->
-    <canvas id="seven-d-canvas" aria-hidden="true"></canvas>
+<body>
+    <!-- =====================================================================
+         INSTITUTIONAL NAVIGATION HEADER
+         ===================================================================== -->
+    <header id="top-nav" class="fixed top-0 inset-x-0 z-40 transition-colors duration-300 bg-[#050507]/70 backdrop-blur-md hairline-b">
+        <div class="max-w-7xl mx-auto px-6 sm:px-10 h-20 flex items-center justify-between gap-6">
+            <!-- Brand Mark + Wordmark -->
+            <a href="#hero" class="flex items-center gap-3.5 shrink-0 group">
+                <svg class="w-8 h-10 shrink-0" viewBox="0 0 96 120" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TOVENZA Monolith Crest">
+                    <rect x="12" y="10" width="72" height="100" stroke="#DFC288" stroke-width="1.3" stroke-opacity="0.75"/>
+                    <rect x="20" y="18" width="56" height="84" stroke="#EFECE6" stroke-width="0.6" stroke-opacity="0.25"/>
+                    <line x1="48" y1="24" x2="48" y2="96" stroke="#DFC288" stroke-width="1.5"/>
+                    <line x1="30" y1="36" x2="66" y2="36" stroke="#DFC288" stroke-width="1.5"/>
+                    <circle cx="48" cy="60" r="11" stroke="#DFC288" stroke-width="1.1"/>
+                </svg>
+                <div class="leading-none">
+                    <div class="font-display text-xl sm:text-2xl tracking-[0.22em] text-[#EFECE6] font-medium">TOVENZA</div>
+                    <div class="font-mono-tech text-[9px] tracking-[0.28em] text-[#9A8152] uppercase mt-1">Institutional Flagship</div>
+                </div>
+            </a>
 
-    <div class="relative z-10 flex-1 flex flex-col">
-        <!-- Sticky Top Header -->
-        <header id="inner-sticky-header" class="sticky top-0 z-30 bg-[#040406]/85 backdrop-blur-md border-b border-white/[0.08]">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
-                <button type="button" data-room-btn="home" onclick="switchRoom('home')" class="flex items-center gap-3 text-left group">
-                    <span class="w-9 h-10 flex items-center justify-center shrink-0">
-                        <svg class="w-full h-full" viewBox="0 0 120 148" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TOVENZA Emblem">
-                            <defs>
-                                <linearGradient id="tvz-gold-hdr" x1="16" y1="8" x2="104" y2="140" gradientUnits="userSpaceOnUse">
-                                    <stop offset="0%" stop-color="#FAF0D7"/>
-                                    <stop offset="48%" stop-color="#E5C687"/>
-                                    <stop offset="100%" stop-color="#9E7C43"/>
-                                </linearGradient>
-                            </defs>
-                            <path d="M14 138V62C14 34.3858 34.5949 12 60 12C85.4051 12 106 34.3858 106 62V138H14Z" fill="#090A0E" stroke="url(#tvz-gold-hdr)" stroke-width="2.4"/>
-                            <path d="M22 131V62.5C22 39.5802 39.0132 21 60 21C80.9868 21 98 39.5802 98 62.5V131H22Z" stroke="url(#tvz-gold-hdr)" stroke-width="1" stroke-opacity="0.55"/>
-                            <circle cx="60" cy="64" r="27" stroke="url(#tvz-gold-hdr)" stroke-width="1.1" stroke-opacity="0.65"/>
-                            <circle cx="60" cy="64" r="20" stroke="url(#tvz-gold-hdr)" stroke-width="0.9" stroke-dasharray="2.5 3.5" stroke-opacity="0.55"/>
-                            <path d="M42 48H78" stroke="url(#tvz-gold-hdr)" stroke-width="3.4" stroke-linecap="round"/>
-                            <path d="M60 48V104" stroke="url(#tvz-gold-hdr)" stroke-width="3.6" stroke-linecap="round"/>
-                            <path d="M51 104H69" stroke="url(#tvz-gold-hdr)" stroke-width="2.4" stroke-linecap="round"/>
-                        </svg>
-                    </span>
-                    <div>
-                        <div class="editorial-title text-xl tracking-[0.14em] text-[#ECE8DF] leading-none">TOVENZA</div>
-                        <div class="mono-micro text-[9px] tracking-[0.22em] text-[#B99D6B] uppercase mt-0.5">Pre-Bank Pilot</div>
-                    </div>
+            <!-- Desktop Navigation -->
+            <nav aria-label="Primary Institutional Navigation" class="hidden lg:flex items-center gap-8 text-xs tracking-[0.18em] uppercase text-[#9D9990]">
+                <a href="#philosophy" class="hover:text-[#EFECE6] transition-colors">Philosophy</a>
+                <a href="#vision" class="hover:text-[#EFECE6] transition-colors">Vision</a>
+                <a href="#pillars" class="hover:text-[#EFECE6] transition-colors">Pillars</a>
+                <a href="#technology" class="hover:text-[#EFECE6] transition-colors">Systems</a>
+                <a href="#impact" class="hover:text-[#EFECE6] transition-colors">Impact</a>
+                <a href="#outlook" class="hover:text-[#EFECE6] transition-colors">Outlook</a>
+            </nav>
+
+            <!-- Primary CTA & Mobile Trigger -->
+            <div class="flex items-center gap-3">
+                <a href="#dispatch" class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 border border-[#DFC288]/45 text-[#DFC288] hover:bg-[#DFC288] hover:text-[#050507] text-[11px] font-mono-tech tracking-[0.2em] uppercase transition-colors">
+                    Briefing
+                </a>
+                <button type="button" id="mobile-menu-btn" onclick="toggleMobileDrawer()" aria-expanded="false" aria-controls="mobile-nav-drawer" aria-label="Toggle navigation menu" class="lg:hidden px-3.5 py-2 border border-white/15 text-[11px] font-mono-tech tracking-[0.18em] uppercase text-[#EFECE6]">
+                    Menu
                 </button>
+            </div>
+        </div>
 
-                <!-- Desktop Room Nav -->
-                <nav aria-label="Primary Workspace Rooms" class="hidden md:flex items-center gap-1 bg-white/[0.03] p-1 rounded-xl border border-white/[0.08]">
-                    <button type="button" data-room-btn="home" onclick="switchRoom('home')" class="room-nav-btn px-3 py-1.5 rounded-lg text-xs font-medium text-[#E5C687] bg-[#E5C687]/15">Home</button>
-                    <button type="button" data-room-btn="career-business" onclick="switchRoom('career-business')" class="room-nav-btn px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-300 hover:text-white">Career &amp; Biz</button>
-                    <button type="button" data-room-btn="astrology" onclick="switchRoom('astrology')" class="room-nav-btn px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-300 hover:text-white">Timing</button>
-                    <button type="button" data-room-btn="life-ops" onclick="switchRoom('life-ops')" class="room-nav-btn px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-300 hover:text-white">Life &amp; Money</button>
-                    <button type="button" data-room-btn="feedbacks" onclick="switchRoom('feedbacks')" class="room-nav-btn px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-300 hover:text-white">Notes &amp; Test</button>
-                </nav>
+        <!-- Mobile Drawer -->
+        <div id="mobile-nav-drawer" class="hidden lg:hidden bg-[#07080C] hairline-b px-6 py-6 space-y-4 text-xs tracking-[0.2em] uppercase text-[#9D9990]">
+            <a href="#philosophy" onclick="closeMobileDrawer()" class="block py-1.5 hover:text-[#EFECE6]">01 • Philosophy</a>
+            <a href="#vision" onclick="closeMobileDrawer()" class="block py-1.5 hover:text-[#EFECE6]">02 • The Bigger Vision</a>
+            <a href="#pillars" onclick="closeMobileDrawer()" class="block py-1.5 hover:text-[#EFECE6]">03 • Core Pillars</a>
+            <a href="#technology" onclick="closeMobileDrawer()" class="block py-1.5 hover:text-[#EFECE6]">04 • Innovation &amp; Systems</a>
+            <a href="#impact" onclick="closeMobileDrawer()" class="block py-1.5 hover:text-[#EFECE6]">05 • Impact &amp; Significance</a>
+            <a href="#outlook" onclick="closeMobileDrawer()" class="block py-1.5 hover:text-[#EFECE6]">06 • Future Outlook</a>
+            <a href="#dispatch" onclick="closeMobileDrawer()" class="block pt-2 text-[#DFC288]">Request Institutional Brief →</a>
+        </div>
+    </header>
 
-                <!-- Right Actions -->
-                <div class="flex items-center gap-2">
-                    <button type="button" id="header-account-btn" onclick="openModal('tovenza-account-modal')" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-neutral-200 transition-colors">
-                        Account
-                    </button>
-                    <button type="button" id="header-pass-btn" onclick="openModal('tovenza-pass-modal')" class="px-3 py-1.5 rounded-lg bg-[#E5C687]/15 hover:bg-[#E5C687]/25 border border-[#E5C687]/40 text-xs font-medium text-[#E5C687] transition-colors">
-                        90-Day Pass • ₹555
-                    </button>
+    <main>
+        <!-- =================================================================
+             1. HERO EXPERIENCE — FULL-VIEWPORT 3D ARCHITECTURAL MONOLITH
+             ================================================================= -->
+        <section id="hero" class="relative min-h-screen flex flex-col justify-between pt-28 pb-10 px-6 sm:px-10 overflow-hidden">
+            <!-- Three.js 3D Sculptural Environment + Procedural Fallback -->
+            <div id="hero-webgl-stage" aria-hidden="true">
+                <!-- Architectural Fallback SVG when WebGL is unavailable or reduced-motion is preferred -->
+                <svg id="hero-fallback-art" class="hidden w-full h-full object-cover opacity-55" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                    <defs>
+                        <linearGradient id="monolith-grad" x1="640" y1="120" x2="820" y2="780" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#1D202A"/>
+                            <stop offset="55%" stop-color="#0C0E14"/>
+                            <stop offset="100%" stop-color="#06070A"/>
+                        </linearGradient>
+                        <linearGradient id="brass-seam" x1="720" y1="120" x2="720" y2="780" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#DFC288" stop-opacity="0.1"/>
+                            <stop offset="50%" stop-color="#DFC288" stop-opacity="0.85"/>
+                            <stop offset="100%" stop-color="#DFC288" stop-opacity="0.15"/>
+                        </linearGradient>
+                    </defs>
+                    <ellipse cx="760" cy="460" rx="340" ry="260" fill="#DFC288" fill-opacity="0.05"/>
+                    <polygon points="665,150 775,150 805,760 635,760" fill="url(#monolith-grad)" stroke="#DFC288" stroke-opacity="0.25"/>
+                    <line x1="720" y1="150" x2="720" y2="760" stroke="url(#brass-seam)" stroke-width="1.5"/>
+                    <circle cx="720" cy="440" r="190" stroke="#DFC288" stroke-opacity="0.14" stroke-dasharray="4 8"/>
+                    <circle cx="720" cy="440" r="265" stroke="#EFECE6" stroke-opacity="0.07"/>
+                </svg>
+            </div>
+
+            <!-- Subtle Vignette Gradient for Typographic Legibility -->
+            <div class="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-[#050507]/90 via-[#050507]/55 to-transparent"></div>
+            <div class="pointer-events-none absolute inset-x-0 bottom-0 h-40 z-[1] bg-gradient-to-t from-[#050507] to-transparent"></div>
+
+            <!-- Top Spacer -->
+            <div class="relative z-10 max-w-7xl w-full mx-auto flex items-center justify-between text-[11px] font-mono-tech tracking-[0.24em] text-[#9D9990] uppercase">
+                <span>Architecture of Deliberate Choice</span>
+                <span class="hidden sm:inline text-[#DFC288]/80">Drag or Move Pointer • 3D Spatial Study</span>
+            </div>
+
+            <!-- Hero Core Composition -->
+            <div class="relative z-10 max-w-7xl w-full mx-auto my-auto py-12">
+                <div class="max-w-2xl space-y-7">
+                    <div class="inline-flex items-center gap-3">
+                        <span class="w-8 h-[1px] bg-[#DFC288]"></span>
+                        <span class="font-mono-tech text-[11px] tracking-[0.28em] text-[#DFC288] uppercase">TOVENZA Institute of Applied Decision Architecture</span>
+                    </div>
+
+                    <h1 class="font-display text-5xl sm:text-7xl lg:text-[5.25rem] font-normal tracking-[-0.015em] leading-[1.01] text-[#EFECE6]">
+                        Clarity Built to Endure <span class="italic text-[#DFC288]">Beyond</span> the Moment.
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-[#C7C2B8] font-light leading-relaxed max-w-xl">
+                        TOVENZA designs structured decision instruments, quantitative risk models, and disciplined operational frameworks for leaders navigating high-consequence transitions.
+                    </p>
+
+                    <div class="pt-2 flex flex-wrap items-center gap-4">
+                        <a href="#philosophy" class="px-7 py-3.5 bg-[#DFC288] hover:bg-[#ebd3a2] text-[#050507] text-xs font-mono-tech font-medium tracking-[0.22em] uppercase transition-colors">
+                            Enter the Thesis
+                        </a>
+                        <a href="#technology" class="px-6 py-3.5 border border-white/20 hover:border-[#DFC288]/60 text-[#EFECE6] text-xs font-mono-tech tracking-[0.2em] uppercase transition-colors">
+                            Inspect Systems
+                        </a>
+                    </div>
                 </div>
             </div>
-        </header>
 
-        <!-- Compact Collapsible Readiness Strip -->
-        <div id="readiness-strip-host" class="border-b border-white/[0.06] bg-[#07080C]/90"></div>
+            <!-- Subtle Scroll Indicator -->
+            <div class="relative z-10 max-w-7xl w-full mx-auto flex items-center justify-between text-[10px] font-mono-tech tracking-[0.26em] text-[#9D9990] uppercase">
+                <a href="#philosophy" class="inline-flex items-center gap-3 hover:text-[#EFECE6] transition-colors">
+                    <span class="w-[1px] h-7 bg-[#DFC288]/70 scroll-drift"></span>
+                    <span>Scroll to Explore</span>
+                </a>
+                <span class="hidden md:inline">01 — 07 Institutional Sequence</span>
+            </div>
+        </section>
 
-        <!-- Main Workspace Content -->
-        <main class="flex-1">
-            <!-- ROOM 1: HOME -->
-            <section id="room-home" class="room-section active">
-                <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-14 sm:pt-20 pb-24 text-center relative">
-                    <div class="mx-auto max-w-3xl relative px-4 sm:px-10 py-6">
-                        <span aria-hidden="true" class="hidden sm:block absolute top-0 left-0 w-4 h-4 border-t border-l border-[#E5C687]/40"></span>
-                        <span aria-hidden="true" class="hidden sm:block absolute top-0 right-0 w-4 h-4 border-t border-r border-[#E5C687]/40"></span>
-                        <span aria-hidden="true" class="hidden sm:block absolute bottom-0 left-0 w-4 h-4 border-b border-l border-[#E5C687]/40"></span>
-                        <span aria-hidden="true" class="hidden sm:block absolute bottom-0 right-0 w-4 h-4 border-b border-r border-[#E5C687]/40"></span>
+        <!-- =================================================================
+             2 & 3. INSTITUTIONAL PHILOSOPHY & THE BIGGER VISION
+             ================================================================= -->
+        <section id="philosophy" class="py-24 sm:py-36 px-6 sm:px-10 hairline-t">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start reveal-block">
+                    <div class="lg:col-span-4 space-y-3">
+                        <div class="font-mono-tech text-[11px] tracking-[0.26em] text-[#DFC288] uppercase">01 • Institutional Philosophy</div>
+                        <h2 class="font-display text-4xl sm:text-5xl text-[#EFECE6] leading-[1.08]">
+                            Noise obscures judgment. Structure restores it.
+                        </h2>
+                    </div>
 
-                        <div class="mx-auto w-28 h-36 flex items-center justify-center mb-6 drop-shadow-[0_0_36px_rgba(229,198,135,0.22)]">
-                            <svg class="w-full h-full" viewBox="0 0 120 148" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TOVENZA Sacred Arch & 7D Emblem">
-                                <defs>
-                                    <linearGradient id="tvz-gold-hero" x1="16" y1="8" x2="104" y2="140" gradientUnits="userSpaceOnUse">
-                                        <stop offset="0%" stop-color="#FAF0D7"/>
-                                        <stop offset="48%" stop-color="#E5C687"/>
-                                        <stop offset="100%" stop-color="#9E7C43"/>
-                                    </linearGradient>
-                                    <radialGradient id="tvz-arch-glow" cx="50%" cy="42%" r="55%">
-                                        <stop offset="0%" stop-color="#E5C687" stop-opacity="0.16"/>
-                                        <stop offset="100%" stop-color="#090A0E" stop-opacity="0.92"/>
-                                    </radialGradient>
-                                </defs>
-                                <path d="M14 138V62C14 34.3858 34.5949 12 60 12C85.4051 12 106 34.3858 106 62V138H14Z" fill="url(#tvz-arch-glow)" stroke="url(#tvz-gold-hero)" stroke-width="2"/>
-                                <path d="M22 131V62.5C22 39.5802 39.0132 21 60 21C80.9868 21 98 39.5802 98 62.5V131H22Z" stroke="url(#tvz-gold-hero)" stroke-width="0.9" stroke-opacity="0.55"/>
-                                <circle cx="60" cy="64" r="27" stroke="url(#tvz-gold-hero)" stroke-width="1" stroke-opacity="0.65"/>
-                                <circle cx="60" cy="64" r="20" stroke="url(#tvz-gold-hero)" stroke-width="0.8" stroke-dasharray="2.5 3.5" stroke-opacity="0.55"/>
-                                <line x1="29" y1="64" x2="91" y2="64" stroke="url(#tvz-gold-hero)" stroke-width="0.9" stroke-opacity="0.45"/>
-                                <path d="M60 31L63 35L60 39L57 35Z" fill="#F6E3B4"/>
-                                <path d="M42 48H78" stroke="url(#tvz-gold-hero)" stroke-width="3" stroke-linecap="round"/>
-                                <path d="M42 48V53M78 48V53" stroke="url(#tvz-gold-hero)" stroke-width="1.8" stroke-linecap="round"/>
-                                <path d="M60 48V104" stroke="url(#tvz-gold-hero)" stroke-width="3.2" stroke-linecap="round"/>
-                                <path d="M51 104H69" stroke="url(#tvz-gold-hero)" stroke-width="2.2" stroke-linecap="round"/>
-                                <text x="60" y="121" text-anchor="middle" fill="#E5C687" fill-opacity="0.82" font-family="JetBrains Mono, monospace" font-size="8.5" letter-spacing="3.5">7D • EST</text>
+                    <div class="lg:col-span-8 space-y-6 text-base sm:text-lg text-[#C2BEB4] font-light leading-[1.8] max-w-3xl">
+                        <p>
+                            Most critical decisions—whether committing capital, restructuring an enterprise, or choosing an irreversible career inflection—are made under compressed timelines and fragmented information. Reaction replaces method.
+                        </p>
+                        <p>
+                            Our intellectual foundation rests on a simple premise: <strong class="font-medium text-[#EFECE6]">durable outcomes require explicit assumptions, visible downside boundaries, and calm execution cadence</strong> before emotions or market momentum dictate terms.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 3. THE BIGGER VISION (Architectural Split Narrative) -->
+                <div id="vision" class="mt-24 sm:mt-32 pt-20 hairline-t grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center reveal-block">
+                    <div class="lg:col-span-5 monumental-panel p-8 sm:p-10 space-y-6">
+                        <div class="font-mono-tech text-[10px] tracking-[0.28em] text-[#9A8152] uppercase">02 • The Bigger Vision</div>
+                        <blockquote class="font-display italic text-3xl sm:text-4xl text-[#EFECE6] leading-snug">
+                            “An institution should outlast cycles of hype by codifying how serious people think when stakes are real.”
+                        </blockquote>
+                        <div class="pt-4 hairline-t flex items-center justify-between text-[11px] font-mono-tech tracking-[0.18em] text-[#9D9990] uppercase">
+                            <span>Multi-Decade Horizon</span>
+                            <span class="text-[#DFC288]">TOVENZA Mandate</span>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7 space-y-6">
+                        <h3 class="font-display text-3xl sm:text-5xl text-[#EFECE6] leading-[1.1]">
+                            From fragmented calculators to a cohesive decision architecture.
+                        </h3>
+                        <p class="text-sm sm:text-base text-[#B5B1A7] leading-relaxed max-w-2xl">
+                            Our long-term vision is to build an enduring research and operational environment where individuals, founders, and institutional teams model trade-offs transparently—linking strategic ambition with liquidity reality, timing discipline, and repeatable daily execution.
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 hairline-t text-xs">
+                            <div>
+                                <div class="font-mono-tech text-[10px] tracking-[0.22em] text-[#DFC288] uppercase">First Principle</div>
+                                <p class="text-[#C7C2B8] mt-1.5 leading-relaxed">Model downside resilience before celebrating upside projections.</p>
+                            </div>
+                            <div>
+                                <div class="font-mono-tech text-[10px] tracking-[0.22em] text-[#DFC288] uppercase">Second Principle</div>
+                                <p class="text-[#C7C2B8] mt-1.5 leading-relaxed">Separate signal from urgency through structured decision gates.</p>
+                            </div>
+                            <div>
+                                <div class="font-mono-tech text-[10px] tracking-[0.22em] text-[#DFC288] uppercase">Third Principle</div>
+                                <p class="text-[#C7C2B8] mt-1.5 leading-relaxed">Keep instruments inspectable, quiet, and free of spectacle.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             4. CORE PILLARS — FOUR STRATEGIC DOMAINS
+             ================================================================= -->
+        <section id="pillars" class="py-24 sm:py-36 px-6 sm:px-10 bg-[#08090D] hairline-t reveal-block">
+            <div class="max-w-7xl mx-auto space-y-16">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div class="space-y-3 max-w-2xl">
+                        <div class="font-mono-tech text-[11px] tracking-[0.26em] text-[#DFC288] uppercase">03 • Core Pillars</div>
+                        <h2 class="font-display text-4xl sm:text-5xl text-[#EFECE6] leading-[1.08]">
+                            Four interlocking disciplines of institutional clarity.
+                        </h2>
+                    </div>
+                    <p class="text-xs sm:text-sm text-[#9D9990] max-w-sm leading-relaxed">
+                        Each pillar addresses a distinct operational vulnerability without diluting analytical rigor.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.09] border border-white/[0.09]">
+                    <!-- Pillar I -->
+                    <article class="bg-[#08090D] p-8 sm:p-9 flex flex-col justify-between space-y-10 hover:bg-[#0D0F16] transition-colors">
+                        <div class="space-y-4">
+                            <div class="font-mono-tech text-xs text-[#DFC288] tracking-[0.22em]">PILLAR I</div>
+                            <h3 class="font-display text-3xl text-[#EFECE6]">Career &amp; Leverage</h3>
+                            <p class="text-xs sm:text-sm text-[#A8A49B] leading-relaxed">
+                                Evaluates compensation structure, fixed vs. variable exposure, role alignment, and narrative precision before commitments are signed.
+                            </p>
+                        </div>
+                        <div class="font-mono-tech text-[10px] tracking-[0.2em] text-[#9A8152] uppercase pt-4 hairline-t">
+                            Comp • Offers • Narrative
+                        </div>
+                    </article>
+
+                    <!-- Pillar II -->
+                    <article class="bg-[#08090D] p-8 sm:p-9 flex flex-col justify-between space-y-10 hover:bg-[#0D0F16] transition-colors">
+                        <div class="space-y-4">
+                            <div class="font-mono-tech text-xs text-[#DFC288] tracking-[0.22em]">PILLAR II</div>
+                            <h3 class="font-display text-3xl text-[#EFECE6]">Capital &amp; Runway</h3>
+                            <p class="text-xs sm:text-sm text-[#A8A49B] leading-relaxed">
+                                Stress-tests burn rates, receivables collection timelines, and cash floors across adverse operating scenarios.
+                            </p>
+                        </div>
+                        <div class="font-mono-tech text-[10px] tracking-[0.2em] text-[#9A8152] uppercase pt-4 hairline-t">
+                            Liquidity • Burn • Stress Tests
+                        </div>
+                    </article>
+
+                    <!-- Pillar III -->
+                    <article class="bg-[#08090D] p-8 sm:p-9 flex flex-col justify-between space-y-10 hover:bg-[#0D0F16] transition-colors">
+                        <div class="space-y-4">
+                            <div class="font-mono-tech text-xs text-[#DFC288] tracking-[0.22em]">PILLAR III</div>
+                            <h3 class="font-display text-3xl text-[#EFECE6]">Temporal Pacing</h3>
+                            <p class="text-xs sm:text-sm text-[#A8A49B] leading-relaxed">
+                                Maps multi-calendar cycles and decision windows to distinguish periods of deliberate consolidation from outward expansion.
+                            </p>
+                        </div>
+                        <div class="font-mono-tech text-[10px] tracking-[0.2em] text-[#9A8152] uppercase pt-4 hairline-t">
+                            Cadence • Windows • Restraint
+                        </div>
+                    </article>
+
+                    <!-- Pillar IV -->
+                    <article class="bg-[#08090D] p-8 sm:p-9 flex flex-col justify-between space-y-10 hover:bg-[#0D0F16] transition-colors">
+                        <div class="space-y-4">
+                            <div class="font-mono-tech text-xs text-[#DFC288] tracking-[0.22em]">PILLAR IV</div>
+                            <h3 class="font-display text-3xl text-[#EFECE6]">Personal Systems</h3>
+                            <p class="text-xs sm:text-sm text-[#A8A49B] leading-relaxed">
+                                Anchors daily execution through emergency buffers, debt-reduction pacing, verification habits, and deep-focus intervals.
+                            </p>
+                        </div>
+                        <div class="font-mono-tech text-[10px] tracking-[0.2em] text-[#9A8152] uppercase pt-4 hairline-t">
+                            Buffers • Focus • Continuity
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             5. INNOVATION AND TECHNOLOGY — DETERMINISTIC MODELS & SPATIAL UI
+             ================================================================= -->
+        <section id="technology" class="py-24 sm:py-36 px-6 sm:px-10 hairline-t reveal-block">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-14 items-center">
+                <div class="lg:col-span-6 space-y-6">
+                    <div class="font-mono-tech text-[11px] tracking-[0.26em] text-[#DFC288] uppercase">04 • Innovation &amp; Technology</div>
+                    <h2 class="font-display text-4xl sm:text-5xl text-[#EFECE6] leading-[1.08]">
+                        Deterministic modeling paired with real-time spatial rendering.
+                    </h2>
+                    <p class="text-sm sm:text-base text-[#B5B1A7] leading-relaxed">
+                        Rather than opaque black-box outputs, TOVENZA pairs transparent mathematical models with hardware-accelerated visual architecture. Users inspect sensitivity directly, adjust parameters smoothly, and retain full control over their records.
+                    </p>
+
+                    <dl class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 hairline-t">
+                        <div>
+                            <dt class="font-mono-tech text-[11px] tracking-[0.2em] text-[#DFC288] uppercase">Real-Time WebGL</dt>
+                            <dd class="text-xs sm:text-sm text-[#A8A49B] mt-1 leading-relaxed">Physically shaded 3D geometry with pointer parallax and automatic fallback on constrained devices.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-mono-tech text-[11px] tracking-[0.2em] text-[#DFC288] uppercase">Transparent Math</dt>
+                            <dd class="text-xs sm:text-sm text-[#A8A49B] mt-1 leading-relaxed">Instant sensitivity across runway months, fixed-pay ratios, and buffer coverage horizons.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-mono-tech text-[11px] tracking-[0.2em] text-[#DFC288] uppercase">Local-First Privacy</dt>
+                            <dd class="text-xs sm:text-sm text-[#A8A49B] mt-1 leading-relaxed">Client-side state persistence with portable JSON export and zero forced cloud lock-in.</dd>
+                        </div>
+                        <div>
+                            <dt class="font-mono-tech text-[11px] tracking-[0.2em] text-[#DFC288] uppercase">Motion Discipline</dt>
+                            <dd class="text-xs sm:text-sm text-[#A8A49B] mt-1 leading-relaxed">Respects <code>prefers-reduced-motion</code> and maintains calm, non-distracting frame pacing.</dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <!-- Architectural Telemetry & Sensitivity Diagram -->
+                <div class="lg:col-span-6 monumental-panel p-8 sm:p-10 space-y-6">
+                    <div class="flex items-center justify-between text-[11px] font-mono-tech tracking-[0.2em] text-[#9D9990] uppercase pb-4 hairline-b">
+                        <span>Model Architecture • Sensitivity Explorer</span>
+                        <span class="text-[#DFC288]">Interactive</span>
+                    </div>
+
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between text-xs mb-2">
+                                <label for="sim-buffer-slider" class="text-[#C7C2B8]">Reserve Capital (₹ Lakhs)</label>
+                                <span id="sim-buffer-readout" class="font-mono-tech text-[#DFC288]">₹12.0L</span>
+                            </div>
+                            <input id="sim-buffer-slider" type="range" min="2" max="60" step="1" value="12" oninput="updateArchitectureSim()" class="tvz-slider">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs mb-2">
+                                <label for="sim-burn-slider" class="text-[#C7C2B8]">Monthly Commitment / Burn (₹ Lakhs)</label>
+                                <span id="sim-burn-readout" class="font-mono-tech text-[#EFECE6]">₹2.0L / mo</span>
+                            </div>
+                            <input id="sim-burn-slider" type="range" min="0.5" max="15" step="0.5" value="2" oninput="updateArchitectureSim()" class="tvz-slider">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 pt-4 hairline-t">
+                        <div class="p-4 bg-[#050507]/80 border border-white/[0.08]">
+                            <div class="font-mono-tech text-[10px] tracking-[0.2em] text-[#9D9990] uppercase">Unbuffered Runway</div>
+                            <div id="sim-runway-out" class="font-display text-3xl sm:text-4xl text-[#DFC288] mt-1">6.0 Months</div>
+                        </div>
+                        <div class="p-4 bg-[#050507]/80 border border-white/[0.08]">
+                            <div class="font-mono-tech text-[10px] tracking-[0.2em] text-[#9D9990] uppercase">Resilience Posture</div>
+                            <div id="sim-posture-out" class="font-display text-2xl sm:text-3xl text-[#EFECE6] mt-2">Fortified Floor</div>
+                        </div>
+                    </div>
+
+                    <p class="text-[11px] font-mono-tech text-[#9D9990] leading-relaxed">
+                        Illustrative sensitivity model for institutional planning; configure actual ledger figures inside your operational workspace.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             6. IMPACT AND SIGNIFICANCE — DATA VISUALIZATION & HORIZON METRICS
+             ================================================================= -->
+        <section id="impact" class="py-24 sm:py-36 px-6 sm:px-10 bg-[#08090D] hairline-t reveal-block">
+            <div class="max-w-7xl mx-auto space-y-14">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div class="space-y-3 max-w-2xl">
+                        <div class="font-mono-tech text-[11px] tracking-[0.26em] text-[#DFC288] uppercase">05 • Impact &amp; Significance</div>
+                        <h2 class="font-display text-4xl sm:text-5xl text-[#EFECE6] leading-[1.08]">
+                            Measured by structural readiness rather than vanity volume.
+                        </h2>
+                    </div>
+                    <div class="font-mono-tech text-[11px] tracking-[0.18em] text-[#9A8152] uppercase">
+                        [Verified Pilot Baseline • Non-Claim Standard]
+                    </div>
+                </div>
+
+                <!-- Data Visualization SVG + Key Institutional Metrics -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                    <div class="lg:col-span-7 monumental-panel p-6 sm:p-8 flex flex-col justify-between space-y-6">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <div>
+                                <div class="font-mono-tech text-[10px] tracking-[0.24em] text-[#DFC288] uppercase">Decision Readiness Trajectory</div>
+                                <h3 class="font-display text-2xl sm:text-3xl text-[#EFECE6] mt-1">Structured Pre-Commitment vs. Reactive Drift</h3>
+                            </div>
+                            <div class="flex items-center gap-4 text-[11px] font-mono-tech text-[#9D9990]">
+                                <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-[2px] bg-[#DFC288]"></span>Structured</span>
+                                <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-[2px] bg-[#EFECE6]/35"></span>Unstructured</span>
+                            </div>
+                        </div>
+
+                        <!-- Clean Architectural SVG Chart -->
+                        <div class="w-full overflow-x-auto">
+                            <svg class="w-full min-w-[440px] h-56" viewBox="0 0 600 220" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Readiness trajectory comparison across decision horizons">
+                                <!-- Horizontal Grid Hairlines -->
+                                <line x1="48" y1="30" x2="576" y2="30" stroke="#EFECE6" stroke-opacity="0.08"/>
+                                <line x1="48" y1="80" x2="576" y2="80" stroke="#EFECE6" stroke-opacity="0.08"/>
+                                <line x1="48" y1="130" x2="576" y2="130" stroke="#EFECE6" stroke-opacity="0.08"/>
+                                <line x1="48" y1="180" x2="576" y2="180" stroke="#EFECE6" stroke-opacity="0.14"/>
+
+                                <!-- Axis Labels -->
+                                <text x="48" y="202" fill="#9D9990" font-family="JetBrains Mono, monospace" font-size="10">WEEK 1</text>
+                                <text x="175" y="202" fill="#9D9990" font-family="JetBrains Mono, monospace" font-size="10">WEEK 4</text>
+                                <text x="302" y="202" fill="#9D9990" font-family="JetBrains Mono, monospace" font-size="10">WEEK 8</text>
+                                <text x="429" y="202" fill="#9D9990" font-family="JetBrains Mono, monospace" font-size="10">WEEK 12</text>
+                                <text x="530" y="202" fill="#DFC288" font-family="JetBrains Mono, monospace" font-size="10">HORIZON</text>
+
+                                <!-- Unstructured Path -->
+                                <polyline fill="none" stroke="#EFECE6" stroke-opacity="0.32" stroke-width="1.5" stroke-dasharray="4 4"
+                                    points="48,145 175,118 302,152 429,128 560,136"/>
+
+                                <!-- Structured TOVENZA Path -->
+                                <polyline fill="none" stroke="#DFC288" stroke-width="2.2"
+                                    points="48,140 175,102 302,74 429,52 560,38"/>
+
+                                <!-- Node Markers -->
+                                <circle cx="48" cy="140" r="3.5" fill="#050507" stroke="#DFC288" stroke-width="1.5"/>
+                                <circle cx="175" cy="102" r="3.5" fill="#050507" stroke="#DFC288" stroke-width="1.5"/>
+                                <circle cx="302" cy="74" r="3.5" fill="#050507" stroke="#DFC288" stroke-width="1.5"/>
+                                <circle cx="429" cy="52" r="3.5" fill="#050507" stroke="#DFC288" stroke-width="1.5"/>
+                                <circle cx="560" cy="38" r="4.5" fill="#DFC288"/>
                             </svg>
                         </div>
 
-                        <span class="mono-micro text-[10px] tracking-[0.28em] text-[#E5C687] uppercase">Career • Founder Ops • Timing • Life OS</span>
-                        <h1 class="editorial-title text-5xl sm:text-6xl text-[#ECE8DF] tracking-[0.06em] mt-2">TOVENZA</h1>
-                        <p class="max-w-xl mx-auto text-sm sm:text-base text-neutral-300 mt-4 leading-relaxed">
-                            Calm decision intelligence for career switches, offer math, founder cash-flow scenarios, Vedic + Western pacing, and everyday money &amp; focus habits.
+                        <p class="text-xs text-[#9D9990] leading-relaxed">
+                            Schematic representation of decision coherence over a 90-day cycle when downside limits and review checkpoints are defined upfront.
                         </p>
-
-                        <!-- First-5-Second Entry Prompt -->
-                        <div class="mt-6 p-4 rounded-2xl bg-black/50 border border-[#E5C687]/25 max-w-2xl mx-auto text-left">
-                            <div class="mono-micro text-[10px] tracking-[0.2em] text-[#E5C687] uppercase mb-2.5">What are you deciding right now?</div>
-                            <div class="flex flex-wrap gap-2 text-xs">
-                                <button type="button" data-room-btn="career-business" onclick="switchRoom('career-business')" class="px-3 py-1.5 rounded-lg bg-[#E5C687]/15 hover:bg-[#E5C687]/25 border border-[#E5C687]/35 text-[#ECE8DF]">Comparing offers / CTC</button>
-                                <button type="button" data-room-btn="career-business" onclick="switchRoom('career-business')" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-200">Checking founder runway / invoices</button>
-                                <button type="button" data-room-btn="astrology" onclick="switchRoom('astrology')" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-200">Timing a decision date</button>
-                                <button type="button" data-room-btn="life-ops" onclick="switchRoom('life-ops')" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-200">Organizing money &amp; focus</button>
-                            </div>
-                        </div>
-
-                        <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
-                            <button type="button" data-room-btn="career-business" onclick="switchRoom('career-business')" class="px-6 py-3 rounded-xl bg-[#E5C687] hover:bg-[#edd39b] text-[#07080C] text-xs tracking-[0.16em] font-semibold uppercase transition-colors">
-                                Explore Workspace
-                            </button>
-                            <button type="button" onclick="loadSampleScenario()" class="px-5 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs tracking-[0.14em] text-neutral-200 uppercase transition-colors">
-                                Load Sample Scenario
-                            </button>
-                        </div>
                     </div>
 
-                    <!-- Live Interactive Proof Right on Home -->
-                    <div id="home-live-proof-card" class="mt-10 max-w-3xl mx-auto p-5 sm:p-6 rounded-2xl tvz-surface text-left"></div>
-
-                    <!-- Live 15m Operator Clinic Card (First Session Free) -->
-                    <div class="mt-6 max-w-3xl mx-auto p-5 sm:p-6 rounded-2xl tvz-surface border border-[#E5C687]/30 text-left space-y-4">
-                        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
-                            <div>
-                                <span class="mono-micro text-[10px] tracking-[0.22em] text-[#E5C687] uppercase">Operator &amp; Leader Clinic • First Session Free</span>
-                                <h2 class="editorial-title text-2xl sm:text-3xl text-[#ECE8DF] mt-0.5">Live 15m Operator Clinic</h2>
-                            </div>
-                            <span class="px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-semibold">1st Session Free • Pilot</span>
+                    <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+                        <div class="monumental-panel p-6">
+                            <div class="font-mono-tech text-[10px] tracking-[0.22em] text-[#9D9990] uppercase">Core Architecture Modules</div>
+                            <div class="font-display text-4xl text-[#EFECE6] mt-1">04 Disciplines</div>
+                            <p class="text-xs text-[#A8A49B] mt-1">Career leverage, capital runway, temporal pacing, and personal systems.</p>
                         </div>
-                        <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed">
-                            Bring a real offer comparison, STAR-L story, or founder cash/invoice bottleneck into a focused 15-minute clinic session. Your first introductory session is free during the pre-bank pilot; ongoing clinic access and async audits pair with the <strong class="text-[#E5C687]">90-Day Pass (₹555 preview)</strong>.
+                        <div class="monumental-panel p-6">
+                            <div class="font-mono-tech text-[10px] tracking-[0.22em] text-[#9D9990] uppercase">Operational Cadence</div>
+                            <div class="font-display text-4xl text-[#DFC288] mt-1">90-Day Cycles</div>
+                            <p class="text-xs text-[#A8A49B] mt-1">Structured review horizons aligned with quarterly execution and capital discipline.</p>
+                        </div>
+                        <div class="monumental-panel p-6">
+                            <div class="font-mono-tech text-[10px] tracking-[0.22em] text-[#9D9990] uppercase">Current Stage</div>
+                            <div class="font-display text-3xl text-[#EFECE6] mt-1">Pre-Bank Pilot</div>
+                            <p class="text-xs text-[#A8A49B] mt-1">Validating workflows, usability, and institutional standards prior to live billing.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             7 & 8. FUTURE OUTLOOK & FINAL CALL TO ACTION
+             ================================================================= -->
+        <section id="outlook" class="py-24 sm:py-36 px-6 sm:px-10 hairline-t reveal-block">
+            <div class="max-w-7xl mx-auto space-y-20">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                    <div class="lg:col-span-5 space-y-3">
+                        <div class="font-mono-tech text-[11px] tracking-[0.26em] text-[#DFC288] uppercase">06 • Future Outlook</div>
+                        <h2 class="font-display text-4xl sm:text-5xl text-[#EFECE6] leading-[1.08]">
+                            Built to evolve in measured phases.
+                        </h2>
+                    </div>
+                    <div class="lg:col-span-7 space-y-5 text-sm sm:text-base text-[#B5B1A7] leading-relaxed max-w-2xl">
+                        <p>
+                            TOVENZA is engineered as a living institutional framework. As operational governance matures, the architecture expands across multi-market benchmarks, deeper scenario stress-testing, and curated executive roundtables—without sacrificing quietness or clarity.
                         </p>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                            <div class="p-3 rounded-xl bg-black/50 border border-white/10">
-                                <div class="text-[#E5C687] font-semibold">1. Prep Your Snapshot</div>
-                                <p class="text-neutral-400 mt-1">Save your CTC, runway, or timing inputs in TOVENZA first.</p>
-                            </div>
-                            <div class="p-3 rounded-xl bg-black/50 border border-white/10">
-                                <div class="text-[#E5C687] font-semibold">2. 15m Focused Audit</div>
-                                <p class="text-neutral-400 mt-1">Sharp feedback on leverage, cash floor &amp; next steps.</p>
-                            </div>
-                            <div class="p-3 rounded-xl bg-black/50 border border-white/10">
-                                <div class="text-[#E5C687] font-semibold">3. Log Your Takeaway</div>
-                                <p class="text-neutral-400 mt-1">Capture action items in Notes &amp; Test right after.</p>
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
-                            <span class="mono-micro text-[11px] text-neutral-400">Slots scheduled in weekly pilot batches</span>
-                            <div class="flex flex-wrap items-center gap-2">
-                                <button type="button" onclick="copyTextSafe('Hi TOVENZA team — I would like to claim my free 15m Live Operator Clinic slot for ' + (document.getElementById('c-role')?.value || 'career/founder planning') + '.', 'Free clinic request copied', this)" class="px-4 py-2 rounded-lg bg-[#E5C687] text-[#07080C] text-xs font-semibold">Copy Free Clinic Request</button>
-                                <button type="button" data-room-btn="feedbacks" onclick="switchRoom('feedbacks')" class="px-3.5 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/15 text-xs text-neutral-200">Log Session Notes in Room 04 →</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 4 Clean Room Entry Cards -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10 text-left">
-                        <button type="button" data-room-btn="career-business" onclick="switchRoom('career-business')" class="p-5 rounded-2xl tvz-surface tvz-card-hover space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="mono-micro text-[10px] text-[#E5C687] uppercase">01 • Primary Wedge</span>
-                                <span class="mono-micro text-[10px] px-1.5 py-0.5 rounded bg-white/5 text-neutral-400">Key 2</span>
-                            </div>
-                            <h2 class="editorial-title text-2xl text-[#ECE8DF]">Career &amp; Founder Ops</h2>
-                            <p class="text-xs text-neutral-400 leading-relaxed">CTC percentile meter, Offer A vs. B compare, STAR-L pacing, runway what-ifs &amp; 3-stage invoice scripts.</p>
-                        </button>
-
-                        <button type="button" data-room-btn="astrology" onclick="switchRoom('astrology')" class="p-5 rounded-2xl tvz-surface tvz-card-hover space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="mono-micro text-[10px] text-[#E5C687] uppercase">02 • Dual Pacing</span>
-                                <span class="mono-micro text-[10px] px-1.5 py-0.5 rounded bg-white/5 text-neutral-400">Key 3</span>
-                            </div>
-                            <h2 class="editorial-title text-2xl text-[#ECE8DF]">Decision Timing</h2>
-                            <p class="text-xs text-neutral-400 leading-relaxed">Vedic + Western indicative pacing windows, plain-English Do vs. Avoid bullets &amp; target-date checks.</p>
-                        </button>
-
-                        <button type="button" data-room-btn="life-ops" onclick="switchRoom('life-ops')" class="p-5 rounded-2xl tvz-surface tvz-card-hover space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="mono-micro text-[10px] text-[#E5C687] uppercase">03 • Daily Habits</span>
-                                <span class="mono-micro text-[10px] px-1.5 py-0.5 rounded bg-white/5 text-neutral-400">Key 4</span>
-                            </div>
-                            <h2 class="editorial-title text-2xl text-[#ECE8DF]">Life &amp; Money Ops</h2>
-                            <p class="text-xs text-neutral-400 leading-relaxed">Salary split, Buffer Days Covered, debt payoff math, scam scanner, Daily 3 + 15m sprint &amp; formal letters.</p>
-                        </button>
-
-                        <button type="button" data-room-btn="feedbacks" onclick="switchRoom('feedbacks')" class="p-5 rounded-2xl tvz-surface tvz-card-hover space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="mono-micro text-[10px] text-[#E5C687] uppercase">04 • QA &amp; Backup</span>
-                                <span class="mono-micro text-[10px] px-1.5 py-0.5 rounded bg-white/5 text-neutral-400">Key 5</span>
-                            </div>
-                            <h2 class="editorial-title text-2xl text-[#ECE8DF]">Notes, Smoke &amp; Backup</h2>
-                            <p class="text-xs text-neutral-400 leading-relaxed">Log pilot tester notes, run the built-in smoke check, and export or restore your workspace JSON.</p>
-                        </button>
+                        <p>
+                            Every addition must earn its place by shortening the distance between ambiguity and sound action.
+                        </p>
                     </div>
                 </div>
-            </section>
 
-            <!-- ROOM 2: CAREER & BUSINESS -->
-            <section id="room-career-business" class="room-section">
-                <div id="career-business-host" class="max-w-6xl mx-auto px-4 sm:px-6 pt-8 pb-24"></div>
-            </section>
-
-            <!-- ROOM 3: ASTROLOGY & TIMING -->
-            <section id="room-astrology" class="room-section">
-                <div id="astrology-host" class="max-w-6xl mx-auto px-4 sm:px-6 pt-8 pb-24"></div>
-            </section>
-
-            <!-- ROOM 4: LIFE & MONEY OPS -->
-            <section id="room-life-ops" class="room-section">
-                <div id="life-ops-host" class="max-w-6xl mx-auto px-4 sm:px-6 pt-8 pb-24"></div>
-            </section>
-
-            <!-- ROOM 5: NOTES, SMOKE TEST & BACKUP -->
-            <section id="room-feedbacks" class="room-section">
-                <div id="feedbacks-host" class="max-w-5xl mx-auto px-4 sm:px-6 pt-8 pb-24"></div>
-            </section>
-        </main>
-
-        <!-- Trust, Legal & Support Footer -->
-        <footer class="border-t border-white/[0.08] bg-[#06070B] pb-20 md:pb-8">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 text-xs text-neutral-400 space-y-3">
-                <div class="flex flex-wrap items-center justify-between gap-3">
-                    <div class="flex items-center gap-2">
-                        <span class="mono-micro text-[10px] tracking-[0.2em] text-[#E5C687] uppercase">TOVENZA • Pre-Bank Pilot</span>
-                        <span class="text-neutral-600">•</span>
-                        <span>Indicative planning &amp; decision-pacing workspace</span>
+                <!-- Final Call to Action -->
+                <div id="dispatch" class="monumental-panel p-8 sm:p-14 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                    <div class="lg:col-span-7 space-y-4">
+                        <div class="font-mono-tech text-[11px] tracking-[0.26em] text-[#DFC288] uppercase">07 • Institutional Dispatch</div>
+                        <h2 class="font-display text-3xl sm:text-5xl text-[#EFECE6] leading-[1.08]">
+                            Receive pilot releases &amp; architectural notes.
+                        </h2>
+                        <p class="text-xs sm:text-sm text-[#A8A49B] max-w-xl leading-relaxed">
+                            Register an email address to note interest in TOVENZA pilot updates and milestone dispatches. Stored locally in this preview environment until official enrollment opens.
+                        </p>
                     </div>
-                    <div class="flex flex-wrap items-center gap-4">
-                        <button type="button" onclick="toggleLegalDrawer()" class="text-[#E5C687] hover:underline">Privacy, Terms &amp; Pass Rules</button>
-                        <a href="mailto:support@tovenza.com" class="text-neutral-300 hover:text-white">support@tovenza.com</a>
-                    </div>
-                </div>
-                <div id="legal-drawer" class="hidden p-4 rounded-xl bg-black/50 border border-white/10 grid grid-cols-1 md:grid-cols-3 gap-4 text-[11px] leading-relaxed text-neutral-300">
-                    <div>
-                        <div class="text-[#E5C687] font-semibold mb-1">Privacy &amp; Local Storage</div>
-                        <p>In this pre-bank pilot, your inputs stay locally in your browser (<code>localStorage</code>). You can export or clear your workspace JSON anytime in Notes &amp; Test.</p>
-                    </div>
-                    <div>
-                        <div class="text-[#E5C687] font-semibold mb-1">Terms &amp; 90-Day Pass Rules</div>
-                        <p>The 90-Day Pass (₹555) is currently in preview mode while business bank &amp; gateway KYC complete. No live payment is collected until official checkout launches.</p>
-                    </div>
-                    <div>
-                        <div class="text-[#E5C687] font-semibold mb-1">Indicative Planning Disclaimer</div>
-                        <p>CTC estimates, runway scenarios, formal letter templates, and Vedic/Western timing windows are structured decision aids—not regulated tax, legal, financial, or medical advice.</p>
+
+                    <div class="lg:col-span-5">
+                        <form id="briefing-form" onsubmit="handleBriefingSubmit(event)" class="space-y-3">
+                            <label for="briefing-email" class="block font-mono-tech text-[10px] tracking-[0.22em] text-[#9D9990] uppercase">Work or Personal Email</label>
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <input id="briefing-email" type="email" required placeholder="name@institution.org" class="flex-1 px-4 py-3 bg-[#050507] border border-white/15 text-xs sm:text-sm text-[#EFECE6] placeholder:text-neutral-600">
+                                <button type="submit" class="px-6 py-3 bg-[#DFC288] hover:bg-[#ebd3a2] text-[#050507] text-xs font-mono-tech font-medium tracking-[0.2em] uppercase shrink-0 transition-colors">
+                                    Register
+                                </button>
+                            </div>
+                            <p id="briefing-status" role="status" aria-live="polite" class="text-xs text-[#DFC288] min-h-[1.25rem]"></p>
+                        </form>
                     </div>
                 </div>
             </div>
-        </footer>
+        </section>
+    </main>
 
-        <!-- Mobile Bottom Nav -->
-        <nav aria-label="Mobile Navigation" class="md:hidden fixed bottom-0 inset-x-0 z-30 bg-[#050609]/95 backdrop-blur-md border-t border-white/10 px-2 py-1.5 flex items-center justify-around">
-            <button type="button" data-room-btn="home" onclick="switchRoom('home')" class="room-nav-btn px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-[#E5C687] bg-[#E5C687]/15">Home</button>
-            <button type="button" data-room-btn="career-business" onclick="switchRoom('career-business')" class="room-nav-btn px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-neutral-300">Career/Biz</button>
-            <button type="button" data-room-btn="astrology" onclick="switchRoom('astrology')" class="room-nav-btn px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-neutral-300">Timing</button>
-            <button type="button" data-room-btn="life-ops" onclick="switchRoom('life-ops')" class="room-nav-btn px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-neutral-300">Life/Money</button>
-            <button type="button" data-room-btn="feedbacks" onclick="switchRoom('feedbacks')" class="room-nav-btn px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-neutral-300">Notes</button>
-        </nav>
-    </div>
-
-    <!-- Account Modal -->
-    <div id="tovenza-account-modal" role="dialog" aria-modal="true" aria-labelledby="account-modal-title" onclick="if(event.target===this) closeModal('tovenza-account-modal')" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="w-full max-w-md rounded-2xl tvz-surface border border-white/15 p-6 space-y-4">
-            <div class="flex items-center justify-between pb-2 border-b border-white/10">
-                <h3 id="account-modal-title" class="editorial-title text-2xl text-[#ECE8DF]">Pilot Member Profile</h3>
-                <button type="button" onclick="closeModal('tovenza-account-modal')" aria-label="Close account modal" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300">✕</button>
-            </div>
-            <p class="text-xs text-neutral-400">Saved locally in your browser during the pre-bank pilot.</p>
-            <div class="space-y-3 text-xs">
-                <div>
-                    <label for="member-name-input" class="block text-neutral-300 mb-1">Full Name</label>
-                    <input id="member-name-input" type="text" placeholder="e.g., Aarav Sharma" class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
-                </div>
-                <div>
-                    <label for="member-email-input" class="block text-neutral-300 mb-1">Email</label>
-                    <input id="member-email-input" type="email" placeholder="you@example.com" class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
-                </div>
-                <div>
-                    <label for="member-phone-input" class="block text-neutral-300 mb-1">Mobile (Optional)</label>
-                    <input id="member-phone-input" type="tel" placeholder="+91 98XXXXXXXX" class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
+    <!-- =====================================================================
+         9. REFINED INSTITUTIONAL FOOTER
+         ===================================================================== -->
+    <footer class="bg-[#050507] hairline-t py-16 px-6 sm:px-10 text-xs text-[#9D9990]">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 hairline-b">
+            <div class="md:col-span-5 space-y-4">
+                <div class="font-display text-2xl tracking-[0.2em] text-[#EFECE6]">TOVENZA</div>
+                <p class="text-xs text-[#8E8A82] max-w-sm leading-relaxed">
+                    Structured decision systems, spatial research interfaces, and long-horizon operational discipline.
+                </p>
+                <div class="font-mono-tech text-[10px] tracking-[0.2em] text-[#9A8152] uppercase">
+                    Contact • <a href="mailto:support@tovenza.com" class="text-[#DFC288] hover:underline">support@tovenza.com</a>
                 </div>
             </div>
-            <div class="flex items-center justify-end gap-2 pt-2">
-                <button type="button" onclick="closeModal('tovenza-account-modal')" class="px-4 py-2 rounded-lg bg-white/5 text-xs text-neutral-300">Cancel</button>
-                <button type="button" onclick="saveMemberProfile()" class="px-4 py-2 rounded-lg bg-[#E5C687] text-[#07080C] text-xs font-semibold">Save Profile</button>
+
+            <div class="md:col-span-3 space-y-3">
+                <div class="font-mono-tech text-[10px] tracking-[0.24em] text-[#EFECE6] uppercase">Sections</div>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#philosophy" class="hover:text-[#EFECE6] transition-colors">Institutional Philosophy</a></li>
+                    <li><a href="#vision" class="hover:text-[#EFECE6] transition-colors">The Bigger Vision</a></li>
+                    <li><a href="#pillars" class="hover:text-[#EFECE6] transition-colors">Core Pillars</a></li>
+                    <li><a href="#technology" class="hover:text-[#EFECE6] transition-colors">Innovation &amp; Systems</a></li>
+                    <li><a href="#impact" class="hover:text-[#EFECE6] transition-colors">Impact &amp; Significance</a></li>
+                </ul>
+            </div>
+
+            <div class="md:col-span-4 space-y-3">
+                <div class="font-mono-tech text-[10px] tracking-[0.24em] text-[#EFECE6] uppercase">Governance &amp; Notices</div>
+                <p class="text-xs text-[#8E8A82] leading-relaxed">
+                    Presented in pre-bank pilot preview. Figures shown on this page are illustrative planning models rather than regulated financial, legal, or investment advice.
+                </p>
             </div>
         </div>
-    </div>
 
-    <!-- 90-Day Pass Modal -->
-    <div id="tovenza-pass-modal" role="dialog" aria-modal="true" aria-labelledby="pass-modal-title" onclick="if(event.target===this) closeModal('tovenza-pass-modal')" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="w-full max-w-md rounded-2xl tvz-surface border border-[#E5C687]/35 p-6 space-y-4">
-            <div class="flex items-center justify-between pb-2 border-b border-[#E5C687]/20">
-                <h3 id="pass-modal-title" class="editorial-title text-2xl text-[#ECE8DF]">TOVENZA 90-Day Pass • ₹555</h3>
-                <button type="button" onclick="closeModal('tovenza-pass-modal')" aria-label="Close pass modal" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300">✕</button>
-            </div>
-            <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-400/30 text-xs text-amber-200 leading-relaxed">
-                <strong>Live Payment Status:</strong> Held until your business bank account, domain policies, and payment gateway KYC are completed. No live charge is processed in this preview.
-            </div>
-            <ul class="space-y-2 text-xs text-neutral-300">
-                <li>✓ Full Career CTC Percentile Meter, Offer A vs. B Compare &amp; STAR-L Pacing</li>
-                <li>✓ Founder 13-Week Runway What-If Scenarios &amp; 3-Stage Invoice Scripts</li>
-                <li>✓ Vedic + Western Decision Timing Windows &amp; City Hub Coordinates</li>
-                <li>✓ Life &amp; Money Ops: Buffer Days, Debt Simulator, Daily 3 Sprint &amp; Formal Letters</li>
-            </ul>
-            <div class="flex items-center justify-between pt-2">
-                <span class="mono-micro text-[11px] text-neutral-400">Pilot Mode: All rooms unlocked free</span>
-                <button type="button" onclick="closeModal('tovenza-pass-modal')" class="px-4 py-2 rounded-lg bg-[#E5C687] text-[#07080C] text-xs font-semibold">Continue Free Pilot</button>
-            </div>
+        <div class="max-w-7xl mx-auto pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono-tech text-[10px] tracking-[0.2em] text-[#7D7971] uppercase">
+            <span>© <span id="footer-year">2026</span> TOVENZA. All rights reserved.</span>
+            <span>Designed with Restraint &amp; Precision</span>
         </div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div id="tovenza-toast" role="status" aria-live="polite" class="pointer-events-none fixed bottom-20 md:bottom-6 right-4 z-50 px-4 py-2.5 rounded-xl bg-[#11131B] border border-[#E5C687]/40 text-xs text-[#ECE8DF] shadow-xl opacity-0 translate-y-2 transition-all duration-200"></div>
+    </footer>
 
     <script>
     (function () {
-        const STORAGE_KEY = 'tovenza_os_state_v2';
-        let lastFocusedTrigger = null;
-        let sprintIntervalId = null;
+        // Footer year
+        const yr = document.getElementById('footer-year');
+        if (yr) yr.textContent = String(new Date().getFullYear());
 
-        const CITY_HUBS = {
-            'New Delhi, India': { lat: 28.61, lon: 77.21, tz: 'IST (UTC+5:30)' },
-            'Mumbai, India': { lat: 19.08, lon: 72.88, tz: 'IST (UTC+5:30)' },
-            'Bengaluru, India': { lat: 12.97, lon: 77.59, tz: 'IST (UTC+5:30)' },
-            'London, UK': { lat: 51.51, lon: -0.13, tz: 'GMT/BST (UTC+0/+1)' },
-            'Dubai, UAE': { lat: 25.20, lon: 55.27, tz: 'GST (UTC+4:00)' },
-            'New York, USA': { lat: 40.71, lon: -74.01, tz: 'EST/EDT (UTC-5/-4)' },
-            'Singapore': { lat: 1.35, lon: 103.82, tz: 'SGT (UTC+8:00)' }
+        // Mobile navigation drawer
+        window.toggleMobileDrawer = function () {
+            const drawer = document.getElementById('mobile-nav-drawer');
+            const btn = document.getElementById('mobile-menu-btn');
+            if (!drawer || !btn) return;
+            const isHidden = drawer.classList.contains('hidden');
+            drawer.classList.toggle('hidden', !isHidden);
+            btn.setAttribute('aria-expanded', String(isHidden));
         };
 
-        function sanitizeNonNegativeNumber(val, min = 0, max = 1000000000) {
-            const n = Number(val);
-            if (!Number.isFinite(n)) return min;
-            return Math.min(max, Math.max(min, n));
-        }
+        window.closeMobileDrawer = function () {
+            const drawer = document.getElementById('mobile-nav-drawer');
+            const btn = document.getElementById('mobile-menu-btn');
+            if (!drawer || !btn) return;
+            drawer.classList.add('hidden');
+            btn.setAttribute('aria-expanded', 'false');
+        };
 
-        function escapeHtml(str) {
-            return String(str ?? '')
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#39;');
-        }
+        // Interactive Sensitivity Explorer (#technology)
+        window.updateArchitectureSim = function () {
+            const bufEl = document.getElementById('sim-buffer-slider');
+            const burnEl = document.getElementById('sim-burn-slider');
+            if (!bufEl || !burnEl) return;
+            const reserveLakhs = Math.max(0.5, Number(bufEl.value) || 12);
+            const burnLakhs = Math.max(0.25, Number(burnEl.value) || 2);
+            const months = (reserveLakhs / burnLakhs).toFixed(1);
 
-        function currentLpaFormat(val) {
-            const n = Number(val) || 0;
-            return Number.isInteger(n) ? String(n) : n.toFixed(1);
-        }
+            const bufOut = document.getElementById('sim-buffer-readout');
+            const burnOut = document.getElementById('sim-burn-readout');
+            const runwayOut = document.getElementById('sim-runway-out');
+            const postureOut = document.getElementById('sim-posture-out');
 
-        function getDefaultState() {
-            return {
-                activeRoom: 'home',
-                readinessExpanded: false,
-                member: { name: '', email: '', phone: '' },
-                career: {
-                    activeSubTab: 'ctc',
-                    role: 'Product & Operations Lead',
-                    city: 'Bengaluru',
-                    expYears: 5,
-                    currentCtc: 14,
-                    targetCtc: 20,
-                    variablePct: 15,
-                    offerACtc: 19.5,
-                    offerAFixedPct: 85,
-                    offerBCtc: 22,
-                    offerBFixedPct: 72,
-                    starStory: 'Led a cross-functional onboarding redesign across 120 enterprise accounts, cutting activation time from 14 days to 5 days and lifting 90-day retention by 18%.',
-                    appsSent: 18,
-                    screensGot: 5,
-                    finalsGot: 2,
-                    offersGot: 1,
-                    scorecard: [4, 4, 3, 4, 4]
-                },
-                business: {
-                    focusArea: 'Revenue & Conversion Bottleneck',
-                    bottleneck: 'conversion',
-                    limit: 'Protect 4-month cash buffer & avoid unhedged fixed commitments',
-                    monthlyRev: 320000,
-                    monthlyBurn: 210000,
-                    cashInBank: 950000,
-                    overdueReceivables: 145000,
-                    whatIfScenario: 'base',
-                    invoiceClient: 'Northstar Retail Pvt Ltd',
-                    invoiceAmount: 85000,
-                    invoiceOverdueDays: 16,
-                    invoiceStage: 'day14'
-                },
-                astro: {
-                    subTab: 'chart',
-                    birthDate: '1994-08-18',
-                    birthPlace: 'New Delhi, India',
-                    targetDate: '2026-12-10'
-                },
-                lifeOps: {
-                    activeTab: 'money',
-                    moneyIncome: 120000,
-                    moneyBuffer: 250000,
-                    debtPrincipal: 180000,
-                    debtApr: 14.5,
-                    debtEmi: 9500,
-                    debtExtra: 3000,
-                    scamChecks: [false, false, false, false, false],
-                    dailyFocus: [
-                        { text: 'Send 3 tailored role/client follow-ups before 11:30 AM', done: false },
-                        { text: 'Review weekly cash buffer & clear overdue invoice nudge', done: false },
-                        { text: 'Complete 15-minute deep work sprint without phone', done: false }
-                    ],
-                    streakDays: 4,
-                    activeSprintPriorityIdx: 0,
-                    sprintSecondsLeft: 900,
-                    sprintRunning: false,
-                    eodWin: '',
-                    letterType: 'deposit',
-                    letterVars: { recipient: 'Landlord / Property Manager', amount: '60000', refDate: '2026-11-30' },
-                    familyDocs: [true, true, false, true, false, true]
-                },
-                feedbacks: []
-            };
-        }
+            if (bufOut) bufOut.textContent = `₹${reserveLakhs.toFixed(1)}L`;
+            if (burnOut) burnOut.textContent = `₹${burnLakhs.toFixed(1)}L / mo`;
+            if (runwayOut) runwayOut.textContent = `${months} Months`;
+            if (postureOut) {
+                const m = Number(months);
+                postureOut.textContent = m >= 6 ? 'Fortified Floor' : m >= 3 ? 'Measured Cushion' : 'Tight Margin';
+            }
+        };
+        updateArchitectureSim();
 
-        function sanitizeStatePayload(parsed) {
-            const base = getDefaultState();
-            if (!parsed || typeof parsed !== 'object') return base;
-
-            const validRooms = ['home', 'career-business', 'astrology', 'life-ops', 'feedbacks'];
-            const mergedDailyFocus = Array.isArray(parsed.lifeOps?.dailyFocus) && parsed.lifeOps.dailyFocus.length === 3
-                ? parsed.lifeOps.dailyFocus.map((item, i) => ({
-                    text: typeof item?.text === 'string' && item.text.trim() ? item.text : base.lifeOps.dailyFocus[i].text,
-                    done: Boolean(item?.done)
-                }))
-                : base.lifeOps.dailyFocus;
-
-            const mergedScamChecks = Array.isArray(parsed.lifeOps?.scamChecks) && parsed.lifeOps.scamChecks.length === 5
-                ? parsed.lifeOps.scamChecks.map(Boolean)
-                : base.lifeOps.scamChecks;
-
-            const mergedFamilyDocs = Array.isArray(parsed.lifeOps?.familyDocs) && parsed.lifeOps.familyDocs.length === 6
-                ? parsed.lifeOps.familyDocs.map(Boolean)
-                : base.lifeOps.familyDocs;
-
-            return {
-                ...base,
-                activeRoom: validRooms.includes(parsed.activeRoom) ? parsed.activeRoom : 'home',
-                readinessExpanded: Boolean(parsed.readinessExpanded),
-                member: {
-                    name: typeof parsed.member?.name === 'string' ? parsed.member.name : '',
-                    email: typeof parsed.member?.email === 'string' ? parsed.member.email : '',
-                    phone: typeof parsed.member?.phone === 'string' ? parsed.member.phone : ''
-                },
-                career: {
-                    ...base.career,
-                    ...(parsed.career && typeof parsed.career === 'object' ? parsed.career : {}),
-                    activeSubTab: ['ctc', 'interview', 'business'].includes(parsed.career?.activeSubTab) ? parsed.career.activeSubTab : 'ctc',
-                    expYears: sanitizeNonNegativeNumber(parsed.career?.expYears ?? base.career.expYears, 0, 45),
-                    currentCtc: sanitizeNonNegativeNumber(parsed.career?.currentCtc ?? base.career.currentCtc, 1, 500),
-                    targetCtc: sanitizeNonNegativeNumber(parsed.career?.targetCtc ?? base.career.targetCtc, 1, 500),
-                    variablePct: sanitizeNonNegativeNumber(parsed.career?.variablePct ?? base.career.variablePct, 0, 80),
-                    offerACtc: sanitizeNonNegativeNumber(parsed.career?.offerACtc ?? base.career.offerACtc, 1, 500),
-                    offerAFixedPct: sanitizeNonNegativeNumber(parsed.career?.offerAFixedPct ?? base.career.offerAFixedPct, 20, 100),
-                    offerBCtc: sanitizeNonNegativeNumber(parsed.career?.offerBCtc ?? base.career.offerBCtc, 1, 500),
-                    offerBFixedPct: sanitizeNonNegativeNumber(parsed.career?.offerBFixedPct ?? base.career.offerBFixedPct, 20, 100),
-                    appsSent: sanitizeNonNegativeNumber(parsed.career?.appsSent ?? base.career.appsSent, 0, 10000),
-                    screensGot: sanitizeNonNegativeNumber(parsed.career?.screensGot ?? base.career.screensGot, 0, 10000),
-                    finalsGot: sanitizeNonNegativeNumber(parsed.career?.finalsGot ?? base.career.finalsGot, 0, 10000),
-                    offersGot: sanitizeNonNegativeNumber(parsed.career?.offersGot ?? base.career.offersGot, 0, 10000)
-                },
-                business: {
-                    ...base.business,
-                    ...(parsed.business && typeof parsed.business === 'object' ? parsed.business : {}),
-                    monthlyRev: sanitizeNonNegativeNumber(parsed.business?.monthlyRev ?? base.business.monthlyRev, 0, 500000000),
-                    monthlyBurn: Math.max(10000, sanitizeNonNegativeNumber(parsed.business?.monthlyBurn ?? base.business.monthlyBurn, 10000, 500000000)),
-                    cashInBank: sanitizeNonNegativeNumber(parsed.business?.cashInBank ?? base.business.cashInBank, 0, 500000000),
-                    overdueReceivables: sanitizeNonNegativeNumber(parsed.business?.overdueReceivables ?? base.business.overdueReceivables, 0, 500000000),
-                    whatIfScenario: ['base', 'collect', 'cut15', 'zeroSales'].includes(parsed.business?.whatIfScenario) ? parsed.business.whatIfScenario : 'base',
-                    invoiceAmount: sanitizeNonNegativeNumber(parsed.business?.invoiceAmount ?? base.business.invoiceAmount, 0, 500000000),
-                    invoiceOverdueDays: sanitizeNonNegativeNumber(parsed.business?.invoiceOverdueDays ?? base.business.invoiceOverdueDays, 0, 730),
-                    invoiceStage: ['day3', 'day14', 'day30'].includes(parsed.business?.invoiceStage) ? parsed.business.invoiceStage : 'day14'
-                },
-                astro: {
-                    ...base.astro,
-                    ...(parsed.astro && typeof parsed.astro === 'object' ? parsed.astro : {}),
-                    birthPlace: CITY_HUBS[parsed.astro?.birthPlace] ? parsed.astro.birthPlace : base.astro.birthPlace
-                },
-                lifeOps: {
-                    ...base.lifeOps,
-                    ...(parsed.lifeOps && typeof parsed.lifeOps === 'object' ? parsed.lifeOps : {}),
-                    activeTab: ['money', 'focus', 'letters', 'weekly'].includes(parsed.lifeOps?.activeTab) ? parsed.lifeOps.activeTab : 'money',
-                    moneyIncome: sanitizeNonNegativeNumber(parsed.lifeOps?.moneyIncome ?? base.lifeOps.moneyIncome, 0, 500000000),
-                    moneyBuffer: sanitizeNonNegativeNumber(parsed.lifeOps?.moneyBuffer ?? base.lifeOps.moneyBuffer, 0, 500000000),
-                    debtPrincipal: sanitizeNonNegativeNumber(parsed.lifeOps?.debtPrincipal ?? base.lifeOps.debtPrincipal, 0, 500000000),
-                    debtApr: sanitizeNonNegativeNumber(parsed.lifeOps?.debtApr ?? base.lifeOps.debtApr, 0, 60),
-                    debtEmi: sanitizeNonNegativeNumber(parsed.lifeOps?.debtEmi ?? base.lifeOps.debtEmi, 0, 50000000),
-                    debtExtra: sanitizeNonNegativeNumber(parsed.lifeOps?.debtExtra ?? base.lifeOps.debtExtra, 0, 50000000),
-                    scamChecks: mergedScamChecks,
-                    dailyFocus: mergedDailyFocus,
-                    streakDays: sanitizeNonNegativeNumber(parsed.lifeOps?.streakDays ?? base.lifeOps.streakDays, 0, 3650),
-                    activeSprintPriorityIdx: [0, 1, 2].includes(parsed.lifeOps?.activeSprintPriorityIdx) ? parsed.lifeOps.activeSprintPriorityIdx : 0,
-                    sprintSecondsLeft: sanitizeNonNegativeNumber(parsed.lifeOps?.sprintSecondsLeft ?? 900, 0, 900),
-                    sprintRunning: false,
-                    letterType: ['deposit', 'fnf', 'politeNo'].includes(parsed.lifeOps?.letterType) ? parsed.lifeOps.letterType : 'deposit',
-                    letterVars: {
-                        recipient: typeof parsed.lifeOps?.letterVars?.recipient === 'string' ? parsed.lifeOps.letterVars.recipient : base.lifeOps.letterVars.recipient,
-                        amount: String(sanitizeNonNegativeNumber(parsed.lifeOps?.letterVars?.amount ?? base.lifeOps.letterVars.amount, 0, 500000000)),
-                        refDate: typeof parsed.lifeOps?.letterVars?.refDate === 'string' ? parsed.lifeOps.letterVars.refDate : base.lifeOps.letterVars.refDate
-                    },
-                    familyDocs: mergedFamilyDocs
-                },
-                feedbacks: Array.isArray(parsed.feedbacks)
-                    ? parsed.feedbacks.slice(0, 100).map((f, idx) => ({
-                        id: sanitizeNonNegativeNumber(f?.id ?? (Date.now() + idx), 1, 9999999999999),
-                        room: typeof f?.room === 'string' ? f.room.slice(0, 60) : 'General',
-                        note: typeof f?.note === 'string' ? f.note.slice(0, 1000) : '',
-                        createdAt: typeof f?.createdAt === 'string' ? f.createdAt.slice(0, 30) : ''
-                    })).filter(f => f.note)
-                    : []
-            };
-        }
-
-        function loadState() {
+        // Briefing Dispatch Form Handler
+        window.handleBriefingSubmit = function (e) {
+            e.preventDefault();
+            const input = document.getElementById('briefing-email');
+            const status = document.getElementById('briefing-status');
+            if (!input || !status) return;
+            const email = input.value.trim();
+            if (!email) return;
             try {
-                const raw = localStorage.getItem(STORAGE_KEY);
-                if (!raw) return getDefaultState();
-                return sanitizeStatePayload(JSON.parse(raw));
-            } catch (e) {
-                return getDefaultState();
-            }
-        }
+                localStorage.setItem('tovenza_flagship_brief_email', email);
+            } catch (err) {}
+            status.textContent = `Noted locally for ${email} (Pre-Bank Pilot Preview).`;
+            input.value = '';
+        };
 
-        let state = loadState();
-
-        function saveState() {
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-            } catch (e) {}
-        }
-
-        function showToast(msg) {
-            const el = document.getElementById('tovenza-toast');
-            if (!el) return;
-            el.textContent = msg;
-            el.classList.remove('opacity-0', 'translate-y-2');
-            clearTimeout(el._toastTimer);
-            el._toastTimer = setTimeout(() => {
-                el.classList.add('opacity-0', 'translate-y-2');
-            }, 2400);
-        }
-
-        async function copyTextSafe(text, successMsg = 'Copied to clipboard', triggerBtn = null) {
-            try {
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    await navigator.clipboard.writeText(text);
-                } else {
-                    const ta = document.createElement('textarea');
-                    ta.value = text;
-                    document.body.appendChild(ta);
-                    ta.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(ta);
-                }
-                const btn = triggerBtn || (typeof window !== 'undefined' && window.event && window.event.currentTarget);
-                if (btn && btn.tagName === 'BUTTON') {
-                    const orig = btn.dataset.origLabel || btn.textContent;
-                    btn.dataset.origLabel = orig;
-                    btn.textContent = 'Copied ✓';
-                    clearTimeout(btn._copyResetTimer);
-                    btn._copyResetTimer = setTimeout(() => { btn.textContent = orig; }, 1600);
-                }
-                showToast(successMsg);
-            } catch (e) {
-                showToast('Copy unavailable — select text manually');
-            }
-        }
-
-        function toggleLegalDrawer() {
-            const d = document.getElementById('legal-drawer');
-            if (d) d.classList.toggle('hidden');
-        }
-
-        function syncModalBodyLock() {
-            const anyOpen = ['tovenza-account-modal', 'tovenza-pass-modal'].some(id => {
-                const m = document.getElementById(id);
-                return m && !m.classList.contains('hidden');
-            });
-            document.body.style.overflow = anyOpen ? 'hidden' : '';
-        }
-
-        function restoreModalFocus() {
-            if (lastFocusedTrigger && typeof lastFocusedTrigger.focus === 'function') {
-                lastFocusedTrigger.focus();
-            }
-            lastFocusedTrigger = null;
-        }
-
-        function openModal(id) {
-            const m = document.getElementById(id);
-            if (!m) return;
-            lastFocusedTrigger = document.activeElement;
-            if (id === 'tovenza-account-modal') {
-                document.getElementById('member-name-input').value = state.member.name || '';
-                document.getElementById('member-email-input').value = state.member.email || '';
-                document.getElementById('member-phone-input').value = state.member.phone || '';
-            }
-            m.classList.remove('hidden');
-            syncModalBodyLock();
-            const closeBtn = m.querySelector('button');
-            if (closeBtn) closeBtn.focus();
-        }
-
-        function closeModal(id) {
-            const m = document.getElementById(id);
-            if (!m) return;
-            m.classList.add('hidden');
-            syncModalBodyLock();
-            restoreModalFocus();
-        }
-
-        function saveMemberProfile() {
-            state.member.name = document.getElementById('member-name-input').value.trim();
-            state.member.email = document.getElementById('member-email-input').value.trim();
-            state.member.phone = document.getElementById('member-phone-input').value.trim();
-            saveState();
-            updateHeaderAccountLabel();
-            closeModal('tovenza-account-modal');
-            showToast('Pilot profile saved locally');
-        }
-
-        function updateHeaderAccountLabel() {
-            const btn = document.getElementById('header-account-btn');
-            if (!btn) return;
-            btn.textContent = state.member.name ? state.member.name.split(' ')[0] : 'Account';
-        }
-
-        function estimateMonthlyInHand(ctcLpa, variablePct = 15) {
-            const annualGross = sanitizeNonNegativeNumber(ctcLpa, 1, 500) * 100000;
-            const fixedAnnual = annualGross * (1 - sanitizeNonNegativeNumber(variablePct, 0, 80) / 100);
-            const estTaxRate = fixedAnnual <= 750000 ? 0.04 : fixedAnnual <= 1500000 ? 0.11 : fixedAnnual <= 2500000 ? 0.17 : 0.23;
-            return Math.round((fixedAnnual * (1 - estTaxRate)) / 12);
-        }
-
-        function computeCareerPercentile(expYears, targetCtc) {
-            const p50 = Math.max(6, 4.5 + sanitizeNonNegativeNumber(expYears, 0, 45) * 2.4);
-            const p25 = Math.round(p50 * 0.78 * 10) / 10;
-            const p75 = Math.round(p50 * 1.32 * 10) / 10;
-            const p90 = Math.round(p50 * 1.65 * 10) / 10;
-            const ratio = sanitizeNonNegativeNumber(targetCtc, 1, 500) / p50;
-            const pct = Math.min(97, Math.max(12, Math.round(50 * ratio)));
-            return { p25, p50: Math.round(p50 * 10) / 10, p75, p90, pct };
-        }
-
-        function computeTovenzaReadinessIndex() {
-            const careerScore = state.career.role && state.career.targetCtc > 0 ? 100 : 65;
-            const runway = state.business.cashInBank / Math.max(1, state.business.monthlyBurn);
-            const opsScore = runway >= 4 ? 100 : runway >= 2 ? 80 : 60;
-            const timingScore = state.astro.birthDate && state.astro.targetDate ? 100 : 70;
-            const total = Math.round(careerScore * 0.4 + opsScore * 0.3 + timingScore * 0.3);
-            return {
-                total,
-                careerScore,
-                opsScore,
-                timingScore,
-                label: total >= 85 ? 'High Readiness — Execute' : total >= 70 ? 'Steady — Verify Details' : 'Audit First'
-            };
-        }
-
-        function toggleReadinessDetails() {
-            state.readinessExpanded = !state.readinessExpanded;
-            saveState();
-            renderReadinessStrip();
-        }
-
-        function renderReadinessStrip() {
-            const host = document.getElementById('readiness-strip-host');
-            if (!host) return;
-            const r = computeTovenzaReadinessIndex();
-            host.innerHTML = `
-                <div class="max-w-6xl mx-auto px-4 sm:px-6 py-2">
-                    <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
-                        <div class="flex items-center gap-2.5">
-                            <span class="mono-micro text-[10px] tracking-[0.2em] text-[#E5C687] uppercase">TOVENZA Readiness</span>
-                            <span class="px-2 py-0.5 rounded-full bg-[#E5C687]/15 border border-[#E5C687]/35 text-[#E5C687] font-semibold">${r.total} / 100</span>
-                            <span class="text-neutral-300 hidden sm:inline">• ${escapeHtml(r.label)}</span>
-                        </div>
-                        <button type="button" onclick="toggleReadinessDetails()" class="text-[11px] text-[#E5C687] hover:underline">
-                            ${state.readinessExpanded ? 'Hide Details ▲' : 'Details ▼'}
-                        </button>
-                    </div>
-                    ${state.readinessExpanded ? `
-                        <div class="mt-2 pt-2 border-t border-white/10 text-xs text-neutral-300 flex flex-wrap items-center justify-between gap-2">
-                            <p>
-                                <strong class="text-[#E5C687]">Pre-Mortem Check:</strong> If <em>${escapeHtml(state.career.role)}</em> or <em>${escapeHtml(state.business.focusArea)}</em> slips in 30 days, watch "${escapeHtml(state.business.limit)}" around ${escapeHtml(state.astro.targetDate)}.
-                            </p>
-                            <div class="flex gap-2 mono-micro text-[10px] text-neutral-400">
-                                <span class="px-2 py-0.5 rounded bg-white/5">Career ${r.careerScore}%</span>
-                                <span class="px-2 py-0.5 rounded bg-white/5">Ops/Money ${r.opsScore}%</span>
-                                <span class="px-2 py-0.5 rounded bg-white/5">Timing ${r.timingScore}%</span>
-                            </div>
-                        </div>
-                    ` : ''}
-                </div>
-            `;
-        }
-
-        function updateHomeQuickCheck(targetCtcVal, bufferVal) {
-            state.career.targetCtc = sanitizeNonNegativeNumber(targetCtcVal, 4, 500);
-            state.lifeOps.moneyBuffer = sanitizeNonNegativeNumber(bufferVal, 0, 500000000);
-            saveState();
-            renderHomeLiveProofCard();
-            renderReadinessStrip();
-        }
-
-        function renderHomeLiveProofCard() {
-            const host = document.getElementById('home-live-proof-card');
-            if (!host) return;
-            const targetCtc = sanitizeNonNegativeNumber(state.career?.targetCtc ?? 20, 4, 500);
-            const estInHand = estimateMonthlyInHand(targetCtc, state.career?.variablePct ?? 15);
-            const buffer = sanitizeNonNegativeNumber(state.lifeOps?.moneyBuffer ?? 250000, 0, 500000000);
-            const needs = Math.max(1, Math.round((state.lifeOps?.moneyIncome ?? 120000) * 0.5));
-            const daysCovered = Math.round(buffer / Math.max(1, Math.round(needs / 30)));
-            const readiness = computeTovenzaReadinessIndex();
-
-            host.innerHTML = `
-                <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-white/10">
-                    <div class="flex items-center gap-2">
-                        <span class="mono-micro text-[10px] tracking-[0.2em] text-[#E5C687] uppercase">Interactive Proof • Live Math</span>
-                        <span class="px-2 py-0.5 rounded-full bg-[#E5C687]/15 text-[#E5C687] text-[11px] font-semibold">Readiness ${readiness.total}/100</span>
-                    </div>
-                    <span class="mono-micro text-[10px] text-neutral-400">Press 1–5 anytime to switch rooms</span>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-                    <div class="space-y-3">
-                        <div>
-                            <div class="flex justify-between text-xs mb-1">
-                                <label for="home-ctc-slider" class="text-neutral-300">Target Annual CTC (₹ Lakhs)</label>
-                                <span class="text-[#E5C687] font-semibold">₹${currentLpaFormat(targetCtc)}L</span>
-                            </div>
-                            <input id="home-ctc-slider" type="range" min="4" max="80" step="0.5" value="${targetCtc}" oninput="updateHomeQuickCheck(this.value, document.getElementById('home-buf-slider').value)" class="w-full accent-[#E5C687]">
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-xs mb-1">
-                                <label for="home-buf-slider" class="text-neutral-300">Safety Buffer Reserve (₹)</label>
-                                <span class="text-emerald-300 font-semibold">₹${buffer.toLocaleString('en-IN')}</span>
-                            </div>
-                            <input id="home-buf-slider" type="range" min="0" max="1500000" step="25000" value="${Math.min(1500000, buffer)}" oninput="updateHomeQuickCheck(document.getElementById('home-ctc-slider').value, this.value)" class="w-full accent-[#E5C687]">
-                        </div>
-                    </div>
-                    <div class="p-4 rounded-xl bg-black/55 border border-white/10 space-y-2">
-                        <div class="flex justify-between text-xs">
-                            <span class="text-neutral-400">Est. Monthly In-Hand:</span>
-                            <span class="text-[#ECE8DF] font-semibold">₹${estInHand.toLocaleString('en-IN')}/mo</span>
-                        </div>
-                        <div class="flex justify-between text-xs">
-                            <span class="text-neutral-400">Emergency Buffer Coverage:</span>
-                            <span class="text-emerald-300 font-semibold">${daysCovered} Days Covered</span>
-                        </div>
-                        <div class="pt-2 border-t border-white/10 flex items-center justify-between gap-2">
-                            <span class="text-[11px] text-neutral-400">Next: Compare offers or test runway</span>
-                            <button type="button" data-room-btn="career-business" onclick="switchRoom('career-business')" class="px-3 py-1.5 rounded-lg bg-[#E5C687]/15 hover:bg-[#E5C687]/25 border border-[#E5C687]/35 text-[11px] text-[#E5C687] font-medium">Open Full Kit →</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function loadSampleScenario() {
-            state.career.role = 'Senior Product Operations Manager';
-            state.career.city = 'Bengaluru';
-            state.career.expYears = 6;
-            state.career.currentCtc = 16;
-            state.career.targetCtc = 24;
-            state.business.monthlyRev = 420000;
-            state.business.monthlyBurn = 240000;
-            state.business.cashInBank = 1150000;
-            state.business.overdueReceivables = 185000;
-            saveState();
-            renderReadinessStrip();
-            renderHomeLiveProofCard();
-            switchRoom('career-business');
-            showToast('Sample career & founder scenario loaded');
-        }
-
-        function setCareerSubTab(tab) {
-            state.career.activeSubTab = tab;
-            saveState();
-            renderCareerBusinessRoom();
-        }
-
-        function updateCareerField(field, val, isNum = false) {
-            const bounds = {
-                expYears: [0, 45],
-                variablePct: [0, 80],
-                currentCtc: [1, 500],
-                targetCtc: [1, 500],
-                offerACtc: [1, 500],
-                offerAFixedPct: [20, 100],
-                offerBCtc: [1, 500],
-                offerBFixedPct: [20, 100],
-                appsSent: [0, 10000],
-                screensGot: [0, 10000],
-                finalsGot: [0, 10000],
-                offersGot: [0, 10000]
-            };
-            if (isNum) {
-                const [min, max] = bounds[field] || [0, 500];
-                state.career[field] = sanitizeNonNegativeNumber(val, min, max);
-            } else {
-                state.career[field] = val;
-            }
-            saveState();
-            renderReadinessStrip();
-            renderCareerBusinessRoom();
-        }
-
-        function updateBusinessField(field, val, isNum = false) {
-            if (isNum) {
-                const min = field === 'monthlyBurn' ? 10000 : 0;
-                const max = field === 'invoiceOverdueDays' ? 730 : 500000000;
-                state.business[field] = sanitizeNonNegativeNumber(val, min, max);
-            } else {
-                state.business[field] = val;
-            }
-            saveState();
-            renderReadinessStrip();
-            renderCareerBusinessRoom();
-        }
-
-        function renderCareerBusinessRoom() {
-            const host = document.getElementById('career-business-host');
-            if (!host) return;
-            const c = state.career;
-            const b = state.business;
-            const activeSubTab = c.activeSubTab || 'ctc';
-            const bench = computeCareerPercentile(c.expYears, c.targetCtc);
-            const targetInHand = estimateMonthlyInHand(c.targetCtc, c.variablePct);
-            const currentInHand = estimateMonthlyInHand(c.currentCtc, c.variablePct);
-            const monthlyJump = targetInHand - currentInHand;
-
-            const offerAFixed = Math.round(c.offerACtc * (c.offerAFixedPct / 100) * 10) / 10;
-            const offerBFixed = Math.round(c.offerBCtc * (c.offerBFixedPct / 100) * 10) / 10;
-            const queryRole = encodeURIComponent(c.role || 'Operations Lead');
-            const queryCity = encodeURIComponent(c.city || 'Bengaluru');
-
-            const words = (c.starStory || '').trim().split(/\s+/).filter(Boolean);
-            const estSeconds = Math.round((words.length / 135) * 60);
-            const metricCount = ((c.starStory || '').match(/\d+%|\d+\s*(days|months|x|cr|lakh|k|accounts|users)/gi) || []).length;
-
-            const screenRate = c.appsSent > 0 ? Math.round((c.screensGot / c.appsSent) * 100) : 0;
-            const finalRate = c.screensGot > 0 ? Math.round((c.finalsGot / c.screensGot) * 100) : 0;
-            const funnelLeak = screenRate < 20
-                ? 'Top-of-Funnel Leak: Tailor top 3 resume bullets to role keywords & message hiring managers directly.'
-                : finalRate < 35
-                    ? 'Screen-to-Final Leak: Tighten your 90-second STAR-L impact story with quantified business outcomes.'
-                    : 'Closing Stage: Strong conversion—anchor negotiation on P75 fixed CTC before accepting.';
-
-            let effCash = b.cashInBank;
-            let effBurn = Math.max(10000, b.monthlyBurn);
-            let effRev = b.monthlyRev;
-            if (b.whatIfScenario === 'collect') effCash += b.overdueReceivables;
-            if (b.whatIfScenario === 'cut15') effBurn = Math.round(effBurn * 0.85);
-            if (b.whatIfScenario === 'zeroSales') effRev = 0;
-
-            const netMonthlyBurn = Math.max(0, effBurn - effRev);
-            const runwayMonths = netMonthlyBurn === 0 ? '24+' : (effCash / netMonthlyBurn).toFixed(1);
-            const runwayTone = netMonthlyBurn === 0 || Number(runwayMonths) >= 4
-                ? 'bg-emerald-500/15 text-emerald-300 border-emerald-400/30'
-                : Number(runwayMonths) >= 2
-                    ? 'bg-amber-500/15 text-amber-300 border-amber-400/30'
-                    : 'bg-rose-500/15 text-rose-300 border-rose-400/30';
-
-            const invoiceScripts = {
-                day3: `Hi ${b.invoiceClient} team,\n\nSharing a quick, friendly check-in on Invoice (₹${Number(b.invoiceAmount).toLocaleString('en-IN')}), which crossed its due date by ${b.invoiceOverdueDays} days. Could you please confirm the scheduled payout date?\n\nBest regards`,
-                day14: `Hi ${b.invoiceClient} team,\n\nFollowing up on Invoice (₹${Number(b.invoiceAmount).toLocaleString('en-IN')}, now ${b.invoiceOverdueDays} days past due). Please share the UTR or exact clearance date by Friday so we can keep our delivery schedule uninterrupted.\n\nRegards`,
-                day30: `Hi ${b.invoiceClient} team,\n\nInvoice (₹${Number(b.invoiceAmount).toLocaleString('en-IN')}) is now ${b.invoiceOverdueDays} days overdue. Per our terms, new sprint deliverables will pause automatically until cleared. Please confirm payment today so we can resume immediately.\n\nRegards`
-            };
-
-            host.innerHTML = `
-                <div class="space-y-6">
-                    <div class="flex flex-wrap items-end justify-between gap-4">
-                        <div>
-                            <span class="mono-micro text-[10px] tracking-[0.22em] text-[#E5C687] uppercase">Room 01 • Primary Wedge</span>
-                            <h2 class="editorial-title text-3xl sm:text-4xl text-[#ECE8DF] mt-1">Career Switch, Offer Math &amp; Founder Ops</h2>
-                        </div>
-                        <div class="flex flex-wrap gap-1.5 bg-white/[0.03] p-1 rounded-xl border border-white/10">
-                            <button type="button" onclick="setCareerSubTab('ctc')" class="px-3.5 py-1.5 rounded-lg text-xs font-medium ${activeSubTab === 'ctc' ? 'bg-[#E5C687] text-[#07080C]' : 'text-neutral-300 hover:text-white'}">1. Career &amp; Offer Compare</button>
-                            <button type="button" onclick="setCareerSubTab('interview')" class="px-3.5 py-1.5 rounded-lg text-xs font-medium ${activeSubTab === 'interview' ? 'bg-[#E5C687] text-[#07080C]' : 'text-neutral-300 hover:text-white'}">2. STAR-L &amp; Funnel</button>
-                            <button type="button" onclick="setCareerSubTab('business')" class="px-3.5 py-1.5 rounded-lg text-xs font-medium ${activeSubTab === 'business' ? 'bg-[#E5C687] text-[#07080C]' : 'text-neutral-300 hover:text-white'}">3. Founder Cash &amp; Invoices</button>
-                        </div>
-                    </div>
-
-                    ${activeSubTab === 'ctc' ? `
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                            <div class="p-5 sm:p-6 rounded-2xl tvz-surface space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="editorial-title text-2xl text-[#ECE8DF]">Compensation Leverage Meter</h3>
-                                    <span class="px-2.5 py-0.5 rounded-full bg-[#E5C687]/15 text-[#E5C687] text-xs font-semibold">Target: P${bench.pct}</span>
-                                </div>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                                    <div>
-                                        <label for="c-role" class="block text-neutral-400 mb-1">Target Role</label>
-                                        <input id="c-role" type="text" value="${escapeHtml(c.role)}" onchange="updateCareerField('role', this.value)" class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </div>
-                                    <div>
-                                        <label for="c-city" class="block text-neutral-400 mb-1">Target City</label>
-                                        <input id="c-city" type="text" value="${escapeHtml(c.city)}" onchange="updateCareerField('city', this.value)" class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </div>
-                                    <div>
-                                        <label for="c-exp" class="block text-neutral-400 mb-1">Experience (Years)</label>
-                                        <input id="c-exp" type="number" min="0" max="45" value="${c.expYears}" onchange="updateCareerField('expYears', this.value, true)" class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </div>
-                                    <div>
-                                        <label for="c-var" class="block text-neutral-400 mb-1">Variable / Bonus (%)</label>
-                                        <input id="c-var" type="number" min="0" max="80" value="${c.variablePct}" onchange="updateCareerField('variablePct', this.value, true)" class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </div>
-                                    <div>
-                                        <label for="c-curr" class="block text-neutral-400 mb-1">Current CTC (₹ LPA)</label>
-                                        <input id="c-curr" type="number" step="0.5" min="1" max="500" value="${c.currentCtc}" onchange="updateCareerField('currentCtc', this.value, true)" class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </div>
-                                    <div>
-                                        <label for="c-targ" class="block text-neutral-400 mb-1">Target CTC (₹ LPA)</label>
-                                        <input id="c-targ" type="number" step="0.5" min="1" max="500" value="${c.targetCtc}" onchange="updateCareerField('targetCtc', this.value, true)" class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </div>
-                                </div>
-
-                                <div class="p-4 rounded-xl bg-black/50 border border-white/10 space-y-2.5">
-                                    <div class="flex justify-between text-[11px] mono-micro text-neutral-400">
-                                        <span>P25: ₹${bench.p25}L</span>
-                                        <span>P50: ₹${bench.p50}L</span>
-                                        <span>P75: ₹${bench.p75}L</span>
-                                        <span>P90: ₹${bench.p90}L</span>
-                                    </div>
-                                    <div class="h-2 rounded-full bg-white/10 overflow-hidden">
-                                        <div class="h-full bg-gradient-to-r from-[#B99D6B] to-[#E5C687]" style="width:${bench.pct}%"></div>
-                                    </div>
-                                    <div class="flex flex-wrap justify-between gap-2 text-xs pt-1">
-                                        <span class="text-neutral-300">Est. Target In-Hand: <strong class="text-[#ECE8DF]">₹${targetInHand.toLocaleString('en-IN')}/mo</strong></span>
-                                        <span class="text-emerald-300 font-medium">${monthlyJump >= 0 ? '+' : ''}₹${monthlyJump.toLocaleString('en-IN')}/mo vs current</span>
-                                    </div>
-                                </div>
-
-                                <div class="pt-1 flex flex-wrap items-center gap-2 text-xs">
-                                    <span class="text-neutral-400">Direct Search:</span>
-                                    <a href="https://www.linkedin.com/jobs/search/?keywords=${queryRole}&location=${queryCity}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-[#E5C687]">LinkedIn ↗</a>
-                                    <a href="https://www.naukri.com/${encodeURIComponent((c.role || 'lead').toLowerCase().replace(/\s+/g, '-'))}-jobs-in-${encodeURIComponent((c.city || 'bengaluru').toLowerCase().replace(/\s+/g, '-'))}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-[#E5C687]">Naukri ↗</a>
-                                    <a href="https://www.wellfound.com/jobs" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-[#E5C687]">Wellfound ↗</a>
-                                </div>
-                            </div>
-
-                            <div class="p-5 sm:p-6 rounded-2xl tvz-surface space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="editorial-title text-2xl text-[#ECE8DF]">Offer A vs. Offer B Compare</h3>
-                                    <span class="mono-micro text-[10px] text-neutral-400 uppercase">Fixed Cash Clarity</span>
-                                </div>
-                                <div class="grid grid-cols-2 gap-3 text-xs">
-                                    <div class="p-3.5 rounded-xl bg-black/50 border border-white/10 space-y-2">
-                                        <div class="text-[#E5C687] font-semibold">Offer A</div>
-                                        <label class="block text-neutral-400">Total CTC (LPA)
-                                            <input type="number" step="0.5" min="1" max="500" value="${c.offerACtc}" onchange="updateCareerField('offerACtc', this.value, true)" class="mt-1 w-full px-2.5 py-1.5 rounded bg-black/70 border border-white/15 text-[#ECE8DF]">
-                                        </label>
-                                        <label class="block text-neutral-400">Fixed Component (%)
-                                            <input type="number" min="20" max="100" value="${c.offerAFixedPct}" onchange="updateCareerField('offerAFixedPct', this.value, true)" class="mt-1 w-full px-2.5 py-1.5 rounded bg-black/70 border border-white/15 text-[#ECE8DF]">
-                                        </label>
-                                        <div class="pt-1 text-neutral-200">Guaranteed Fixed: <strong>₹${offerAFixed}L</strong></div>
-                                    </div>
-                                    <div class="p-3.5 rounded-xl bg-black/50 border border-white/10 space-y-2">
-                                        <div class="text-[#E5C687] font-semibold">Offer B</div>
-                                        <label class="block text-neutral-400">Total CTC (LPA)
-                                            <input type="number" step="0.5" min="1" max="500" value="${c.offerBCtc}" onchange="updateCareerField('offerBCtc', this.value, true)" class="mt-1 w-full px-2.5 py-1.5 rounded bg-black/70 border border-white/15 text-[#ECE8DF]">
-                                        </label>
-                                        <label class="block text-neutral-400">Fixed Component (%)
-                                            <input type="number" min="20" max="100" value="${c.offerBFixedPct}" onchange="updateCareerField('offerBFixedPct', this.value, true)" class="mt-1 w-full px-2.5 py-1.5 rounded bg-black/70 border border-white/15 text-[#ECE8DF]">
-                                        </label>
-                                        <div class="pt-1 text-neutral-200">Guaranteed Fixed: <strong>₹${offerBFixed}L</strong></div>
-                                    </div>
-                                </div>
-                                <div class="p-4 rounded-xl bg-[#E5C687]/10 border border-[#E5C687]/25 text-xs space-y-2">
-                                    <div class="font-semibold text-[#E5C687]">
-                                        ${offerAFixed >= offerBFixed
-                                            ? `Offer A wins on guaranteed fixed pay (₹${offerAFixed}L vs ₹${offerBFixed}L).`
-                                            : `Offer B wins on guaranteed fixed pay (₹${offerBFixed}L vs ₹${offerAFixed}L).`}
-                                    </div>
-                                    <p class="text-neutral-300">Counter-Offer Anchor Script ready to copy before HR finalization:</p>
-                                    <button type="button" onclick="copyTextSafe('Thank you for the ${escapeHtml(c.role)} offer. Based on market P75 bands in ${escapeHtml(c.city)} and my track record, if we can align fixed compensation closer to ₹${bench.p75} LPA, I am ready to sign immediately.', 'Counter-offer script copied', this)" class="px-3 py-1.5 rounded-lg bg-[#E5C687] text-[#07080C] font-semibold">Copy Counter-Offer Script</button>
-                                </div>
-                            </div>
-                        </div>
-                    ` : ''}
-
-                    ${activeSubTab === 'interview' ? `
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                            <div class="p-5 sm:p-6 rounded-2xl tvz-surface space-y-3">
-                                <div class="flex items-center justify-between gap-2">
-                                    <h3 class="editorial-title text-2xl text-[#ECE8DF]">STAR-L Story Pacing Check</h3>
-                                    <span class="mono-micro text-[11px] text-[#E5C687]">${estSeconds}s spoken • ${metricCount} metrics</span>
-                                </div>
-                                <label for="star-story-input" class="block text-xs text-neutral-400">Paste your 90-second leadership/impact story:</label>
-                                <textarea id="star-story-input" rows="5" oninput="updateCareerField('starStory', this.value)" class="w-full p-3 rounded-xl bg-black/60 border border-white/15 text-xs text-[#ECE8DF] leading-relaxed">${escapeHtml(c.starStory)}</textarea>
-                                <div class="text-xs text-neutral-300">
-                                    ${estSeconds <= 110 && metricCount >= 2
-                                        ? '✓ Crisp pacing (<2 min) with strong quantified proof.'
-                                        : 'Tip: Keep under 220 words (~95s) and include at least 2 concrete numbers.'}
-                                </div>
-                            </div>
-
-                            <div class="p-5 sm:p-6 rounded-2xl tvz-surface space-y-3 text-xs">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="editorial-title text-2xl text-[#ECE8DF]">Interview Funnel Leak Detector</h3>
-                                    <span class="mono-micro text-[11px] text-emerald-300">Screen ${screenRate}% • Final ${finalRate}%</span>
-                                </div>
-                                <div class="grid grid-cols-4 gap-2">
-                                    <label class="text-neutral-400">Applied
-                                        <input type="number" min="0" max="10000" value="${c.appsSent}" onchange="updateCareerField('appsSent', this.value, true)" class="mt-1 w-full px-2.5 py-1.5 rounded bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </label>
-                                    <label class="text-neutral-400">Screens
-                                        <input type="number" min="0" max="10000" value="${c.screensGot}" onchange="updateCareerField('screensGot', this.value, true)" class="mt-1 w-full px-2.5 py-1.5 rounded bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </label>
-                                    <label class="text-neutral-400">Finals
-                                        <input type="number" min="0" max="10000" value="${c.finalsGot}" onchange="updateCareerField('finalsGot', this.value, true)" class="mt-1 w-full px-2.5 py-1.5 rounded bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </label>
-                                    <label class="text-neutral-400">Offers
-                                        <input type="number" min="0" max="10000" value="${c.offersGot}" onchange="updateCareerField('offersGot', this.value, true)" class="mt-1 w-full px-2.5 py-1.5 rounded bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </label>
-                                </div>
-                                <div class="p-3.5 rounded-xl bg-black/50 border border-white/10 text-neutral-200 leading-relaxed">
-                                    ${escapeHtml(funnelLeak)}
-                                </div>
-                            </div>
-                        </div>
-                    ` : ''}
-
-                    ${activeSubTab === 'business' ? `
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 text-xs">
-                            <div class="p-5 sm:p-6 rounded-2xl tvz-surface space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="editorial-title text-2xl text-[#ECE8DF]">Founder 13-Week Runway &amp; What-Ifs</h3>
-                                    <span class="px-2.5 py-0.5 rounded-full border ${runwayTone} font-semibold">Runway: ${runwayMonths} mo</span>
-                                </div>
-                                <div class="grid grid-cols-2 gap-3">
-                                    <label class="text-neutral-400">Monthly Revenue (₹)
-                                        <input type="number" min="0" value="${b.monthlyRev}" onchange="updateBusinessField('monthlyRev', this.value, true)" class="mt-1 w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </label>
-                                    <label class="text-neutral-400">Monthly Burn (₹)
-                                        <input type="number" min="10000" value="${b.monthlyBurn}" onchange="updateBusinessField('monthlyBurn', this.value, true)" class="mt-1 w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </label>
-                                    <label class="text-neutral-400">Cash in Bank (₹)
-                                        <input type="number" min="0" value="${b.cashInBank}" onchange="updateBusinessField('cashInBank', this.value, true)" class="mt-1 w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </label>
-                                    <label class="text-neutral-400">Overdue Receivables (₹)
-                                        <input type="number" min="0" value="${b.overdueReceivables}" onchange="updateBusinessField('overdueReceivables', this.value, true)" class="mt-1 w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </label>
-                                </div>
-                                <div class="flex flex-wrap gap-1.5">
-                                    ${[
-                                        ['base', 'Baseline'],
-                                        ['collect', '+Collect Overdue'],
-                                        ['cut15', '-15% Burn'],
-                                        ['zeroSales', '0 New Sales']
-                                    ].map(([k, lbl]) => `
-                                        <button type="button" onclick="updateBusinessField('whatIfScenario', '${k}')" class="px-2.5 py-1 rounded-lg ${b.whatIfScenario === k ? 'bg-[#E5C687] text-[#07080C] font-semibold' : 'bg-white/5 text-neutral-300'}">${lbl}</button>
-                                    `).join('')}
-                                </div>
-                                <div class="p-3.5 rounded-xl bg-black/50 border border-white/10 text-neutral-300 flex justify-between">
-                                    <span>Scenario Cash: <strong class="text-[#ECE8DF]">₹${effCash.toLocaleString('en-IN')}</strong></span>
-                                    <span>Net Burn: <strong class="text-[#E5C687]">₹${netMonthlyBurn.toLocaleString('en-IN')}/mo</strong></span>
-                                </div>
-                            </div>
-
-                            <div class="p-5 sm:p-6 rounded-2xl tvz-surface space-y-3">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="editorial-title text-2xl text-[#ECE8DF]">3-Stage Invoice Escalation</h3>
-                                    <div class="flex gap-1">
-                                        ${[['day3', 'Day +3'], ['day14', 'Day +14'], ['day30', 'Day +30+']].map(([k, lbl]) => `
-                                            <button type="button" onclick="updateBusinessField('invoiceStage', '${k}')" class="px-2 py-1 rounded ${b.invoiceStage === k ? 'bg-[#E5C687] text-[#07080C] font-semibold' : 'bg-white/5 text-neutral-300'}">${lbl}</button>
-                                        `).join('')}
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-3 gap-2">
-                                    <label class="text-neutral-400">Client
-                                        <input type="text" value="${escapeHtml(b.invoiceClient)}" onchange="updateBusinessField('invoiceClient', this.value)" class="mt-1 w-full px-2.5 py-1.5 rounded bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </label>
-                                    <label class="text-neutral-400">Amount (₹)
-                                        <input type="number" min="0" value="${b.invoiceAmount}" onchange="updateBusinessField('invoiceAmount', this.value, true)" class="mt-1 w-full px-2.5 py-1.5 rounded bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </label>
-                                    <label class="text-neutral-400">Days Overdue
-                                        <input type="number" min="0" max="730" value="${b.invoiceOverdueDays}" onchange="updateBusinessField('invoiceOverdueDays', this.value, true)" class="mt-1 w-full px-2.5 py-1.5 rounded bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </label>
-                                </div>
-                                <pre id="invoice-script-pre" class="p-3 rounded-xl bg-black/60 border border-white/10 whitespace-pre-wrap font-sans text-neutral-200 leading-relaxed">${escapeHtml(invoiceScripts[b.invoiceStage] || invoiceScripts.day14)}</pre>
-                                <button type="button" onclick="copyTextSafe(document.getElementById('invoice-script-pre').textContent, 'Invoice follow-up copied', this)" class="px-4 py-2 rounded-lg bg-[#E5C687] text-[#07080C] font-semibold">Copy Escalation Script</button>
-                            </div>
-                        </div>
-                    ` : ''}
-                </div>
-            `;
-        }
-
-        function updateAstroField(field, val) {
-            state.astro[field] = val;
-            saveState();
-            renderReadinessStrip();
-            renderAstrologyRoom();
-        }
-
-        function renderAstrologyRoom() {
-            const host = document.getElementById('astrology-host');
-            if (!host) return;
-            const a = state.astro;
-            const hub = CITY_HUBS[a.birthPlace] || CITY_HUBS['New Delhi, India'];
-            const monthNum = Number((a.targetDate || '2026-12-10').split('-')[1] || 12);
-            const phases = [
-                {
-                    mode: 'Consolidation & Audit Window (Vedic Saturn-Mercury + Western Earth Trine)',
-                    doList: [
-                        'Verify written offer terms, fixed vs. variable split & cash runway floor',
-                        'Follow up on warm introductions and overdue invoices with clear dates',
-                        'Lock 3 non-negotiable deliverables before committing to new scope'
-                    ],
-                    avoidList: [
-                        'Signing unreviewed variable-heavy contracts under artificial urgency',
-                        'Taking on unhedged fixed overhead before receivables clear'
-                    ]
-                },
-                {
-                    mode: 'Execution & Visibility Window (Vedic Sun-Jupiter + Western Fire/Air Transit)',
-                    doList: [
-                        'Pitch senior decision-makers, present compensation anchors & launch offers',
-                        'Schedule final-round interviews and high-leverage client negotiations',
-                        'Publish clear milestones and lock Q1/Q2 strategic commitments'
-                    ],
-                    avoidList: [
-                        'Scattered multitasking across too many low-leverage side projects',
-                        'Delaying clear yes/no decisions once written terms meet your floor'
-                    ]
-                }
-            ];
-            const active = phases[monthNum % 2];
-
-            host.innerHTML = `
-                <div class="space-y-6">
-                    <div>
-                        <span class="mono-micro text-[10px] tracking-[0.22em] text-[#E5C687] uppercase">Room 02 • Dual-Tradition Pacing</span>
-                        <h2 class="editorial-title text-3xl sm:text-4xl text-[#ECE8DF] mt-1">Vedic + Western Decision Timing</h2>
-                    </div>
-
-                    <div class="p-5 sm:p-6 rounded-2xl tvz-surface space-y-5">
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                            <label class="text-neutral-300">Birth Date
-                                <input type="date" value="${escapeHtml(a.birthDate)}" onchange="updateAstroField('birthDate', this.value)" class="mt-1 w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
-                            </label>
-                            <label class="text-neutral-300">Birth City / Timezone Hub
-                                <select onchange="updateAstroField('birthPlace', this.value)" class="mt-1 w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    ${Object.keys(CITY_HUBS).map(city => `<option value="${escapeHtml(city)}" ${a.birthPlace === city ? 'selected' : ''}>${escapeHtml(city)}</option>`).join('')}
-                                </select>
-                            </label>
-                            <label class="text-neutral-300">Target Decision Date
-                                <input type="date" value="${escapeHtml(a.targetDate)}" onchange="updateAstroField('targetDate', this.value)" class="mt-1 w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
-                            </label>
-                        </div>
-
-                        <div class="p-4 rounded-xl bg-black/50 border border-[#E5C687]/25 flex flex-wrap items-center justify-between gap-2 text-xs">
-                            <div>
-                                <div class="mono-micro text-[10px] text-[#E5C687] uppercase">${escapeHtml(hub.tz)} • Lat ${hub.lat}°, Lon ${hub.lon}°</div>
-                                <div class="editorial-title text-2xl text-[#ECE8DF] mt-0.5">${escapeHtml(active.mode)}</div>
-                            </div>
-                            <span class="px-3 py-1 rounded-full bg-[#E5C687]/15 text-[#E5C687] font-medium">Target: ${escapeHtml(a.targetDate)}</span>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                            <div class="p-4 rounded-xl bg-emerald-500/[0.06] border border-emerald-400/25 space-y-2">
-                                <div class="mono-micro text-[10px] tracking-[0.2em] text-emerald-300 uppercase">Do This Window</div>
-                                <ul class="space-y-1.5 text-neutral-200">
-                                    ${active.doList.map(item => `<li>✓ ${escapeHtml(item)}</li>`).join('')}
-                                </ul>
-                            </div>
-                            <div class="p-4 rounded-xl bg-rose-500/[0.06] border border-rose-400/25 space-y-2">
-                                <div class="mono-micro text-[10px] tracking-[0.2em] text-rose-300 uppercase">Avoid This Window</div>
-                                <ul class="space-y-1.5 text-neutral-200">
-                                    ${active.avoidList.map(item => `<li>✕ ${escapeHtml(item)}</li>`).join('')}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function setLifeOpsTab(tab) {
-            state.lifeOps.activeTab = tab;
-            saveState();
-            renderLifeOpsRoom();
-        }
-
-        function setLetterType(type) {
-            state.lifeOps.letterType = type;
-            saveState();
-            renderLifeOpsRoom();
-        }
-
-        function updateMoneyField(field, val) {
-            const max = field === 'debtApr' ? 60 : 500000000;
-            state.lifeOps[field] = sanitizeNonNegativeNumber(val, 0, max);
-            saveState();
-            renderHomeLiveProofCard();
-            renderLifeOpsRoom();
-        }
-
-        function toggleScamCheck(idx) {
-            state.lifeOps.scamChecks[idx] = !state.lifeOps.scamChecks[idx];
-            saveState();
-            renderLifeOpsRoom();
-        }
-
-        function toggleDailyPriority(idx) {
-            state.lifeOps.dailyFocus[idx].done = !state.lifeOps.dailyFocus[idx].done;
-            saveState();
-            renderLifeOpsRoom();
-        }
-
-        function updateDailyPriorityText(idx, text) {
-            state.lifeOps.dailyFocus[idx].text = text;
-            saveState();
-        }
-
-        function startPrioritySprint(idx) {
-            state.lifeOps.activeSprintPriorityIdx = idx;
-            state.lifeOps.sprintSecondsLeft = 900;
-            state.lifeOps.sprintRunning = true;
-            saveState();
-            startSprintTicker();
-            renderLifeOpsRoom();
-        }
-
-        function toggleSprintRun() {
-            state.lifeOps.sprintRunning = !state.lifeOps.sprintRunning;
-            if (state.lifeOps.sprintRunning) {
-                if (state.lifeOps.sprintSecondsLeft <= 0) state.lifeOps.sprintSecondsLeft = 900;
-                startSprintTicker();
-            } else {
-                clearInterval(sprintIntervalId);
-            }
-            saveState();
-            renderLifeOpsRoom();
-        }
-
-        function resetSprintTimer() {
-            clearInterval(sprintIntervalId);
-            state.lifeOps.sprintRunning = false;
-            state.lifeOps.sprintSecondsLeft = 900;
-            saveState();
-            renderLifeOpsRoom();
-        }
-
-        function startSprintTicker() {
-            clearInterval(sprintIntervalId);
-            sprintIntervalId = setInterval(() => {
-                if (!state.lifeOps.sprintRunning) {
-                    clearInterval(sprintIntervalId);
-                    return;
-                }
-                if (state.lifeOps.sprintSecondsLeft > 0) {
-                    state.lifeOps.sprintSecondsLeft -= 1;
-                    if (state.activeRoom === 'life-ops' && state.lifeOps.activeTab === 'focus') {
-                        renderLifeOpsRoom();
+        // Controlled IntersectionObserver for section entrance transitions
+        const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const blocks = document.querySelectorAll('.reveal-block');
+        if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            blocks.forEach(el => el.classList.add('is-visible'));
+        } else {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
                     }
-                } else {
-                    clearInterval(sprintIntervalId);
-                    state.lifeOps.sprintRunning = false;
-                    state.lifeOps.streakDays += 1;
-                    saveState();
-                    showToast('15m Sprint complete! Streak +1');
-                    renderLifeOpsRoom();
-                }
-            }, 1000);
-        }
-
-        function updateLetterVar(key, val) {
-            state.lifeOps.letterVars[key] = key === 'amount'
-                ? String(sanitizeNonNegativeNumber(val, 0, 500000000))
-                : val;
-            saveState();
-            renderLifeOpsRoom();
-        }
-
-        function toggleFamilyDoc(idx) {
-            state.lifeOps.familyDocs[idx] = !state.lifeOps.familyDocs[idx];
-            saveState();
-            renderLifeOpsRoom();
-        }
-
-        function renderLifeOpsRoom() {
-            const host = document.getElementById('life-ops-host');
-            if (!host) return;
-            const l = state.lifeOps;
-            const activeTab = l.activeTab || 'money';
-
-            const needs = Math.round(l.moneyIncome * 0.5);
-            const wants = Math.round(l.moneyIncome * 0.25);
-            const wealth = Math.max(0, l.moneyIncome - needs - wants);
-            const targetBuffer = needs * 4;
-            const bufferPct = targetBuffer > 0 ? Math.min(100, Math.round((l.moneyBuffer / targetBuffer) * 100)) : 100;
-            const bufferDays = Math.round(l.moneyBuffer / Math.max(1, Math.round(needs / 30)));
-
-            const totalMonthlyPay = Math.max(1, l.debtEmi + l.debtExtra);
-            const baseMonths = l.debtPrincipal > 0 ? Math.ceil(l.debtPrincipal / Math.max(1, l.debtEmi)) : 0;
-            const accelMonths = l.debtPrincipal > 0 ? Math.ceil(l.debtPrincipal / totalMonthlyPay) : 0;
-            const monthsSaved = Math.max(0, baseMonths - accelMonths);
-
-            const scamFlags = l.scamChecks.filter(Boolean).length;
-            const docsReady = l.familyDocs.filter(Boolean).length;
-            const docsPct = Math.round((docsReady / l.familyDocs.length) * 100);
-
-            const mins = String(Math.floor((l.sprintSecondsLeft ?? 900) / 60)).padStart(2, '0');
-            const secs = String((l.sprintSecondsLeft ?? 900) % 60).padStart(2, '0');
-
-            const letterTemplates = {
-                deposit: `To: ${l.letterVars.recipient}\nSubject: Security Deposit Refund Request (₹${Number(l.letterVars.amount || 0).toLocaleString('en-IN')})\n\nDear ${l.letterVars.recipient},\n\nAs our tenancy handover is scheduled/completed on ${l.letterVars.refDate}, please process the refundable security deposit of ₹${Number(l.letterVars.amount || 0).toLocaleString('en-IN')} to my bank account within 7 working days.\n\nRegards`,
-                fnf: `To: ${l.letterVars.recipient}\nSubject: Full & Final Settlement & Relieving Letter Follow-Up\n\nDear ${l.letterVars.recipient},\n\nFollowing my handover on ${l.letterVars.refDate}, kindly confirm the release date for my Full & Final settlement (approx. ₹${Number(l.letterVars.amount || 0).toLocaleString('en-IN')}) and relieving documents.\n\nRegards`,
-                politeNo: `Hi ${l.letterVars.recipient},\n\nThank you for thinking of me. Because my core priorities are locked through ${l.letterVars.refDate}, I won't be able to take this on right now so it gets the attention it deserves.\n\nWarm regards`
-            };
-
-            const weeklyBrief = `TOVENZA MONDAY BRIEF\n• Top Priority: ${l.dailyFocus[0]?.text || 'Lock top priority'}\n• Buffer Coverage: ${bufferDays} days (${bufferPct}% of 4-month goal)\n• Overdue Watch: ₹${Number(state.business.overdueReceivables).toLocaleString('en-IN')}\n• Target Date: ${state.astro.targetDate}`;
-
-            host.innerHTML = `
-                <div class="space-y-6">
-                    <div class="flex flex-wrap items-end justify-between gap-4">
-                        <div>
-                            <span class="mono-micro text-[10px] tracking-[0.22em] text-[#E5C687] uppercase">Room 03 • Everyday Rhythm</span>
-                            <h2 class="editorial-title text-3xl sm:text-4xl text-[#ECE8DF] mt-1">Life, Money &amp; Focus Ops</h2>
-                        </div>
-                        <div class="flex flex-wrap gap-1.5 bg-white/[0.03] p-1 rounded-xl border border-white/10">
-                            <button type="button" onclick="setLifeOpsTab('money')" class="px-3 py-1.5 rounded-lg text-xs font-medium ${activeTab === 'money' ? 'bg-[#E5C687] text-[#07080C]' : 'text-neutral-300'}">1. Money &amp; Scam Guard</button>
-                            <button type="button" onclick="setLifeOpsTab('focus')" class="px-3 py-1.5 rounded-lg text-xs font-medium ${activeTab === 'focus' ? 'bg-[#E5C687] text-[#07080C]' : 'text-neutral-300'}">2. Daily 3 &amp; Sprint</button>
-                            <button type="button" onclick="setLifeOpsTab('letters')" class="px-3 py-1.5 rounded-lg text-xs font-medium ${activeTab === 'letters' ? 'bg-[#E5C687] text-[#07080C]' : 'text-neutral-300'}">3. Letters &amp; Vault</button>
-                            <button type="button" onclick="setLifeOpsTab('weekly')" class="px-3 py-1.5 rounded-lg text-xs font-medium ${activeTab === 'weekly' ? 'bg-[#E5C687] text-[#07080C]' : 'text-neutral-300'}">4. Monday Brief</button>
-                        </div>
-                    </div>
-
-                    ${activeTab === 'money' ? `
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-                            <div class="p-5 rounded-2xl tvz-surface space-y-3 text-xs">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="editorial-title text-2xl text-[#ECE8DF]">Salary Split &amp; Buffer</h3>
-                                    <span class="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 font-semibold">${bufferDays}d Covered</span>
-                                </div>
-                                <label class="block text-neutral-400">Monthly Take-Home (₹)
-                                    <input type="number" min="0" value="${l.moneyIncome}" onchange="updateMoneyField('moneyIncome', this.value)" class="mt-1 w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                </label>
-                                <label class="block text-neutral-400">Current Emergency Buffer (₹)
-                                    <input type="number" min="0" value="${l.moneyBuffer}" onchange="updateMoneyField('moneyBuffer', this.value)" class="mt-1 w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                </label>
-                                <div class="space-y-1.5 pt-1">
-                                    <div class="flex justify-between text-neutral-300">
-                                        <span>4-Month Goal (₹${targetBuffer.toLocaleString('en-IN')})</span>
-                                        <span class="text-[#E5C687] font-semibold">${bufferPct}%</span>
-                                    </div>
-                                    <div class="h-2 rounded-full bg-white/10 overflow-hidden">
-                                        <div class="h-full bg-emerald-400" style="width:${bufferPct}%"></div>
-                                    </div>
-                                </div>
-                                <div class="p-3 rounded-xl bg-black/50 border border-white/10 space-y-1 text-neutral-300">
-                                    <div class="flex justify-between"><span>50% Needs:</span><span>₹${needs.toLocaleString('en-IN')}</span></div>
-                                    <div class="flex justify-between"><span>25% Wants:</span><span>₹${wants.toLocaleString('en-IN')}</span></div>
-                                    <div class="flex justify-between text-[#E5C687]"><span>25% Wealth/Buffer:</span><span>₹${wealth.toLocaleString('en-IN')}</span></div>
-                                </div>
-                            </div>
-
-                            <div class="p-5 rounded-2xl tvz-surface space-y-3 text-xs">
-                                <h3 class="editorial-title text-2xl text-[#ECE8DF]">EMI &amp; Debt Payoff</h3>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <label class="text-neutral-400">Balance (₹)
-                                        <input type="number" min="0" value="${l.debtPrincipal}" onchange="updateMoneyField('debtPrincipal', this.value)" class="mt-1 w-full px-2.5 py-1.5 rounded bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </label>
-                                    <label class="text-neutral-400">APR (%)
-                                        <input type="number" step="0.5" min="0" max="60" value="${l.debtApr}" onchange="updateMoneyField('debtApr', this.value)" class="mt-1 w-full px-2.5 py-1.5 rounded bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </label>
-                                    <label class="text-neutral-400">Base EMI (₹)
-                                        <input type="number" min="0" value="${l.debtEmi}" onchange="updateMoneyField('debtEmi', this.value)" class="mt-1 w-full px-2.5 py-1.5 rounded bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </label>
-                                    <label class="text-neutral-400">Extra / Mo (₹)
-                                        <input type="number" min="0" value="${l.debtExtra}" onchange="updateMoneyField('debtExtra', this.value)" class="mt-1 w-full px-2.5 py-1.5 rounded bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </label>
-                                </div>
-                                <div id="debt-payoff-summary" class="p-3.5 rounded-xl bg-black/50 border border-white/10 text-neutral-200 leading-relaxed">
-                                    Payoff drops from <strong>${baseMonths} mo</strong> to <strong>${accelMonths} mo</strong> — saving <strong>${monthsSaved} months</strong> of debt drag.
-                                </div>
-                            </div>
-
-                            <div class="p-5 rounded-2xl tvz-surface space-y-3 text-xs">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="editorial-title text-2xl text-[#ECE8DF]">60s Scam Guard</h3>
-                                    <span class="px-2 py-0.5 rounded-full ${scamFlags >= 2 ? 'bg-rose-500/20 text-rose-300' : 'bg-white/10 text-neutral-300'}">${scamFlags}/5 Flags</span>
-                                </div>
-                                <div class="space-y-2">
-                                    ${[
-                                        'Promises guaranteed or risk-free high returns',
-                                        'Asks upfront "registration/tax" fee or QR scan to receive money',
-                                        'Creates artificial 15-minute urgency to pay now',
-                                        'Requests OTP, screen-share, or blank signed cheque',
-                                        'Unverified domain or missing legal entity details'
-                                    ].map((q, idx) => `
-                                        <label class="flex items-start gap-2 cursor-pointer text-neutral-300">
-                                            <input type="checkbox" ${l.scamChecks[idx] ? 'checked' : ''} onchange="toggleScamCheck(${idx})" class="mt-0.5 accent-[#E5C687]">
-                                            <span>${q}</span>
-                                        </label>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        </div>
-                    ` : ''}
-
-                    ${activeTab === 'focus' ? `
-                        <div class="p-5 sm:p-6 rounded-2xl tvz-surface space-y-4">
-                            <div class="flex flex-wrap items-center justify-between gap-2">
-                                <div>
-                                    <h3 class="editorial-title text-2xl text-[#ECE8DF]">Daily 3 Priorities &amp; 15m Sprint</h3>
-                                    <p class="text-xs text-neutral-400">Active sprint focus: <span class="text-[#E5C687]">Priority #${(l.activeSprintPriorityIdx ?? 0) + 1}</span> • ${Math.round(((900 - (l.sprintSecondsLeft ?? 900)) / 900) * 100)}% sprint elapsed</p>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <span class="mono-micro text-lg text-[#E5C687] px-3 py-1 rounded-lg bg-black/60 border border-[#E5C687]/30">${mins}:${secs}</span>
-                                    <button type="button" onclick="toggleSprintRun()" class="px-3 py-1.5 rounded-lg bg-[#E5C687] text-[#07080C] text-xs font-semibold">${l.sprintRunning ? 'Pause' : 'Start'}</button>
-                                    <button type="button" onclick="resetSprintTimer()" class="px-3 py-1.5 rounded-lg bg-white/5 text-xs text-neutral-300">Reset</button>
-                                </div>
-                            </div>
-                            <div class="space-y-2.5 text-xs">
-                                ${l.dailyFocus.map((item, idx) => `
-                                    <div class="flex items-center gap-2.5 p-3 rounded-xl bg-black/50 border border-white/10">
-                                        <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleDailyPriority(${idx})" aria-label="Mark priority ${idx + 1} complete" class="accent-[#E5C687]">
-                                        <input type="text" value="${escapeHtml(item.text)}" onchange="updateDailyPriorityText(${idx}, this.value)" aria-label="Priority ${idx + 1} text" class="flex-1 bg-transparent text-[#ECE8DF] ${item.done ? 'line-through text-neutral-500' : ''}">
-                                        <button type="button" onclick="startPrioritySprint(${idx})" class="px-2.5 py-1 rounded-lg bg-[#E5C687]/15 hover:bg-[#E5C687]/25 text-[#E5C687] shrink-0">Sprint 15m</button>
-                                    </div>
-                                `).join('')}
-                            </div>
-                            <div class="text-xs text-neutral-400 flex justify-between">
-                                <span>Discipline Streak: <strong class="text-[#E5C687]">${l.streakDays} days</strong></span>
-                                <span>Complete a 15m sprint to increment streak</span>
-                            </div>
-                        </div>
-                    ` : ''}
-
-                    ${activeTab === 'letters' ? `
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 text-xs">
-                            <div class="p-5 rounded-2xl tvz-surface space-y-3">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="editorial-title text-2xl text-[#ECE8DF]">1-Click Formal Letter &amp; Notice</h3>
-                                    <div class="flex gap-1">
-                                        ${[['deposit', 'Deposit'], ['fnf', 'HR / FnF'], ['politeNo', 'Polite No']].map(([k, lbl]) => `
-                                            <button type="button" onclick="setLetterType('${k}')" class="px-2 py-1 rounded ${l.letterType === k ? 'bg-[#E5C687] text-[#07080C] font-semibold' : 'bg-white/5 text-neutral-300'}">${lbl}</button>
-                                        `).join('')}
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-3 gap-2">
-                                    <label class="text-neutral-400">Recipient
-                                        <input type="text" value="${escapeHtml(l.letterVars.recipient)}" onchange="updateLetterVar('recipient', this.value)" class="mt-1 w-full px-2.5 py-1.5 rounded bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </label>
-                                    <label class="text-neutral-400">Amount (₹)
-                                        <input type="number" min="0" value="${escapeHtml(l.letterVars.amount)}" onchange="updateLetterVar('amount', this.value)" class="mt-1 w-full px-2.5 py-1.5 rounded bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </label>
-                                    <label class="text-neutral-400">Ref Date
-                                        <input type="date" value="${escapeHtml(l.letterVars.refDate)}" onchange="updateLetterVar('refDate', this.value)" class="mt-1 w-full px-2.5 py-1.5 rounded bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                    </label>
-                                </div>
-                                <pre id="formal-letter-pre" class="p-3.5 rounded-xl bg-black/60 border border-white/10 whitespace-pre-wrap font-sans text-neutral-200 leading-relaxed">${escapeHtml(letterTemplates[l.letterType] || letterTemplates.deposit)}</pre>
-                                <button type="button" onclick="copyTextSafe(document.getElementById('formal-letter-pre').textContent, 'Formal draft copied', this)" class="px-4 py-2 rounded-lg bg-[#E5C687] text-[#07080C] font-semibold">Copy Letter</button>
-                            </div>
-
-                            <div class="p-5 rounded-2xl tvz-surface space-y-3">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="editorial-title text-2xl text-[#ECE8DF]">Family Document Vault</h3>
-                                    <span class="px-2.5 py-0.5 rounded-full bg-[#E5C687]/15 text-[#E5C687] font-semibold">${docsPct}% Ready</span>
-                                </div>
-                                <div class="h-2 rounded-full bg-white/10 overflow-hidden">
-                                    <div class="h-full bg-[#E5C687]" style="width:${docsPct}%"></div>
-                                </div>
-                                <div class="space-y-2 pt-1">
-                                    ${[
-                                        'PAN & Aadhaar digital copies accessible',
-                                        'Health Insurance e-Card & TPA helpline saved',
-                                        'Term Insurance policy & nominee verified',
-                                        'Bank accounts & mutual fund nominees updated',
-                                        'Property / Rent agreement & deposit receipts filed',
-                                        'Emergency family & doctor contacts shared'
-                                    ].map((doc, idx) => `
-                                        <label class="flex items-center gap-2.5 cursor-pointer text-neutral-300">
-                                            <input type="checkbox" ${l.familyDocs[idx] ? 'checked' : ''} onchange="toggleFamilyDoc(${idx})" class="accent-[#E5C687]">
-                                            <span>${doc}</span>
-                                        </label>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        </div>
-                    ` : ''}
-
-                    ${activeTab === 'weekly' ? `
-                        <div class="p-5 sm:p-6 rounded-2xl tvz-surface space-y-4 text-xs">
-                            <div class="flex flex-wrap items-center justify-between gap-2">
-                                <h3 class="editorial-title text-2xl text-[#ECE8DF]">Monday Morning Executive Brief</h3>
-                                <button type="button" onclick="copyTextSafe(document.getElementById('monday-brief-pre').textContent, 'Monday brief copied', this)" class="px-4 py-2 rounded-lg bg-[#E5C687] text-[#07080C] font-semibold">Copy Brief</button>
-                            </div>
-                            <pre id="monday-brief-pre" class="p-4 rounded-xl bg-black/60 border border-white/10 whitespace-pre-wrap font-mono text-neutral-200 leading-relaxed">${escapeHtml(weeklyBrief)}</pre>
-                        </div>
-                    ` : ''}
-                </div>
-            `;
-        }
-
-        function addTesterFeedback() {
-            const room = document.getElementById('fb-room-select').value;
-            const note = document.getElementById('fb-note-input').value.trim();
-            if (!note) {
-                showToast('Enter a short tester note first');
-                return;
-            }
-            state.feedbacks.unshift({
-                id: Date.now(),
-                room,
-                note,
-                createdAt: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short' })
-            });
-            saveState();
-            renderFeedbacksRoom();
-            showToast('Tester note saved');
-        }
-
-        function deleteTesterFeedback(id) {
-            state.feedbacks = state.feedbacks.filter(f => f.id !== id);
-            saveState();
-            renderFeedbacksRoom();
-            showToast('Note removed');
-        }
-
-        function exportWorkspaceJson() {
-            const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `tovenza-backup-${new Date().toISOString().slice(0, 10)}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-            showToast('Workspace JSON exported');
-        }
-
-        function handleImportWorkspaceFile(inputEl) {
-            try {
-                const file = inputEl && inputEl.files && inputEl.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = function (ev) {
-                    try {
-                        const parsed = JSON.parse(String((ev.target && ev.target.result) || '{}'));
-                        state = sanitizeStatePayload(parsed);
-                        saveState();
-                        updateHeaderAccountLabel();
-                        renderReadinessStrip();
-                        switchRoom(state.activeRoom || 'feedbacks');
-                        showToast('Workspace JSON restored safely');
-                    } catch (err) {
-                        showToast('Invalid JSON backup file');
-                    } finally {
-                        inputEl.value = '';
-                    }
-                };
-                reader.readAsText(file);
-            } catch (e) {
-                showToast('File import not supported in this preview');
-            }
-        }
-
-        function resetWorkspaceDefaults() {
-            clearInterval(sprintIntervalId);
-            state = getDefaultState();
-            saveState();
-            updateHeaderAccountLabel();
-            renderReadinessStrip();
-            switchRoom('home');
-            showToast('Workspace reset to default pilot state');
-        }
-
-        function runBuiltInSmokeCheck() {
-            const checks = [
-                ['Readiness Index computes cleanly', computeTovenzaReadinessIndex().total >= 0],
-                ['All 5 rooms exist in DOM', ['room-home', 'room-career-business', 'room-astrology', 'room-life-ops', 'room-feedbacks'].every(id => Boolean(document.getElementById(id)))],
-                ['Modals & helpers defined', typeof syncModalBodyLock === 'function' && typeof restoreModalFocus === 'function'],
-                ['LocalStorage persistence active', (() => { saveState(); return Boolean(localStorage.getItem(STORAGE_KEY)); })()],
-                ['Trust & Policy footer present', Boolean(document.getElementById('legal-drawer'))]
-            ];
-            const out = document.getElementById('smoke-check-output');
-            if (out) {
-                out.innerHTML = checks.map(([name, ok]) => `
-                    <div class="flex justify-between py-1 border-b border-white/5">
-                        <span class="text-neutral-300">${escapeHtml(name)}</span>
-                        <span class="${ok ? 'text-emerald-300 font-semibold' : 'text-rose-400'}">${ok ? 'PASS ✓' : 'FAIL ✕'}</span>
-                    </div>
-                `).join('');
-            }
-            showToast('5-Point Smoke Check completed');
-        }
-
-        function renderFeedbacksRoom() {
-            const host = document.getElementById('feedbacks-host');
-            if (!host) return;
-            host.innerHTML = `
-                <div class="space-y-6">
-                    <div>
-                        <span class="mono-micro text-[10px] tracking-[0.22em] text-[#E5C687] uppercase">Room 04 • Pilot QA</span>
-                        <h2 class="editorial-title text-3xl sm:text-4xl text-[#ECE8DF] mt-1">Tester Notes, Smoke Runner &amp; Backup</h2>
-                    </div>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 text-xs">
-                        <div class="p-5 sm:p-6 rounded-2xl tvz-surface space-y-4">
-                            <h3 class="editorial-title text-2xl text-[#ECE8DF]">Log Tester Observation</h3>
-                            <div class="space-y-3">
-                                <label class="block text-neutral-400">Room Tested
-                                    <select id="fb-room-select" class="mt-1 w-full px-3 py-2 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]">
-                                        <option>Home</option>
-                                        <option>Career &amp; Business</option>
-                                        <option>Decision Timing</option>
-                                        <option>Life &amp; Money Ops</option>
-                                    </select>
-                                </label>
-                                <label class="block text-neutral-400">60s Confusion / Top Tool / Drop-off Note
-                                    <textarea id="fb-note-input" rows="3" placeholder="e.g., Loved Offer A vs B compare; wanted clearer label on variable pay." class="mt-1 w-full p-3 rounded-lg bg-black/60 border border-white/15 text-[#ECE8DF]"></textarea>
-                                </label>
-                                <button type="button" onclick="addTesterFeedback()" class="px-4 py-2 rounded-lg bg-[#E5C687] text-[#07080C] font-semibold">Save Tester Note</button>
-                            </div>
-                            <div class="space-y-2 pt-2 border-t border-white/10">
-                                ${state.feedbacks.length === 0
-                                    ? '<p class="text-neutral-500">No tester notes saved yet.</p>'
-                                    : state.feedbacks.map(f => `
-                                        <div class="p-3 rounded-xl bg-black/50 border border-white/10 flex items-start justify-between gap-2">
-                                            <div>
-                                                <div class="mono-micro text-[10px] text-[#E5C687]">${escapeHtml(f.room)} • ${escapeHtml(f.createdAt)}</div>
-                                                <p class="text-neutral-200 mt-1">${escapeHtml(f.note)}</p>
-                                            </div>
-                                            <button type="button" onclick="deleteTesterFeedback(${f.id})" aria-label="Delete note" class="text-neutral-500 hover:text-rose-300">✕</button>
-                                        </div>
-                                    `).join('')}
-                            </div>
-                        </div>
-
-                        <div class="p-5 sm:p-6 rounded-2xl tvz-surface space-y-4">
-                            <h3 class="editorial-title text-2xl text-[#ECE8DF]">Smoke Runner &amp; Workspace Backup</h3>
-                            <p class="text-neutral-400">Verify all 5 core runtime checks, export a portable JSON backup, or restore/reset your local workspace.</p>
-                            <div class="flex flex-wrap gap-2">
-                                <button type="button" onclick="runBuiltInSmokeCheck()" class="px-4 py-2 rounded-lg bg-[#E5C687] text-[#07080C] font-semibold">Run 5-Point Smoke Check</button>
-                                <button type="button" onclick="exportWorkspaceJson()" class="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/15 text-neutral-200">Export JSON</button>
-                                <label class="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/15 text-neutral-200 cursor-pointer">
-                                    Restore JSON
-                                    <input type="file" accept="application/json" onchange="handleImportWorkspaceFile(this)" class="hidden">
-                                </label>
-                                <button type="button" onclick="resetWorkspaceDefaults()" class="px-3 py-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 border border-rose-400/25 text-rose-300">Reset Defaults</button>
-                            </div>
-                            <div id="smoke-check-output" class="p-3.5 rounded-xl bg-black/50 border border-white/10 text-neutral-400">
-                                Click "Run 5-Point Smoke Check" to verify runtime integrity.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function switchRoom(roomId) {
-            const valid = ['home', 'career-business', 'astrology', 'life-ops', 'feedbacks'];
-            const target = valid.includes(roomId) ? roomId : 'home';
-            state.activeRoom = target;
-            saveState();
-
-            document.querySelectorAll('.room-section').forEach(sec => {
-                sec.classList.toggle('active', sec.id === `room-${target}`);
-            });
-
-            document.querySelectorAll('.room-nav-btn').forEach(btn => {
-                const active = btn.dataset.roomBtn === target;
-                btn.classList.toggle('text-[#E5C687]', active);
-                btn.classList.toggle('bg-[#E5C687]/15', active);
-                btn.classList.toggle('text-neutral-300', !active);
-            });
-
-            if (target === 'home') renderHomeLiveProofCard();
-            if (target === 'career-business') renderCareerBusinessRoom();
-            if (target === 'astrology') renderAstrologyRoom();
-            if (target === 'life-ops') renderLifeOpsRoom();
-            if (target === 'feedbacks') renderFeedbacksRoom();
-        }
-
-        Object.assign(window, {
-            switchRoom,
-            toggleLegalDrawer,
-            openModal,
-            closeModal,
-            saveMemberProfile,
-            toggleReadinessDetails,
-            updateHomeQuickCheck,
-            loadSampleScenario,
-            setCareerSubTab,
-            updateCareerField,
-            updateBusinessField,
-            updateAstroField,
-            setLifeOpsTab,
-            setLetterType,
-            updateMoneyField,
-            toggleScamCheck,
-            toggleDailyPriority,
-            updateDailyPriorityText,
-            startPrioritySprint,
-            toggleSprintRun,
-            resetSprintTimer,
-            updateLetterVar,
-            toggleFamilyDoc,
-            addTesterFeedback,
-            deleteTesterFeedback,
-            exportWorkspaceJson,
-            handleImportWorkspaceFile,
-            resetWorkspaceDefaults,
-            runBuiltInSmokeCheck,
-            copyTextSafe
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                ['tovenza-account-modal', 'tovenza-pass-modal'].forEach(id => {
-                    const m = document.getElementById(id);
-                    if (m && !m.classList.contains('hidden')) closeModal(id);
                 });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            blocks.forEach(el => observer.observe(el));
+        }
+
+        // =====================================================================
+        // THREE.JS 3D HERO CENTREPIECE — SCULPTURAL MONOLITH & ORBITAL RINGS
+        // =====================================================================
+        function showFallbackArt() {
+            const fb = document.getElementById('hero-fallback-art');
+            if (fb) fb.classList.remove('hidden');
+        }
+
+        function initThreeHero() {
+            const stage = document.getElementById('hero-webgl-stage');
+            if (!stage || typeof THREE === 'undefined' || prefersReducedMotion) {
+                showFallbackArt();
                 return;
             }
-            const tag = (document.activeElement?.tagName || '').toLowerCase();
-            if (['input', 'textarea', 'select'].includes(tag) || e.metaKey || e.ctrlKey || e.altKey) return;
-            const roomKeys = { '1': 'home', '2': 'career-business', '3': 'astrology', '4': 'life-ops', '5': 'feedbacks' };
-            if (roomKeys[e.key]) {
-                switchRoom(roomKeys[e.key]);
-            }
-        });
 
-        (function initSevenDCanvas() {
-            const canvas = document.getElementById('seven-d-canvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            if (!ctx) return;
-
-            let t = 0;
-            let dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-            function resize() {
-                dpr = Math.min(window.devicePixelRatio || 1, 2);
-                canvas.width = Math.max(1, Math.floor(window.innerWidth * dpr));
-                canvas.height = Math.max(1, Math.floor(window.innerHeight * dpr));
-                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            }
-            resize();
-            window.addEventListener('resize', resize);
-
-            function traceHeptagram(cx, cy, radius, step, rotOffset, alpha) {
-                const safeRadius = Math.max(2, Number.isFinite(radius) ? radius : 2);
-                ctx.save();
-                ctx.beginPath();
-                for (let i = 0; i <= 7; i++) {
-                    const idx = (i * step) % 7;
-                    const angle = rotOffset + (idx * Math.PI * 2) / 7 - Math.PI / 2;
-                    const x = cx + Math.cos(angle) * safeRadius;
-                    const y = cy + Math.sin(angle) * safeRadius;
-                    if (i === 0) ctx.moveTo(x, y);
-                    else ctx.lineTo(x, y);
-                }
-                ctx.closePath();
-                ctx.strokeStyle = `rgba(229, 198, 135, ${alpha})`;
-                ctx.lineWidth = 1.25;
-                ctx.stroke();
-                ctx.restore();
+            let renderer;
+            try {
+                renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+            } catch (e) {
+                showFallbackArt();
+                return;
             }
 
-            function draw() {
-                try {
-                    t += 0.0045;
-                    const w = Math.max(1, window.innerWidth || 1);
-                    const h = Math.max(1, window.innerHeight || 1);
-                    ctx.clearRect(0, 0, w, h);
+            const scene = new THREE.Scene();
+            const width = Math.max(1, stage.clientWidth || window.innerWidth);
+            const height = Math.max(1, stage.clientHeight || window.innerHeight);
 
-                    const cx = w * 0.5 + Math.sin(t * 0.45) * Math.min(42, w * 0.035);
-                    const cy = h * 0.44 + Math.cos(t * 0.35) * Math.min(32, h * 0.035);
-                    const baseR = Math.max(28, Math.min(w, h) * 0.38);
+            const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
+            camera.position.set(0.8, 0.35, 7.6);
 
-                    const innerGlowR = Math.max(4, baseR * 0.08);
-                    const outerGlowR = Math.max(innerGlowR + 8, baseR * 1.5);
-                    const radial = ctx.createRadialGradient(cx, cy, innerGlowR, cx, cy, outerGlowR);
-                    radial.addColorStop(0, 'rgba(229, 198, 135, 0.13)');
-                    radial.addColorStop(0.55, 'rgba(185, 157, 107, 0.05)');
-                    radial.addColorStop(1, 'rgba(4, 4, 6, 0)');
-                    ctx.fillStyle = radial;
-                    ctx.fillRect(0, 0, w, h);
+            renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+            renderer.setSize(width, height);
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.15;
+            stage.appendChild(renderer.domElement);
 
-                    for (let i = 1; i <= 4; i++) {
-                        const r = Math.max(4, baseR * (0.32 + i * 0.22) + Math.sin(t * 1.4 + i) * 4.5);
-                        ctx.beginPath();
-                        ctx.arc(cx, cy, r, 0, Math.PI * 2);
-                        ctx.strokeStyle = `rgba(229, 198, 135, ${0.24 - i * 0.032})`;
-                        ctx.lineWidth = i === 2 ? 1.45 : 1.05;
-                        if (i === 3) ctx.setLineDash([5, 6]);
-                        else ctx.setLineDash([]);
-                        ctx.stroke();
-                    }
-                    ctx.setLineDash([]);
+            // Studio & Architectural Lighting Rig
+            const ambient = new THREE.AmbientLight(0xd8d4cc, 0.45);
+            scene.add(ambient);
 
-                    traceHeptagram(cx, cy, Math.max(8, baseR * 0.78), 2, t * 0.35, 0.22);
-                    traceHeptagram(cx, cy, Math.max(6, baseR * 0.58), 3, -t * 0.25, 0.19);
+            const keyLight = new THREE.DirectionalLight(0xfff2d6, 2.2);
+            keyLight.position.set(4.5, 6.0, 5.5);
+            scene.add(keyLight);
 
-                    const outerR = Math.max(10, baseR * 0.98);
-                    for (let k = 0; k < 7; k++) {
-                        const ang = t * 0.22 + (k * Math.PI * 2) / 7 - Math.PI / 2;
-                        const nx = cx + Math.cos(ang) * outerR;
-                        const ny = cy + Math.sin(ang) * outerR;
-                        const pulse = Math.max(1.5, 2.6 + Math.sin(t * 2.2 + k) * 1.0);
+            const rimLight = new THREE.DirectionalLight(0x8fa8c8, 1.15);
+            rimLight.position.set(-5.0, 2.5, -4.0);
+            scene.add(rimLight);
 
-                        ctx.beginPath();
-                        ctx.moveTo(cx, cy);
-                        ctx.lineTo(nx, ny);
-                        ctx.strokeStyle = 'rgba(229, 198, 135, 0.11)';
-                        ctx.lineWidth = 0.95;
-                        ctx.stroke();
+            const goldAccentLight = new THREE.PointLight(0xdfc288, 2.4, 14);
+            goldAccentLight.position.set(1.6, 0.4, 2.4);
+            scene.add(goldAccentLight);
 
-                        ctx.beginPath();
-                        ctx.arc(nx, ny, pulse, 0, Math.PI * 2);
-                        ctx.fillStyle = 'rgba(246, 227, 180, 0.68)';
-                        ctx.fill();
-                    }
-                } catch (e) {}
+            // Sculptural Assembly Group (positioned slightly right-of-center on desktop)
+            const heroGroup = new THREE.Group();
+            heroGroup.position.set(width >= 1024 ? 1.45 : 0, 0.05, 0);
+            scene.add(heroGroup);
 
-                requestAnimationFrame(draw);
+            // 1. Monumental Obsidian Obelisk Core
+            const monolithGeo = new THREE.CylinderGeometry(0.52, 0.88, 3.8, 4, 1);
+            const monolithMat = new THREE.MeshStandardMaterial({
+                color: 0x0d0f15,
+                metalness: 0.72,
+                roughness: 0.28
+            });
+            const monolith = new THREE.Mesh(monolithGeo, monolithMat);
+            monolith.rotation.y = Math.PI * 0.25;
+            heroGroup.add(monolith);
+
+            // 2. Champagne Brass Vertical Meridian Spine
+            const spineGeo = new THREE.BoxGeometry(0.035, 4.15, 0.035);
+            const brassMat = new THREE.MeshStandardMaterial({
+                color: 0xdfc288,
+                metalness: 0.88,
+                roughness: 0.22
+            });
+            const spine = new THREE.Mesh(spineGeo, brassMat);
+            spine.position.set(0, 0, 0.62);
+            heroGroup.add(spine);
+
+            // 3. Precision Architectural Gimbal Rings
+            const ring1Geo = new THREE.TorusGeometry(2.05, 0.012, 16, 120);
+            const ring1Mat = new THREE.MeshBasicMaterial({ color: 0xdfc288, transparent: true, opacity: 0.42 });
+            const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
+            ring1.rotation.set(Math.PI * 0.36, Math.PI * 0.12, 0);
+            heroGroup.add(ring1);
+
+            const ring2Geo = new THREE.TorusGeometry(2.55, 0.009, 16, 120);
+            const ring2Mat = new THREE.MeshBasicMaterial({ color: 0xefece6, transparent: true, opacity: 0.16 });
+            const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
+            ring2.rotation.set(-Math.PI * 0.24, Math.PI * 0.28, 0.3);
+            heroGroup.add(ring2);
+
+            // 4. Fine Particle Field
+            const particleCount = 140;
+            const pPositions = new Float32Array(particleCount * 3);
+            for (let i = 0; i < particleCount; i++) {
+                const radius = 2.8 + ((i * 73) % 100) / 28;
+                const theta = (i * 2.39996); // golden angle distribution
+                const y = (((i * 37) % 100) / 100 - 0.5) * 5.2;
+                pPositions[i * 3] = Math.cos(theta) * radius;
+                pPositions[i * 3 + 1] = y;
+                pPositions[i * 3 + 2] = Math.sin(theta) * radius;
             }
-            draw();
-        })();
+            const pGeo = new THREE.BufferGeometry();
+            pGeo.setAttribute('position', new THREE.BufferAttribute(pPositions, 3));
+            const pMat = new THREE.PointsMaterial({
+                color: 0xdfc288,
+                size: 0.032,
+                transparent: true,
+                opacity: 0.55
+            });
+            const particles = new THREE.Points(pGeo, pMat);
+            heroGroup.add(particles);
 
-        updateHeaderAccountLabel();
-        renderReadinessStrip();
-        switchRoom(state.activeRoom || 'home');
+            // Pointer & Scroll Parallax State
+            let targetPointerX = 0;
+            let targetPointerY = 0;
+            let currentPointerX = 0;
+            let currentPointerY = 0;
+            let scrollProgress = 0;
+
+            window.addEventListener('pointermove', (e) => {
+                const w = Math.max(1, window.innerWidth);
+                const h = Math.max(1, window.innerHeight);
+                targetPointerX = (e.clientX / w - 0.5) * 2;
+                targetPointerY = (e.clientY / h - 0.5) * 2;
+            }, { passive: true });
+
+            window.addEventListener('scroll', () => {
+                const h = Math.max(1, window.innerHeight);
+                scrollProgress = Math.min(1, Math.max(0, window.scrollY / h));
+            }, { passive: true });
+
+            window.addEventListener('resize', () => {
+                const nw = Math.max(1, stage.clientWidth || window.innerWidth);
+                const nh = Math.max(1, stage.clientHeight || window.innerHeight);
+                camera.aspect = nw / nh;
+                camera.updateProjectionMatrix();
+                renderer.setSize(nw, nh);
+                heroGroup.position.x = nw >= 1024 ? 1.45 : 0;
+            });
+
+            let clock = 0;
+            function animate() {
+                requestAnimationFrame(animate);
+                clock += 0.006;
+
+                currentPointerX += (targetPointerX - currentPointerX) * 0.04;
+                currentPointerY += (targetPointerY - currentPointerY) * 0.04;
+
+                heroGroup.rotation.y = clock * 0.22 + currentPointerX * 0.25 - scrollProgress * 0.45;
+                heroGroup.rotation.x = currentPointerY * 0.12 + scrollProgress * 0.18;
+                heroGroup.position.y = 0.05 + Math.sin(clock * 1.4) * 0.08 - scrollProgress * 0.65;
+
+                ring1.rotation.z = clock * 0.18;
+                ring2.rotation.x = -Math.PI * 0.24 + clock * 0.12;
+                particles.rotation.y = -clock * 0.08;
+
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initThreeHero);
+        } else {
+            initThreeHero();
+        }
     })();
     </script>
 </body>
