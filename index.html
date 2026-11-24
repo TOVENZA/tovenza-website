@@ -69,6 +69,7 @@
     </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-[#E5C687]/30 selection:text-[#ECE8DF]">
+    <!-- Live 7D sacred geometry background canvas -->
     <canvas id="seven-d-canvas" aria-hidden="true"></canvas>
 
     <div class="relative z-10 flex-1 flex flex-col">
@@ -168,7 +169,18 @@
                             Calm decision intelligence for career switches, offer math, founder cash-flow scenarios, Vedic + Western pacing, and everyday money &amp; focus habits.
                         </p>
 
-                        <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+                        <!-- First-5-Second Entry Prompt -->
+                        <div class="mt-6 p-4 rounded-2xl bg-black/50 border border-[#E5C687]/25 max-w-2xl mx-auto text-left">
+                            <div class="mono-micro text-[10px] tracking-[0.2em] text-[#E5C687] uppercase mb-2.5">What are you deciding right now?</div>
+                            <div class="flex flex-wrap gap-2 text-xs">
+                                <button type="button" data-room-btn="career-business" onclick="switchRoom('career-business')" class="px-3 py-1.5 rounded-lg bg-[#E5C687]/15 hover:bg-[#E5C687]/25 border border-[#E5C687]/35 text-[#ECE8DF]">Comparing offers / CTC</button>
+                                <button type="button" data-room-btn="career-business" onclick="switchRoom('career-business')" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-200">Checking founder runway / invoices</button>
+                                <button type="button" data-room-btn="astrology" onclick="switchRoom('astrology')" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-200">Timing a decision date</button>
+                                <button type="button" data-room-btn="life-ops" onclick="switchRoom('life-ops')" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-200">Organizing money &amp; focus</button>
+                            </div>
+                        </div>
+
+                        <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
                             <button type="button" data-room-btn="career-business" onclick="switchRoom('career-business')" class="px-6 py-3 rounded-xl bg-[#E5C687] hover:bg-[#edd39b] text-[#07080C] text-xs tracking-[0.16em] font-semibold uppercase transition-colors">
                                 Explore Workspace
                             </button>
@@ -180,6 +192,41 @@
 
                     <!-- Live Interactive Proof Right on Home -->
                     <div id="home-live-proof-card" class="mt-10 max-w-3xl mx-auto p-5 sm:p-6 rounded-2xl tvz-surface text-left"></div>
+
+                    <!-- Live 15m Operator Clinic Card (First Session Free) -->
+                    <div class="mt-6 max-w-3xl mx-auto p-5 sm:p-6 rounded-2xl tvz-surface border border-[#E5C687]/30 text-left space-y-4">
+                        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
+                            <div>
+                                <span class="mono-micro text-[10px] tracking-[0.22em] text-[#E5C687] uppercase">Operator &amp; Leader Clinic • First Session Free</span>
+                                <h2 class="editorial-title text-2xl sm:text-3xl text-[#ECE8DF] mt-0.5">Live 15m Operator Clinic</h2>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-semibold">1st Session Free • Pilot</span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed">
+                            Bring a real offer comparison, STAR-L story, or founder cash/invoice bottleneck into a focused 15-minute clinic session. Your first introductory session is free during the pre-bank pilot; ongoing clinic access and async audits pair with the <strong class="text-[#E5C687]">90-Day Pass (₹555 preview)</strong>.
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                            <div class="p-3 rounded-xl bg-black/50 border border-white/10">
+                                <div class="text-[#E5C687] font-semibold">1. Prep Your Snapshot</div>
+                                <p class="text-neutral-400 mt-1">Save your CTC, runway, or timing inputs in TOVENZA first.</p>
+                            </div>
+                            <div class="p-3 rounded-xl bg-black/50 border border-white/10">
+                                <div class="text-[#E5C687] font-semibold">2. 15m Focused Audit</div>
+                                <p class="text-neutral-400 mt-1">Sharp feedback on leverage, cash floor &amp; next steps.</p>
+                            </div>
+                            <div class="p-3 rounded-xl bg-black/50 border border-white/10">
+                                <div class="text-[#E5C687] font-semibold">3. Log Your Takeaway</div>
+                                <p class="text-neutral-400 mt-1">Capture action items in Notes &amp; Test right after.</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+                            <span class="mono-micro text-[11px] text-neutral-400">Slots scheduled in weekly pilot batches</span>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <button type="button" onclick="copyTextSafe('Hi TOVENZA team — I would like to claim my free 15m Live Operator Clinic slot for ' + (document.getElementById('c-role')?.value || 'career/founder planning') + '.', 'Free clinic request copied', this)" class="px-4 py-2 rounded-lg bg-[#E5C687] text-[#07080C] text-xs font-semibold">Copy Free Clinic Request</button>
+                                <button type="button" data-room-btn="feedbacks" onclick="switchRoom('feedbacks')" class="px-3.5 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/15 text-xs text-neutral-200">Log Session Notes in Room 04 →</button>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- 4 Clean Room Entry Cards -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10 text-left">
@@ -1805,7 +1852,6 @@
                     const cy = h * 0.44 + Math.cos(t * 0.35) * Math.min(32, h * 0.035);
                     const baseR = Math.max(28, Math.min(w, h) * 0.38);
 
-                    // Subtle radial gold-obsidian ambient field
                     const innerGlowR = Math.max(4, baseR * 0.08);
                     const outerGlowR = Math.max(innerGlowR + 8, baseR * 1.5);
                     const radial = ctx.createRadialGradient(cx, cy, innerGlowR, cx, cy, outerGlowR);
@@ -1815,7 +1861,6 @@
                     ctx.fillStyle = radial;
                     ctx.fillRect(0, 0, w, h);
 
-                    // Concentric 7D rings + multi-axis projection spokes (always positive radius)
                     for (let i = 1; i <= 4; i++) {
                         const r = Math.max(4, baseR * (0.32 + i * 0.22) + Math.sin(t * 1.4 + i) * 4.5);
                         ctx.beginPath();
@@ -1828,11 +1873,9 @@
                     }
                     ctx.setLineDash([]);
 
-                    // 7-fold sacred geometry star lattices rotating in opposite directions
                     traceHeptagram(cx, cy, Math.max(8, baseR * 0.78), 2, t * 0.35, 0.22);
                     traceHeptagram(cx, cy, Math.max(6, baseR * 0.58), 3, -t * 0.25, 0.19);
 
-                    // 7 orbital dimensional nodes along the outer ring
                     const outerR = Math.max(10, baseR * 0.98);
                     for (let k = 0; k < 7; k++) {
                         const ang = t * 0.22 + (k * Math.PI * 2) / 7 - Math.PI / 2;
