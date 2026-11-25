@@ -102,6 +102,11 @@
       border-color: var(--tvz-border-champagne);
     }
 
+    .tvz-focus-ring:focus-visible {
+      outline: 1px solid var(--tvz-color-champagne);
+      outline-offset: 3px;
+    }
+
     @media (max-width: 1023px) {
       .tvz-desktop-nav { display: none !important; }
     }
@@ -124,6 +129,7 @@
       identity: 'Global Institutional Group',
       statement: 'Beyond Business. Built to Endure.',
       creativeDirection: 'Obsidian Sovereignty',
+      originMandate: 'India-Origin Global Institutional Group',
       currentStage: 'Pre-Operational Institutional Architecture & Pilot Preview',
       governanceDisclosure:
         'TOVENZA presents its Four Foundations and Eleven Strategic Horizons as a long-term institutional architecture. Individual horizons carry explicit lifecycle designations distinguishing research and thesis development from active operations.'
@@ -137,11 +143,11 @@
         title: 'Sovereign Identity',
         subtitle: 'Philosophical Independence & Brand Permanence',
         thesis:
-          'Establishes institutional independence, unmistakable aesthetic restraint, and long-horizon ownership principles across every venture.',
+          'Establishes institutional independence, unmistakable aesthetic restraint, ethical consent-first stewardship, and long-horizon ownership principles across every venture.',
         principles: [
-          'Uncompromising editorial and architectural coherence',
+          'Uncompromising editorial and architectural coherence under Obsidian Sovereignty',
           'Independence from short-term market noise and opportunistic dilution',
-          'Long-term intellectual property and brand equity stewardship'
+          'Centralized brand equity and intellectual property stewardship across branches'
         ]
       },
       {
@@ -188,17 +194,170 @@
       }
     ]);
 
+    const SOVEREIGN_IDENTITY_SPEC = Object.freeze({
+      classificationNotice:
+        'Founder-approved institutional philosophy and brand direction are explicitly distinguished below from proposed architectural guidelines currently in pre-incorporation validation.',
+      purpose: {
+        status: 'Founder-Approved Direction & Proposed Formulation',
+        statement:
+          'To architect, govern, and compound enduring human-centered enterprises and decision systems—originating from India for global permanence—so people receive the right support at the right time without sacrificing dignity, privacy, or institutional integrity.'
+      },
+      visionAndMission: [
+        {
+          label: 'Institutional Vision',
+          status: 'Founder-Approved Ambition',
+          text: 'To establish an India-origin, globally operating institutional group defined by architectural restraint, ethical stewardship, and multi-generational durability across eleven interconnected strategic horizons.'
+        },
+        {
+          label: 'Institutional Mission',
+          status: 'Proposed Operating Mandate',
+          text: 'To translate long-horizon institutional principles into disciplined, human-centered operating branches—advancing only through verified empirical evidence, explicit informed consent, and Stage-Gate governance.'
+        }
+      ],
+      philosophicalSpine: [
+        {
+          num: '01',
+          status: 'Founder-Approved Principle',
+          title: 'Right Support at the Right Time',
+          detail: 'Designing systems and human advisory that meet individuals and enterprises at decisive inflection points with calm clarity rather than reactive noise.'
+        },
+        {
+          num: '02',
+          status: 'Founder-Approved Principle',
+          title: 'Dignity, Privacy, Freedom & Consent',
+          detail: 'Personal information, career records, and human choices belong to the individual. Zero scraping, zero silent profiling, and zero third-party sharing without separate opt-in consent.'
+        },
+        {
+          num: '03',
+          status: 'Founder-Approved Principle',
+          title: 'Equal Opportunity & Human Potential',
+          detail: 'Building structured pathways that evaluate capability and character fairly, unlocking human potential across backgrounds without algorithmic discrimination.'
+        },
+        {
+          num: '04',
+          status: 'Founder-Approved Principle',
+          title: 'Profit as Sustainability, Not Sole Purpose',
+          detail: 'Financial discipline and healthy unit economics are essential oxygen for endurance, never an excuse to compromise ethics or user trust.'
+        },
+        {
+          num: '05',
+          status: 'Founder-Approved Principle',
+          title: 'Responsible Innovation & Multi-Generational Endurance',
+          detail: 'Technology and AI assist human judgment under strict human oversight—compounding institutional knowledge built to outlast single market cycles.'
+        }
+      ],
+      coreValues: [
+        {
+          name: 'Dignity & Consent First',
+          desc: 'Every interaction begins with transparency, mutual respect, and explicit permission.'
+        },
+        {
+          name: 'Architectural Restraint',
+          desc: 'Refusing premature sprawl, visual clutter, and unverified hype so every commitment carries weight.'
+        },
+        {
+          name: 'Epistemic Honesty',
+          desc: 'Maintaining a strict boundary between long-term vision, research theses, and live operational reality.'
+        },
+        {
+          name: 'Enduring Stewardship',
+          desc: 'Designing brand equity, codebases, and relationships to compound across decades rather than quarters.'
+        },
+        {
+          name: 'Accountable Execution',
+          desc: 'Grounding philosophical principles in measurable, human-verified quality standards.'
+        }
+      ],
+      nonNegotiableBoundaries: [
+        {
+          rule: 'No Unconsented Data Monetization or Scraping',
+          desc: 'TOVENZA will never harvest, trade, or expose personal records without specific, revocable consent.'
+        },
+        {
+          rule: 'No Misrepresentation of Planned Horizons',
+          desc: 'Future strategic horizons and research theses are never presented as active commercial operations or licensed entities.'
+        },
+        {
+          rule: 'No Guaranteed Outcome Promises',
+          desc: 'Advisory, career, financial, or temporal frameworks provide structured clarity—never false guarantees.'
+        },
+        {
+          rule: 'No Autonomous AI Verdicts on Humans',
+          desc: 'Software and AI organize information and decision math; consequential human decisions retain human oversight.'
+        },
+        {
+          rule: 'No Opportunistic Brand Dilution',
+          desc: 'No branch or partnership may compromise TOVENZA’s aesthetic restraint or ethical standards for short-term revenue.'
+        }
+      ],
+      paletteTokens: [
+        { name: 'Obsidian', hex: '#080909', role: 'Primary Institutional Canvas & Void Depth' },
+        { name: 'Basalt', hex: '#202321', role: 'Architectural Structural Surfaces & Monolith Panels' },
+        { name: 'Champagne Brass', hex: '#B99D6B', role: 'Precision Meridian Accents, Numerals & Active States' },
+        { name: 'Warm Ivory', hex: '#E9E4D9', role: 'High-Contrast Editorial & Display Typography' }
+      ],
+      verbalStandards: [
+        {
+          dimension: 'Institutional Voice',
+          spec: 'Composed, precise, dignified, and transparent—written for serious decision-makers rather than mass hype.'
+        },
+        {
+          dimension: 'Endorsed Naming Architecture',
+          spec: 'Operating branches carry the unified TOVENZA institutional prefix (e.g., TOVENZA GROUP, TOVENZA CAREER) to compound collective trust.'
+        },
+        {
+          dimension: 'Lifecycle Disclosure Discipline',
+          spec: 'Every public page explicitly distinguishes Research, Strategic Thesis, and In Development from Operational status.'
+        }
+      ],
+      ownershipAndGovernance: [
+        {
+          label: 'Hybrid Institutional Architecture',
+          status: 'Founder-Approved Direction',
+          detail: 'Combines central institutional governance, brand custody, and shared intelligence with independently managed future operating branches.'
+        },
+        {
+          label: 'Founder Stewardship & Reserve Authority',
+          status: 'Founder Preference (Pre-Incorporation)',
+          detail: 'The Founder retains ownership and ultimate constitutional decision-making authority until personally deciding otherwise. Formal corporate instruments (MoA/AoA, IP deeds) will be executed with qualified Indian legal and CA counsel upon entity incorporation.'
+        },
+        {
+          label: 'Central Brand & IP Custody',
+          status: 'Proposed Architectural Rule',
+          detail: 'Core brand identity (TOVENZA), design systems, and shared software frameworks remain stewarded centrally rather than fragmented across individual ventures.'
+        }
+      ],
+      legacyHorizons: [
+        {
+          phase: 'Horizon I • Foundation & Inaugural Proof',
+          window: 'Current Architectural & Validation Stage',
+          focus: 'Lock Sovereign Identity, validate TOVENZA CAREER (Horizon 01) through ethical human-centered execution, and establish Central Intelligence playbooks.'
+        },
+        {
+          phase: 'Horizon II • Multi-Branch Institutional Scaling',
+          window: 'Stage-Gate Validated Expansion',
+          focus: 'Activate adjacent capability and advisory horizons from India into international corridors once unit economics, governance controls, and statutory registrations are verified.'
+        },
+        {
+          phase: 'Horizon III • Multi-Generational Stewardship',
+          window: 'Enduring Global Institution',
+          focus: 'Compound an India-origin global institutional group whose governance charter, ethical guardrails, and intellectual capital endure beyond any single generation.'
+        }
+      ]
+    });
+
     const ELEVEN_HORIZONS = Object.freeze([
       {
         index: '01',
         slug: 'human-capital',
         path: '/horizons/human-capital',
         title: 'Recruitment & HR / Human Capital',
+        branchName: 'TOVENZA CAREER (Inaugural Initiative)',
         primaryFoundation: 'architectural-authority',
         secondaryFoundations: ['sovereign-identity', 'global-ecosystem'],
         priorityTier: 'Near-Term',
         lifecycleStatus: 'In Development',
-        summary: 'Structured compensation benchmarking, offer evaluation architecture, and executive talent intelligence.'
+        summary: 'Structured compensation benchmarking, offer evaluation architecture, and consent-first talent intelligence.'
       },
       {
         index: '02',
@@ -334,7 +493,7 @@
         path: f.path,
         group: 'foundations',
         title: f.title,
-        template: 'FoundationDetailTemplate',
+        template: f.id === 'sovereign-identity' ? 'SovereignIdentityTemplate' : 'FoundationDetailTemplate',
         slug: f.id
       })),
       ...ELEVEN_HORIZONS.map((h, idx) => ({
@@ -381,14 +540,29 @@
       }
     }
 
+    function TovenzaCrest({ width = 28, height = 34 }) {
+      return (
+        <svg width={width} height={height} viewBox="0 0 96 120" fill="none" aria-hidden="true">
+          <rect x="12" y="10" width="72" height="100" stroke="#B99D6B" strokeWidth="1.4" />
+          <line x1="48" y1="24" x2="48" y2="96" stroke="#B99D6B" strokeWidth="1.6" />
+          <line x1="30" y1="36" x2="66" y2="36" stroke="#B99D6B" strokeWidth="1.6" />
+          <circle cx="48" cy="60" r="11" stroke="#B99D6B" strokeWidth="1.1" />
+        </svg>
+      );
+    }
+
     function InstitutionalLink({ to, onNavigate, className = '', style = {}, children, ...rest }) {
+      const isBlobPreview =
+        window.location.protocol === 'blob:' || window.location.origin === 'null';
+      const safeHref = isBlobPreview ? `#${to}` : to;
+
       const handleClick = (e) => {
         if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
         e.preventDefault();
         onNavigate(to);
       };
       return (
-        <a href={to} onClick={handleClick} className={className} style={style} {...rest}>
+        <a href={safeHref} onClick={handleClick} className={`tvz-focus-ring ${className}`.trim()} style={style} {...rest}>
           {children}
         </a>
       );
@@ -514,12 +688,7 @@
               onNavigate={navigateAndClose}
               style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', textDecoration: 'none' }}
             >
-              <svg width="28" height="34" viewBox="0 0 96 120" fill="none" aria-hidden="true">
-                <rect x="12" y="10" width="72" height="100" stroke="#B99D6B" strokeWidth="1.4" />
-                <line x1="48" y1="24" x2="48" y2="96" stroke="#B99D6B" strokeWidth="1.6" />
-                <line x1="30" y1="36" x2="66" y2="36" stroke="#B99D6B" strokeWidth="1.6" />
-                <circle cx="48" cy="60" r="11" stroke="#B99D6B" strokeWidth="1.1" />
-              </svg>
+              <TovenzaCrest width={28} height={34} />
               <div>
                 <div
                   className="tvz-display"
@@ -551,7 +720,7 @@
                 onClick={() => setOpenMenu(openMenu === 'foundations' ? null : 'foundations')}
                 onMouseEnter={() => setOpenMenu('foundations')}
                 aria-expanded={openMenu === 'foundations'}
-                className="tvz-mono"
+                className="tvz-mono tvz-focus-ring"
                 style={{
                   background: 'none',
                   border: 'none',
@@ -570,7 +739,7 @@
                 onClick={() => setOpenMenu(openMenu === 'horizons' ? null : 'horizons')}
                 onMouseEnter={() => setOpenMenu('horizons')}
                 aria-expanded={openMenu === 'horizons'}
-                className="tvz-mono"
+                className="tvz-mono tvz-focus-ring"
                 style={{
                   background: 'none',
                   border: 'none',
@@ -626,7 +795,7 @@
 
             <button
               type="button"
-              className="tvz-mono tvz-mobile-toggle"
+              className="tvz-mono tvz-mobile-toggle tvz-focus-ring"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-expanded={mobileOpen}
               style={{
@@ -801,7 +970,576 @@
     }
 
     /* ============================================================================
-       EIGHT REUSABLE PAGE TEMPLATES FOR ALL 21 CANONICAL ROUTES
+       DEDICATED FOUNDATION 01 EXPERIENCE: SovereignIdentityTemplate
+       Route: /foundations/sovereign-identity
+       ============================================================================ */
+    function SovereignIdentityTemplate({ onNavigate }) {
+      const foundation = FOUR_FOUNDATIONS[0];
+      const [copiedHex, setCopiedHex] = useState(null);
+      const [horizonFilter, setHorizonFilter] = useState('ALL');
+      const [activeLegacyIndex, setActiveLegacyIndex] = useState(0);
+
+      const handleCopyHex = (hex) => {
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(hex).catch(() => {});
+          }
+        } catch {}
+        setCopiedHex(hex);
+        setTimeout(() => setCopiedHex(null), 1800);
+      };
+
+      const governedHorizons = ELEVEN_HORIZONS.map((h) => {
+        let relation = 'Institutional Standard';
+        if (h.primaryFoundation === 'sovereign-identity') relation = 'Primary Anchor';
+        else if (h.secondaryFoundations.includes('sovereign-identity')) relation = 'Secondary Enabler';
+        return { ...h, relation };
+      });
+
+      const filteredHorizons =
+        horizonFilter === 'ALL'
+          ? governedHorizons
+          : governedHorizons.filter((h) => h.relation === horizonFilter);
+
+      return (
+        <article aria-labelledby="sovereign-identity-heading">
+          {/* 1. SOVEREIGN HERO & SIBLING FOUNDATION NAVIGATION */}
+          <section className="tvz-container" style={{ paddingBlock: 'clamp(4rem, 7vw, 6.5rem)' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '2.25rem' }}>
+              {FOUR_FOUNDATIONS.map((f) => (
+                <InstitutionalLink
+                  key={f.id}
+                  to={f.path}
+                  onNavigate={onNavigate}
+                  aria-current={f.id === foundation.id ? 'page' : undefined}
+                  className="tvz-mono"
+                  style={{
+                    padding: '0.55rem 0.9rem',
+                    textDecoration: 'none',
+                    border: '1px solid var(--tvz-border-champagne)',
+                    backgroundColor: f.id === foundation.id ? 'var(--tvz-color-champagne)' : 'transparent',
+                    color: f.id === foundation.id ? 'var(--tvz-color-obsidian)' : 'var(--tvz-color-ivory-secondary)'
+                  }}
+                >
+                  {f.numeral}. {f.title}
+                </InstitutionalLink>
+              ))}
+            </div>
+
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                gap: '2.5rem',
+                alignItems: 'center'
+              }}
+            >
+              <div>
+                <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', margin: 0 }}>
+                  Foundation I of IV • Permanent Strategic Pillar
+                </p>
+                <h1
+                  id="sovereign-identity-heading"
+                  className="tvz-display"
+                  style={{ fontSize: 'var(--tvz-text-hero)', margin: '0.6rem 0 0.9rem' }}
+                >
+                  Sovereign Identity
+                </h1>
+                <p
+                  className="tvz-display"
+                  style={{
+                    fontSize: 'clamp(1.35rem, 2.2vw, 1.85rem)',
+                    fontStyle: 'italic',
+                    color: 'var(--tvz-color-champagne-light)',
+                    margin: '0 0 1.25rem'
+                  }}
+                >
+                  “{INSTITUTION_META.statement}”
+                </p>
+                <p style={{ fontSize: 'var(--tvz-text-body)', color: 'var(--tvz-color-ivory-secondary)', maxWidth: '60ch', margin: 0 }}>
+                  {foundation.thesis}
+                </p>
+              </div>
+
+              {/* Architectural Sovereign Crest & Institutional Posture Card */}
+              <aside className="tvz-monolith-card" style={{ padding: '2.25rem', display: 'grid', gap: '1.35rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <TovenzaCrest width={44} height={54} />
+                    <div>
+                      <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem' }}>
+                        Parent Institutional Identity
+                      </div>
+                      <div className="tvz-display" style={{ fontSize: '1.75rem', letterSpacing: '0.18em' }}>
+                        TOVENZA
+                      </div>
+                    </div>
+                  </div>
+                  <LifecycleStatusBadge status="Active Pillar" />
+                </div>
+
+                <div className="tvz-hairline-t" style={{ paddingTop: '1.1rem', display: 'grid', gap: '0.65rem', fontSize: '0.84rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
+                    <span className="tvz-mono" style={{ fontSize: '0.56rem', color: 'var(--tvz-color-ivory-muted)' }}>Origin &amp; Ambition</span>
+                    <span style={{ color: 'var(--tvz-color-ivory)', textAlign: 'right' }}>{INSTITUTION_META.originMandate}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
+                    <span className="tvz-mono" style={{ fontSize: '0.56rem', color: 'var(--tvz-color-ivory-muted)' }}>Creative Direction</span>
+                    <span style={{ color: 'var(--tvz-color-champagne-light)' }}>{INSTITUTION_META.creativeDirection}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
+                    <span className="tvz-mono" style={{ fontSize: '0.56rem', color: 'var(--tvz-color-ivory-muted)' }}>Current Posture</span>
+                    <span style={{ color: 'var(--tvz-color-ivory-secondary)', textAlign: 'right' }}>Pre-Incorporation Validation</span>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </section>
+
+          {/* 2. INSTITUTIONAL PURPOSE, VISION & MISSION */}
+          <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
+            <div className="tvz-container">
+              <div style={{ maxWidth: '48rem', marginBottom: '2.5rem' }}>
+                <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', margin: 0 }}>
+                  01 • Institutional Purpose, Vision &amp; Mission
+                </p>
+                <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h1)', margin: '0.6rem 0 0' }}>
+                  Why TOVENZA Exists
+                </h2>
+              </div>
+
+              <div className="tvz-monolith-card" style={{ padding: '2.25rem', marginBottom: '1.25rem' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '0.75rem', marginBottom: '0.75rem' }}>
+                  <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>Institutional Purpose</span>
+                  <span className="tvz-mono" style={{ fontSize: '0.56rem', color: 'var(--tvz-color-ivory-muted)' }}>
+                    {SOVEREIGN_IDENTITY_SPEC.purpose.status}
+                  </span>
+                </div>
+                <p className="tvz-display" style={{ fontSize: 'clamp(1.4rem, 2.3vw, 1.95rem)', color: 'var(--tvz-color-ivory)', margin: 0, lineHeight: 1.3 }}>
+                  {SOVEREIGN_IDENTITY_SPEC.purpose.statement}
+                </p>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.25rem' }}>
+                {SOVEREIGN_IDENTITY_SPEC.visionAndMission.map((item) => (
+                  <div key={item.label} className="tvz-monolith-card" style={{ padding: '2rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                      <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>{item.label}</span>
+                      <span className="tvz-mono" style={{ fontSize: '0.55rem', color: 'var(--tvz-color-ivory-muted)' }}>{item.status}</span>
+                    </div>
+                    <p style={{ fontSize: '0.95rem', color: 'var(--tvz-color-ivory-secondary)', margin: 0 }}>
+                      {item.text}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* 3. INSTITUTIONAL PHILOSOPHY (THE FIVE FOUNDER COMMITMENTS) */}
+          <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
+            <div className="tvz-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2.5rem', alignItems: 'start' }}>
+              <div>
+                <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', margin: 0 }}>
+                  02 • Ethical &amp; Philosophical Spine
+                </p>
+                <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h1)', margin: '0.6rem 0 1rem' }}>
+                  Human-Centered Sovereignty
+                </h2>
+                <p style={{ fontSize: 'var(--tvz-text-body)', color: 'var(--tvz-color-ivory-secondary)', maxWidth: '46ch' }}>
+                  Institutional permanence is impossible without moral legitimacy. Every venture, algorithm, and advisory workflow built under TOVENZA is bound by five founder-approved philosophical commitments.
+                </p>
+              </div>
+
+              <div style={{ display: 'grid', gap: '0.9rem' }}>
+                {SOVEREIGN_IDENTITY_SPEC.philosophicalSpine.map((item) => (
+                  <div key={item.num} className="tvz-monolith-card" style={{ padding: '1.65rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                      <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>Principle {item.num}</span>
+                      <span className="tvz-mono" style={{ fontSize: '0.54rem', color: 'var(--tvz-color-ivory-muted)' }}>{item.status}</span>
+                    </div>
+                    <h3 className="tvz-display" style={{ fontSize: '1.45rem', margin: '0 0 0.45rem', color: 'var(--tvz-color-ivory)' }}>
+                      {item.title}
+                    </h3>
+                    <p style={{ fontSize: '0.9rem', color: 'var(--tvz-color-ivory-secondary)', margin: 0 }}>
+                      {item.detail}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* 4. CORE VALUES & NON-NEGOTIABLE BOUNDARIES */}
+          <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
+            <div className="tvz-container">
+              <div style={{ maxWidth: '48rem', marginBottom: '2.5rem' }}>
+                <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', margin: 0 }}>
+                  03 • Behavioral Standards &amp; Institutional Red Lines
+                </p>
+                <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h1)', margin: '0.6rem 0 0' }}>
+                  What We Stand For &amp; What We Refuse
+                </h2>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+                <div className="tvz-monolith-card" style={{ padding: '2.25rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                    <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>Core Institutional Values</span>
+                    <span className="tvz-mono" style={{ fontSize: '0.55rem', color: 'var(--tvz-color-ivory-muted)' }}>Proposed Framework</span>
+                  </div>
+                  <div style={{ display: 'grid', gap: '1.1rem' }}>
+                    {SOVEREIGN_IDENTITY_SPEC.coreValues.map((val, idx) => (
+                      <div key={val.name} className={idx > 0 ? 'tvz-hairline-t' : ''} style={{ paddingTop: idx > 0 ? '1.1rem' : 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.65rem' }}>
+                          <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>+</span>
+                          <strong style={{ color: 'var(--tvz-color-ivory)', fontSize: '0.96rem', fontWeight: 500 }}>{val.name}</strong>
+                        </div>
+                        <p style={{ margin: '0.35rem 0 0 1.25rem', fontSize: '0.88rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                          {val.desc}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="tvz-monolith-card" style={{ padding: '2.25rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                    <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne-light)' }}>Non-Negotiable Red Lines</span>
+                    <span className="tvz-mono" style={{ fontSize: '0.55rem', color: 'var(--tvz-color-ivory-muted)' }}>Binding Guardrails</span>
+                  </div>
+                  <div style={{ display: 'grid', gap: '1.1rem' }}>
+                    {SOVEREIGN_IDENTITY_SPEC.nonNegotiableBoundaries.map((b, idx) => (
+                      <div key={b.rule} className={idx > 0 ? 'tvz-hairline-t' : ''} style={{ paddingTop: idx > 0 ? '1.1rem' : 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.65rem' }}>
+                          <span className="tvz-mono" style={{ color: 'var(--tvz-color-ivory-muted)' }}>—</span>
+                          <strong style={{ color: 'var(--tvz-color-ivory)', fontSize: '0.96rem', fontWeight: 500 }}>{b.rule}</strong>
+                        </div>
+                        <p style={{ margin: '0.35rem 0 0 1.25rem', fontSize: '0.88rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                          {b.desc}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* 5. OBSIDIAN SOVEREIGNTY: VISUAL, VERBAL & IP STEWARDSHIP */}
+          <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
+            <div className="tvz-container">
+              <div style={{ maxWidth: '50rem', marginBottom: '2.5rem' }}>
+                <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', margin: 0 }}>
+                  04 • Institutional Character, Visual System &amp; Verbal Discipline
+                </p>
+                <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h1)', margin: '0.6rem 0 0.9rem' }}>
+                  Obsidian Sovereignty
+                </h2>
+                <p style={{ fontSize: 'var(--tvz-text-body)', color: 'var(--tvz-color-ivory-secondary)', maxWidth: '62ch', margin: 0 }}>
+                  Obsidian Sovereignty expresses institutional character through calm architectural restraint—deep basalt surfaces, warm ivory typography, and champagne brass precision—refusing loud templates or visual clutter.
+                </p>
+              </div>
+
+              {/* Interactive Master Palette Swatches */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
+                {SOVEREIGN_IDENTITY_SPEC.paletteTokens.map((swatch) => (
+                  <div key={swatch.hex} className="tvz-monolith-card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1.1rem' }}>
+                    <div>
+                      <div
+                        style={{
+                          height: '4.25rem',
+                          backgroundColor: swatch.hex,
+                          border: '1px solid var(--tvz-border-champagne)',
+                          marginBottom: '1rem'
+                        }}
+                      />
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span className="tvz-display" style={{ fontSize: '1.35rem' }}>{swatch.name}</span>
+                        <button
+                          type="button"
+                          onClick={() => handleCopyHex(swatch.hex)}
+                          className="tvz-mono tvz-focus-ring"
+                          aria-label={`Copy ${swatch.name} hex code ${swatch.hex}`}
+                          style={{
+                            background: 'none',
+                            border: '1px solid var(--tvz-border-hairline)',
+                            color: copiedHex === swatch.hex ? 'var(--tvz-color-champagne-light)' : 'var(--tvz-color-champagne)',
+                            padding: '0.28rem 0.55rem',
+                            cursor: 'pointer',
+                            fontSize: '0.58rem'
+                          }}
+                        >
+                          {copiedHex === swatch.hex ? 'Copied ✓' : swatch.hex}
+                        </button>
+                      </div>
+                    </div>
+                    <p style={{ fontSize: '0.82rem', color: 'var(--tvz-color-ivory-muted)', margin: 0 }}>
+                      {swatch.role}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Verbal Identity & Brand Custody Grid */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+                {SOVEREIGN_IDENTITY_SPEC.verbalStandards.map((v) => (
+                  <div key={v.dimension} className="tvz-monolith-card" style={{ padding: '1.75rem' }}>
+                    <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', marginBottom: '0.5rem' }}>
+                      {v.dimension}
+                    </div>
+                    <p style={{ fontSize: '0.9rem', color: 'var(--tvz-color-ivory-secondary)', margin: 0 }}>
+                      {v.spec}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* 6. OWNERSHIP PHILOSOPHY, GOVERNANCE BOUNDARIES & INSTITUTIONAL LEGACY */}
+          <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
+            <div className="tvz-container">
+              <div style={{ maxWidth: '50rem', marginBottom: '2.5rem' }}>
+                <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', margin: 0 }}>
+                  05 • Ownership Philosophy, Governance Boundaries &amp; Legacy
+                </p>
+                <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h1)', margin: '0.6rem 0 0' }}>
+                  Stewardship Built Across Generations
+                </h2>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
+                {SOVEREIGN_IDENTITY_SPEC.ownershipAndGovernance.map((item) => (
+                  <div key={item.label} className="tvz-monolith-card" style={{ padding: '1.9rem' }}>
+                    <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.56rem', marginBottom: '0.45rem' }}>
+                      {item.status}
+                    </div>
+                    <h3 className="tvz-display" style={{ fontSize: '1.4rem', margin: '0 0 0.65rem' }}>
+                      {item.label}
+                    </h3>
+                    <p style={{ fontSize: '0.88rem', color: 'var(--tvz-color-ivory-secondary)', margin: 0 }}>
+                      {item.detail}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Interactive Three-Horizon Legacy Selector */}
+              <div className="tvz-monolith-card" style={{ padding: '2.25rem' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+                  <div>
+                    <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>Institutional Legacy Trajectory</span>
+                    <h3 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h3)', margin: '0.35rem 0 0' }}>
+                      Three Horizons of Endurance
+                    </h3>
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }} role="tablist" aria-label="Institutional Legacy Horizons">
+                    {SOVEREIGN_IDENTITY_SPEC.legacyHorizons.map((lh, idx) => (
+                      <button
+                        key={lh.phase}
+                        type="button"
+                        role="tab"
+                        aria-selected={activeLegacyIndex === idx}
+                        onClick={() => setActiveLegacyIndex(idx)}
+                        className="tvz-mono tvz-focus-ring"
+                        style={{
+                          padding: '0.5rem 0.85rem',
+                          cursor: 'pointer',
+                          border: '1px solid var(--tvz-border-champagne)',
+                          backgroundColor: activeLegacyIndex === idx ? 'var(--tvz-color-champagne)' : 'transparent',
+                          color: activeLegacyIndex === idx ? 'var(--tvz-color-obsidian)' : 'var(--tvz-color-ivory-secondary)'
+                        }}
+                      >
+                        Stage 0{idx + 1}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="tvz-hairline-t" style={{ paddingTop: '1.35rem' }}>
+                  <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne-light)', fontSize: '0.58rem' }}>
+                    {SOVEREIGN_IDENTITY_SPEC.legacyHorizons[activeLegacyIndex].window}
+                  </div>
+                  <h4 className="tvz-display" style={{ fontSize: '1.55rem', margin: '0.45rem 0 0.65rem' }}>
+                    {SOVEREIGN_IDENTITY_SPEC.legacyHorizons[activeLegacyIndex].phase}
+                  </h4>
+                  <p style={{ fontSize: '0.95rem', color: 'var(--tvz-color-ivory-secondary)', maxWidth: '66ch', margin: 0 }}>
+                    {SOVEREIGN_IDENTITY_SPEC.legacyHorizons[activeLegacyIndex].focus}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* 7. FOUR FOUNDATIONS & ELEVEN STRATEGIC HORIZONS RELATIONSHIP MATRIX */}
+          <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
+            <div className="tvz-container">
+              <div style={{ maxWidth: '50rem', marginBottom: '2.25rem' }}>
+                <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', margin: 0 }}>
+                  06 • Institutional Architecture &amp; Cross-Horizon Governance
+                </p>
+                <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h1)', margin: '0.6rem 0 0.8rem' }}>
+                  How Foundation I Anchors TOVENZA
+                </h2>
+                <p style={{ fontSize: 'var(--tvz-text-body)', color: 'var(--tvz-color-ivory-secondary)', maxWidth: '62ch', margin: 0 }}>
+                  Sovereign Identity establishes the philosophical and brand perimeter within which Foundations II, III, and IV operate—and governs all Eleven Strategic Horizons across active development and long-term research.
+                </p>
+              </div>
+
+              {/* Four Foundations Overview Strip */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem', marginBottom: '2.75rem' }}>
+                {FOUR_FOUNDATIONS.map((f) => (
+                  <InstitutionalLink
+                    key={f.id}
+                    to={f.path}
+                    onNavigate={onNavigate}
+                    className="tvz-monolith-card"
+                    style={{
+                      padding: '1.5rem',
+                      textDecoration: 'none',
+                      borderColor: f.id === 'sovereign-identity' ? 'var(--tvz-color-champagne)' : undefined
+                    }}
+                  >
+                    <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem' }}>
+                      Foundation {f.numeral} {f.id === 'sovereign-identity' ? '• Current Pillar' : ''}
+                    </div>
+                    <div className="tvz-display" style={{ fontSize: '1.35rem', color: 'var(--tvz-color-ivory)', margin: '0.4rem 0' }}>
+                      {f.title}
+                    </div>
+                    <p style={{ fontSize: '0.82rem', color: 'var(--tvz-color-ivory-muted)', margin: 0 }}>
+                      {f.subtitle}
+                    </p>
+                  </InstitutionalLink>
+                ))}
+              </div>
+
+              {/* Filterable Eleven Horizons Relationship Grid */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+                <h3 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h3)', margin: 0 }}>
+                  Eleven Strategic Horizons ({filteredHorizons.length})
+                </h3>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
+                  {['ALL', 'Primary Anchor', 'Secondary Enabler', 'Institutional Standard'].map((role) => (
+                    <button
+                      key={role}
+                      type="button"
+                      onClick={() => setHorizonFilter(role)}
+                      className="tvz-mono tvz-focus-ring"
+                      style={{
+                        padding: '0.48rem 0.8rem',
+                        cursor: 'pointer',
+                        fontSize: '0.58rem',
+                        border: '1px solid var(--tvz-border-champagne)',
+                        backgroundColor: horizonFilter === role ? 'var(--tvz-color-champagne)' : 'transparent',
+                        color: horizonFilter === role ? 'var(--tvz-color-obsidian)' : 'var(--tvz-color-ivory-secondary)'
+                      }}
+                    >
+                      {role}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: '0.9rem' }}>
+                {filteredHorizons.map((h) => (
+                  <InstitutionalLink
+                    key={h.slug}
+                    to={h.path}
+                    onNavigate={onNavigate}
+                    className="tvz-monolith-card"
+                    style={{
+                      padding: '1.35rem 1.5rem',
+                      textDecoration: 'none',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      gap: '0.85rem'
+                    }}
+                  >
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.5rem' }}>
+                        <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.56rem' }}>
+                          {h.index} • {h.relation}
+                        </span>
+                        <LifecycleStatusBadge status={h.lifecycleStatus} />
+                      </div>
+                      <div className="tvz-display" style={{ fontSize: '1.3rem', color: 'var(--tvz-color-ivory)', marginTop: '0.45rem' }}>
+                        {h.title}
+                      </div>
+                      {h.branchName && (
+                        <div className="tvz-mono" style={{ fontSize: '0.55rem', color: 'var(--tvz-color-champagne-light)', marginTop: '0.25rem' }}>
+                          {h.branchName}
+                        </div>
+                      )}
+                    </div>
+                    <div style={{ fontSize: '0.82rem', color: 'var(--tvz-color-ivory-muted)' }}>
+                      {h.summary}
+                    </div>
+                  </InstitutionalLink>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* 8. INSTITUTIONAL DISCLOSURES & FORWARD NAVIGATION */}
+          <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
+            <div className="tvz-container">
+              <div className="tvz-monolith-card" style={{ padding: '2rem', marginBottom: '2rem' }}>
+                <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', marginBottom: '0.6rem' }}>
+                  07 • Institutional Governance &amp; Epistemic Disclosure
+                </div>
+                <p style={{ fontSize: '0.9rem', color: 'var(--tvz-color-ivory-secondary)', margin: '0 0 0.75rem', maxWidth: '72ch' }}>
+                  {SOVEREIGN_IDENTITY_SPEC.classificationNotice}
+                </p>
+                <p style={{ fontSize: '0.84rem', color: 'var(--tvz-color-ivory-muted)', margin: 0, maxWidth: '72ch' }}>
+                  TOVENZA is currently in pre-incorporation architectural validation. References to trademarks, corporate structures, or future branches describe architectural intent and do not represent completed statutory registrations or live commercial operations across all horizons.
+                </p>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+                <InstitutionalLink
+                  to="/foundations/architectural-authority"
+                  onNavigate={onNavigate}
+                  className="tvz-monolith-card"
+                  style={{ padding: '2rem', textDecoration: 'none', display: 'block' }}
+                >
+                  <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem' }}>
+                    Next Permanent Pillar → Foundation II
+                  </div>
+                  <div className="tvz-display" style={{ fontSize: '1.65rem', color: 'var(--tvz-color-ivory)', margin: '0.5rem 0 0.4rem' }}>
+                    Architectural Authority
+                  </div>
+                  <p style={{ fontSize: '0.86rem', color: 'var(--tvz-color-ivory-secondary)', margin: 0 }}>
+                    Explore governance structures, Stage-Gate controls, and operational accountability.
+                  </p>
+                </InstitutionalLink>
+
+                <InstitutionalLink
+                  to="/horizons/human-capital"
+                  onNavigate={onNavigate}
+                  className="tvz-monolith-card"
+                  style={{ padding: '2rem', textDecoration: 'none', display: 'block' }}
+                >
+                  <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem' }}>
+                    Inaugural Practical Initiative → Horizon 01
+                  </div>
+                  <div className="tvz-display" style={{ fontSize: '1.65rem', color: 'var(--tvz-color-ivory)', margin: '0.5rem 0 0.4rem' }}>
+                    TOVENZA CAREER
+                  </div>
+                  <p style={{ fontSize: '0.86rem', color: 'var(--tvz-color-ivory-secondary)', margin: 0 }}>
+                    Inspect the first active validation initiative under Recruitment &amp; HR / Human Capital.
+                  </p>
+                </InstitutionalLink>
+              </div>
+            </div>
+          </section>
+        </article>
+      );
+    }
+
+    /* ============================================================================
+       REMAINING REUSABLE PAGE TEMPLATES FOR ALL 21 CANONICAL ROUTES
        ============================================================================ */
     function HomeFlagshipTemplate({ onNavigate }) {
       const [selectedTier, setSelectedTier] = useState('ALL');
@@ -825,7 +1563,7 @@
               </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.9rem', marginTop: '2.25rem' }}>
                 <InstitutionalLink
-                  to="/institution"
+                  to="/foundations/sovereign-identity"
                   onNavigate={onNavigate}
                   className="tvz-mono"
                   style={{
@@ -836,7 +1574,7 @@
                     fontWeight: 500
                   }}
                 >
-                  Read Institutional Charter
+                  Explore Foundation I: Sovereign Identity
                 </InstitutionalLink>
                 <InstitutionalLink
                   to="/gateway"
@@ -931,7 +1669,7 @@
                       key={tier}
                       type="button"
                       onClick={() => setSelectedTier(tier)}
-                      className="tvz-mono"
+                      className="tvz-mono tvz-focus-ring"
                       style={{
                         padding: '0.55rem 0.9rem',
                         cursor: 'pointer',
@@ -1083,7 +1821,7 @@
     }
 
     function FoundationDetailTemplate({ slug, onNavigate }) {
-      const foundation = FOUR_FOUNDATIONS.find((f) => f.id === slug) || FOUR_FOUNDATIONS[0];
+      const foundation = FOUR_FOUNDATIONS.find((f) => f.id === slug) || FOUR_FOUNDATIONS[1];
       const anchoredHorizons = ELEVEN_HORIZONS.filter(
         (h) => h.primaryFoundation === foundation.id || h.secondaryFoundations.includes(foundation.id)
       );
@@ -1395,7 +2133,7 @@
               </label>
               <button
                 type="submit"
-                className="tvz-mono"
+                className="tvz-mono tvz-focus-ring"
                 style={{ padding: '0.85rem 1.25rem', backgroundColor: 'var(--tvz-color-champagne)', color: 'var(--tvz-color-obsidian)', border: 'none', cursor: 'pointer', fontWeight: 500 }}
               >
                 Record Dispatch Interest
@@ -1531,7 +2269,7 @@
 
             <div className="tvz-hairline-t" style={{ paddingTop: '1.5rem', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '1rem', color: 'var(--tvz-color-ivory-muted)' }}>
               <span className="tvz-mono">© {new Date().getFullYear()} TOVENZA. Beyond Business. Built to Endure.</span>
-              <span className="tvz-mono">21 Canonical Routes • Milestone 02 (Phase 04)</span>
+              <span className="tvz-mono">21 Canonical Routes • Foundation I Complete</span>
             </div>
           </div>
         </footer>
@@ -1547,20 +2285,30 @@
     }
 
     function App() {
-      const [currentPath, setCurrentPath] = useState(() => normalizePathname(window.location.pathname));
+      const [currentPath, setCurrentPath] = useState(() => {
+        if (window.location.protocol === 'blob:' || window.location.origin === 'null') return '/';
+        return normalizePathname(window.location.pathname);
+      });
 
       const navigate = useCallback((to) => {
         const nextPath = normalizePathname(to);
-        if (window.location.pathname !== nextPath) {
+        if (
+          window.location.protocol !== 'blob:' &&
+          window.location.origin !== 'null' &&
+          window.location.pathname !== nextPath
+        ) {
           try {
             window.history.pushState({}, '', nextPath);
           } catch {}
         }
         setCurrentPath(nextPath);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        try {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch {}
       }, []);
 
       useEffect(() => {
+        if (window.location.protocol === 'blob:') return;
         const handlePopState = () => setCurrentPath(normalizePathname(window.location.pathname));
         window.addEventListener('popstate', handlePopState);
         return () => window.removeEventListener('popstate', handlePopState);
@@ -1568,11 +2316,23 @@
 
       const matchedRoute = ROUTE_REGISTRY.find((r) => r.path === currentPath);
 
+      useEffect(() => {
+        if (!matchedRoute || matchedRoute.path === '/') {
+          document.title = 'TOVENZA — Global Institutional Group';
+        } else if (matchedRoute.path === '/foundations/sovereign-identity') {
+          document.title = 'Sovereign Identity (Foundation I) — TOVENZA';
+        } else {
+          document.title = `${matchedRoute.title} — TOVENZA`;
+        }
+      }, [matchedRoute]);
+
       let activeView = null;
       if (!matchedRoute || matchedRoute.path === '/') {
         activeView = <HomeFlagshipTemplate onNavigate={navigate} />;
       } else if (matchedRoute.path === '/institution') {
         activeView = <EditorialEssayTemplate onNavigate={navigate} />;
+      } else if (matchedRoute.path === '/foundations/sovereign-identity') {
+        activeView = <SovereignIdentityTemplate onNavigate={navigate} />;
       } else if (matchedRoute.group === 'foundations') {
         activeView = <FoundationDetailTemplate slug={matchedRoute.slug} onNavigate={navigate} />;
       } else if (matchedRoute.group === 'horizons') {
