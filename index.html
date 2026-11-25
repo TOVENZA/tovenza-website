@@ -435,8 +435,8 @@
         primaryFoundation: 'architectural-authority',
         secondaryFoundations: ['sovereign-identity', 'global-ecosystem'],
         priorityTier: 'Medium-Term',
-        lifecycleStatus: 'Strategic Thesis',
-        summary: 'Applied institutional learning systems and structured capability transfer.'
+        lifecycleStatus: 'In Development',
+        summary: 'From learning to real capability: TOVENZA Learning Pathway discovery, skill-gap assessment, structured pathways, and practical assignments.'
       },
       {
         index: '10',
@@ -606,62 +606,888 @@
     }
 
     function saveRetailRequests(list) {
-      try {
-        window.localStorage.setItem(RETAIL_STORAGE_KEY, JSON.stringify(list));
-      } catch {}
+  try {
+    window.localStorage.setItem(RETAIL_STORAGE_KEY, JSON.stringify(list));
+  } catch {}
+}
+
+const EDUCATION_LEARNING_AREAS = Object.freeze([
+  'Career and Professional Skills',
+  'Business and Entrepreneurship',
+  'Technology and Digital Skills',
+  'Artificial Intelligence and Productivity',
+  'Communication and Leadership',
+  'Financial and Business Literacy',
+  'Critical Thinking and Problem Solving',
+  'Personal and Professional Development'
+]);
+
+const EDUCATION_JOURNEY_STAGES = Object.freeze([
+  'Discover',
+  'Understand',
+  'Register',
+  'Submit Learning Goal',
+  'Assessment',
+  'Learning Pathway',
+  'Practice',
+  'Progress Review',
+  'Completion',
+  'Next Step'
+]);
+
+const EDUCATION_REQUEST_STATUSES = Object.freeze([
+  'New Request',
+  'Under Review',
+  'Assessment in Progress',
+  'Learning Pathway in Preparation',
+  'Pathway Delivered',
+  'Awaiting Customer Feedback',
+  'Active Learning',
+  'Progress Review',
+  'Completed',
+  'Closed'
+]);
+
+const EDUCATION_STORAGE_KEY = 'tovenza_education_pathway_requests_v1';
+const EDUCATION_CONSOLE_PASSCODE = 'TVZ-EDU-2026';
+
+const SEED_EDUCATION_REQUESTS = Object.freeze([
+  {
+    requestId: 'TVZ-EDU-209412',
+    createdAt: '2026-11-25T09:15:00.000Z',
+    customerName: 'Sample Learner Entry (Masked)',
+    email: 'learner-sample@tovenza.in',
+    ageEligibility: '18+ Adult Learner',
+    guardianConsentNote: 'Not applicable (18+ adult self-consent)',
+    cityCountry: 'Gurugram, India',
+    background: 'Early-career analyst (2 years experience)',
+    learningArea: 'Artificial Intelligence and Productivity',
+    learningGoal: 'Build practical AI-assisted research and workflow habits with verifiable output rather than passive course completion.',
+    currentLevel: 'Foundational familiarity; inconsistent hands-on practice',
+    availableTime: '5–6 hours per week',
+    preferredFormat: 'Structured pathway + weekly practical assignments',
+    budgetRange: 'Exploratory / Pilot Scope',
+    additionalInfo: 'Prefer free or open-access reference sources first; no unverified certificates needed.',
+    consentGiven: true,
+    status: 'Pathway Delivered',
+    assessmentNotes: 'Sample pilot entry demonstrating structured pathway preparation and milestone tracking.',
+    learningPathway: {
+      objective: 'Turn AI and productivity tools into reliable, human-reviewed work outputs.',
+      expectedCapability: 'Scope prompts, verify outputs against primary sources, and document repeatable SOPs.',
+      startingLevel: 'Foundational / Inconsistent Practice',
+      modules: [
+        'Module 1: Problem Framing & Source Verification Hygiene',
+        'Module 2: Structured Drafting, Summarization & Error Checking',
+        'Module 3: Repeatable Personal & Team Workflow SOPs'
+      ],
+      resources: [
+        { title: 'NIST AI Risk Management Framework (Public Reference)', accessType: 'Free / Public', link: 'https://www.nist.gov/itl/ai-risk-management-framework' },
+        { title: 'Web.dev Performance & Accessibility Guides (Public Reference)', accessType: 'Free / Public', link: 'https://web.dev/' }
+      ],
+      practicalExercises: [
+        'Audit two real work tasks and log every factual or logical error caught during human review.',
+        'Build a one-page checklist separating verified facts from assumptions.'
+      ],
+      realWorldApplication: 'Deliver one complete, human-verified research brief or workflow template on a real work problem.',
+      timeEstimate: '3–4 weeks at 5–6 hours/week',
+      milestones: [
+        'Milestone 1 (Week 1): Baseline error log & source-check habit established',
+        'Milestone 2 (Week 2–3): Practical workflow tested on live task',
+        'Milestone 3 (Week 4): Completed practical assignment & self-review'
+      ],
+      assessmentMethod: 'Practical deliverable walkthrough and self-assessment rubric (no automated grading or formal accreditation).',
+      completionCriteria: 'Practical assignment completed and reviewed against stated learning objective.',
+      nextStep: 'Decide whether to deepen into a specialized domain module or transition into independent practice.'
+    },
+    feedbackNotes: 'Pathway delivered in pilot preview; awaiting real learner validation.',
+    serviceOutcome: 'In Pilot Preview'
+  }
+]);
+
+function generateUniqueEducationId(existingList = []) {
+  const existingIds = new Set(existingList.map((item) => item.requestId));
+  let candidate = '';
+  let attempts = 0;
+  do {
+    const randomNum = Math.floor(100000 + Math.random() * 900000);
+    candidate = `TVZ-EDU-${randomNum}`;
+    attempts += 1;
+  } while (existingIds.has(candidate) && attempts < 25);
+  return candidate;
+}
+
+function loadEducationRequests() {
+  try {
+    const raw = window.localStorage.getItem(EDUCATION_STORAGE_KEY);
+    if (!raw) return [...SEED_EDUCATION_REQUESTS];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed) || parsed.length === 0) return [...SEED_EDUCATION_REQUESTS];
+    return parsed;
+  } catch {
+    return [...SEED_EDUCATION_REQUESTS];
+  }
+}
+
+function saveEducationRequests(list) {
+  try {
+    window.localStorage.setItem(EDUCATION_STORAGE_KEY, JSON.stringify(list));
+  } catch {}
+}
+
+const CAPABILITY_SYSTEMS_CHARTER = Object.freeze({
+  ratified: false,
+  statusLabel: 'Pending Founder Ratification — Six Capability Systems Charter',
+  notice:
+    'The final names, definitions, and operational scope of the Six Institutional Capability Systems remain under founder review and are intentionally not fabricated.',
+  evaluationDimensions: [
+    'Institutional Purpose & Cross-Horizon Mandate',
+    'Core Operational Functions & Boundaries',
+    'Dependencies Across the Four Locked Foundations',
+    'Digital Application & Workspace Integration',
+    'Governance Controls, Compliance & Audit Trails'
+  ]
+});
+
+const ROUTE_REGISTRY = Object.freeze([
+  { index: '01', path: '/', group: 'core', title: 'Homepage', template: 'HomeFlagshipTemplate' },
+  { index: '02', path: '/institution', group: 'core', title: 'The Institution', template: 'EditorialEssayTemplate' },
+  ...FOUR_FOUNDATIONS.map((f, idx) => ({
+    index: String(idx + 3).padStart(2, '0'),
+    path: f.path,
+    group: 'foundations',
+    title: f.title,
+    template:
+      f.id === 'sovereign-identity'
+        ? 'SovereignIdentityTemplate'
+        : f.id === 'architectural-authority'
+        ? 'ArchitecturalAuthorityTemplate'
+        : f.id === 'financial-sophistication'
+        ? 'FinancialSophisticationTemplate'
+        : f.id === 'global-ecosystem'
+        ? 'GlobalEcosystemTemplate'
+        : 'FoundationDetailTemplate',
+    slug: f.id
+  })),
+  ...ELEVEN_HORIZONS.map((h, idx) => ({
+    index: String(idx + 7).padStart(2, '0'),
+    path: h.path,
+    group: 'horizons',
+    title: h.title,
+    template:
+      h.slug === 'retail'
+        ? 'RetailHorizonTemplate'
+        : h.slug === 'education-learning'
+        ? 'EducationLearningTemplate'
+        : 'HorizonBlueprintTemplate',
+    slug: h.slug
+  })),
+  { index: '18', path: '/capabilities', group: 'control', title: 'Six Capability Systems', template: 'CapabilityFrameworkTemplate' },
+  { index: '19', path: '/governance', group: 'control', title: 'Institutional Governance', template: 'GovernanceLedgerTemplate' },
+  { index: '20', path: '/gateway', group: 'control', title: 'Institutional Gateway', template: 'GatewayPortalTemplate' },
+  { index: '21', path: '/legal', group: 'control', title: 'Legal & Disclosures', template: 'LegalDocumentTemplate' }
+]);
+
+function EducationLearningTemplate({ onNavigate }) {
+  const [records, setRecords] = useState(() => loadEducationRequests());
+  const [activeTab, setActiveTab] = useState('learner'); // 'learner' | 'admin'
+  const [selectedId, setSelectedId] = useState(() => {
+    const init = loadEducationRequests();
+    return init[0] ? init[0].requestId : '';
+  });
+
+  // Learner Request Form State
+  const [customerName, setCustomerName] = useState('');
+  const [email, setEmail] = useState('');
+  const [ageEligibility, setAgeEligibility] = useState('18+ Adult Learner');
+  const [guardianConsentNote, setGuardianConsentNote] = useState('');
+  const [cityCountry, setCityCountry] = useState('');
+  const [background, setBackground] = useState('');
+  const [learningArea, setLearningArea] = useState(EDUCATION_LEARNING_AREAS[0]);
+  const [learningGoal, setLearningGoal] = useState('');
+  const [currentLevel, setCurrentLevel] = useState('Beginner / Exploring');
+  const [availableTime, setAvailableTime] = useState('4–6 hours per week');
+  const [preferredFormat, setPreferredFormat] = useState('Structured pathway + practical assignments');
+  const [budgetRange, setBudgetRange] = useState('Free / Exploratory Pilot');
+  const [additionalInfo, setAdditionalInfo] = useState('');
+  const [consentGiven, setConsentGiven] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [submittedId, setSubmittedId] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+
+  // Lookup & Learner Feedback
+  const [lookupInput, setLookupInput] = useState('');
+  const [lookupStatus, setLookupStatus] = useState('');
+  const [learnerFeedbackInput, setLearnerFeedbackInput] = useState('');
+
+  // Internal Admin Console State
+  const [adminUnlocked, setAdminUnlocked] = useState(false);
+  const [passcodeInput, setPasscodeInput] = useState('');
+  const [passcodeError, setPasscodeError] = useState('');
+  const [statusFilter, setStatusFilter] = useState('ALL');
+
+  // Pathway Builder State in Admin Console
+  const [pwObjective, setPwObjective] = useState('');
+  const [pwCapability, setPwCapability] = useState('');
+  const [pwModules, setPwModules] = useState('');
+  const [pwExercises, setPwExercises] = useState('');
+  const [pwAssignment, setPwAssignment] = useState('');
+  const [pwMilestones, setPwMilestones] = useState('');
+  const [pwCompletionCriteria, setPwCompletionCriteria] = useState('Practical assignment completed and reviewed against stated objective.');
+
+  useEffect(() => {
+    saveEducationRequests(records);
+  }, [records]);
+
+  const activeRecord = useMemo(() => {
+    if (!records.length) return null;
+    return records.find((r) => r.requestId === selectedId) || records[0];
+  }, [records, selectedId]);
+
+  const handleCreateRequest = (e) => {
+    e.preventDefault();
+    setErrorMsg('');
+    if (submitting) return;
+
+    const cleanName = customerName.trim();
+    const cleanEmail = email.trim();
+    const cleanGoal = learningGoal.trim();
+
+    if (!cleanName || !cleanEmail || !cleanEmail.includes('@')) {
+      setErrorMsg('Please enter your full name and a valid email address.');
+      return;
+    }
+    if (!cleanGoal || cleanGoal.length < 10) {
+      setErrorMsg('Please describe what you want to learn and achieve (at least 10 characters).');
+      return;
+    }
+    if (ageEligibility === 'Under 18 (Guardian Required)' && !guardianConsentNote.trim()) {
+      setErrorMsg('For under-18 requests, please provide parent/guardian contact & consent confirmation before submitting.');
+      return;
+    }
+    if (!consentGiven) {
+      setErrorMsg('Please confirm your privacy and service consent before submitting your learning request.');
+      return;
     }
 
-    const CAPABILITY_SYSTEMS_CHARTER = Object.freeze({
-      ratified: false,
-      statusLabel: 'Pending Founder Ratification — Six Capability Systems Charter',
-      notice:
-        'The final names, definitions, and operational scope of the Six Institutional Capability Systems remain under founder review and are intentionally not fabricated.',
-      evaluationDimensions: [
-        'Institutional Purpose & Cross-Horizon Mandate',
-        'Core Operational Functions & Boundaries',
-        'Dependencies Across the Four Locked Foundations',
-        'Digital Application & Workspace Integration',
-        'Governance Controls, Compliance & Audit Trails'
-      ]
+    const nowMs = Date.now();
+    const isDuplicate = records.some((item) => {
+      const sameEmail = item.email.trim().toLowerCase() === cleanEmail.toLowerCase();
+      const sameGoal = item.learningGoal.trim().toLowerCase() === cleanGoal.toLowerCase();
+      return sameEmail && sameGoal && nowMs - new Date(item.createdAt).getTime() < 120000;
     });
 
-    const ROUTE_REGISTRY = Object.freeze([
-      { index: '01', path: '/', group: 'core', title: 'Homepage', template: 'HomeFlagshipTemplate' },
-      { index: '02', path: '/institution', group: 'core', title: 'The Institution', template: 'EditorialEssayTemplate' },
-      ...FOUR_FOUNDATIONS.map((f, idx) => ({
-        index: String(idx + 3).padStart(2, '0'),
-        path: f.path,
-        group: 'foundations',
-        title: f.title,
-        template:
-          f.id === 'sovereign-identity'
-            ? 'SovereignIdentityTemplate'
-            : f.id === 'architectural-authority'
-            ? 'ArchitecturalAuthorityTemplate'
-            : f.id === 'financial-sophistication'
-            ? 'FinancialSophisticationTemplate'
-            : f.id === 'global-ecosystem'
-            ? 'GlobalEcosystemTemplate'
-            : 'FoundationDetailTemplate',
-        slug: f.id
-      })),
-      ...ELEVEN_HORIZONS.map((h, idx) => ({
-        index: String(idx + 7).padStart(2, '0'),
-        path: h.path,
-        group: 'horizons',
-        title: h.title,
-        template: h.slug === 'retail' ? 'RetailHorizonTemplate' : 'HorizonBlueprintTemplate',
-        slug: h.slug
-      })),
-      { index: '18', path: '/capabilities', group: 'control', title: 'Six Capability Systems', template: 'CapabilityFrameworkTemplate' },
-      { index: '19', path: '/governance', group: 'control', title: 'Institutional Governance', template: 'GovernanceLedgerTemplate' },
-      { index: '20', path: '/gateway', group: 'control', title: 'Institutional Gateway', template: 'GatewayPortalTemplate' },
-      { index: '21', path: '/legal', group: 'control', title: 'Legal & Disclosures', template: 'LegalDocumentTemplate' }
-    ]);
+    if (isDuplicate) {
+      setErrorMsg('Duplicate request detected within 2 minutes for the same email and learning goal.');
+      return;
+    }
 
-    /* ============================================================================
-       SHARED UI COMPONENTS
-       ============================================================================ */
+    setSubmitting(true);
+    const newId = generateUniqueEducationId(records);
+    const createdAt = new Date().toISOString();
+    const entry = {
+      requestId: newId,
+      createdAt,
+      customerName: cleanName,
+      email: cleanEmail,
+      ageEligibility,
+      guardianConsentNote: guardianConsentNote.trim() || 'Not applicable',
+      cityCountry: cityCountry.trim() || 'Not specified',
+      background: background.trim() || 'Not specified',
+      learningArea,
+      learningGoal: cleanGoal,
+      currentLevel,
+      availableTime,
+      preferredFormat,
+      budgetRange,
+      additionalInfo: additionalInfo.trim() || 'None',
+      consentGiven: true,
+      status: 'New Request',
+      assessmentNotes: '',
+      learningPathway: null,
+      feedbackNotes: '',
+      serviceOutcome: 'Logged — Awaiting Review'
+    };
+
+    setRecords((prev) => [entry, ...prev]);
+    setSelectedId(newId);
+    setSubmittedId(newId);
+    setLookupInput(newId);
+    setCustomerName('');
+    setEmail('');
+    setGuardianConsentNote('');
+    setCityCountry('');
+    setBackground('');
+    setLearningGoal('');
+    setAdditionalInfo('');
+    setConsentGiven(false);
+    setSubmitting(false);
+  };
+
+  const handleLookup = (e) => {
+    e.preventDefault();
+    const target = lookupInput.trim().toUpperCase();
+    if (!target) return;
+    const match = records.find((r) => r.requestId.toUpperCase() === target);
+    if (match) {
+      setSelectedId(match.requestId);
+      setLookupStatus(`Request ${match.requestId} found • Status: ${match.status}.`);
+    } else {
+      setLookupStatus(`No record found for "${target}" in current browser storage.`);
+    }
+  };
+
+  const handleSubmitLearnerFeedback = (e) => {
+    e.preventDefault();
+    if (!activeRecord || !learnerFeedbackInput.trim()) return;
+    const note = learnerFeedbackInput.trim();
+    setRecords((prev) =>
+      prev.map((r) =>
+        r.requestId === activeRecord.requestId
+          ? {
+              ...r,
+              feedbackNotes: r.feedbackNotes ? `${r.feedbackNotes} | ${note}` : note
+            }
+          : r
+      )
+    );
+    setLearnerFeedbackInput('');
+  };
+
+  const handleAdminUnlock = (e) => {
+    e.preventDefault();
+    if (passcodeInput.trim() === EDUCATION_CONSOLE_PASSCODE) {
+      setAdminUnlocked(true);
+      setPasscodeError('');
+      setPasscodeInput('');
+    } else {
+      setPasscodeError('Invalid pilot passcode. Internal education console remains locked.');
+    }
+  };
+
+  const handleUpdateRecord = (requestId, patch) => {
+    setRecords((prev) => prev.map((r) => (r.requestId === requestId ? { ...r, ...patch } : r)));
+  };
+
+  const handleSavePathway = (e) => {
+    e.preventDefault();
+    if (!activeRecord) return;
+    const pathwayObj = {
+      objective: pwObjective.trim() || activeRecord.learningGoal,
+      expectedCapability: pwCapability.trim() || 'Demonstrable practical skill application in real scenarios.',
+      startingLevel: activeRecord.currentLevel,
+      modules: pwModules
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean),
+      resources: [
+        { title: 'Verified Public / Open Learning Reference (Verify Access & Free/Paid Terms)', accessType: 'Verify Before Use', link: 'https://www.education.gov.in/' }
+      ],
+      practicalExercises: pwExercises
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean),
+      realWorldApplication: pwAssignment.trim() || 'Complete one applied task mapped to your learning goal.',
+      timeEstimate: activeRecord.availableTime,
+      milestones: pwMilestones
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean),
+      assessmentMethod: 'Practical output review and self-assessment checklist (non-accredited pilot).',
+      completionCriteria: pwCompletionCriteria.trim() || 'Practical assignment completed and reviewed.',
+      nextStep: 'Review progress and choose next capability step.'
+    };
+
+    handleUpdateRecord(activeRecord.requestId, {
+      learningPathway: pathwayObj,
+      status: 'Pathway Delivered'
+    });
+    setPwObjective('');
+    setPwCapability('');
+    setPwModules('');
+    setPwExercises('');
+    setPwAssignment('');
+    setPwMilestones('');
+  };
+
+  const filteredRecords = useMemo(() => {
+    if (statusFilter === 'ALL') return records;
+    return records.filter((r) => r.status === statusFilter);
+  }, [records, statusFilter]);
+
+  return (
+    <article aria-labelledby="education-horizon-heading">
+      {/* HERO & CENTRAL PHILOSOPHY */}
+      <section className="tvz-container" style={{ paddingBlock: 'clamp(3.5rem, 6.5vw, 5.5rem)' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', alignItems: 'center', marginBottom: '1.1rem' }}>
+          <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>
+            Horizon 09 of 11 • TOVENZA Education &amp; Learning
+          </span>
+          <LifecycleStatusBadge status="In Development" />
+          <span className="tvz-mono" style={{ fontSize: '0.56rem', color: 'var(--tvz-color-ivory-muted)' }}>
+            FROM LEARNING TO REAL CAPABILITY • NON-ACCREDITED PILOT
+          </span>
+        </div>
+
+        <h1 id="education-horizon-heading" className="tvz-display" style={{ fontSize: 'var(--tvz-text-hero)', margin: '0 0 0.8rem' }}>
+          TOVENZA Learning Pathway
+        </h1>
+        <p className="tvz-display" style={{ fontSize: 'clamp(1.25rem, 2vw, 1.65rem)', fontStyle: 'italic', color: 'var(--tvz-color-champagne-light)', margin: '0 0 1.15rem' }}>
+          “From learning to real capability.”
+        </p>
+        <p style={{ fontSize: 'var(--tvz-text-body)', color: 'var(--tvz-color-ivory-secondary)', maxWidth: '64ch', margin: '0 0 1.65rem' }}>
+          Rather than selling passive course lists or unverified certificates, TOVENZA Education &amp; Learning helps individuals clarify what to learn, assess current knowledge and gaps, follow a structured pathway, practise through real-world assignments, and measure genuine capability.
+        </p>
+
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem' }}>
+          <button
+            type="button"
+            onClick={() => setActiveTab('learner')}
+            className="tvz-mono tvz-focus-ring"
+            style={{
+              padding: '0.8rem 1.25rem',
+              cursor: 'pointer',
+              border: '1px solid var(--tvz-border-champagne)',
+              backgroundColor: activeTab === 'learner' ? 'var(--tvz-color-champagne)' : 'transparent',
+              color: activeTab === 'learner' ? 'var(--tvz-color-obsidian)' : 'var(--tvz-color-ivory)',
+              fontWeight: 500
+            }}
+          >
+            Learner Request &amp; Pathway View
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('admin')}
+            className="tvz-mono tvz-focus-ring"
+            style={{
+              padding: '0.8rem 1.25rem',
+              cursor: 'pointer',
+              border: '1px solid var(--tvz-border-champagne)',
+              backgroundColor: activeTab === 'admin' ? 'var(--tvz-color-champagne)' : 'transparent',
+              color: activeTab === 'admin' ? 'var(--tvz-color-obsidian)' : 'var(--tvz-color-champagne-light)'
+            }}
+          >
+            Internal Education Console ({records.length})
+          </button>
+        </div>
+      </section>
+
+      {/* 10-STEP CUSTOMER JOURNEY */}
+      <section className="tvz-hairline-t" style={{ paddingBlock: '2.25rem' }}>
+        <div className="tvz-container">
+          <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', marginBottom: '0.9rem' }}>
+            10-Step Learning-to-Capability Customer Journey
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(145px, 1fr))', gap: '0.5rem' }}>
+            {EDUCATION_JOURNEY_STAGES.map((step, idx) => (
+              <div key={step} className="tvz-monolith-card" style={{ padding: '0.75rem 0.85rem' }}>
+                <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.54rem' }}>
+                  0{idx + 1}
+                </div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--tvz-color-ivory)', marginTop: '0.2rem' }}>
+                  {step}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 8 EXPLORABLE LEARNING AREAS */}
+      <section className="tvz-hairline-t" style={{ paddingBlock: '2.5rem' }}>
+        <div className="tvz-container">
+          <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', marginBottom: '0.85rem' }}>
+            Proposed Learning Areas (Subject to Validation)
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '0.65rem' }}>
+            {EDUCATION_LEARNING_AREAS.map((area, i) => (
+              <button
+                key={area}
+                type="button"
+                onClick={() => {
+                  setLearningArea(area);
+                  setActiveTab('learner');
+                }}
+                className="tvz-monolith-card tvz-focus-ring"
+                style={{ padding: '1rem', textAlign: 'left', cursor: 'pointer', color: 'var(--tvz-color-ivory)' }}
+              >
+                <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.54rem' }}>
+                  Area 0{i + 1}
+                </div>
+                <div style={{ fontSize: '0.86rem', marginTop: '0.25rem' }}>{area}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {activeTab === 'learner' ? (
+        <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
+          <div className="tvz-container">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(310px, 1fr))', gap: '1.75rem', alignItems: 'start' }}>
+              {/* LEARNER PATHWAY REQUEST FORM */}
+              <form onSubmit={handleCreateRequest} className="tvz-monolith-card" style={{ padding: '2rem', display: 'grid', gap: '0.9rem' }} aria-label="TOVENZA Learning Pathway Request Form">
+                <div>
+                  <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem' }}>
+                    Step 03–04 • Submit Learning Goal
+                  </span>
+                  <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h2)', margin: '0.3rem 0 0.25rem' }}>
+                    Request a Learning Pathway
+                  </h2>
+                  <p style={{ fontSize: '0.82rem', color: 'var(--tvz-color-ivory-muted)', margin: 0 }}>
+                    Only essential fields are collected. No guaranteed employment or accredited degree/certification is claimed.
+                  </p>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '0.75rem' }}>
+                  <label style={{ display: 'grid', gap: '0.3rem', fontSize: '0.82rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                    <span>Full Name *</span>
+                    <input type="text" required value={customerName} onChange={(e) => setCustomerName(e.target.value)} placeholder="Your name" style={{ padding: '0.68rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)' }} />
+                  </label>
+                  <label style={{ display: 'grid', gap: '0.3rem', fontSize: '0.82rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                    <span>Email Address *</span>
+                    <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@domain.com" style={{ padding: '0.68rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)' }} />
+                  </label>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '0.75rem' }}>
+                  <label style={{ display: 'grid', gap: '0.3rem', fontSize: '0.82rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                    <span>Age Eligibility / Band</span>
+                    <select value={ageEligibility} onChange={(e) => setAgeEligibility(e.target.value)} style={{ padding: '0.68rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)' }}>
+                      <option value="18+ Adult Learner">18+ Adult Learner</option>
+                      <option value="Under 18 (Guardian Required)">Under 18 (Guardian Required)</option>
+                    </select>
+                  </label>
+                  <label style={{ display: 'grid', gap: '0.3rem', fontSize: '0.82rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                    <span>City &amp; Country</span>
+                    <input type="text" value={cityCountry} onChange={(e) => setCityCountry(e.target.value)} placeholder="e.g., Bengaluru, India" style={{ padding: '0.68rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)' }} />
+                  </label>
+                </div>
+
+                {ageEligibility === 'Under 18 (Guardian Required)' && (
+                  <label style={{ display: 'grid', gap: '0.3rem', fontSize: '0.82rem', color: 'var(--tvz-color-champagne-light)' }}>
+                    <span>Parent / Guardian Consent &amp; Contact Reference *</span>
+                    <input type="text" value={guardianConsentNote} onChange={(e) => setGuardianConsentNote(e.target.value)} placeholder="Guardian name, relationship & consent confirmation" style={{ padding: '0.68rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-champagne)', color: 'var(--tvz-color-ivory)' }} />
+                  </label>
+                )}
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '0.75rem' }}>
+                  <label style={{ display: 'grid', gap: '0.3rem', fontSize: '0.82rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                    <span>Current Background</span>
+                    <input type="text" value={background} onChange={(e) => setBackground(e.target.value)} placeholder="Student, fresher, working pro, founder..." style={{ padding: '0.68rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)' }} />
+                  </label>
+                  <label style={{ display: 'grid', gap: '0.3rem', fontSize: '0.82rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                    <span>Learning Area</span>
+                    <select value={learningArea} onChange={(e) => setLearningArea(e.target.value)} style={{ padding: '0.68rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)' }}>
+                      {EDUCATION_LEARNING_AREAS.map((area) => (
+                        <option key={area} value={area}>{area}</option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+
+                <label style={{ display: 'grid', gap: '0.3rem', fontSize: '0.82rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                  <span>What Do You Want to Learn &amp; Achieve? *</span>
+                  <textarea rows={2} required value={learningGoal} onChange={(e) => setLearningGoal(e.target.value)} placeholder="Explain your learning goal, why it matters now, and what practical capability you want..." style={{ padding: '0.68rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)', resize: 'vertical' }} />
+                </label>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '0.75rem' }}>
+                  <label style={{ display: 'grid', gap: '0.3rem', fontSize: '0.82rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                    <span>Current Level</span>
+                    <select value={currentLevel} onChange={(e) => setCurrentLevel(e.target.value)} style={{ padding: '0.68rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)' }}>
+                      <option value="Beginner / Exploring">Beginner / Exploring</option>
+                      <option value="Foundational familiarity">Foundational familiarity</option>
+                      <option value="Intermediate / Bridging gaps">Intermediate / Bridging gaps</option>
+                    </select>
+                  </label>
+                  <label style={{ display: 'grid', gap: '0.3rem', fontSize: '0.82rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                    <span>Available Time</span>
+                    <input type="text" value={availableTime} onChange={(e) => setAvailableTime(e.target.value)} placeholder="e.g., 5 hrs/week" style={{ padding: '0.68rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)' }} />
+                  </label>
+                  <label style={{ display: 'grid', gap: '0.3rem', fontSize: '0.82rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                    <span>Budget (If Applicable)</span>
+                    <input type="text" value={budgetRange} onChange={(e) => setBudgetRange(e.target.value)} placeholder="Free / Pilot / Budget" style={{ padding: '0.68rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)' }} />
+                  </label>
+                </div>
+
+                <label style={{ display: 'grid', gap: '0.3rem', fontSize: '0.82rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                  <span>Preferred Format &amp; Additional Context</span>
+                  <input type="text" value={additionalInfo} onChange={(e) => setAdditionalInfo(e.target.value)} placeholder="Format preference, deadlines, or helpful context..." style={{ padding: '0.68rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)' }} />
+                </label>
+
+                <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.55rem', fontSize: '0.79rem', color: 'var(--tvz-color-ivory-secondary)', cursor: 'pointer' }}>
+                  <input type="checkbox" checked={consentGiven} onChange={(e) => setConsentGiven(e.target.checked)} style={{ marginTop: '0.2rem' }} />
+                  <span>
+                    I consent to TOVENZA collecting and using these learning details solely to assess my learning goal and prepare a structured learning pathway under TOVENZA’s privacy terms.
+                  </span>
+                </label>
+
+                {errorMsg && (
+                  <p role="alert" style={{ margin: 0, fontSize: '0.83rem', color: 'var(--tvz-color-champagne-light)' }}>
+                    {errorMsg}
+                  </p>
+                )}
+
+                <button type="submit" disabled={submitting} className="tvz-mono tvz-focus-ring" style={{ padding: '0.88rem 1.3rem', backgroundColor: 'var(--tvz-color-champagne)', color: 'var(--tvz-color-obsidian)', border: 'none', cursor: 'pointer', fontWeight: 500 }}>
+                  {submitting ? 'Submitting Request...' : 'Submit Learning Pathway Request & Generate ID'}
+                </button>
+
+                {submittedId && (
+                  <div role="status" className="tvz-hairline-t" style={{ paddingTop: '0.85rem' }}>
+                    <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne-light)', fontSize: '0.58rem' }}>
+                      Submission Confirmed • Unique Reference ID
+                    </div>
+                    <p style={{ margin: '0.3rem 0 0', fontSize: '0.86rem', color: 'var(--tvz-color-ivory)' }}>
+                      Reference Number: <strong style={{ color: 'var(--tvz-color-champagne-light)' }}>{submittedId}</strong>. View your request status and pathway template on the right.
+                    </p>
+                  </div>
+                )}
+              </form>
+
+              {/* REFERENCE LOOKUP & STRUCTURED LEARNING PATHWAY VIEW */}
+              <div style={{ display: 'grid', gap: '1.25rem' }}>
+                <form onSubmit={handleLookup} className="tvz-monolith-card" style={{ padding: '1.5rem', display: 'grid', gap: '0.7rem' }}>
+                  <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem' }}>
+                    Track Request &amp; Pathway Reference
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                    <input type="text" value={lookupInput} onChange={(e) => setLookupInput(e.target.value)} placeholder="Enter Reference ID (e.g., TVZ-EDU-209412)" aria-label="Lookup Education Reference ID" style={{ flex: '1 1 200px', padding: '0.65rem 0.8rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)' }} />
+                    <button type="submit" className="tvz-mono tvz-focus-ring" style={{ padding: '0.65rem 1rem', backgroundColor: 'transparent', border: '1px solid var(--tvz-border-champagne)', color: 'var(--tvz-color-champagne)', cursor: 'pointer', fontSize: '0.58rem' }}>
+                      Find Request
+                    </button>
+                  </div>
+                  {lookupStatus && (
+                    <p role="status" style={{ margin: 0, fontSize: '0.8rem', color: 'var(--tvz-color-champagne-light)' }}>
+                      {lookupStatus}
+                    </p>
+                  )}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                    {records.slice(0, 4).map((r) => (
+                      <button key={r.requestId} type="button" onClick={() => setSelectedId(r.requestId)} className="tvz-mono tvz-focus-ring" style={{ padding: '0.35rem 0.6rem', fontSize: '0.54rem', cursor: 'pointer', border: '1px solid var(--tvz-border-hairline)', backgroundColor: activeRecord && activeRecord.requestId === r.requestId ? 'rgba(185,157,107,0.14)' : 'transparent', color: 'var(--tvz-color-ivory-secondary)' }}>
+                        {r.requestId} • {r.status}
+                      </button>
+                    ))}
+                  </div>
+                </form>
+
+                {activeRecord && (
+                  <div className="tvz-monolith-card" style={{ padding: '1.85rem', display: 'grid', gap: '1rem' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '0.5rem' }}>
+                      <div>
+                        <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem' }}>
+                          {activeRecord.requestId} • {activeRecord.learningArea}
+                        </span>
+                        <h3 className="tvz-display" style={{ fontSize: '1.45rem', margin: '0.25rem 0 0' }}>
+                          {activeRecord.learningGoal}
+                        </h3>
+                      </div>
+                      <span className="tvz-mono" style={{ padding: '0.3rem 0.65rem', border: '1px solid var(--tvz-border-champagne)', color: 'var(--tvz-color-champagne-light)', fontSize: '0.55rem' }}>
+                        {activeRecord.status}
+                      </span>
+                    </div>
+
+                    <div style={{ fontSize: '0.82rem', color: 'var(--tvz-color-ivory-secondary)', display: 'grid', gap: '0.25rem' }}>
+                      <div><strong style={{ color: 'var(--tvz-color-ivory)' }}>Starting Level:</strong> {activeRecord.currentLevel} • <strong style={{ color: 'var(--tvz-color-ivory)' }}>Time:</strong> {activeRecord.availableTime}</div>
+                      <div><strong style={{ color: 'var(--tvz-color-ivory)' }}>Eligibility:</strong> {activeRecord.ageEligibility}</div>
+                    </div>
+
+                    {activeRecord.learningPathway ? (
+                      <div className="tvz-hairline-t" style={{ paddingTop: '1rem', display: 'grid', gap: '0.55rem', fontSize: '0.83rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                        <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem' }}>
+                          Structured Learning Pathway Blueprint (10 Elements)
+                        </div>
+                        <div><strong style={{ color: 'var(--tvz-color-ivory)' }}>1. Learning Goal:</strong> {activeRecord.learningPathway.objective}</div>
+                        <div><strong style={{ color: 'var(--tvz-color-ivory)' }}>2–3. Capability &amp; Starting Level:</strong> {activeRecord.learningPathway.expectedCapability} ({activeRecord.learningPathway.startingLevel})</div>
+                        {activeRecord.learningPathway.modules && activeRecord.learningPathway.modules.length > 0 && (
+                          <div><strong style={{ color: 'var(--tvz-color-ivory)' }}>4. Learning Sequence:</strong> {activeRecord.learningPathway.modules.join(' → ')}</div>
+                        )}
+                        {activeRecord.learningPathway.resources && activeRecord.learningPathway.resources.length > 0 && (
+                          <div>
+                            <strong style={{ color: 'var(--tvz-color-ivory)' }}>5. Curated Resources:</strong>{' '}
+                            {activeRecord.learningPathway.resources.map((res, idx) => (
+                              <span key={res.link + idx}>
+                                {idx > 0 ? '; ' : ''}
+                                <a href={res.link} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--tvz-color-champagne)' }}>
+                                  {res.title} ({res.accessType}) ↗
+                                </a>
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        {activeRecord.learningPathway.practicalExercises && activeRecord.learningPathway.practicalExercises.length > 0 && (
+                          <div><strong style={{ color: 'var(--tvz-color-ivory)' }}>6. Practical Exercises:</strong> {activeRecord.learningPathway.practicalExercises.join(' • ')}</div>
+                        )}
+                        <div><strong style={{ color: 'var(--tvz-color-ivory)' }}>7. Real-World Assignment:</strong> {activeRecord.learningPathway.realWorldApplication}</div>
+                        {activeRecord.learningPathway.milestones && activeRecord.learningPathway.milestones.length > 0 && (
+                          <div><strong style={{ color: 'var(--tvz-color-ivory)' }}>8. Progress Milestones:</strong> {activeRecord.learningPathway.milestones.join(' | ')}</div>
+                        )}
+                        <div><strong style={{ color: 'var(--tvz-color-ivory)' }}>9. Assessment &amp; Completion:</strong> {activeRecord.learningPathway.assessmentMethod} — {activeRecord.learningPathway.completionCriteria}</div>
+                        <div><strong style={{ color: 'var(--tvz-color-ivory)' }}>10. Next Recommended Step:</strong> {activeRecord.learningPathway.nextStep}</div>
+                      </div>
+                    ) : (
+                      <p style={{ fontSize: '0.84rem', color: 'var(--tvz-color-ivory-muted)', margin: 0 }}>
+                        Pathway not yet attached to this request. Once prepared in the internal console, all 10 pathway elements appear here.
+                      </p>
+                    )}
+
+                    <form onSubmit={handleSubmitLearnerFeedback} className="tvz-hairline-t" style={{ paddingTop: '0.9rem', display: 'grid', gap: '0.55rem' }}>
+                      <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.56rem' }}>
+                        Learner Feedback &amp; Progress Note
+                      </div>
+                      <input type="text" value={learnerFeedbackInput} onChange={(e) => setLearnerFeedbackInput(e.target.value)} placeholder="Share feedback, practice progress, or questions..." aria-label="Learner feedback note" style={{ padding: '0.62rem 0.75rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)', fontSize: '0.82rem' }} />
+                      <button type="submit" className="tvz-mono tvz-focus-ring" style={{ padding: '0.58rem 0.9rem', backgroundColor: 'transparent', border: '1px solid var(--tvz-border-champagne)', color: 'var(--tvz-color-champagne)', cursor: 'pointer', fontSize: '0.56rem', alignSelf: 'flex-start' }}>
+                        Save Feedback Note
+                      </button>
+                      {activeRecord.feedbackNotes && (
+                        <div style={{ fontSize: '0.8rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                          <strong>Recorded Feedback:</strong> {activeRecord.feedbackNotes}
+                        </div>
+                      )}
+                    </form>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : (
+        /* INTERNAL EDUCATION OPERATING SYSTEM CONSOLE */
+        <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
+          <div className="tvz-container">
+            {!adminUnlocked ? (
+              <form onSubmit={handleAdminUnlock} className="tvz-monolith-card" style={{ padding: '2.25rem', maxWidth: '34rem', display: 'grid', gap: '1rem' }}>
+                <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem' }}>
+                  Internal Education Operating Console (Pilot Access Gate)
+                </span>
+                <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h2)', margin: 0 }}>
+                  Unlock Education Operations
+                </h2>
+                <p style={{ fontSize: '0.84rem', color: 'var(--tvz-color-ivory-secondary)', margin: 0 }}>
+                  Enter internal pilot passcode (<code style={{ color: 'var(--tvz-color-champagne-light)' }}>{EDUCATION_CONSOLE_PASSCODE}</code>) to review requests, update status across the 10 workflow stages, and attach structured learning pathways. Move authentication and storage to a server backend before multi-user production.
+                </p>
+                <input type="password" value={passcodeInput} onChange={(e) => setPasscodeInput(e.target.value)} placeholder="Enter internal pilot passcode" aria-label="Education admin passcode" style={{ padding: '0.72rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)' }} />
+                {passcodeError && (
+                  <p role="alert" style={{ margin: 0, fontSize: '0.82rem', color: 'var(--tvz-color-champagne-light)' }}>
+                    {passcodeError}
+                  </p>
+                )}
+                <button type="submit" className="tvz-mono tvz-focus-ring" style={{ padding: '0.8rem 1.2rem', backgroundColor: 'var(--tvz-color-champagne)', color: 'var(--tvz-color-obsidian)', border: 'none', cursor: 'pointer', fontWeight: 500 }}>
+                  Open Education Console
+                </button>
+              </form>
+            ) : (
+              <div style={{ display: 'grid', gap: '1.5rem' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
+                  <div>
+                    <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem' }}>
+                      Internal Workflow &amp; Pathway Delivery
+                    </span>
+                    <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h2)', margin: '0.25rem 0 0' }}>
+                      Learner Requests ({filteredRecords.length})
+                    </h2>
+                  </div>
+                  <button type="button" onClick={() => setAdminUnlocked(false)} className="tvz-mono tvz-focus-ring" style={{ padding: '0.55rem 0.9rem', backgroundColor: 'transparent', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory-muted)', cursor: 'pointer', fontSize: '0.56rem' }}>
+                    Lock Console
+                  </button>
+                </div>
+
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                  {['ALL', ...EDUCATION_REQUEST_STATUSES].map((st) => (
+                    <button key={st} type="button" onClick={() => setStatusFilter(st)} className="tvz-mono tvz-focus-ring" style={{ padding: '0.42rem 0.65rem', fontSize: '0.53rem', cursor: 'pointer', border: '1px solid var(--tvz-border-champagne)', backgroundColor: statusFilter === st ? 'var(--tvz-color-champagne)' : 'transparent', color: statusFilter === st ? 'var(--tvz-color-obsidian)' : 'var(--tvz-color-ivory-secondary)' }}>
+                      {st}
+                    </button>
+                  ))}
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', alignItems: 'start' }}>
+                  <div style={{ display: 'grid', gap: '0.75rem' }}>
+                    {filteredRecords.map((rec) => (
+                      <button key={rec.requestId} type="button" onClick={() => setSelectedId(rec.requestId)} className="tvz-monolith-card tvz-focus-ring" style={{ padding: '1.2rem', textAlign: 'left', cursor: 'pointer', borderColor: activeRecord && activeRecord.requestId === rec.requestId ? 'var(--tvz-color-champagne)' : undefined }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem' }}>
+                          <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.56rem' }}>{rec.requestId}</span>
+                          <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne-light)', fontSize: '0.53rem' }}>{rec.status}</span>
+                        </div>
+                        <div style={{ color: 'var(--tvz-color-ivory)', fontSize: '0.9rem', margin: '0.3rem 0' }}>{rec.learningGoal}</div>
+                        <div style={{ fontSize: '0.78rem', color: 'var(--tvz-color-ivory-muted)' }}>{rec.learningArea} • {rec.ageEligibility}</div>
+                      </button>
+                    ))}
+                  </div>
+
+                  {activeRecord && (
+                    <div className="tvz-monolith-card" style={{ padding: '1.8rem', display: 'grid', gap: '0.9rem' }}>
+                      <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem' }}>
+                        Managing {activeRecord.requestId} • {activeRecord.customerName} ({activeRecord.email})
+                      </div>
+
+                      <label style={{ display: 'grid', gap: '0.3rem', fontSize: '0.82rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                        <span>Workflow Status</span>
+                        <select value={activeRecord.status} onChange={(e) => handleUpdateRecord(activeRecord.requestId, { status: e.target.value })} style={{ padding: '0.62rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)' }}>
+                          {EDUCATION_REQUEST_STATUSES.map((st) => (
+                            <option key={st} value={st}>{st}</option>
+                          ))}
+                        </select>
+                      </label>
+
+                      <label style={{ display: 'grid', gap: '0.3rem', fontSize: '0.82rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                        <span>Assessment &amp; Gap Notes</span>
+                        <textarea rows={2} value={activeRecord.assessmentNotes || ''} onChange={(e) => handleUpdateRecord(activeRecord.requestId, { assessmentNotes: e.target.value })} placeholder="Current capability gaps, time feasibility, and notes..." style={{ padding: '0.62rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)' }} />
+                      </label>
+
+                      <form onSubmit={handleSavePathway} className="tvz-hairline-t" style={{ paddingTop: '0.9rem', display: 'grid', gap: '0.6rem' }}>
+                        <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.56rem' }}>
+                          Prepare &amp; Deliver Learning Pathway
+                        </div>
+                        <input type="text" value={pwObjective} onChange={(e) => setPwObjective(e.target.value)} placeholder="Learning Objective" style={{ padding: '0.58rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)', fontSize: '0.8rem' }} />
+                        <input type="text" value={pwCapability} onChange={(e) => setPwCapability(e.target.value)} placeholder="Expected Capability Outcome" style={{ padding: '0.58rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)', fontSize: '0.8rem' }} />
+                        <input type="text" value={pwModules} onChange={(e) => setPwModules(e.target.value)} placeholder="Modules (comma-separated)" style={{ padding: '0.58rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)', fontSize: '0.8rem' }} />
+                        <input type="text" value={pwExercises} onChange={(e) => setPwExercises(e.target.value)} placeholder="Practical Exercises (comma-separated)" style={{ padding: '0.58rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)', fontSize: '0.8rem' }} />
+                        <input type="text" value={pwAssignment} onChange={(e) => setPwAssignment(e.target.value)} placeholder="Real-World Assignment" style={{ padding: '0.58rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)', fontSize: '0.8rem' }} />
+                        <input type="text" value={pwMilestones} onChange={(e) => setPwMilestones(e.target.value)} placeholder="Milestones (comma-separated)" style={{ padding: '0.58rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)', fontSize: '0.8rem' }} />
+                        <button type="submit" className="tvz-mono tvz-focus-ring" style={{ padding: '0.68rem 1rem', backgroundColor: 'var(--tvz-color-champagne)', color: 'var(--tvz-color-obsidian)', border: 'none', cursor: 'pointer', fontSize: '0.56rem', fontWeight: 500 }}>
+                          Attach Pathway &amp; Mark Delivered
+                        </button>
+                      </form>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* FAQ, SAFEGUARDING & SERVICE BOUNDARIES */}
+      <section className="tvz-hairline-t" style={{ paddingBlock: '3rem' }}>
+        <div className="tvz-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.15rem' }}>
+          <div className="tvz-monolith-card" style={{ padding: '1.5rem' }}>
+            <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.56rem' }}>Non-Accredited &amp; No Job Guarantee</div>
+            <p style={{ fontSize: '0.83rem', color: 'var(--tvz-color-ivory-secondary)', margin: '0.5rem 0 0' }}>
+              TOVENZA Learning Pathway provides structured learning guidance and practical exercises—not an accredited degree, formal certification, or guaranteed job placement.
+            </p>
+          </div>
+          <div className="tvz-monolith-card" style={{ padding: '1.5rem' }}>
+            <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.56rem' }}>Age, Guardian &amp; Privacy Notice</div>
+            <p style={{ fontSize: '0.83rem', color: 'var(--tvz-color-ivory-secondary)', margin: '0.5rem 0 0' }}>
+              Any request involving minors (under 18) requires explicit parent/guardian consent and safeguarding review before processing; records in this pilot use browser storage until server persistence is connected.
+            </p>
+          </div>
+          <div className="tvz-monolith-card" style={{ padding: '1.5rem' }}>
+            <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.56rem' }}>Support &amp; Governance</div>
+            <p style={{ fontSize: '0.83rem', color: 'var(--tvz-color-ivory-secondary)', margin: '0.5rem 0 0.75rem' }}>
+              Review full institutional boundaries and privacy disclosures before sharing details.
+            </p>
+            <InstitutionalLink to="/legal" onNavigate={onNavigate} className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', textDecoration: 'none', fontSize: '0.56rem' }}>
+              Open Legal &amp; Privacy Disclosures →
+            </InstitutionalLink>
+          </div>
+        </div>
+      </section>
+    </article>
+  );
+}
+
+/* ============================================================================
+   REMAINING REUSABLE PAGE TEMPLATES FOR ALL 21 CANONICAL ROUTES
+   ============================================================================ */
     class InstitutionalErrorBoundary extends Component {
       constructor(props) {
         super(props);
@@ -3183,6 +4009,8 @@
           document.title = 'Global Ecosystem (Foundation IV) — TOVENZA';
         } else if (matchedRoute.path === '/horizons/retail') {
           document.title = 'TOVENZA Product Discovery & Buying Assistance — TOVENZA';
+        } else if (matchedRoute.path === '/horizons/education-learning') {
+          document.title = 'TOVENZA Learning Pathway (Education & Learning) — TOVENZA';
         } else {
           document.title = `${matchedRoute.title} — TOVENZA`;
         }
@@ -3203,6 +4031,8 @@
         activeView = <GlobalEcosystemTemplate onNavigate={navigate} />;
       } else if (matchedRoute.path === '/horizons/retail') {
         activeView = <RetailHorizonTemplate onNavigate={navigate} />;
+      } else if (matchedRoute.path === '/horizons/education-learning') {
+        activeView = <EducationLearningTemplate onNavigate={navigate} />;
       } else if (matchedRoute.group === 'foundations') {
         activeView = <FoundationDetailTemplate slug={matchedRoute.slug} onNavigate={navigate} />;
       } else if (matchedRoute.group === 'horizons') {
