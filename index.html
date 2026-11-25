@@ -346,6 +346,403 @@
       ]
     });
 
+    const ARCHITECTURAL_AUTHORITY_SPEC = Object.freeze({
+      classificationNotice:
+        'Approved architectural directions (Hybrid Institutional Group, India-origin global vision, Founder reserve authority preference, and TOVENZA CAREER as inaugural initiative) are explicitly separated from proposed enterprise frameworks and pre-incorporation design hypotheses.',
+      overviewMetrics: [
+        { code: 'PILLARS', value: '08', label: 'Core Architectural Domains' },
+        { code: 'HORIZONS', value: '11', label: 'Governed Industry Tracks' },
+        { code: 'GATES', value: '06', label: 'Stage-Gate Validation Controls' },
+        { code: 'POSTURE', value: 'HYBRID', label: 'Central Oversight + Unit Autonomy' }
+      ],
+      eightPillars: [
+        {
+          index: '01',
+          id: 'institutional-architecture',
+          title: 'Institutional Architecture',
+          purpose:
+            'Defines the structural hierarchy separating TOVENZA’s permanent institutional core from operating divisions, future subsidiaries, joint ventures, and intellectual property holdings.',
+          principles: [
+            'Institutional vision is structurally separated from legally established corporate entities until incorporation triggers occur.',
+            'Core brand identity, constitutional rules, and shared IP remain anchored at the center rather than fragmented across operating units.'
+          ],
+          components: [
+            'Parent Institutional Core (TOVENZA GROUP)',
+            'Four Permanent Foundations & Pending Capability Systems',
+            'Ring-fenced Operating Divisions, Subsidiaries & Joint Ventures'
+          ],
+          responsibilities: 'Maintains group structural integrity, entity classification boundaries, and cross-horizon coherence.',
+          connections: 'Anchors Governance (03) and Business Architecture (04); sets structural boundaries for Scalability (08).',
+          implementationRequirements: 'Formalize corporate structure with Indian legal and CA counsel only when commercial, contracting, or regulatory triggers require entity registration.',
+          maturityCurrent: 'Architectural blueprint defined in pre-incorporation validation; zero corporate subsidiaries incorporated yet.',
+          maturityFuture: 'India-headquartered parent entity stewarding compliant domestic and international operating branches.'
+        },
+        {
+          index: '02',
+          id: 'operating-architecture',
+          title: 'Operating Architecture',
+          purpose:
+            'Establishes how work actually gets done—converting strategic intent into repeatable workflows, service delivery standards, and shared institutional services without early-stage bureaucracy.',
+          principles: [
+            'Build architecture broadly, launch services narrowly, and formalize repeatable workflows before automating.',
+            'Operating branches execute day-to-day commercial delivery independently within clear institutional standards.'
+          ],
+          components: [
+            'Standard Operating Procedures (SOPs) & Delivery Playbooks',
+            'Shared Institutional Services (Research, Design System, Core Tech)',
+            'Branch Operating Charters & Quality Checklists'
+          ],
+          responsibilities: 'Ensures consistent execution quality across TOVENZA CAREER and future branches while preventing duplicated back-office overhead.',
+          connections: 'Operationalizes Business Architecture (04) and Intelligence/Tech (05, 07) under Risk & Control (06).',
+          implementationRequirements: 'Document manual delivery playbooks during first 10–20 TOVENZA CAREER engagements before building heavy operational software.',
+          maturityCurrent: 'Founder-led lean validation workflows and documented intake/delivery checklists.',
+          maturityFuture: 'Autonomous business-unit leaders running standardized operating playbooks backed by shared group infrastructure.'
+        },
+        {
+          index: '03',
+          id: 'governance-architecture',
+          title: 'Governance Architecture',
+          purpose:
+            'Codifies decision-making authority, approval hierarchies, Stage-Gate progression, and Founder reserve powers so growth never outruns accountability.',
+          principles: [
+            'Clear distinction between Central Institutional Authority (reserved strategic/capital/risk powers) and Operating Business Authority (delegated execution).',
+            'No horizon advances to commercial launch or capital commitment without passing sequential Stage-Gate validation.'
+          ],
+          components: [
+            'Founder Reserve Authority & Constitutional Charter',
+            'Six-Gate Stage-Gate System (Gates 0 through 5)',
+            'Delegation of Authority Matrix & Operating Charters'
+          ],
+          responsibilities: 'Prevents premature multi-horizon launches, unauthorized liabilities, and unverified public claims.',
+          connections: 'Governs all seven other pillars; enforces Risk & Control (06) and Capital Discipline.',
+          implementationRequirements: 'Translate internal charter provisions into legally enforceable MoA/AoA, Board Charters, and Shareholder Agreements upon entity incorporation.',
+          maturityCurrent: 'Internal governance charter and Stage-Gate rules active under direct Founder stewardship.',
+          maturityFuture: 'Multi-tier institutional governance with formal boards, audit committees, and delegated unit leadership.'
+        },
+        {
+          index: '04',
+          id: 'business-architecture',
+          title: 'Business Architecture',
+          purpose:
+            'Organizes how TOVENZA creates, delivers, and captures sustainable value across its Eleven Strategic Horizons—starting with TOVENZA CAREER—while preserving industry-specific independence.',
+          principles: [
+            'Sequence horizons by capital intensity, regulatory complexity, and speed of empirical validation.',
+            'Connect complementary horizons through shared intelligence without forcing artificial cross-selling.'
+          ],
+          components: [
+            'Inaugural Active Branch: TOVENZA CAREER (Horizon 01)',
+            'Near-Term Enablers: Technology/AI (05) & Business Consulting (06)',
+            'Phased Medium- & Long-Term Industry Portfolio (Horizons 02–04, 07–11)'
+          ],
+          responsibilities: 'Defines customer segments, value ladders (free utility -> human clinics -> productized benchmarks), and unit-economic thresholds.',
+          connections: 'Feeds Operating Architecture (02) and Intelligence (05); constrained by Risk & Control (06).',
+          implementationRequirements: 'Complete customer discovery and paid pilot validation in TOVENZA CAREER before activating secondary commercial horizons.',
+          maturityCurrent: 'TOVENZA CAREER in structured validation; remaining 10 horizons maintained as research/thesis tracks.',
+          maturityFuture: 'Diversified portfolio of self-sustaining operating businesses across domestic and global markets.'
+        },
+        {
+          index: '05',
+          id: 'intelligence-architecture',
+          title: 'Intelligence Architecture',
+          purpose:
+            'Establishes TOVENZA’s permanent Central Intelligence capability—capturing market research, domain benchmarks, decision models, and institutional knowledge so learning compounds across branches.',
+          principles: [
+            'Every client engagement, market study, and pilot outcome enriches a structured, privacy-safe institutional knowledge base.',
+            'Human judgment remains sovereign; intelligence systems inform decisions rather than issuing autonomous verdicts.'
+          ],
+          components: [
+            'Central Intelligence Research & Benchmark Repository',
+            'Role, Compensation & Decision-Math Frameworks',
+            'Cross-Horizon Analytical Playbooks & Outcome Ledgers'
+          ],
+          responsibilities: 'Eliminates institutional amnesia, powers deterministic calculators, and guides horizon prioritization.',
+          connections: 'Implemented via Technology Architecture (07); informs Business (04) and Governance (03).',
+          implementationRequirements: 'Maintain structured, anonymized benchmark sheets and decision templates from Day 1; automate only verified patterns.',
+          maturityCurrent: 'Structured research dossiers, compensation/offer models, and architectural documentation.',
+          maturityFuture: 'Proprietary multi-industry intelligence engine supporting decision workflows across all active branches.'
+        },
+        {
+          index: '06',
+          id: 'risk-control-architecture',
+          title: 'Risk & Control Architecture',
+          purpose:
+            'Protects institutional solvency, legal compliance, data privacy, and brand trust through preventive guardrails, liability isolation, and periodic review.',
+          principles: [
+            'Consent-first data governance aligned with India’s DPDP Act principles—strict separation of private user vaults from shareable records.',
+            'Separate legal vehicles isolate operational risks where justified, while recognizing that corporate separateness requires strict governance hygiene.'
+          ],
+          components: [
+            'DPDP Privacy & Consent Controls + Non-Guarantee Disclosures',
+            'Trigger-Based Legal/Tax/Regulatory Gateways',
+            'Risk Registers, Financial Controls & Internal Audit Checklists'
+          ],
+          responsibilities: 'Blocks unconsented data sharing, unlicensed regulated activities, and unhedged financial commitments.',
+          connections: 'Enforces boundaries across Operating (02), Business (04), Technology (07), and Scalability (08).',
+          implementationRequirements: 'Obtain qualified Indian legal, tax, and regulatory review before entering regulated sectors or cross-border entity commitments.',
+          maturityCurrent: 'Pre-incorporation epistemic disclosures, non-claim guardrails, and local-storage privacy posture.',
+          maturityFuture: 'Formal internal audit, statutory compliance calendars, ISO/SOC security controls, and ring-fenced entity governance.'
+        },
+        {
+          index: '07',
+          id: 'technology-architecture',
+          title: 'Technology Architecture',
+          purpose:
+            'Provides the unified digital foundation, design system, security controls, and modular software primitives powering TOVENZA’s public flagship and future operational workspaces.',
+          principles: [
+            'Obsidian Sovereignty design token consistency, high performance, accessibility, and graceful fallbacks.',
+            'Modular three-level progression: Level 1 Public Flagship -> Level 2 Authorized Workspaces -> Level 3 Institutional Admin.'
+          ],
+          components: [
+            'Unified Web Flagship & Reusable Page/Data Architecture',
+            'Deterministic Decision Calculators & Intake Workflows',
+            'Future Authenticated Workspaces, APIs & Security Controls'
+          ],
+          responsibilities: 'Delivers reliable, low-maintenance digital infrastructure without premature backend bloat.',
+          connections: 'Hosts Intelligence Architecture (05); enforces Risk & Control (06) technical safeguards.',
+          implementationRequirements: 'Consolidate clean Vite build, wire consent-checked inquiry capture, and defer heavy database/auth layers until pilot traction.',
+          maturityCurrent: 'Level 1 Public Institutional Flagship live with modular data registry and interactive components.',
+          maturityFuture: 'Interoperable multi-branch digital platform with role-based access, encrypted user vaults, and AI-assisted workflows.'
+        },
+        {
+          index: '08',
+          id: 'scalability-architecture',
+          title: 'Scalability Architecture',
+          purpose:
+            'Enables TOVENZA to expand across new industries, larger teams, and international jurisdictions from its India headquarters without breaking governance or brand coherence.',
+          principles: [
+            'Replicate proven templates (charters, design tokens, risk controls, intelligence schemas) rather than reinventing structures per branch.',
+            'International expansion follows evidence-based stages from cross-border digital delivery to local partnerships and entities.'
+          ],
+          components: [
+            'Modular Branch Replication Blueprint',
+            'Progressive Cross-Border Expansion Stages (Discovery -> Pilot -> Authorized Entry)',
+            'Leadership Succession & Continuity Protocols'
+          ],
+          responsibilities: 'Ensures smooth transition from Founder-led validation to multi-leader, multi-country institutional scale.',
+          connections: 'Integrates Institutional (01), Operating (02), Governance (03), and Technology (07) architectures.',
+          implementationRequirements: 'Validate unit economics and repeatable playbooks in India first; execute jurisdictional legal/tax assessment prior to foreign entry.',
+          maturityCurrent: 'Scalable modular architecture designed into foundational blueprints; operations focused on initial validation.',
+          maturityFuture: 'India-headquartered global institutional group operating across multiple geographies and industry verticals.'
+        }
+      ],
+      groupLayers: [
+        {
+          tier: 'Layer 01 • Central Core',
+          name: 'TOVENZA GROUP (Parent Institutional Core)',
+          status: 'Founder-Approved Direction (Pre-Incorporation)',
+          role: 'Holds constitutional governance, Obsidian Sovereignty brand custody, central capital allocation principles, and shared intelligence standards. Intended HQ: India.',
+          autonomyBoundary: 'Retains reserve authority over strategy, brand, risk thresholds, and new branch/entity approvals.'
+        },
+        {
+          tier: 'Layer 02 • Shared Spine',
+          name: 'Central Intelligence & Shared Infrastructure',
+          status: 'Proposed Permanent Capability',
+          role: 'Provides research repositories, compensation/decision models, design tokens, cybersecurity standards, and reusable software modules across all branches.',
+          autonomyBoundary: 'Supports branches as a shared backbone without taking over daily customer sales or industry delivery.'
+        },
+        {
+          tier: 'Layer 03 • Active Inaugural Branch',
+          name: 'TOVENZA CAREER (Horizon 01 Initiative)',
+          status: 'First Practical Initiative (In Validation)',
+          role: 'Focuses on adult career clarity, offer/compensation positioning, and consent-first hiring calibration as the inaugural commercial proving ground.',
+          autonomyBoundary: 'Executes day-to-day client/candidate workflows within TOVENZA’s ethical, privacy, and non-guarantee boundaries.'
+        },
+        {
+          tier: 'Layer 04 • Future Branches & Vehicles',
+          name: 'Future Operating Divisions, Subsidiaries & Joint Ventures',
+          status: 'Future Stage-Gate Vehicles (Not Yet Incorporated)',
+          role: 'Separate entities or divisions established only when specific horizons pass Stage-Gate validation and require statutory licensing, risk ring-fencing, or local foreign registration.',
+          autonomyBoundary: 'Independent operational management under an approved Operating Business Charter and periodic performance review.'
+        }
+      ],
+      horizonIntegrationModel: [
+        {
+          index: '01',
+          title: 'Recruitment & HR / Human Capital',
+          track: 'Track A • Inaugural Practical Initiative (TOVENZA CAREER)',
+          status: 'In Development',
+          boundary: 'Adult (18+) consent-first career positioning and selective employer hiring calibration; strict DPDP data separation and non-guarantee disclosures.'
+        },
+        {
+          index: '02',
+          title: 'Healthcare & Diagnostics',
+          track: 'Track C • Long-Term Regulated Horizon',
+          status: 'Research',
+          boundary: 'Requires dedicated clinical governance, medical/diagnostic statutory licensing, and strict patient data isolation before any operational activity.'
+        },
+        {
+          index: '03',
+          title: 'Hospitality',
+          track: 'Track C • Long-Term Asset & Service Horizon',
+          status: 'Research',
+          boundary: 'High physical capital intensity and municipal/hospitality licensing; separated into dedicated asset/operating vehicles when pursued.'
+        },
+        {
+          index: '04',
+          title: 'Real Estate & Property',
+          track: 'Track C • Long-Term Capital-Intensive Horizon',
+          status: 'Research',
+          boundary: 'Subject to RERA and jurisdictional property regulations; requires ring-fenced project entities and disciplined underwriting.'
+        },
+        {
+          index: '05',
+          title: 'Technology, AI & Software',
+          track: 'Track A • Core Digital & Intelligence Enabler',
+          status: 'In Development',
+          boundary: 'Powers internal decision tools and modular platforms under human-in-the-loop AI accountability and centralized IP custody.'
+        },
+        {
+          index: '06',
+          title: 'Business Consulting',
+          track: 'Track A • Near-Term Advisory Synergy',
+          status: 'In Development',
+          boundary: 'Structured operator and organizational advisory clearly separated from regulated SEBI investment or statutory legal/tax practice.'
+        },
+        {
+          index: '07',
+          title: 'Psychology & Wellbeing',
+          track: 'Track B • Medium-Term Human Potential Horizon',
+          status: 'Strategic Thesis',
+          boundary: 'Strict separation between non-clinical behavioral/performance coaching and licensed clinical psychiatric/psychological care.'
+        },
+        {
+          index: '08',
+          title: 'Astrology & Jyotish Sciences',
+          track: 'Track B • Medium-Term Cultural & Temporal Research',
+          status: 'In Development',
+          boundary: 'Framed strictly as traditional/cultural temporal decision-pacing research with explicit non-predictive, non-advisory disclaimers.'
+        },
+        {
+          index: '09',
+          title: 'Education & Learning',
+          track: 'Track B • Medium-Term Capability Transfer Horizon',
+          status: 'Strategic Thesis',
+          boundary: 'Applied professional learning and readiness frameworks built from validated industry benchmarks; under-18 programs deferred.'
+        },
+        {
+          index: '10',
+          title: 'Retail',
+          track: 'Track C • Long-Term Commercial Horizon',
+          status: 'Research',
+          boundary: 'Requires working-capital inventory controls, supply-chain compliance, and consumer protection adherence.'
+        },
+        {
+          index: '11',
+          title: 'Future Industries',
+          track: 'Track C • Long-Term Frontier Observatory',
+          status: 'Research',
+          boundary: 'Ring-fenced R&D thesis evaluation for emerging technologies and industrial shifts; zero premature capital lock-up.'
+        }
+      ],
+      operatingAndGovernance: {
+        authorityLevels: [
+          {
+            level: 'Level 01 • Founder & Central Institutional Authority',
+            scope: 'Constitutional direction, brand/IP custody, entity incorporation, capital allocation, risk thresholds, and Stage-Gate approvals.',
+            earlyMode: 'Exercised directly by the Founder during pre-incorporation and early validation without artificial executive titles.',
+            scaledMode: 'Exercised through Parent Board, Investment/Risk Committees, and ratified Delegations of Authority.'
+          },
+          {
+            level: 'Level 02 • Shared Capability & Intelligence Layer',
+            scope: 'Research standards, technology architecture, financial/compliance controls, and cross-branch playbooks.',
+            earlyMode: 'Lightweight Founder-stewarded disciplines supported by external Indian CA and legal advisors.',
+            scaledMode: 'Dedicated functional leads operating under clear service-level agreements (SLAs).'
+          },
+          {
+            level: 'Level 03 • Operating Business Unit Leadership',
+            scope: 'Customer acquisition, service delivery, unit budgets, hiring within caps, and day-to-day operational execution.',
+            earlyMode: 'Founder-led pilot execution for TOVENZA CAREER until repeatable unit economics are proven.',
+            scaledMode: 'Accountable Branch/Subsidiary Leaders governed by written Operating Business Charters and monthly KPI reviews.'
+          }
+        ],
+        stageGates: [
+          { gate: 'Gate 0', name: 'Strategic Fit', check: 'Alignment with Four Foundations, ethical boundaries, and institutional purpose.' },
+          { gate: 'Gate 1', name: 'Feasibility & Risk', check: 'Market structure, regulatory mapping, and initial risk register.' },
+          { gate: 'Gate 2', name: 'Commercial Validation', check: 'Real customer discovery and paid pilot willingness-to-pay proof.' },
+          { gate: 'Gate 3', name: 'Legal & Readiness', check: 'Entity/licensing clearance (with legal/CA counsel), budget, and Operating Charter.' },
+          { gate: 'Gate 4', name: 'Authorized Launch', check: 'Formal Founder/Central authorization to begin live commercial scaling.' },
+          { gate: 'Gate 5', name: 'Review & Scale/Exit', check: '90/180/365-day unit-economic and compliance audit to scale, restructure, or exit.' }
+        ]
+      },
+      techAndIntelligenceLayers: [
+        {
+          layer: 'Immediate Practical Foundation (Now)',
+          items: [
+            'Clean modular web architecture (Obsidian Sovereignty tokens + unified data registry)',
+            'Deterministic browser-side decision calculators (CTC/Offer reality & cash-runway checks)',
+            'Consent-first inquiry intake workflows with DPDP purpose disclosure',
+            'Structured Central Intelligence repository (anonymized benchmarks, scorecards, SOPs)'
+          ]
+        },
+        {
+          layer: 'Medium-Term Operational Spine (Post-Validation)',
+          items: [
+            'Authenticated Level 2 user workspaces with encrypted private career/decision vaults',
+            'Granular opt-in consent toggles separating private user data from employer-shareable briefs',
+            'Automated scheduling, structured brief generation, and 90-day outcome tracking',
+            'Role-based access controls (RBAC), audit logging, and automated backup routines'
+          ]
+        },
+        {
+          layer: 'Long-Term Institutional Ecosystem (At Multi-Branch Scale)',
+          items: [
+            'Cross-branch data interoperability via standardized APIs and shared competency ontologies',
+            'Human-in-the-loop AI research synthesis and workflow orchestration with explainability logs',
+            'Level 3 Institutional Administration portal for multi-entity governance and risk monitoring',
+            'Multi-region data residency and international cybersecurity compliance frameworks'
+          ]
+        }
+      ],
+      riskAndScalabilityPillars: [
+        {
+          domain: 'Financial & Operational Risk',
+          control: 'Phased tranche budgeting, liquidity floor rules, manual validation before CapEx, and documented SOPs to prevent single-point operational failure.'
+        },
+        {
+          domain: 'Legal, Regulatory & Entity Risk',
+          control: 'Trigger-based incorporation with qualified Indian legal/CA counsel; ring-fenced subsidiaries where statutory licensing or liability isolation is warranted, recognizing corporate veil limits.'
+        },
+        {
+          domain: 'Data Protection & Cybersecurity',
+          control: 'Data minimization, explicit opt-in consent aligned with DPDP Act principles, adult (18+) launch scope, and strict separation of private vs. shareable records.'
+        },
+        {
+          domain: 'Reputation, Brand & AI Accountability',
+          control: 'Mandatory lifecycle status badges (`Research` vs. `In Development` vs. `Operational`), non-guarantee disclaimers, and human oversight over all consequential recommendations.'
+        },
+        {
+          domain: 'Geographic & International Expansion',
+          control: 'India HQ anchor with progressive international entry: non-binding discovery -> legal/tax-cleared validation pilots -> formal jurisdictional compliance & entity structuring.'
+        },
+        {
+          domain: 'Institutional Succession & Continuity',
+          control: 'Central IP custody, documented operational playbooks, deputy accountability rules, and future legal trust/corporate continuity instruments.'
+        }
+      ],
+      maturityRoadmap: [
+        {
+          phase: 'Phase 01 • Architectural & Philosophical Lock',
+          status: 'Active / Completed Foundation',
+          summary: 'Establish Sovereign Identity, Architectural Authority blueprints, Obsidian Sovereignty design system, and honest 21-route digital architecture.'
+        },
+        {
+          phase: 'Phase 02 • Inaugural Branch Validation (TOVENZA CAREER)',
+          status: 'Immediate Execution Focus',
+          summary: 'Validate adult career/offer clinics and selective startup hiring sprints through real customer conversations, paid pilots, and consent-first intake.'
+        },
+        {
+          phase: 'Phase 03 • Entity Structuring & Playbook Systematization',
+          status: 'Trigger-Based Next Horizon',
+          summary: 'Execute Indian legal/CA incorporation dossier when commercial/contracting triggers arise; formalize trademark protection and repeatable operating playbooks.'
+        },
+        {
+          phase: 'Phase 04 • Multi-Horizon & Global Ecosystem Expansion',
+          status: 'Long-Term Stage-Gate Horizon',
+          summary: 'Activate authenticated Level 2 workspaces, adjacent horizons (Tech/AI, Consulting, Education), and compliant cross-border corridors from India.'
+        }
+      ]
+    });
+
     const ELEVEN_HORIZONS = Object.freeze([
       {
         index: '01',
@@ -493,7 +890,12 @@
         path: f.path,
         group: 'foundations',
         title: f.title,
-        template: f.id === 'sovereign-identity' ? 'SovereignIdentityTemplate' : 'FoundationDetailTemplate',
+        template:
+          f.id === 'sovereign-identity'
+            ? 'SovereignIdentityTemplate'
+            : f.id === 'architectural-authority'
+            ? 'ArchitecturalAuthorityTemplate'
+            : 'FoundationDetailTemplate',
         slug: f.id
       })),
       ...ELEVEN_HORIZONS.map((h, idx) => ({
@@ -551,6 +953,64 @@
       );
     }
 
+    function ArchitecturalAuthorityDiagram() {
+      return (
+        <svg
+          viewBox="0 0 520 340"
+          width="100%"
+          role="img"
+          aria-label="TOVENZA Hybrid Institutional Group Architectural Schematic showing Parent Core, Shared Intelligence Spine, Active TOVENZA CAREER Branch, and Future Stage-Gate Horizons"
+          style={{ display: 'block', maxWidth: '520px', marginInline: 'auto' }}
+        >
+          <rect x="10" y="10" width="500" height="320" fill="#050606" stroke="rgba(185, 157, 107, 0.36)" strokeWidth="1" />
+          <line x1="260" y1="26" x2="260" y2="314" stroke="rgba(185, 157, 107, 0.22)" strokeWidth="1" strokeDasharray="3 3" />
+
+          <rect x="60" y="28" width="400" height="54" fill="#202321" stroke="#B99D6B" strokeWidth="1.2" />
+          <text x="260" y="50" fill="#B99D6B" fontSize="9" fontFamily="JetBrains Mono, monospace" textAnchor="middle" letterSpacing="2.2">
+            TIER 01 • CENTRAL INSTITUTIONAL CORE (INDIA HQ)
+          </text>
+          <text x="260" y="69" fill="#E9E4D9" fontSize="14" fontFamily="Cormorant Garamond, Georgia, serif" textAnchor="middle">
+            TOVENZA GROUP — Governance, Brand Custody &amp; Capital Discipline
+          </text>
+
+          <rect x="60" y="104" width="400" height="50" fill="rgba(32, 35, 33, 0.55)" stroke="rgba(233, 228, 217, 0.25)" strokeWidth="1" />
+          <text x="260" y="125" fill="#D1B98A" fontSize="8.5" fontFamily="JetBrains Mono, monospace" textAnchor="middle" letterSpacing="2">
+            TIER 02 • SHARED CAPABILITY &amp; CENTRAL INTELLIGENCE SPINE
+          </text>
+          <text x="260" y="142" fill="#B8B2A6" fontSize="11" fontFamily="Inter, sans-serif" textAnchor="middle">
+            Research • Decision Models • Design Tokens • Privacy &amp; Risk Controls
+          </text>
+
+          <rect x="60" y="178" width="190" height="68" fill="rgba(185, 157, 107, 0.1)" stroke="#B99D6B" strokeWidth="1.2" />
+          <text x="155" y="199" fill="#B99D6B" fontSize="8" fontFamily="JetBrains Mono, monospace" textAnchor="middle" letterSpacing="1.6">
+            ACTIVE INAUGURAL BRANCH
+          </text>
+          <text x="155" y="218" fill="#E9E4D9" fontSize="13.5" fontFamily="Cormorant Garamond, Georgia, serif" textAnchor="middle">
+            TOVENZA CAREER
+          </text>
+          <text x="155" y="234" fill="#B8B2A6" fontSize="9.5" fontFamily="Inter, sans-serif" textAnchor="middle">
+            Horizon 01 • Adult (18+) &amp; Employers
+          </text>
+
+          <rect x="270" y="178" width="190" height="68" fill="rgba(32, 35, 33, 0.45)" stroke="rgba(233, 228, 217, 0.2)" strokeWidth="1" />
+          <text x="365" y="199" fill="#868177" fontSize="8" fontFamily="JetBrains Mono, monospace" textAnchor="middle" letterSpacing="1.6">
+            STAGE-GATE PORTFOLIO
+          </text>
+          <text x="365" y="218" fill="#E9E4D9" fontSize="13.5" fontFamily="Cormorant Garamond, Georgia, serif" textAnchor="middle">
+            Horizons 02 – 11
+          </text>
+          <text x="365" y="234" fill="#868177" fontSize="9.5" fontFamily="Inter, sans-serif" textAnchor="middle">
+            Research &amp; Future Ring-Fenced Units
+          </text>
+
+          <rect x="60" y="266" width="400" height="42" fill="#080909" stroke="rgba(233, 228, 217, 0.16)" strokeWidth="1" />
+          <text x="260" y="291" fill="#868177" fontSize="8.5" fontFamily="JetBrains Mono, monospace" textAnchor="middle" letterSpacing="1.8">
+            GATES 0–5 • TRIGGER-BASED INCORPORATION • DPDP CONSENT PERIMETER
+          </text>
+        </svg>
+      );
+    }
+
     function InstitutionalLink({ to, onNavigate, className = '', style = {}, children, ...rest }) {
       const isBlobPreview =
         window.location.protocol === 'blob:' || window.location.origin === 'null';
@@ -569,7 +1029,7 @@
     }
 
     function LifecycleStatusBadge({ status }) {
-      const isDev = status === 'In Development';
+      const isDev = status === 'In Development' || status === 'Active Pillar';
       const isThesis = status === 'Strategic Thesis';
       return (
         <span
@@ -1003,7 +1463,6 @@
 
       return (
         <article aria-labelledby="sovereign-identity-heading">
-          {/* 1. SOVEREIGN HERO & SIBLING FOUNDATION NAVIGATION */}
           <section className="tvz-container" style={{ paddingBlock: 'clamp(4rem, 7vw, 6.5rem)' }}>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '2.25rem' }}>
               {FOUR_FOUNDATIONS.map((f) => (
@@ -1061,7 +1520,6 @@
                 </p>
               </div>
 
-              {/* Architectural Sovereign Crest & Institutional Posture Card */}
               <aside className="tvz-monolith-card" style={{ padding: '2.25rem', display: 'grid', gap: '1.35rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -1096,7 +1554,6 @@
             </div>
           </section>
 
-          {/* 2. INSTITUTIONAL PURPOSE, VISION & MISSION */}
           <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
             <div className="tvz-container">
               <div style={{ maxWidth: '48rem', marginBottom: '2.5rem' }}>
@@ -1136,7 +1593,6 @@
             </div>
           </section>
 
-          {/* 3. INSTITUTIONAL PHILOSOPHY (THE FIVE FOUNDER COMMITMENTS) */}
           <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
             <div className="tvz-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2.5rem', alignItems: 'start' }}>
               <div>
@@ -1170,7 +1626,6 @@
             </div>
           </section>
 
-          {/* 4. CORE VALUES & NON-NEGOTIABLE BOUNDARIES */}
           <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
             <div className="tvz-container">
               <div style={{ maxWidth: '48rem', marginBottom: '2.5rem' }}>
@@ -1226,7 +1681,6 @@
             </div>
           </section>
 
-          {/* 5. OBSIDIAN SOVEREIGNTY: VISUAL, VERBAL & IP STEWARDSHIP */}
           <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
             <div className="tvz-container">
               <div style={{ maxWidth: '50rem', marginBottom: '2.5rem' }}>
@@ -1241,7 +1695,6 @@
                 </p>
               </div>
 
-              {/* Interactive Master Palette Swatches */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
                 {SOVEREIGN_IDENTITY_SPEC.paletteTokens.map((swatch) => (
                   <div key={swatch.hex} className="tvz-monolith-card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1.1rem' }}>
@@ -1281,7 +1734,6 @@
                 ))}
               </div>
 
-              {/* Verbal Identity & Brand Custody Grid */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
                 {SOVEREIGN_IDENTITY_SPEC.verbalStandards.map((v) => (
                   <div key={v.dimension} className="tvz-monolith-card" style={{ padding: '1.75rem' }}>
@@ -1297,7 +1749,6 @@
             </div>
           </section>
 
-          {/* 6. OWNERSHIP PHILOSOPHY, GOVERNANCE BOUNDARIES & INSTITUTIONAL LEGACY */}
           <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
             <div className="tvz-container">
               <div style={{ maxWidth: '50rem', marginBottom: '2.5rem' }}>
@@ -1325,7 +1776,6 @@
                 ))}
               </div>
 
-              {/* Interactive Three-Horizon Legacy Selector */}
               <div className="tvz-monolith-card" style={{ padding: '2.25rem' }}>
                 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
                   <div>
@@ -1372,7 +1822,6 @@
             </div>
           </section>
 
-          {/* 7. FOUR FOUNDATIONS & ELEVEN STRATEGIC HORIZONS RELATIONSHIP MATRIX */}
           <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
             <div className="tvz-container">
               <div style={{ maxWidth: '50rem', marginBottom: '2.25rem' }}>
@@ -1387,7 +1836,6 @@
                 </p>
               </div>
 
-              {/* Four Foundations Overview Strip */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem', marginBottom: '2.75rem' }}>
                 {FOUR_FOUNDATIONS.map((f) => (
                   <InstitutionalLink
@@ -1414,7 +1862,6 @@
                 ))}
               </div>
 
-              {/* Filterable Eleven Horizons Relationship Grid */}
               <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
                 <h3 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h3)', margin: 0 }}>
                   Eleven Strategic Horizons ({filteredHorizons.length})
@@ -1482,7 +1929,6 @@
             </div>
           </section>
 
-          {/* 8. INSTITUTIONAL DISCLOSURES & FORWARD NAVIGATION */}
           <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
             <div className="tvz-container">
               <div className="tvz-monolith-card" style={{ padding: '2rem', marginBottom: '2rem' }}>
@@ -1539,6 +1985,564 @@
     }
 
     /* ============================================================================
+       DEDICATED FOUNDATION 02 EXPERIENCE: ArchitecturalAuthorityTemplate
+       Route: /foundations/architectural-authority
+       ============================================================================ */
+    function ArchitecturalAuthorityTemplate({ onNavigate }) {
+      const foundation = FOUR_FOUNDATIONS[1];
+      const [activePillarIndex, setActivePillarIndex] = useState(0);
+      const [horizonTrackFilter, setHorizonTrackFilter] = useState('ALL');
+      const [activeMaturityIndex, setActiveMaturityIndex] = useState(0);
+
+      const activePillar = ARCHITECTURAL_AUTHORITY_SPEC.eightPillars[activePillarIndex];
+
+      const filteredHorizonTracks =
+        horizonTrackFilter === 'ALL'
+          ? ARCHITECTURAL_AUTHORITY_SPEC.horizonIntegrationModel
+          : ARCHITECTURAL_AUTHORITY_SPEC.horizonIntegrationModel.filter((item) =>
+              item.track.startsWith(horizonTrackFilter)
+            );
+
+      return (
+        <article aria-labelledby="architectural-authority-heading">
+          <section className="tvz-container" style={{ paddingBlock: 'clamp(4rem, 7vw, 6.5rem)' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '2.25rem' }}>
+              {FOUR_FOUNDATIONS.map((f) => (
+                <InstitutionalLink
+                  key={f.id}
+                  to={f.path}
+                  onNavigate={onNavigate}
+                  aria-current={f.id === foundation.id ? 'page' : undefined}
+                  className="tvz-mono"
+                  style={{
+                    padding: '0.55rem 0.9rem',
+                    textDecoration: 'none',
+                    border: '1px solid var(--tvz-border-champagne)',
+                    backgroundColor: f.id === foundation.id ? 'var(--tvz-color-champagne)' : 'transparent',
+                    color: f.id === foundation.id ? 'var(--tvz-color-obsidian)' : 'var(--tvz-color-ivory-secondary)'
+                  }}
+                >
+                  {f.numeral}. {f.title}
+                </InstitutionalLink>
+              ))}
+            </div>
+
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                gap: '2.5rem',
+                alignItems: 'center'
+              }}
+            >
+              <div>
+                <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', margin: 0 }}>
+                  Foundation II of IV • Enterprise &amp; Governance Spine
+                </p>
+                <h1
+                  id="architectural-authority-heading"
+                  className="tvz-display"
+                  style={{ fontSize: 'var(--tvz-text-hero)', margin: '0.6rem 0 0.9rem' }}
+                >
+                  Architectural Authority
+                </h1>
+                <p
+                  className="tvz-display"
+                  style={{
+                    fontSize: 'clamp(1.35rem, 2.2vw, 1.85rem)',
+                    fontStyle: 'italic',
+                    color: 'var(--tvz-color-champagne-light)',
+                    margin: '0 0 1.25rem'
+                  }}
+                >
+                  “{INSTITUTION_META.statement}”
+                </p>
+                <p style={{ fontSize: 'var(--tvz-text-body)', color: 'var(--tvz-color-ivory-secondary)', maxWidth: '60ch', margin: 0 }}>
+                  {foundation.thesis} Designed for an India-origin, globally operating institutional group where central governance standards empower independent operating branches.
+                </p>
+              </div>
+
+              <aside className="tvz-monolith-card" style={{ padding: '1.5rem' }}>
+                <ArchitecturalAuthorityDiagram />
+              </aside>
+            </div>
+          </section>
+
+          <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
+            <div className="tvz-container">
+              <div style={{ maxWidth: '52rem', marginBottom: '2.5rem' }}>
+                <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', margin: 0 }}>
+                  01 • Institutional Architecture Overview
+                </p>
+                <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h1)', margin: '0.6rem 0 0.9rem' }}>
+                  Structure Before Scale
+                </h2>
+                <p style={{ fontSize: 'var(--tvz-text-body)', color: 'var(--tvz-color-ivory-secondary)', maxWidth: '64ch', margin: 0 }}>
+                  Enduring institutions are not built by launching eleven disconnected ventures at once. Architectural Authority establishes a unified institutional core in India, connects shared intelligence and technology across branches, and enforces Stage-Gate discipline before capital or legal complexity is added.
+                </p>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
+                {ARCHITECTURAL_AUTHORITY_SPEC.overviewMetrics.map((m) => (
+                  <div key={m.code} className="tvz-monolith-card" style={{ padding: '1.75rem' }}>
+                    <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem' }}>{m.code}</div>
+                    <div className="tvz-display" style={{ fontSize: '2.5rem', color: 'var(--tvz-color-ivory)', margin: '0.45rem 0 0.25rem' }}>
+                      {m.value}
+                    </div>
+                    <div style={{ fontSize: '0.86rem', color: 'var(--tvz-color-ivory-secondary)' }}>{m.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
+            <div className="tvz-container">
+              <div style={{ maxWidth: '52rem', marginBottom: '2rem' }}>
+                <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', margin: 0 }}>
+                  02 • The Eight Architectural Pillars
+                </p>
+                <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h1)', margin: '0.6rem 0 0.8rem' }}>
+                  Complete Enterprise Architecture Blueprint
+                </h2>
+                <p style={{ fontSize: 'var(--tvz-text-body)', color: 'var(--tvz-color-ivory-secondary)', maxWidth: '64ch', margin: 0 }}>
+                  Select any of the eight pillars below to inspect its purpose, core principles, structural components, cross-pillar connections, implementation requirements, and current maturity versus future ambition.
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem', marginBottom: '1.75rem' }} role="tablist" aria-label="Eight Architectural Pillars">
+                {ARCHITECTURAL_AUTHORITY_SPEC.eightPillars.map((pillar, idx) => (
+                  <button
+                    key={pillar.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={activePillarIndex === idx}
+                    onClick={() => setActivePillarIndex(idx)}
+                    className="tvz-mono tvz-focus-ring"
+                    style={{
+                      padding: '0.55rem 0.85rem',
+                      cursor: 'pointer',
+                      fontSize: '0.58rem',
+                      border: '1px solid var(--tvz-border-champagne)',
+                      backgroundColor: activePillarIndex === idx ? 'var(--tvz-color-champagne)' : 'transparent',
+                      color: activePillarIndex === idx ? 'var(--tvz-color-obsidian)' : 'var(--tvz-color-ivory-secondary)'
+                    }}
+                  >
+                    {pillar.index}. {pillar.title.replace(' Architecture', '')}
+                  </button>
+                ))}
+              </div>
+
+              <div className="tvz-monolith-card" style={{ padding: '2.25rem', display: 'grid', gap: '1.75rem' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: '1rem' }}>
+                  <div>
+                    <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>
+                      Pillar {activePillar.index} of 08
+                    </span>
+                    <h3 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h2)', margin: '0.4rem 0 0' }}>
+                      {activePillar.title}
+                    </h3>
+                  </div>
+                  <span className="tvz-mono" style={{ fontSize: '0.56rem', color: 'var(--tvz-color-ivory-muted)' }}>
+                    Proposed Enterprise Architecture
+                  </span>
+                </div>
+
+                <p style={{ fontSize: '1.02rem', color: 'var(--tvz-color-ivory)', margin: 0, maxWidth: '72ch' }}>
+                  {activePillar.purpose}
+                </p>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem' }}>
+                  <div className="tvz-hairline-t" style={{ paddingTop: '1.1rem' }}>
+                    <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem', marginBottom: '0.6rem' }}>
+                      Core Principles
+                    </div>
+                    <ul style={{ margin: 0, paddingLeft: '1.1rem', color: 'var(--tvz-color-ivory-secondary)', fontSize: '0.88rem' }}>
+                      {activePillar.principles.map((p) => (
+                        <li key={p} style={{ marginBottom: '0.5rem' }}>{p}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="tvz-hairline-t" style={{ paddingTop: '1.1rem' }}>
+                    <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem', marginBottom: '0.6rem' }}>
+                      Structural Components
+                    </div>
+                    <ul style={{ margin: 0, paddingLeft: '1.1rem', color: 'var(--tvz-color-ivory-secondary)', fontSize: '0.88rem' }}>
+                      {activePillar.components.map((c) => (
+                        <li key={c} style={{ marginBottom: '0.5rem' }}>{c}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="tvz-hairline-t" style={{ paddingTop: '1.1rem' }}>
+                    <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem', marginBottom: '0.6rem' }}>
+                      Responsibilities &amp; Connections
+                    </div>
+                    <p style={{ margin: '0 0 0.6rem', color: 'var(--tvz-color-ivory-secondary)', fontSize: '0.88rem' }}>
+                      <strong style={{ color: 'var(--tvz-color-ivory)', fontWeight: 500 }}>Mandate:</strong> {activePillar.responsibilities}
+                    </p>
+                    <p style={{ margin: 0, color: 'var(--tvz-color-ivory-muted)', fontSize: '0.84rem' }}>
+                      <strong style={{ color: 'var(--tvz-color-champagne-light)', fontWeight: 500 }}>Interfaces:</strong> {activePillar.connections}
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  className="tvz-hairline-t"
+                  style={{
+                    paddingTop: '1.25rem',
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+                    gap: '1.25rem'
+                  }}
+                >
+                  <div>
+                    <div className="tvz-mono" style={{ color: 'var(--tvz-color-ivory-muted)', fontSize: '0.56rem', marginBottom: '0.35rem' }}>
+                      Current Maturity (Pre-Incorporation)
+                    </div>
+                    <p style={{ margin: 0, fontSize: '0.86rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                      {activePillar.maturityCurrent}
+                    </p>
+                  </div>
+                  <div>
+                    <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.56rem', marginBottom: '0.35rem' }}>
+                      Implementation Requirement
+                    </div>
+                    <p style={{ margin: 0, fontSize: '0.86rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                      {activePillar.implementationRequirements}
+                    </p>
+                  </div>
+                  <div>
+                    <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne-light)', fontSize: '0.56rem', marginBottom: '0.35rem' }}>
+                      Future Institutional Ambition
+                    </div>
+                    <p style={{ margin: 0, fontSize: '0.86rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                      {activePillar.maturityFuture}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
+            <div className="tvz-container">
+              <div style={{ maxWidth: '52rem', marginBottom: '2.5rem' }}>
+                <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', margin: 0 }}>
+                  03 • TOVENZA Group Structural Model
+                </p>
+                <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h1)', margin: '0.6rem 0 0.8rem' }}>
+                  Hybrid Institutional Group Architecture
+                </h2>
+                <p style={{ fontSize: 'var(--tvz-text-body)', color: 'var(--tvz-color-ivory-secondary)', maxWidth: '64ch', margin: 0 }}>
+                  Structured to grow from India into a globally operating institutional group—uniting central institutional governance and IP stewardship with independently managed operating branches. Founder retention of ownership and ultimate authority is maintained as a founder preference prior to formal corporate structuring.
+                </p>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+                {ARCHITECTURAL_AUTHORITY_SPEC.groupLayers.map((layer) => (
+                  <div key={layer.tier} className="tvz-monolith-card" style={{ padding: '1.9rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1rem' }}>
+                    <div>
+                      <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem' }}>{layer.tier}</div>
+                      <h3 className="tvz-display" style={{ fontSize: '1.45rem', margin: '0.5rem 0 0.65rem' }}>{layer.name}</h3>
+                      <p style={{ fontSize: '0.88rem', color: 'var(--tvz-color-ivory-secondary)', margin: 0 }}>{layer.role}</p>
+                    </div>
+                    <div className="tvz-hairline-t" style={{ paddingTop: '0.9rem' }}>
+                      <div className="tvz-mono" style={{ fontSize: '0.54rem', color: 'var(--tvz-color-champagne-light)', marginBottom: '0.3rem' }}>
+                        {layer.status}
+                      </div>
+                      <p style={{ fontSize: '0.8rem', color: 'var(--tvz-color-ivory-muted)', margin: 0 }}>
+                        {layer.autonomyBoundary}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
+            <div className="tvz-container">
+              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-end', gap: '1rem', marginBottom: '2rem' }}>
+                <div style={{ maxWidth: '48rem' }}>
+                  <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', margin: 0 }}>
+                    04 • Eleven-Horizon Ecosystem Architecture
+                  </p>
+                  <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h1)', margin: '0.6rem 0 0.75rem' }}>
+                    Unified Governance, Industry Independence
+                  </h2>
+                  <p style={{ fontSize: 'var(--tvz-text-body)', color: 'var(--tvz-color-ivory-secondary)', margin: 0 }}>
+                    Preserving the exact eleven-horizon constitutional order while isolating regulatory, clinical, financial, and operational boundaries per industry. Only TOVENZA CAREER (Horizon 01) is active as the inaugural practical initiative.
+                  </p>
+                </div>
+
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
+                  {['ALL', 'Track A', 'Track B', 'Track C'].map((track) => (
+                    <button
+                      key={track}
+                      type="button"
+                      onClick={() => setHorizonTrackFilter(track)}
+                      className="tvz-mono tvz-focus-ring"
+                      style={{
+                        padding: '0.5rem 0.85rem',
+                        cursor: 'pointer',
+                        fontSize: '0.58rem',
+                        border: '1px solid var(--tvz-border-champagne)',
+                        backgroundColor: horizonTrackFilter === track ? 'var(--tvz-color-champagne)' : 'transparent',
+                        color: horizonTrackFilter === track ? 'var(--tvz-color-obsidian)' : 'var(--tvz-color-ivory-secondary)'
+                      }}
+                    >
+                      {track === 'ALL' ? 'All 11 Horizons' : track}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '0.95rem' }}>
+                {filteredHorizonTracks.map((item) => {
+                  const horizonRoute = ELEVEN_HORIZONS.find((h) => h.index === item.index)?.path || '/horizons/human-capital';
+                  return (
+                    <InstitutionalLink
+                      key={item.index}
+                      to={horizonRoute}
+                      onNavigate={onNavigate}
+                      className="tvz-monolith-card"
+                      style={{ padding: '1.5rem', textDecoration: 'none', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '0.85rem' }}
+                    >
+                      <div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.5rem' }}>
+                          <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.56rem' }}>
+                            {item.index} • {item.track.split('•')[0].trim()}
+                          </span>
+                          <LifecycleStatusBadge status={item.status} />
+                        </div>
+                        <div className="tvz-display" style={{ fontSize: '1.35rem', color: 'var(--tvz-color-ivory)', marginTop: '0.45rem' }}>
+                          {item.title}
+                        </div>
+                      </div>
+                      <p style={{ fontSize: '0.82rem', color: 'var(--tvz-color-ivory-muted)', margin: 0 }}>
+                        {item.boundary}
+                      </p>
+                    </InstitutionalLink>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+
+          <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
+            <div className="tvz-container">
+              <div style={{ maxWidth: '52rem', marginBottom: '2.5rem' }}>
+                <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', margin: 0 }}>
+                  05 &amp; 06 • Operating Model &amp; Governance Authority Framework
+                </p>
+                <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h1)', margin: '0.6rem 0 0.8rem' }}>
+                  Lean Today, Scalable Tomorrow
+                </h2>
+                <p style={{ fontSize: 'var(--tvz-text-body)', color: 'var(--tvz-color-ivory-secondary)', maxWidth: '64ch', margin: 0 }}>
+                  Avoids premature corporate bureaucracy during founder-led validation while establishing clear delegation of authority, escalation paths, and Six-Gate validation controls for future unit leaders.
+                </p>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
+                {ARCHITECTURAL_AUTHORITY_SPEC.operatingAndGovernance.authorityLevels.map((lvl) => (
+                  <div key={lvl.level} className="tvz-monolith-card" style={{ padding: '1.9rem', display: 'grid', gap: '0.85rem' }}>
+                    <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem' }}>{lvl.level}</div>
+                    <p style={{ fontSize: '0.9rem', color: 'var(--tvz-color-ivory)', margin: 0 }}>{lvl.scope}</p>
+                    <div className="tvz-hairline-t" style={{ paddingTop: '0.75rem', fontSize: '0.82rem', color: 'var(--tvz-color-ivory-secondary)' }}>
+                      <strong style={{ color: 'var(--tvz-color-champagne-light)', fontWeight: 500 }}>Early Mode:</strong> {lvl.earlyMode}
+                    </div>
+                    <div style={{ fontSize: '0.82rem', color: 'var(--tvz-color-ivory-muted)' }}>
+                      <strong style={{ color: 'var(--tvz-color-ivory)', fontWeight: 500 }}>Scaled Mode:</strong> {lvl.scaledMode}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="tvz-monolith-card" style={{ padding: '2rem' }}>
+                <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', marginBottom: '1.25rem' }}>
+                  Six-Gate Institutional Stage-Gate Sequence (Mandatory Before Commercial Launch)
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(185px, 1fr))', gap: '0.9rem' }}>
+                  {ARCHITECTURAL_AUTHORITY_SPEC.operatingAndGovernance.stageGates.map((g) => (
+                    <div key={g.gate} style={{ padding: '1.1rem', border: '1px solid var(--tvz-border-hairline)' }}>
+                      <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem' }}>{g.gate}</div>
+                      <div className="tvz-display" style={{ fontSize: '1.25rem', margin: '0.35rem 0' }}>{g.name}</div>
+                      <p style={{ fontSize: '0.8rem', color: 'var(--tvz-color-ivory-muted)', margin: 0 }}>{g.check}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
+            <div className="tvz-container">
+              <div style={{ maxWidth: '52rem', marginBottom: '2.5rem' }}>
+                <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', margin: 0 }}>
+                  07 • Intelligence &amp; Technology Architecture
+                </p>
+                <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h1)', margin: '0.6rem 0 0.8rem' }}>
+                  Central Intelligence &amp; Modular Digital Spine
+                </h2>
+                <p style={{ fontSize: 'var(--tvz-text-body)', color: 'var(--tvz-color-ivory-secondary)', maxWidth: '64ch', margin: 0 }}>
+                  Separates immediate low-capital utilities from future authenticated workspaces and AI-assisted workflows—enforcing human oversight so software supports judgment rather than issuing unreviewed verdicts.
+                </p>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: '1.25rem' }}>
+                {ARCHITECTURAL_AUTHORITY_SPEC.techAndIntelligenceLayers.map((tier) => (
+                  <div key={tier.layer} className="tvz-monolith-card" style={{ padding: '2rem' }}>
+                    <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', marginBottom: '1rem' }}>
+                      {tier.layer}
+                    </div>
+                    <ul style={{ margin: 0, paddingLeft: '1.15rem', color: 'var(--tvz-color-ivory-secondary)', fontSize: '0.88rem' }}>
+                      {tier.items.map((item) => (
+                        <li key={item} style={{ marginBottom: '0.65rem' }}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
+            <div className="tvz-container">
+              <div style={{ maxWidth: '52rem', marginBottom: '2.5rem' }}>
+                <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', margin: 0 }}>
+                  08 &amp; 09 • Risk, Control, Scalability &amp; Global Expansion
+                </p>
+                <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h1)', margin: '0.6rem 0 0.8rem' }}>
+                  Resilience Perimeter &amp; Progressive Global Reach
+                </h2>
+                <p style={{ fontSize: 'var(--tvz-text-body)', color: 'var(--tvz-color-ivory-secondary)', maxWidth: '64ch', margin: 0 }}>
+                  Establishes multi-layer safeguards across financial, legal, privacy, reputational, and cross-border dimensions without claiming unverified statutory registrations or premature regulatory certifications.
+                </p>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.1rem' }}>
+                {ARCHITECTURAL_AUTHORITY_SPEC.riskAndScalabilityPillars.map((r) => (
+                  <div key={r.domain} className="tvz-monolith-card" style={{ padding: '1.75rem' }}>
+                    <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem', marginBottom: '0.45rem' }}>
+                      {r.domain}
+                    </div>
+                    <p style={{ fontSize: '0.88rem', color: 'var(--tvz-color-ivory-secondary)', margin: 0 }}>
+                      {r.control}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
+            <div className="tvz-container">
+              <div className="tvz-monolith-card" style={{ padding: '2.25rem' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+                  <div>
+                    <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>
+                      10 • Implementation Maturity Roadmap
+                    </span>
+                    <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h2)', margin: '0.35rem 0 0' }}>
+                      Phased Institutional Execution
+                    </h2>
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }} role="tablist" aria-label="Implementation Maturity Phases">
+                    {ARCHITECTURAL_AUTHORITY_SPEC.maturityRoadmap.map((step, idx) => (
+                      <button
+                        key={step.phase}
+                        type="button"
+                        role="tab"
+                        aria-selected={activeMaturityIndex === idx}
+                        onClick={() => setActiveMaturityIndex(idx)}
+                        className="tvz-mono tvz-focus-ring"
+                        style={{
+                          padding: '0.5rem 0.85rem',
+                          cursor: 'pointer',
+                          border: '1px solid var(--tvz-border-champagne)',
+                          backgroundColor: activeMaturityIndex === idx ? 'var(--tvz-color-champagne)' : 'transparent',
+                          color: activeMaturityIndex === idx ? 'var(--tvz-color-obsidian)' : 'var(--tvz-color-ivory-secondary)'
+                        }}
+                      >
+                        Phase 0{idx + 1}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="tvz-hairline-t" style={{ paddingTop: '1.35rem' }}>
+                  <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne-light)', fontSize: '0.58rem' }}>
+                    {ARCHITECTURAL_AUTHORITY_SPEC.maturityRoadmap[activeMaturityIndex].status}
+                  </div>
+                  <h3 className="tvz-display" style={{ fontSize: '1.55rem', margin: '0.45rem 0 0.65rem' }}>
+                    {ARCHITECTURAL_AUTHORITY_SPEC.maturityRoadmap[activeMaturityIndex].phase}
+                  </h3>
+                  <p style={{ fontSize: '0.95rem', color: 'var(--tvz-color-ivory-secondary)', maxWidth: '66ch', margin: 0 }}>
+                    {ARCHITECTURAL_AUTHORITY_SPEC.maturityRoadmap[activeMaturityIndex].summary}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
+            <div className="tvz-container">
+              <div className="tvz-monolith-card" style={{ padding: '2rem', marginBottom: '2rem' }}>
+                <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', marginBottom: '0.6rem' }}>
+                  11 • Institutional Governance &amp; Epistemic Disclosure
+                </div>
+                <p style={{ fontSize: '0.9rem', color: 'var(--tvz-color-ivory-secondary)', margin: '0 0 0.75rem', maxWidth: '72ch' }}>
+                  {ARCHITECTURAL_AUTHORITY_SPEC.classificationNotice}
+                </p>
+                <p style={{ fontSize: '0.84rem', color: 'var(--tvz-color-ivory-muted)', margin: 0, maxWidth: '72ch' }}>
+                  No subsidiaries, boards, statutory licenses, or active operations across Horizons 02–11 are claimed as existing facts. All corporate structures and cross-border entities remain subject to trigger-based Founder approval and qualified Indian legal and Chartered Accountant advice.
+                </p>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+                <InstitutionalLink
+                  to="/foundations/sovereign-identity"
+                  onNavigate={onNavigate}
+                  className="tvz-monolith-card"
+                  style={{ padding: '2rem', textDecoration: 'none', display: 'block' }}
+                >
+                  <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem' }}>
+                    ← Previous Pillar • Foundation I
+                  </div>
+                  <div className="tvz-display" style={{ fontSize: '1.65rem', color: 'var(--tvz-color-ivory)', margin: '0.5rem 0 0.4rem' }}>
+                    Sovereign Identity
+                  </div>
+                  <p style={{ fontSize: '0.86rem', color: 'var(--tvz-color-ivory-secondary)', margin: 0 }}>
+                    Review TOVENZA’s philosophical spine, Obsidian Sovereignty system, and ethical guardrails.
+                  </p>
+                </InstitutionalLink>
+
+                <InstitutionalLink
+                  to="/foundations/financial-sophistication"
+                  onNavigate={onNavigate}
+                  className="tvz-monolith-card"
+                  style={{ padding: '2rem', textDecoration: 'none', display: 'block' }}
+                >
+                  <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.58rem' }}>
+                    Next Permanent Pillar → Foundation III
+                  </div>
+                  <div className="tvz-display" style={{ fontSize: '1.65rem', color: 'var(--tvz-color-ivory)', margin: '0.5rem 0 0.4rem' }}>
+                    Financial Sophistication
+                  </div>
+                  <p style={{ fontSize: '0.86rem', color: 'var(--tvz-color-ivory-secondary)', margin: 0 }}>
+                    Examine capital allocation discipline, liquidity floors, and downside resilience.
+                  </p>
+                </InstitutionalLink>
+              </div>
+            </div>
+          </section>
+        </article>
+      );
+    }
+
+    /* ============================================================================
        REMAINING REUSABLE PAGE TEMPLATES FOR ALL 21 CANONICAL ROUTES
        ============================================================================ */
     function HomeFlagshipTemplate({ onNavigate }) {
@@ -1577,7 +2581,7 @@
                   Explore Foundation I: Sovereign Identity
                 </InstitutionalLink>
                 <InstitutionalLink
-                  to="/gateway"
+                  to="/foundations/architectural-authority"
                   onNavigate={onNavigate}
                   className="tvz-mono"
                   style={{
@@ -1587,7 +2591,7 @@
                     textDecoration: 'none'
                   }}
                 >
-                  Enter Gateway
+                  Explore Foundation II: Architectural Authority
                 </InstitutionalLink>
               </div>
             </div>
@@ -1810,8 +2814,8 @@
             <InstitutionalLink to="/foundations/sovereign-identity" onNavigate={onNavigate} className="tvz-mono" style={{ padding: '0.8rem 1.25rem', border: '1px solid var(--tvz-border-champagne)', color: 'var(--tvz-color-champagne)', textDecoration: 'none' }}>
               Explore Foundation I: Sovereign Identity →
             </InstitutionalLink>
-            <InstitutionalLink to="/governance" onNavigate={onNavigate} className="tvz-mono" style={{ padding: '0.8rem 1.25rem', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)', textDecoration: 'none' }}>
-              Review Governance Ledger →
+            <InstitutionalLink to="/foundations/architectural-authority" onNavigate={onNavigate} className="tvz-mono" style={{ padding: '0.8rem 1.25rem', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)', textDecoration: 'none' }}>
+              Explore Foundation II: Architectural Authority →
             </InstitutionalLink>
           </div>
 
@@ -1821,7 +2825,7 @@
     }
 
     function FoundationDetailTemplate({ slug, onNavigate }) {
-      const foundation = FOUR_FOUNDATIONS.find((f) => f.id === slug) || FOUR_FOUNDATIONS[1];
+      const foundation = FOUR_FOUNDATIONS.find((f) => f.id === slug) || FOUR_FOUNDATIONS[2];
       const anchoredHorizons = ELEVEN_HORIZONS.filter(
         (h) => h.primaryFoundation === foundation.id || h.secondaryFoundations.includes(foundation.id)
       );
@@ -2269,7 +3273,7 @@
 
             <div className="tvz-hairline-t" style={{ paddingTop: '1.5rem', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '1rem', color: 'var(--tvz-color-ivory-muted)' }}>
               <span className="tvz-mono">© {new Date().getFullYear()} TOVENZA. Beyond Business. Built to Endure.</span>
-              <span className="tvz-mono">21 Canonical Routes • Foundation I Complete</span>
+              <span className="tvz-mono">21 Canonical Routes • Foundations I &amp; II Complete</span>
             </div>
           </div>
         </footer>
@@ -2321,6 +3325,8 @@
           document.title = 'TOVENZA — Global Institutional Group';
         } else if (matchedRoute.path === '/foundations/sovereign-identity') {
           document.title = 'Sovereign Identity (Foundation I) — TOVENZA';
+        } else if (matchedRoute.path === '/foundations/architectural-authority') {
+          document.title = 'Architectural Authority (Foundation II) — TOVENZA';
         } else {
           document.title = `${matchedRoute.title} — TOVENZA`;
         }
@@ -2333,6 +3339,8 @@
         activeView = <EditorialEssayTemplate onNavigate={navigate} />;
       } else if (matchedRoute.path === '/foundations/sovereign-identity') {
         activeView = <SovereignIdentityTemplate onNavigate={navigate} />;
+      } else if (matchedRoute.path === '/foundations/architectural-authority') {
+        activeView = <ArchitecturalAuthorityTemplate onNavigate={navigate} />;
       } else if (matchedRoute.group === 'foundations') {
         activeView = <FoundationDetailTemplate slug={matchedRoute.slug} onNavigate={navigate} />;
       } else if (matchedRoute.group === 'horizons') {
