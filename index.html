@@ -3,25 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TOVENZA — Horizon 04 · Delhi Real Estate &amp; Property</title>
+  <title>TOVENZA — All 11 Strategic Horizons · Architectural Studio Showcase</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Typography: Plus Jakarta Sans & Inter -->
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Typography: Cormorant Garamond, Plus Jakarta Sans & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <style>
     :root {
+      --bg-warm-white: #F9F8F5;
+      --surface-pure: #FFFFFF;
+      --surface-warm-tint: #F2EFE9;
       --slate-teal: #0D1F2D;
-      --slate-deep: #081520;
-      --cyclorama-light: #ECEAE4;
-      --cyclorama-mid: #E3E0D8;
-      --cyclorama-edge: #DFDDD6;
-      --warm-cream: #F4EFE8;
-      --bronze-gold: #C8A96E;
+      --slate-mid: #1A3347;
+      --text-muted: #4A5A66;
+      --bronze: #C5A059;
+      --bronze-deep: #8C6A2E;
+      --hairline: rgba(13, 31, 45, 0.11);
     }
 
     * {
@@ -29,150 +35,239 @@
     }
 
     html {
-      background-color: var(--cyclorama-light);
+      background-color: var(--bg-warm-white);
       color: var(--slate-teal);
       font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     body {
+      position: relative;
+      min-height: 100vh;
       overflow-x: hidden;
-      background-color: var(--cyclorama-light);
+      background-color: var(--bg-warm-white);
+      color: var(--slate-teal);
       -webkit-font-smoothing: antialiased;
+    }
+
+    .font-serif-editorial {
+      font-family: 'Cormorant Garamond', Georgia, serif;
     }
 
     .font-inter {
       font-family: 'Inter', sans-serif;
     }
 
-    /* Subtle tactile studio grain over the page */
-    .studio-grain {
+    /* Never-ending full-page cinematic live background behind all sections */
+    #live-cinematic-bg {
       position: fixed;
       inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
       pointer-events: none;
-      z-index: 60;
-      opacity: 0.022;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      display: block;
     }
 
-    /* Floating Dark Slate-Teal Pill Navigation Bar (#0D1F2D) */
-    .tovenza-pill-nav {
-      max-width: 1320px;
+    /* Subtle tactile paper-studio grain */
+    .studio-paper-grain {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.024;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* Keep foreground content above the live background canvas */
+    .foreground-layer {
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Persistent Dark Slate-Teal Pill Navigation Bar (#0D1F2D) */
+    .tovenza-nav-pill {
+      max-width: 1360px;
       background: rgba(13, 31, 45, 0.94);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      box-shadow: 0 22px 50px -14px rgba(7, 17, 26, 0.52);
+      border: 1px solid rgba(197, 160, 89, 0.28);
+      box-shadow: 0 20px 46px -14px rgba(13, 31, 45, 0.34);
     }
 
-    /* 420vh Scroll-Scrubbed Track for Delhi Cutaway Tour */
-    #delhiTourTrack {
+    /* Scroll-scrubbed 3D cutaway tour track */
+    #horizonStageTrack {
       position: relative;
-      height: 420vh;
+      height: 400vh;
       width: 100%;
     }
 
-    #delhiStudioStage {
+    #horizonStickyStage {
       position: sticky;
       top: 0;
       width: 100%;
       height: 100vh;
       overflow: hidden;
-      background: radial-gradient(circle at 50% 45%, #F2F0EB 0%, #ECEAE4 54%, #DFDDD6 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    /* Full-bleed responsive canvas for the 3D-shaded Delhi architectural cutaway */
-    #delhiCutawayCanvas {
-      display: block;
-      width: 100%;
-      height: 100%;
+    /* 2.5D Cutaway Plinth Frame */
+    .cutaway-plinth-stage {
+      position: relative;
+      width: min(92vw, 1080px);
+      height: min(64vh, 620px);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(13, 31, 45, 0.12);
+      box-shadow:
+        0 34px 70px -24px rgba(13, 31, 45, 0.16),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+      overflow: hidden;
+      transform-style: preserve-3d;
       will-change: transform;
     }
 
-    /* Frosted Dark Slate-Teal Card Gliding Between Bottom-Left & Bottom-Right */
-    .gliding-glass-card {
-      background: rgba(13, 31, 45, 0.88);
+    .cutaway-visual-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform-origin: center center;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+      will-change: transform, filter;
+    }
+
+    .cutaway-visual-layer img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    /* Gliding Dark Slate-Teal Frosted Glass Card */
+    .gliding-slate-card {
+      background: rgba(13, 31, 45, 0.9);
       backdrop-filter: blur(22px);
       -webkit-backdrop-filter: blur(22px);
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(197, 160, 89, 0.34);
       box-shadow:
-        0 30px 64px -16px rgba(6, 16, 24, 0.58),
+        0 28px 60px -16px rgba(13, 31, 45, 0.45),
         inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
-      transition:
-        transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-        opacity 0.4s ease;
+      transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
       will-change: transform, opacity;
     }
 
-    .metric-tile {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.11);
+    .glass-metric-box {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(197, 160, 89, 0.22);
     }
 
-    .delhi-estate-card {
-      transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Warm-White Studio Cards (#FFFFFF & #F9F8F5) */
+    .studio-card {
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(13, 31, 45, 0.1);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.4s ease;
     }
 
-    .delhi-estate-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 24px 48px -14px rgba(13, 31, 45, 0.16);
+    .studio-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(197, 160, 89, 0.65);
+      box-shadow: 0 24px 48px -18px rgba(13, 31, 45, 0.16);
+    }
+
+    .studio-card.is-selected {
+      border-color: #C5A059;
+      box-shadow: 0 22px 46px -16px rgba(140, 106, 46, 0.24);
+    }
+
+    /* Custom subtle scrollbar on warm-white */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F9F8F5;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(13, 31, 45, 0.22);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #8C6A2E;
     }
   </style>
 </head>
-<body class="selection:bg-[#0D1F2D] selection:text-[#F4EFE8]">
-
-  <!-- Tactile Studio Film Grain -->
-  <div class="studio-grain"></div>
+<body class="selection:bg-[#0D1F2D] selection:text-[#F9F8F5]">
 
   <!-- =====================================================================
-       1. PERSISTENT FLOATING DARK SLATE-TEAL PILL NAVIGATION BAR (#0D1F2D)
+       NEVER-ENDING FULL-PAGE CINEMATIC LIVE BACKGROUND (#live-cinematic-bg)
+       Interconnected with scroll depth, scroll velocity, cursor & horizon
+       ===================================================================== -->
+  <canvas id="live-cinematic-bg" aria-hidden="true"></canvas>
+  <div class="studio-paper-grain" aria-hidden="true"></div>
+
+  <!-- =====================================================================
+       PERSISTENT DARK SLATE-TEAL PILL NAVIGATION BAR (#0D1F2D)
        ===================================================================== -->
   <header class="fixed top-4 sm:top-5 left-0 right-0 z-50 px-3 sm:px-6 pointer-events-none">
-    <nav class="tovenza-pill-nav mx-auto rounded-full px-4 sm:px-7 py-2.5 sm:py-3 flex items-center justify-between pointer-events-auto">
-      <!-- Left: TOVENZA Geometric Monogram + Wordmark + Horizon 04 Delhi Tag -->
-      <a href="#delhiTourTrack" onclick="scrubToBeat(0); return false;" class="flex items-center gap-3 group focus:outline-none">
-        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/[0.06] border border-white/20 flex items-center justify-center group-hover:border-[#C8A96E] transition-colors">
-          <svg class="w-4 h-4 text-[#C8A96E]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+    <nav class="tovenza-nav-pill mx-auto rounded-full px-4 sm:px-7 py-2.5 sm:py-3 flex items-center justify-between gap-3 pointer-events-auto">
+      <!-- Brand Mark -->
+      <a href="#horizonStageTrack" onclick="scrubToHorizonBeat(0); return false;" class="flex items-center gap-3 group focus:outline-none">
+        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/[0.06] border border-[#C5A059]/45 flex items-center justify-center group-hover:border-[#C5A059] transition-colors">
+          <svg class="w-4 h-4 text-[#C5A059]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M4 6h16M12 6v13M7.5 10h9" />
           </svg>
         </div>
         <div class="leading-tight">
-          <span class="block text-sm sm:text-base font-extrabold tracking-[0.16em] text-white uppercase">
+          <span class="block text-sm sm:text-base font-extrabold tracking-[0.18em] text-white uppercase">
             TOVENZA
           </span>
-          <span class="block text-[9px] font-medium tracking-[0.2em] text-[#9BB2C4] uppercase">
-            HORIZON 04 &middot; DELHI REAL ESTATE
+          <span id="navActiveHorizonLabel" class="block text-[9px] font-medium tracking-[0.18em] text-[#C5A059] uppercase">
+            HORIZON 01 &middot; RECRUITMENT &amp; HR
           </span>
         </div>
       </a>
 
-      <!-- Center: Navigation Links -->
-      <div class="hidden lg:flex items-center gap-8 text-xs font-medium text-white/80">
-        <a href="#delhiTourTrack" onclick="scrubToBeat(0); return false;" class="hover:text-white transition-colors">Tour</a>
-        <a href="#delhiSolutionsBand" class="hover:text-white transition-colors">Solutions</a>
-        <a href="#delhiEstatesBand" class="hover:text-white transition-colors">Delhi Estates</a>
-        <a href="#readyToGetStartedBand" class="hover:text-white transition-colors">Inquire</a>
+      <!-- Section Links -->
+      <div class="hidden lg:flex items-center gap-7 text-xs font-medium text-white/80">
+        <a href="#horizonStageTrack" onclick="scrubToHorizonBeat(0); return false;" class="hover:text-[#C5A059] transition-colors">Stage Tour</a>
+        <a href="#allHorizonsDirectory" class="hover:text-[#C5A059] transition-colors">All 11 Horizons</a>
+        <a href="#architecturalCadence" class="hover:text-[#C5A059] transition-colors">Architecture</a>
+        <a href="#readyToGetStartedSection" class="hover:text-[#C5A059] transition-colors">Inquire</a>
       </div>
 
-      <!-- Right: Phone + Auto-Tour Button + Gold Inquire Now Pill -->
-      <div class="flex items-center gap-2 sm:gap-3">
-        <span class="hidden xl:inline-block text-xs font-medium text-white/80 tracking-wide">
-          +91 (11) 4800-0400
-        </span>
+      <!-- Right Utility Controls -->
+      <div class="flex items-center gap-2 sm:gap-2.5">
+        <label for="headerHorizonSelect" class="sr-only">Select Strategic Horizon</label>
+        <select
+          id="headerHorizonSelect"
+          onchange="selectHorizon(this.value, true)"
+          aria-label="Select Strategic Horizon"
+          class="hidden sm:inline-block px-3 py-1.5 rounded-full text-[11px] font-semibold bg-white/[0.08] text-white border border-[#C5A059]/35 focus:outline-none focus:border-[#C5A059] cursor-pointer"
+        ></select>
 
+        <!-- Auto-Tour Toggle -->
         <button
-          id="autoTourToggleBtn"
+          id="btnAutoPlayStage"
           type="button"
-          onclick="toggleDelhiAutoTour()"
-          class="px-3.5 py-1.5 rounded-full text-[11px] font-medium bg-white/[0.08] text-white border border-white/15 hover:bg-white/[0.16] transition-all flex items-center gap-1.5 cursor-pointer"
-          title="Play automated Delhi architectural cutaway tour"
+          onclick="toggleStageAutoTour()"
+          class="px-3 py-1.5 rounded-full text-[11px] font-medium bg-white/[0.08] text-white border border-white/15 hover:bg-white/[0.16] transition-all flex items-center gap-1.5 cursor-pointer"
+          title="Auto-tour across the four spatial beats"
         >
-          <span id="autoTourPulse" class="w-1.5 h-1.5 rounded-full bg-[#C8A96E]"></span>
-          <span id="autoTourBtnLabel">Auto-Tour</span>
+          <span id="autoPlayDot" class="w-1.5 h-1.5 rounded-full bg-[#C5A059]"></span>
+          <span id="autoPlayText">Auto-Tour</span>
         </button>
 
+        <!-- Primary Inquire CTA -->
         <a
-          href="#readyToGetStartedBand"
-          class="px-4 sm:px-5 py-2 rounded-full text-xs font-semibold bg-[#C8A96E] text-[#0D1F2D] hover:bg-white transition-all shadow-md"
+          href="#readyToGetStartedSection"
+          onclick="syncInquiryWithActiveHorizon()"
+          class="px-4 py-1.5 rounded-full text-[11px] font-semibold bg-[#C5A059] text-[#0D1F2D] hover:bg-[#F9F8F5] transition-all"
         >
           Inquire Now
         </a>
@@ -181,1134 +276,1135 @@
   </header>
 
   <!-- =====================================================================
-       2. SCROLL-SCRUBBED DELHI ARCHITECTURAL CUTAWAY TOUR STAGE (420vh)
+       FOREGROUND CONTENT LAYER
        ===================================================================== -->
-  <section id="delhiTourTrack">
-    <div id="delhiStudioStage">
+  <main class="foreground-layer">
 
-      <!-- Top-Center Delhi Tour Beat Selector Pills -->
-      <div id="tourBeatBar" class="fixed top-20 sm:top-24 left-1/2 -translate-x-1/2 z-30 flex flex-wrap items-center justify-center gap-1 sm:gap-1.5 p-1.5 rounded-full bg-[#0D1F2D]/88 backdrop-blur-xl border border-white/15 shadow-lg max-w-[95vw] transition-opacity duration-300">
-        <button type="button" onclick="scrubToBeat(0)" class="beat-pill px-2.5 sm:px-3.5 py-1.5 rounded-full text-[10px] sm:text-[11px] font-semibold bg-[#C8A96E] text-[#0D1F2D] transition-all cursor-pointer" data-beat="0">
-          01 Exterior &amp; Cutaway
-        </button>
-        <button type="button" onclick="scrubToBeat(1)" class="beat-pill px-2.5 sm:px-3.5 py-1.5 rounded-full text-[10px] sm:text-[11px] font-medium text-white/80 hover:text-white transition-all cursor-pointer" data-beat="1">
-          02 Living &amp; Spiral Stair
-        </button>
-        <button type="button" onclick="scrubToBeat(2)" class="beat-pill px-2.5 sm:px-3.5 py-1.5 rounded-full text-[10px] sm:text-[11px] font-medium text-white/80 hover:text-white transition-all cursor-pointer" data-beat="2">
-          03 Dining &amp; Upper Suite
-        </button>
-        <button type="button" onclick="scrubToBeat(3)" class="beat-pill px-2.5 sm:px-3.5 py-1.5 rounded-full text-[10px] sm:text-[11px] font-medium text-white/80 hover:text-white transition-all cursor-pointer" data-beat="3">
-          04 Terrace &amp; Sanctuary
-        </button>
-      </div>
+    <!-- Early fallback helper so image onerror handlers always resolve -->
+    <script>
+      window.renderArchitecturalFallback = function renderArchitecturalFallback(imgEl) {
+        if (!imgEl || imgEl.dataset.fallbackApplied) return;
+        imgEl.dataset.fallbackApplied = 'true';
+        const horizon = (window.TOVENZA_HORIZONS && window.TOVENZA_HORIZONS[window.appState?.activeHorizonIndex || 0]) || {
+          code: 'H-01',
+          name: 'Strategic Horizon',
+          tag: 'ARCHITECTURAL STUDIO CUTAWAY'
+        };
+        const svgMarkup = '<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760">' +
+          '<defs>' +
+          '<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">' +
+          '<stop offset="0%" stop-color="#F9F8F5"/>' +
+          '<stop offset="100%" stop-color="#ECE8DF"/>' +
+          '</linearGradient>' +
+          '<linearGradient id="walnut" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop offset="0%" stop-color="#6E472B"/>' +
+          '<stop offset="100%" stop-color="#3E2514"/>' +
+          '</linearGradient>' +
+          '</defs>' +
+          '<rect width="1280" height="760" fill="url(#bg)"/>' +
+          '<ellipse cx="640" cy="610" rx="410" ry="52" fill="rgba(13,31,45,0.14)"/>' +
+          '<polygon points="330,545 640,655 950,545 640,445" fill="#FFFFFF" stroke="#0D1F2D" stroke-opacity="0.14"/>' +
+          '<polygon points="360,245 640,155 920,245 920,475 640,565 360,475" fill="url(#walnut)" stroke="#C5A059" stroke-width="2"/>' +
+          '<line x1="360" y1="360" x2="920" y2="360" stroke="#C5A059" stroke-width="2" stroke-opacity="0.65"/>' +
+          '<text x="640" y="102" text-anchor="middle" fill="#0D1F2D" font-family="Georgia, serif" font-size="38" font-weight="600">TOVENZA ' + horizon.code + ' \u00B7 ' + horizon.name + '</text>' +
+          '<text x="640" y="136" text-anchor="middle" fill="#8C6A2E" font-family="sans-serif" font-size="14" letter-spacing="4">' + horizon.tag + '</text>' +
+          '</svg>';
+        imgEl.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgMarkup);
+      };
+    </script>
 
-      <!-- High-Detail Canvas Renderer for Delhi Cutaway Residence on Studio Cyclorama -->
-      <canvas id="delhiCutawayCanvas"></canvas>
+    <!-- -------------------------------------------------------------------
+         1. SCROLL-SCRUBBED ARCHITECTURAL STUDIO STAGE
+         ------------------------------------------------------------------- -->
+    <section id="horizonStageTrack" aria-label="Scroll-Scrubbed Strategic Horizon Stage">
+      <div id="horizonStickyStage">
 
-      <!-- Left-to-Right Gliding Dark Slate-Teal Frosted Glass Card -->
-      <div
-        id="glidingDelhiGlassCard"
-        class="gliding-glass-card fixed bottom-8 sm:bottom-11 left-4 sm:left-8 lg:left-12 z-30 w-[calc(100vw-2rem)] max-w-[395px] sm:max-w-[435px] rounded-[22px] p-5 sm:p-6 text-white pointer-events-auto"
-      >
-        <div class="flex items-center justify-between gap-2 mb-2">
-          <span id="delhiCardEyebrow" class="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#C8A96E]">
-            TOVENZA HORIZON 04 &middot; NEW DELHI
+        <!-- Top-Center Stage Beat HUD -->
+        <div id="stageTopHud" class="fixed top-20 sm:top-24 left-1/2 -translate-x-1/2 z-30 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 px-3 py-2 rounded-full bg-[#0D1F2D]/90 backdrop-blur-md border border-[#C5A059]/35 shadow-lg transition-opacity duration-300 max-w-[94vw]">
+          <span id="stageHorizonBadge" class="px-3 py-1 rounded-full text-[10px] font-bold tracking-[0.16em] uppercase bg-[#C5A059] text-[#0D1F2D]">
+            H-01 &middot; RECRUITMENT &amp; HR
           </span>
-          <span id="delhiCardBeatTag" class="text-[10px] font-mono text-white/70 px-2.5 py-0.5 rounded-full bg-white/[0.08]">
-            01 / 04
+          <button type="button" onclick="scrubToHorizonBeat(0)" class="stage-beat-btn px-2.5 py-1 rounded-full text-[10px] font-semibold bg-white text-[#0D1F2D] transition-all cursor-pointer" data-beat="0">
+            01 Overview
+          </button>
+          <button type="button" onclick="scrubToHorizonBeat(1)" class="stage-beat-btn px-2.5 py-1 rounded-full text-[10px] font-medium text-white/80 hover:text-white transition-all cursor-pointer" data-beat="1">
+            02 Spatial Cutaway
+          </button>
+          <button type="button" onclick="scrubToHorizonBeat(2)" class="stage-beat-btn px-2.5 py-1 rounded-full text-[10px] font-medium text-white/80 hover:text-white transition-all cursor-pointer" data-beat="2">
+            03 Core Systems
+          </button>
+          <button type="button" onclick="scrubToHorizonBeat(3)" class="stage-beat-btn px-2.5 py-1 rounded-full text-[10px] font-medium text-white/80 hover:text-white transition-all cursor-pointer" data-beat="3">
+            04 Flagship Mandate
+          </button>
+        </div>
+
+        <!-- Architectural Cutaway Plinth Stage -->
+        <div id="cutawayPlinthFrame" class="cutaway-plinth-stage">
+          <div id="cutawayVisualLayer" class="cutaway-visual-layer">
+            <img
+              id="stageHorizonImage"
+              src="image_generation_content/12547840578920600200"
+              alt="TOVENZA Horizon 01 Recruitment and HR Architectural Cutaway"
+              onerror="renderArchitecturalFallback(this)"
+            />
+          </div>
+
+          <!-- Warm-White & Bronze Studio Vignette Rim -->
+          <div
+            class="pointer-events-none absolute inset-0"
+            style="background: radial-gradient(circle at 50% 45%, rgba(249, 248, 245, 0) 56%, rgba(249, 248, 245, 0.36) 100%);"
+          ></div>
+
+          <!-- Subtle Bottom Studio Plinth Caption -->
+          <div class="pointer-events-none hidden sm:flex items-center justify-between px-6 py-3 absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#F9F8F5]/90 via-[#F9F8F5]/45 to-transparent">
+            <span id="stageBeatCaption" class="text-[11px] font-semibold tracking-[0.14em] uppercase text-[#0D1F2D]">
+              Beat 01 · Executive Talent Architecture &amp; Spatial Cadence
+            </span>
+            <span id="stageScrollPercent" class="text-[11px] font-mono font-semibold text-[#8C6A2E]">
+              SCRUB 0%
+            </span>
+          </div>
+        </div>
+
+        <!-- Left-to-Right Gliding Dark Slate-Teal Frosted Glass Card -->
+        <aside
+          id="glidingHorizonCard"
+          class="gliding-slate-card fixed bottom-7 sm:bottom-10 left-4 sm:left-8 lg:left-12 z-30 w-[calc(100vw-2rem)] max-w-[390px] sm:max-w-[430px] rounded-[22px] p-5 sm:p-6 text-white"
+        >
+          <div class="flex items-center justify-between gap-2 mb-2">
+            <span id="cardHorizonMeta" class="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#C5A059]">
+              HORIZON 01 &middot; HUMAN CAPITAL
+            </span>
+            <span id="cardBeatIndex" class="text-[10px] font-mono text-white/75 px-2.5 py-0.5 rounded-full bg-white/[0.08]">
+              01 / 04
+            </span>
+          </div>
+
+          <h1 id="cardHorizonHeadline" class="font-serif-editorial text-2xl sm:text-3xl font-semibold leading-tight text-white mb-2">
+            Recruitment &amp; HR
+          </h1>
+
+          <p id="cardHorizonBeatCopy" class="font-inter text-xs sm:text-[13px] leading-relaxed text-white/80 mb-4">
+            Precision leadership search, organizational design, and human-capital architecture engineered for high-velocity enterprises.
+          </p>
+
+          <div class="grid grid-cols-2 gap-2.5 mb-4">
+            <div class="glass-metric-box rounded-xl p-3">
+              <span id="cardStatPrimaryVal" class="block text-sm sm:text-base font-bold text-white tracking-tight">
+                96.4%
+              </span>
+              <span id="cardStatPrimaryLbl" class="block text-[9px] font-semibold uppercase tracking-[0.15em] text-[#C5A059] mt-0.5">
+                Executive Retention
+              </span>
+            </div>
+            <div class="glass-metric-box rounded-xl p-3">
+              <span id="cardStatSecondaryVal" class="block text-sm sm:text-base font-bold text-[#C5A059] tracking-tight">
+                18 Days
+              </span>
+              <span id="cardStatSecondaryLbl" class="block text-[9px] font-semibold uppercase tracking-[0.15em] text-white/75 mt-0.5">
+                Shortlist Velocity
+              </span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2.5">
+            <a
+              href="#readyToGetStartedSection"
+              onclick="syncInquiryWithActiveHorizon()"
+              class="flex-1 py-2.5 px-4 rounded-full text-xs font-semibold bg-[#C5A059] text-[#0D1F2D] hover:bg-[#F9F8F5] transition-all text-center"
+            >
+              Launch Mandate
+            </a>
+            <a
+              href="#allHorizonsDirectory"
+              class="flex-1 py-2.5 px-4 rounded-full text-xs font-medium bg-white/[0.08] text-white border border-white/20 hover:border-[#C5A059] transition-all text-center"
+            >
+              All 11 Horizons
+            </a>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------------------
+         2. INTERACTIVE 11-HORIZON DIRECTORY & DOMAIN CLUSTER FILTER
+         ------------------------------------------------------------------- -->
+    <section id="allHorizonsDirectory" class="py-24 sm:py-28 px-4 sm:px-8 lg:px-14 border-t border-[#0D1F2D]/10">
+      <div class="max-w-7xl mx-auto">
+
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+          <div class="max-w-2xl">
+            <span class="inline-block text-[10px] font-semibold tracking-[0.26em] uppercase text-[#8C6A2E] mb-2">
+              COMPLETE ECOSYSTEM &middot; HORIZONS 01 TO 11
+            </span>
+            <h2 class="font-serif-editorial text-3xl sm:text-5xl font-semibold text-[#0D1F2D] leading-tight">
+              Eleven Strategic Horizons on a Unified Studio Canvas
+            </h2>
+            <p class="font-inter text-xs sm:text-sm text-[#4A5A66] mt-3 leading-relaxed">
+              Every horizon pairs its dedicated architectural cutaway visual with scroll-scrubbed camera choreography, dark slate-teal glass cards, and burnished bronze precision against our warm-white `#F9F8F5` ground.
+            </p>
+          </div>
+
+          <!-- Domain Cluster Filter Pills -->
+          <div class="flex flex-wrap items-center gap-2">
+            <button type="button" onclick="filterHorizonCluster('all')" class="cluster-pill px-4 py-2 rounded-full text-xs font-semibold bg-[#0D1F2D] text-[#F9F8F5] transition-all cursor-pointer" data-cluster="all">
+              All 11 Horizons
+            </button>
+            <button type="button" onclick="filterHorizonCluster('enterprise-capital')" class="cluster-pill px-4 py-2 rounded-full text-xs font-medium bg-white text-[#0D1F2D] border border-[#0D1F2D]/15 hover:border-[#C5A059] transition-all cursor-pointer" data-cluster="enterprise-capital">
+              Enterprise &amp; Capital
+            </button>
+            <button type="button" onclick="filterHorizonCluster('human-spaces')" class="cluster-pill px-4 py-2 rounded-full text-xs font-medium bg-white text-[#0D1F2D] border border-[#0D1F2D]/15 hover:border-[#C5A059] transition-all cursor-pointer" data-cluster="human-spaces">
+              Spaces, Health &amp; Mind
+            </button>
+            <button type="button" onclick="filterHorizonCluster('frontier-knowledge')" class="cluster-pill px-4 py-2 rounded-full text-xs font-medium bg-white text-[#0D1F2D] border border-[#0D1F2D]/15 hover:border-[#C5A059] transition-all cursor-pointer" data-cluster="frontier-knowledge">
+              Frontier &amp; Wisdom
+            </button>
+          </div>
+        </div>
+
+        <!-- 11 Horizons Grid Populated Cleanly -->
+        <div id="horizonsGridContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7"></div>
+
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------------------
+         3. ARCHITECTURAL CADENCE & LIVE BACKGROUND ARCHITECTURE
+         ------------------------------------------------------------------- -->
+    <section id="architecturalCadence" class="py-20 sm:py-24 px-4 sm:px-8 lg:px-14 border-t border-[#0D1F2D]/10">
+      <div class="max-w-7xl mx-auto">
+        <div class="max-w-2xl mb-12">
+          <span class="inline-block text-[10px] font-semibold tracking-[0.26em] uppercase text-[#8C6A2E] mb-2">
+            INTERCONNECTED SYSTEM ARCHITECTURE
           </span>
+          <h2 class="font-serif-editorial text-3xl sm:text-4xl font-semibold text-[#0D1F2D]">
+            Continuous Motion Without Visual Fragmentation
+          </h2>
         </div>
 
-        <h1 id="delhiCardTitle" class="text-xl sm:text-2xl font-extrabold tracking-tight leading-snug text-white uppercase mb-2">
-          BUYING &amp; SELLING REDEFINED IN DELHI
-        </h1>
-
-        <p id="delhiCardDesc" class="font-inter text-xs sm:text-[13px] font-normal leading-relaxed text-white/75 mb-4">
-          White-glove representation across Lutyens&rsquo; Bungalow Zone, Amrita Shergill Marg, Golf Links, and Vasant Vihar with architectural precision.
-        </p>
-
-        <!-- Delhi Mandate Metrics -->
-        <div class="grid grid-cols-2 gap-2.5 mb-4">
-          <div class="metric-tile rounded-xl p-3">
-            <span id="delhiStatLeftVal" class="block text-sm sm:text-base font-bold text-white tracking-tight">
-              &#8377;4,200 Cr+
-            </span>
-            <span id="delhiStatLeftLbl" class="block text-[9px] font-semibold uppercase tracking-[0.15em] text-[#9BB2C4] mt-0.5">
-              Delhi Mandate Value
-            </span>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="studio-card rounded-2xl p-6">
+            <span class="text-xs font-mono font-bold text-[#8C6A2E]">01 / LIVE BACKGROUND</span>
+            <h3 class="text-lg font-bold text-[#0D1F2D] mt-2">Never-Ending Ambient Stage</h3>
+            <p class="font-inter text-xs sm:text-sm text-[#4A5A66] mt-2.5 leading-relaxed">
+              Fixed behind every band on a warm-white studio ground, flowing architectural ribbons and slate-teal/bronze light nodes react continuously to scroll velocity, cursor depth, and the active horizon.
+            </p>
           </div>
-          <div class="metric-tile rounded-xl p-3">
-            <span id="delhiStatRightVal" class="block text-sm sm:text-base font-bold text-[#C8A96E] tracking-tight">
-              #1
-            </span>
-            <span id="delhiStatRightLbl" class="block text-[9px] font-semibold uppercase tracking-[0.15em] text-[#9BB2C4] mt-0.5">
-              Institutional Advisory
-            </span>
+
+          <div class="studio-card rounded-2xl p-6">
+            <span class="text-xs font-mono font-bold text-[#8C6A2E]">02 / SCRUBBED CHOREOGRAPHY</span>
+            <h3 class="text-lg font-bold text-[#0D1F2D] mt-2">Four-Beat Cutaway Progression</h3>
+            <p class="font-inter text-xs sm:text-sm text-[#4A5A66] mt-2.5 leading-relaxed">
+              GSAP ScrollTrigger maps scroll depth smoothly through four spatial beats per horizon while gliding the frosted dark slate-teal card across bottom-left and bottom-right.
+            </p>
+          </div>
+
+          <div class="studio-card rounded-2xl p-6">
+            <span class="text-xs font-mono font-bold text-[#8C6A2E]">03 / INLINE MANDATE FLOW</span>
+            <h3 class="text-lg font-bold text-[#0D1F2D] mt-2">Zero-Popup Direct Inquiry</h3>
+            <p class="font-inter text-xs sm:text-sm text-[#4A5A66] mt-2.5 leading-relaxed">
+              All mandate requests route directly into the single inline &ldquo;Ready To Get Started?&rdquo; bar at the foot of the page&mdash;preserving uninterrupted viewing across all 11 horizons.
+            </p>
           </div>
         </div>
+      </div>
+    </section>
 
-        <!-- Action Pills Smooth-Scrolling to Bottom 'Ready To Get Started?' Section -->
-        <div class="flex items-center gap-2.5">
-          <a
-            href="#readyToGetStartedBand"
-            onclick="setMandateObjective('Acquire Delhi Estate')"
-            class="flex-1 py-2.5 px-4 rounded-full text-xs font-semibold bg-[#C8A96E] text-[#0D1F2D] hover:bg-white transition-all text-center"
-          >
-            Acquire Delhi Estate
-          </a>
-          <a
-            href="#readyToGetStartedBand"
-            onclick="setMandateObjective('List Your Mandate')"
-            class="flex-1 py-2.5 px-4 rounded-full text-xs font-medium bg-white/[0.08] text-white border border-white/20 hover:bg-white/[0.16] transition-all text-center"
-          >
-            List Your Mandate
-          </a>
+    <!-- -------------------------------------------------------------------
+         4. INLINE BOTTOM 'READY TO GET STARTED?' INQUIRY BAR & FOOTER
+         ------------------------------------------------------------------- -->
+    <section id="readyToGetStartedSection" class="py-20 sm:py-24 px-4 sm:px-8 lg:px-14 border-t border-[#0D1F2D]/10">
+      <div class="max-w-6xl mx-auto rounded-[28px] bg-[#0D1F2D] text-white p-7 sm:p-12 border border-[#C5A059]/35 shadow-2xl">
+
+        <div class="text-center max-w-2xl mx-auto mb-8">
+          <span class="inline-block text-[10px] font-semibold tracking-[0.26em] uppercase text-[#C5A059] mb-2">
+            TOVENZA GLOBAL MANDATE DESK &middot; HORIZONS 01&ndash;11
+          </span>
+          <h2 class="font-serif-editorial text-3xl sm:text-5xl font-semibold text-white">
+            Ready To Get Started?
+          </h2>
+          <p class="font-inter text-xs sm:text-sm text-white/75 mt-2.5">
+            Choose a horizon and mandate track below to initiate a confidential briefing directly on this page.
+          </p>
         </div>
-      </div>
 
-      <!-- Subtle Scroll Cue -->
-      <div id="delhiScrollCue" class="fixed bottom-3 left-1/2 -translate-x-1/2 z-20 hidden md:flex items-center pointer-events-none transition-opacity duration-300">
-        <span class="text-[10px] font-semibold tracking-[0.24em] uppercase text-[#0D1F2D]/75 bg-white/75 backdrop-blur-md px-4 py-1 rounded-full border border-black/10">
-          SCROLL TO SCRUB DELHI CUTAWAY TOUR
-        </span>
-      </div>
+        <!-- Horizon Selector Pills in Inline Bar -->
+        <div id="inquiryHorizonPills" class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mb-7"></div>
 
-    </div>
-  </section>
-
-  <!-- =====================================================================
-       3. DARK SLATE-TEAL SOLUTIONS BAND (#0D1F2D)
-       ===================================================================== -->
-  <section id="delhiSolutionsBand" class="relative z-30 bg-[#0D1F2D] text-white py-24 sm:py-28 px-4 sm:px-8 lg:px-14 border-t border-white/10">
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center max-w-3xl mx-auto mb-14">
-        <span class="inline-block text-[10px] font-semibold tracking-[0.26em] uppercase text-[#C8A96E] mb-2">
-          TOVENZA HORIZON 04 &middot; NEW DELHI ADVISORY
-        </span>
-        <h2 class="text-2xl sm:text-4xl lg:text-[2.55rem] font-extrabold tracking-tight uppercase leading-tight">
-          WE HAVE MODERN SOLUTIONS FOR EVERY SCENARIO
-        </h2>
-        <p class="font-inter text-xs sm:text-sm text-white/70 mt-3 leading-relaxed">
-          Structured specifically for Delhi&rsquo;s legacy bungalows, low-density freehold plots, diplomatic residences, and private institutional mandates.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Solution 1 -->
-        <article class="rounded-2xl p-6 bg-white/[0.04] border border-white/12 hover:border-[#C8A96E]/55 transition-all flex flex-col justify-between">
-          <div>
-            <div class="w-11 h-11 rounded-xl bg-[#C8A96E]/15 border border-[#C8A96E]/35 flex items-center justify-center text-[#C8A96E] mb-5">
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" />
-              </svg>
-            </div>
-            <h3 class="text-base font-bold text-white">Sovereign Acquisitions</h3>
-            <p class="font-inter text-xs text-white/65 mt-2.5 leading-relaxed">
-              Confidential off-market access to rare bungalows and plots across Lutyens&rsquo; Bungalow Zone, Amrita Shergill Marg, and Golf Links.
-            </p>
+        <!-- Inline Mandate Form (No Popup Modals) -->
+        <form id="inlineMandateForm" onsubmit="handleInlineMandateSubmit(event)" class="grid grid-cols-1 md:grid-cols-12 gap-3 max-w-5xl mx-auto">
+          <div class="md:col-span-3">
+            <input
+              id="mandateFullName"
+              type="text"
+              required
+              placeholder="Your Name"
+              class="w-full px-4 py-3 rounded-full bg-white/[0.07] border border-white/15 text-xs text-white placeholder-white/45 focus:outline-none focus:border-[#C5A059]"
+            />
           </div>
-          <a href="#readyToGetStartedBand" onclick="setMandateObjective('Sovereign Acquisitions')" class="mt-6 inline-flex items-center gap-1.5 text-xs font-semibold text-[#C8A96E] hover:text-white transition-colors">
-            <span>Initiate Mandate</span>
-            <span>&rarr;</span>
-          </a>
-        </article>
-
-        <!-- Solution 2 -->
-        <article class="rounded-2xl p-6 bg-white/[0.04] border border-white/12 hover:border-[#C8A96E]/55 transition-all flex flex-col justify-between">
-          <div>
-            <div class="w-11 h-11 rounded-xl bg-[#C8A96E]/15 border border-[#C8A96E]/35 flex items-center justify-center text-[#C8A96E] mb-5">
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <rect x="3" y="3" width="18" height="18" rx="2" />
-                <path d="M3 12h18M12 3v18" />
-              </svg>
-            </div>
-            <h3 class="text-base font-bold text-white">Bungalow &amp; Floor Redevelopment</h3>
-            <p class="font-inter text-xs text-white/65 mt-2.5 leading-relaxed">
-              End-to-end architectural massing, approval structuring, and build-to-suit execution for luxury floors in Vasant Vihar and Jor Bagh.
-            </p>
+          <div class="md:col-span-3">
+            <input
+              id="mandateOrganization"
+              type="text"
+              required
+              placeholder="Organization or City"
+              class="w-full px-4 py-3 rounded-full bg-white/[0.07] border border-white/15 text-xs text-white placeholder-white/45 focus:outline-none focus:border-[#C5A059]"
+            />
           </div>
-          <a href="#readyToGetStartedBand" onclick="setMandateObjective('Bungalow & Floor Redevelopment')" class="mt-6 inline-flex items-center gap-1.5 text-xs font-semibold text-[#C8A96E] hover:text-white transition-colors">
-            <span>Explore Redevelopment</span>
-            <span>&rarr;</span>
-          </a>
-        </article>
-
-        <!-- Solution 3 -->
-        <article class="rounded-2xl p-6 bg-white/[0.04] border border-white/12 hover:border-[#C8A96E]/55 transition-all flex flex-col justify-between">
-          <div>
-            <div class="w-11 h-11 rounded-xl bg-[#C8A96E]/15 border border-[#C8A96E]/35 flex items-center justify-center text-[#C8A96E] mb-5">
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5" />
-              </svg>
-            </div>
-            <h3 class="text-base font-bold text-white">Institutional Mandates</h3>
-            <p class="font-inter text-xs text-white/65 mt-2.5 leading-relaxed">
-              Precision valuation, cutaway digital twins, and discreet placement before vetted family offices and institutional principals.
-            </p>
+          <div class="md:col-span-3">
+            <input
+              id="mandateContact"
+              type="text"
+              required
+              placeholder="Email or Phone"
+              class="w-full px-4 py-3 rounded-full bg-white/[0.07] border border-white/15 text-xs text-white placeholder-white/45 focus:outline-none focus:border-[#C5A059]"
+            />
           </div>
-          <a href="#readyToGetStartedBand" onclick="setMandateObjective('Institutional Mandates')" class="mt-6 inline-flex items-center gap-1.5 text-xs font-semibold text-[#C8A96E] hover:text-white transition-colors">
-            <span>Structure Mandate</span>
-            <span>&rarr;</span>
-          </a>
-        </article>
-
-        <!-- Solution 4 -->
-        <article class="rounded-2xl p-6 bg-white/[0.04] border border-white/12 hover:border-[#C8A96E]/55 transition-all flex flex-col justify-between">
-          <div>
-            <div class="w-11 h-11 rounded-xl bg-[#C8A96E]/15 border border-[#C8A96E]/35 flex items-center justify-center text-[#C8A96E] mb-5">
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <circle cx="12" cy="12" r="9" />
-                <path d="M12 7v5l3 3" />
-              </svg>
-            </div>
-            <h3 class="text-base font-bold text-white">Private Family Advisory</h3>
-            <p class="font-inter text-xs text-white/65 mt-2.5 leading-relaxed">
-              Multi-generational wealth stewardship, diplomatic &amp; executive leases in Chanakyapuri, and portfolio rebalancing across Delhi.
-            </p>
+          <div class="md:col-span-3">
+            <button
+              type="submit"
+              class="w-full py-3 px-6 rounded-full text-xs font-bold bg-[#C5A059] text-[#0D1F2D] hover:bg-[#F9F8F5] transition-all cursor-pointer"
+            >
+              Submit Mandate &rarr;
+            </button>
           </div>
-          <a href="#readyToGetStartedBand" onclick="setMandateObjective('Private Family Advisory')" class="mt-6 inline-flex items-center gap-1.5 text-xs font-semibold text-[#C8A96E] hover:text-white transition-colors">
-            <span>Speak With Advisory</span>
-            <span>&rarr;</span>
-          </a>
-        </article>
-      </div>
-    </div>
-  </section>
+        </form>
 
-  <!-- =====================================================================
-       4. WARM STUDIO CREAM DELHI ESTATES PORTFOLIO GRID (#F4EFE8)
-       ===================================================================== -->
-  <section id="delhiEstatesBand" class="relative z-30 bg-[#F4EFE8] text-[#0D1F2D] py-24 sm:py-28 px-4 sm:px-8 lg:px-14 border-t border-black/10">
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center max-w-3xl mx-auto mb-12">
-        <span class="inline-block text-[10px] font-semibold tracking-[0.26em] uppercase text-[#4B6375] mb-2">
-          CURATED DELHI MANDATES
-        </span>
-        <h2 class="text-2xl sm:text-4xl lg:text-[2.55rem] font-extrabold tracking-tight uppercase leading-tight text-[#0D1F2D]">
-          ICONIC RESIDENCES ACROSS DELHI
-        </h2>
-        <p class="font-inter text-xs sm:text-sm text-[#425563] mt-3">
-          Filter Delhi&rsquo;s premier enclaves or select <span class="font-semibold text-[#0D1F2D]">Tour Residence</span> to scrub directly into the matching architectural cutaway tour beat.
-        </p>
-
-        <!-- Enclave Filter Pills -->
-        <div class="flex flex-wrap items-center justify-center gap-2 mt-7">
-          <button type="button" onclick="filterDelhiEnclaves('all')" class="enclave-pill px-4 py-2 rounded-full text-xs font-semibold bg-[#0D1F2D] text-white transition-all cursor-pointer" data-enclave="all">
-            All Delhi
-          </button>
-          <button type="button" onclick="filterDelhiEnclaves('lutyens-golf')" class="enclave-pill px-4 py-2 rounded-full text-xs font-medium bg-white text-[#0D1F2D] border border-black/10 hover:border-[#0D1F2D] transition-all cursor-pointer" data-enclave="lutyens-golf">
-            Lutyens &amp; Golf Links
-          </button>
-          <button type="button" onclick="filterDelhiEnclaves('south-vasant')" class="enclave-pill px-4 py-2 rounded-full text-xs font-medium bg-white text-[#0D1F2D] border border-black/10 hover:border-[#0D1F2D] transition-all cursor-pointer" data-enclave="south-vasant">
-            South Delhi &amp; Vasant Vihar
-          </button>
-          <button type="button" onclick="filterDelhiEnclaves('central-diplomatic')" class="enclave-pill px-4 py-2 rounded-full text-xs font-medium bg-white text-[#0D1F2D] border border-black/10 hover:border-[#0D1F2D] transition-all cursor-pointer" data-enclave="central-diplomatic">
-            Central &amp; Diplomatic Enclaves
-          </button>
-        </div>
-      </div>
-
-      <!-- 6 Delhi Residence Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-
-        <!-- 1. Amrita Shergill Marg -->
-        <article class="delhi-estate-card bg-white rounded-2xl overflow-hidden border border-black/10 flex flex-col justify-between p-6" data-enclave="lutyens-golf">
-          <div>
-            <div class="flex items-center justify-between gap-2 mb-4">
-              <span class="px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-[#0D1F2D] text-white">
-                Amrita Shergill Marg
-              </span>
-              <span class="text-sm font-extrabold text-[#0D1F2D]">&#8377;145 Cr</span>
-            </div>
-            <h3 class="text-lg font-bold text-[#0D1F2D]">The Lodhi-Edge Bronze Bungalow</h3>
-            <p class="font-inter text-xs text-[#5A6D7C] mt-1.5 leading-relaxed">
-              Two-story freehold residence with sculptural dark bronze louvers, vertical living greenery, spiral staircase, and warm walnut atrium.
-            </p>
-            <div class="grid grid-cols-3 gap-2 mt-5 pt-4 border-t border-black/10 text-center">
-              <div>
-                <span class="block text-xs font-bold text-[#0D1F2D]">1,450 Sq. Yds</span>
-                <span class="block text-[9px] uppercase text-[#5A6D7C]">Plot Scale</span>
-              </div>
-              <div>
-                <span class="block text-xs font-bold text-[#0D1F2D]">6 Suites</span>
-                <span class="block text-[9px] uppercase text-[#5A6D7C]">Configuration</span>
-              </div>
-              <div>
-                <span class="block text-xs font-bold text-[#0D1F2D]">Freehold</span>
-                <span class="block text-[9px] uppercase text-[#5A6D7C]">Title Status</span>
-              </div>
-            </div>
-          </div>
+        <!-- Inline Confirmation Message -->
+        <div id="inlineMandateConfirmation" class="hidden max-w-3xl mx-auto rounded-2xl bg-white/[0.06] border border-[#C5A059]/45 p-5 text-center">
+          <p id="inlineMandateSummary" class="text-xs sm:text-sm text-white font-medium"></p>
           <button
             type="button"
-            onclick="tourDelhiBeat(1)"
-            class="mt-6 w-full py-2.5 px-4 rounded-full text-xs font-semibold bg-[#0D1F2D] text-white hover:bg-[#C8A96E] hover:text-[#0D1F2D] transition-colors cursor-pointer"
+            onclick="resetInlineMandate()"
+            class="mt-3 text-[11px] font-semibold uppercase tracking-wider text-[#C5A059] hover:text-white transition-colors cursor-pointer"
           >
-            Tour Residence &uarr;
+            New Mandate Inquiry &rarr;
           </button>
-        </article>
+        </div>
 
-        <!-- 2. Golf Links -->
-        <article class="delhi-estate-card bg-white rounded-2xl overflow-hidden border border-black/10 flex flex-col justify-between p-6" data-enclave="lutyens-golf">
+        <!-- Footer Row -->
+        <footer class="mt-14 pt-8 border-t border-white/12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-white/65">
           <div>
-            <div class="flex items-center justify-between gap-2 mb-4">
-              <span class="px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-[#0D1F2D] text-white">
-                Golf Links
-              </span>
-              <span class="text-sm font-extrabold text-[#0D1F2D]">&#8377;92 Cr</span>
-            </div>
-            <h3 class="text-lg font-bold text-[#0D1F2D]">Golf Links Canopy Residence</h3>
-            <p class="font-inter text-xs text-[#5A6D7C] mt-1.5 leading-relaxed">
-              Double-height salon overlooking tree-lined greens, cantilevered mezzanine bridge, and bespoke walnut millwork throughout.
-            </p>
-            <div class="grid grid-cols-3 gap-2 mt-5 pt-4 border-t border-black/10 text-center">
-              <div>
-                <span class="block text-xs font-bold text-[#0D1F2D]">820 Sq. Yds</span>
-                <span class="block text-[9px] uppercase text-[#5A6D7C]">Plot Scale</span>
-              </div>
-              <div>
-                <span class="block text-xs font-bold text-[#0D1F2D]">5 Suites</span>
-                <span class="block text-[9px] uppercase text-[#5A6D7C]">Configuration</span>
-              </div>
-              <div>
-                <span class="block text-xs font-bold text-[#0D1F2D]">Freehold</span>
-                <span class="block text-[9px] uppercase text-[#5A6D7C]">Title Status</span>
-              </div>
-            </div>
+            <span class="font-extrabold tracking-[0.18em] text-white uppercase">TOVENZA</span>
+            <span class="mx-2 text-[#C5A059]">/</span>
+            <span>Horizons 01&ndash;11 Strategic Showcase</span>
           </div>
-          <button
-            type="button"
-            onclick="tourDelhiBeat(1)"
-            class="mt-6 w-full py-2.5 px-4 rounded-full text-xs font-semibold bg-[#0D1F2D] text-white hover:bg-[#C8A96E] hover:text-[#0D1F2D] transition-colors cursor-pointer"
-          >
-            Tour Residence &uarr;
-          </button>
-        </article>
-
-        <!-- 3. Vasant Vihar -->
-        <article class="delhi-estate-card bg-white rounded-2xl overflow-hidden border border-black/10 flex flex-col justify-between p-6" data-enclave="south-vasant">
-          <div>
-            <div class="flex items-center justify-between gap-2 mb-4">
-              <span class="px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-[#0D1F2D] text-white">
-                Vasant Vihar
-              </span>
-              <span class="text-sm font-extrabold text-[#0D1F2D]">&#8377;44 Cr</span>
-            </div>
-            <h3 class="text-lg font-bold text-[#0D1F2D]">Vasant Vihar Atelier Residence</h3>
-            <p class="font-inter text-xs text-[#5A6D7C] mt-1.5 leading-relaxed">
-              Expansive formal dining gallery, marble island kitchen, and private garden courtyard on a quiet south-facing block.
-            </p>
-            <div class="grid grid-cols-3 gap-2 mt-5 pt-4 border-t border-black/10 text-center">
-              <div>
-                <span class="block text-xs font-bold text-[#0D1F2D]">7,600 Sq. Ft.</span>
-                <span class="block text-[9px] uppercase text-[#5A6D7C]">Floor Area</span>
-              </div>
-              <div>
-                <span class="block text-xs font-bold text-[#0D1F2D]">4 Suites</span>
-                <span class="block text-[9px] uppercase text-[#5A6D7C]">Configuration</span>
-              </div>
-              <div>
-                <span class="block text-xs font-bold text-[#0D1F2D]">Ready</span>
-                <span class="block text-[9px] uppercase text-[#5A6D7C]">Handover</span>
-              </div>
-            </div>
+          <div class="flex flex-wrap items-center gap-6 font-inter">
+            <span>+91 (11) 4800-0400</span>
+            <span>support.tovenza@gmail.com</span>
+            <span>&copy; 2026 TOVENZA</span>
           </div>
-          <button
-            type="button"
-            onclick="tourDelhiBeat(2)"
-            class="mt-6 w-full py-2.5 px-4 rounded-full text-xs font-semibold bg-[#0D1F2D] text-white hover:bg-[#C8A96E] hover:text-[#0D1F2D] transition-colors cursor-pointer"
-          >
-            Tour Residence &uarr;
-          </button>
-        </article>
-
-        <!-- 4. Lutyens' Bungalow Zone -->
-        <article class="delhi-estate-card bg-white rounded-2xl overflow-hidden border border-black/10 flex flex-col justify-between p-6" data-enclave="lutyens-golf">
-          <div>
-            <div class="flex items-center justify-between gap-2 mb-4">
-              <span class="px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-[#0D1F2D] text-white">
-                Lutyens&rsquo; Bungalow Zone
-              </span>
-              <span class="text-sm font-extrabold text-[#0D1F2D]">&#8377;210 Cr</span>
-            </div>
-            <h3 class="text-lg font-bold text-[#0D1F2D]">LBZ Sovereign Sanctuary</h3>
-            <p class="font-inter text-xs text-[#5A6D7C] mt-1.5 leading-relaxed">
-              Landmark architectural estate featuring botanical courtyard walls, upper master suite, and private pavilion terraces.
-            </p>
-            <div class="grid grid-cols-3 gap-2 mt-5 pt-4 border-t border-black/10 text-center">
-              <div>
-                <span class="block text-xs font-bold text-[#0D1F2D]">2.1 Acres</span>
-                <span class="block text-[9px] uppercase text-[#5A6D7C]">Estate Scale</span>
-              </div>
-              <div>
-                <span class="block text-xs font-bold text-[#0D1F2D]">7 Suites</span>
-                <span class="block text-[9px] uppercase text-[#5A6D7C]">Configuration</span>
-              </div>
-              <div>
-                <span class="block text-xs font-bold text-[#0D1F2D]">Private</span>
-                <span class="block text-[9px] uppercase text-[#5A6D7C]">Mandate Type</span>
-              </div>
-            </div>
-          </div>
-          <button
-            type="button"
-            onclick="tourDelhiBeat(0)"
-            class="mt-6 w-full py-2.5 px-4 rounded-full text-xs font-semibold bg-[#0D1F2D] text-white hover:bg-[#C8A96E] hover:text-[#0D1F2D] transition-colors cursor-pointer"
-          >
-            Tour Residence &uarr;
-          </button>
-        </article>
-
-        <!-- 5. Jor Bagh -->
-        <article class="delhi-estate-card bg-white rounded-2xl overflow-hidden border border-black/10 flex flex-col justify-between p-6" data-enclave="central-diplomatic">
-          <div>
-            <div class="flex items-center justify-between gap-2 mb-4">
-              <span class="px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-[#0D1F2D] text-white">
-                Jor Bagh
-              </span>
-              <span class="text-sm font-extrabold text-[#0D1F2D]">&#8377;56 Cr</span>
-            </div>
-            <h3 class="text-lg font-bold text-[#0D1F2D]">Jor Bagh Courtyard Residence</h3>
-            <p class="font-inter text-xs text-[#5A6D7C] mt-1.5 leading-relaxed">
-              Sculptural spiral stair geometry, warm timber ceilings, and sunlit terraces steps from Lodhi Gardens and Safdarjung Tomb.
-            </p>
-            <div class="grid grid-cols-3 gap-2 mt-5 pt-4 border-t border-black/10 text-center">
-              <div>
-                <span class="block text-xs font-bold text-[#0D1F2D]">6,800 Sq. Ft.</span>
-                <span class="block text-[9px] uppercase text-[#5A6D7C]">Floor Area</span>
-              </div>
-              <div>
-                <span class="block text-xs font-bold text-[#0D1F2D]">4 Suites</span>
-                <span class="block text-[9px] uppercase text-[#5A6D7C]">Configuration</span>
-              </div>
-              <div>
-                <span class="block text-xs font-bold text-[#0D1F2D]">Freehold</span>
-                <span class="block text-[9px] uppercase text-[#5A6D7C]">Title Status</span>
-              </div>
-            </div>
-          </div>
-          <button
-            type="button"
-            onclick="tourDelhiBeat(2)"
-            class="mt-6 w-full py-2.5 px-4 rounded-full text-xs font-semibold bg-[#0D1F2D] text-white hover:bg-[#C8A96E] hover:text-[#0D1F2D] transition-colors cursor-pointer"
-          >
-            Tour Residence &uarr;
-          </button>
-        </article>
-
-        <!-- 6. Chanakyapuri -->
-        <article class="delhi-estate-card bg-white rounded-2xl overflow-hidden border border-black/10 flex flex-col justify-between p-6" data-enclave="central-diplomatic">
-          <div>
-            <div class="flex items-center justify-between gap-2 mb-4">
-              <span class="px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-[#0D1F2D] text-white">
-                Chanakyapuri
-              </span>
-              <span class="text-sm font-extrabold text-[#0D1F2D]">&#8377;118 Cr</span>
-            </div>
-            <h3 class="text-lg font-bold text-[#0D1F2D]">Chanakyapuri Diplomatic Villa</h3>
-            <p class="font-inter text-xs text-[#5A6D7C] mt-1.5 leading-relaxed">
-              High-security perimeter, private sky terrace, and serene walnut sanctuary crafted for sovereign missions and family principals.
-            </p>
-            <div class="grid grid-cols-3 gap-2 mt-5 pt-4 border-t border-black/10 text-center">
-              <div>
-                <span class="block text-xs font-bold text-[#0D1F2D]">1,180 Sq. Yds</span>
-                <span class="block text-[9px] uppercase text-[#5A6D7C]">Plot Scale</span>
-              </div>
-              <div>
-                <span class="block text-xs font-bold text-[#0D1F2D]">6 Suites</span>
-                <span class="block text-[9px] uppercase text-[#5A6D7C]">Configuration</span>
-              </div>
-              <div>
-                <span class="block text-xs font-bold text-[#0D1F2D]">Private</span>
-                <span class="block text-[9px] uppercase text-[#5A6D7C]">Mandate Type</span>
-              </div>
-            </div>
-          </div>
-          <button
-            type="button"
-            onclick="tourDelhiBeat(3)"
-            class="mt-6 w-full py-2.5 px-4 rounded-full text-xs font-semibold bg-[#0D1F2D] text-white hover:bg-[#C8A96E] hover:text-[#0D1F2D] transition-colors cursor-pointer"
-          >
-            Tour Residence &uarr;
-          </button>
-        </article>
+        </footer>
 
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- =====================================================================
-       5. 'READY TO GET STARTED?' INLINE BOTTOM INQUIRY BAND & FOOTER (#0D1F2D)
-       Exact video-matched inline structure — zero popups or extra boxes
-       ===================================================================== -->
-  <section id="readyToGetStartedBand" class="relative z-30 bg-[#0D1F2D] text-white pt-20 pb-14 px-4 sm:px-8 lg:px-14 border-t border-white/10">
-    <div class="max-w-6xl mx-auto">
+  </main>
 
-      <div class="text-center max-w-2xl mx-auto mb-8">
-        <span class="block text-[10px] font-semibold tracking-[0.26em] uppercase text-[#C8A96E] mb-2">
-          TOVENZA HORIZON 04 &middot; NEW DELHI PRIVATE DESK
-        </span>
-        <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight uppercase text-white">
-          READY TO GET STARTED?
-        </h2>
-        <p class="font-inter text-xs sm:text-sm text-white/70 mt-2">
-          Select your Delhi mandate objective and enclave below to connect directly with our Horizon 04 advisory team.
-        </p>
-      </div>
-
-      <!-- Mandate Objective Pills -->
-      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mb-7">
-        <button
-          type="button"
-          onclick="selectObjectivePill(this)"
-          class="obj-pill px-4 py-2 rounded-full text-xs font-semibold bg-[#C8A96E] text-[#0D1F2D] transition-all cursor-pointer"
-          data-objective="Acquire Delhi Estate"
-        >
-          Acquire Delhi Estate
-        </button>
-        <button
-          type="button"
-          onclick="selectObjectivePill(this)"
-          class="obj-pill px-4 py-2 rounded-full text-xs font-medium bg-white/[0.06] text-white/85 border border-white/15 hover:border-[#C8A96E] transition-all cursor-pointer"
-          data-objective="List Your Mandate"
-        >
-          List Your Mandate
-        </button>
-        <button
-          type="button"
-          onclick="selectObjectivePill(this)"
-          class="obj-pill px-4 py-2 rounded-full text-xs font-medium bg-white/[0.06] text-white/85 border border-white/15 hover:border-[#C8A96E] transition-all cursor-pointer"
-          data-objective="Bungalow & Floor Redevelopment"
-        >
-          Bungalow &amp; Floor Redevelopment
-        </button>
-        <button
-          type="button"
-          onclick="selectObjectivePill(this)"
-          class="obj-pill px-4 py-2 rounded-full text-xs font-medium bg-white/[0.06] text-white/85 border border-white/15 hover:border-[#C8A96E] transition-all cursor-pointer"
-          data-objective="Private Family Advisory"
-        >
-          Private Family Advisory
-        </button>
-      </div>
-
-      <!-- Clean Single-Row Inline Inquiry Form -->
-      <form id="delhiInquiryForm" onsubmit="submitDelhiMandate(event)" class="grid grid-cols-1 md:grid-cols-12 gap-3 max-w-5xl mx-auto">
-        <div class="md:col-span-3">
-          <input
-            id="delhiInqName"
-            type="text"
-            required
-            placeholder="Your Name"
-            class="w-full px-4 py-3 rounded-full bg-white/[0.06] border border-white/15 text-xs text-white placeholder-white/45 focus:outline-none focus:border-[#C8A96E]"
-          />
-        </div>
-        <div class="md:col-span-3">
-          <input
-            id="delhiInqEnclave"
-            type="text"
-            required
-            placeholder="Delhi Enclave (e.g. Golf Links, Vasant Vihar)"
-            class="w-full px-4 py-3 rounded-full bg-white/[0.06] border border-white/15 text-xs text-white placeholder-white/45 focus:outline-none focus:border-[#C8A96E]"
-          />
-        </div>
-        <div class="md:col-span-3">
-          <input
-            id="delhiInqContact"
-            type="text"
-            required
-            placeholder="Phone or Email"
-            class="w-full px-4 py-3 rounded-full bg-white/[0.06] border border-white/15 text-xs text-white placeholder-white/45 focus:outline-none focus:border-[#C8A96E]"
-          />
-        </div>
-        <div class="md:col-span-3">
-          <button
-            type="submit"
-            class="w-full py-3 px-6 rounded-full text-xs font-bold bg-[#C8A96E] text-[#0D1F2D] hover:bg-white transition-all cursor-pointer"
-          >
-            Request Dossier &rarr;
-          </button>
-        </div>
-      </form>
-
-      <!-- Inline Confirmation Banner -->
-      <div id="delhiInquiryConfirmed" class="hidden max-w-3xl mx-auto rounded-2xl bg-white/[0.05] border border-[#C8A96E]/45 p-5 text-center">
-        <p id="delhiConfirmedSummary" class="text-xs sm:text-sm font-medium text-white"></p>
-        <button
-          type="button"
-          onclick="resetDelhiMandateForm()"
-          class="mt-3 text-[11px] font-semibold uppercase tracking-wider text-[#C8A96E] hover:text-white transition-colors cursor-pointer"
-        >
-          Submit Another Delhi Inquiry &rarr;
-        </button>
-      </div>
-
-      <!-- Clean Institutional Footer -->
-      <footer class="mt-20 pt-10 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 text-xs text-white/60">
-        <div>
-          <span class="font-extrabold tracking-[0.18em] text-white uppercase">TOVENZA</span>
-          <span class="mx-2 text-white/25">/</span>
-          <span>Horizon 04 &middot; Delhi Real Estate &amp; Property</span>
-        </div>
-        <div class="flex flex-wrap items-center gap-6 font-inter">
-          <span>+91 (11) 4800-0400</span>
-          <span>support.tovenza@gmail.com</span>
-          <span>&copy; 2026 TOVENZA Group</span>
-        </div>
-      </footer>
-
-    </div>
-  </section>
-
-  <!-- =====================================================================
-       SCROLL-SCRUBBED 3D ARCHITECTURAL CUTAWAY & GLIDING GLASS CARD ENGINE
-       ===================================================================== -->
   <script>
-    /**
-     * TOVENZA — Horizon 04 · Delhi Real Estate & Property
-     * Renders a richly shaded two-story architectural cutaway residence on a bright
-     * warm-gray/cream studio cyclorama backdrop (#ECEAE4 -> #DFDDD6), complete with:
-     * - Sculptural dark bronze vertical louvers
-     * - Living vertical greenery wall
-     * - Curved spiral staircase
-     * - Warm walnut paneling & lit floor contours
-     * - Floating white plinth slab & soft global illumination studio shadows
-     * - Continuous camera push-in / pan / depth-parallax choreography across 4 Delhi beats
-     * - Left-to-right gliding dark slate-teal frosted glass card
-     */
+    gsap.registerPlugin(ScrollTrigger);
 
-    const delhiBeats = [
+    // Theme hex constants grouped cleanly in one object
+    const STUDIO_THEME = {
+      warmWhite: '#F9F8F5',
+      warmHighlight: '#FCFBF9',
+      warmShadow: '#F1EFE9',
+      slateTeal: '#0D1F2D',
+      bronze: '#C5A059',
+      bronzeDeep: '#8C6A2E'
+    };
+
+    // All 11 Strategic Horizons with assigned generated assets from this conversation
+    const TOVENZA_HORIZONS = [
       {
-        eyebrow: 'TOVENZA HORIZON 04 · NEW DELHI',
-        beatTag: '01 / 04',
-        title: 'BUYING & SELLING REDEFINED IN DELHI',
-        desc: 'White-glove representation across Lutyens’ Bungalow Zone, Amrita Shergill Marg, Golf Links, and Vasant Vihar with architectural precision.',
-        leftVal: '₹4,200 Cr+',
-        leftLbl: 'Delhi Mandate Value',
-        rightVal: '#1',
-        rightLbl: 'Institutional Advisory',
-        side: 'left',
-        camZoom: 1.0,
-        camPanX: 0.0,
-        camPanY: 0.0,
-        cutawayOpenness: 0.72
+        id: '01',
+        code: 'H-01',
+        name: 'Recruitment & HR',
+        cluster: 'enterprise-capital',
+        tag: 'HUMAN CAPITAL ARCHITECTURE',
+        image: 'image_generation_content/12547840578920600200',
+        statPrimaryVal: '96.4%',
+        statPrimaryLbl: 'Executive Retention',
+        statSecondaryVal: '18 Days',
+        statSecondaryLbl: 'Shortlist Velocity',
+        summary: 'Executive search, leadership calibration, and organizational design engineered for high-growth enterprises.',
+        beats: [
+          {
+            side: 'left',
+            caption: 'Beat 01 · Executive Talent Architecture & Spatial Cadence',
+            copy: 'Precision leadership search, organizational design, and human-capital architecture engineered for high-velocity enterprises.',
+            scale: 1.0,
+            x: 0,
+            y: 0
+          },
+          {
+            side: 'right',
+            caption: 'Beat 02 · Leadership Assessment & Succession Cutaway',
+            copy: 'Structured board-level succession mapping and multi-stage capability diagnostics across core operating pillars.',
+            scale: 1.12,
+            x: -24,
+            y: 12
+          },
+          {
+            side: 'left',
+            caption: 'Beat 03 · Culture Systems & High-Trust Pod Design',
+            copy: 'Aligning autonomous engineering, product, and commercial pods around clear ownership and measurable outcomes.',
+            scale: 1.2,
+            x: 22,
+            y: -10
+          },
+          {
+            side: 'right',
+            caption: 'Beat 04 · Global Talent Mandate & Advisory',
+            copy: 'Discreet C-suite and founding-leader placements backed by institutional governance and long-horizon retention.',
+            scale: 1.08,
+            x: 0,
+            y: 6
+          }
+        ]
       },
       {
-        eyebrow: 'AMRITA SHERGILL MARG & GOLF LINKS',
-        beatTag: '02 / 04',
-        title: 'CURATED LIVING FROM THE INSIDE OUT',
-        desc: 'Double-height living salon framed by sculptural bronze louvers, living vertical greenery, illuminated floor contours, and a central spiral stair.',
-        leftVal: 'Lutyens & Golf Links',
-        leftLbl: 'Prime Delhi Enclaves',
-        rightVal: '12 Days',
-        rightLbl: 'Avg. Mandate Pace',
-        side: 'right',
-        camZoom: 1.24,
-        camPanX: -0.06,
-        camPanY: 0.03,
-        cutawayOpenness: 1.0
+        id: '02',
+        code: 'H-02',
+        name: 'Healthcare & Diagnostics',
+        cluster: 'human-spaces',
+        tag: 'CLINICAL PRECISION & SYSTEMS',
+        image: 'image_generation_content/4530242925854783073',
+        statPrimaryVal: '99.2%',
+        statPrimaryLbl: 'Diagnostic Fidelity',
+        statSecondaryVal: '4.2x',
+        statSecondaryLbl: 'Throughput Efficiency',
+        summary: 'Next-generation diagnostic architecture, clinical workflow precision, and patient-first care environments.',
+        beats: [
+          {
+            side: 'left',
+            caption: 'Beat 01 · Clinical Spatial Precision & Flow',
+            copy: 'Calm, high-clarity diagnostic environments designed around patient comfort, acoustic serenity, and rapid turnaround.',
+            scale: 1.0,
+            x: 0,
+            y: 0
+          },
+          {
+            side: 'right',
+            caption: 'Beat 02 · Imaging & Biomarker Workflow Cutaway',
+            copy: 'Streamlined laboratory and imaging pathways that reduce bottlenecks while elevating analytical rigor.',
+            scale: 1.14,
+            x: -20,
+            y: 10
+          },
+          {
+            side: 'left',
+            caption: 'Beat 03 · Preventive Longevity & Care Suites',
+            copy: 'Integrated longitudinal health telemetry paired with restorative clinical interiors.',
+            scale: 1.22,
+            x: 20,
+            y: -12
+          },
+          {
+            side: 'right',
+            caption: 'Beat 04 · Multi-Center Network Scalability',
+            copy: 'Standardized clinical playbooks ready for rapid expansion across metropolitan care hubs.',
+            scale: 1.08,
+            x: 0,
+            y: 4
+          }
+        ]
       },
       {
-        eyebrow: 'VASANT VIHAR & JOR BAGH',
-        beatTag: '03 / 04',
-        title: 'DINING GALLERY & UPPER WALNUT SUITE',
-        desc: 'Warm walnut paneling, architectural lighting coves, and seamless vertical transition into upper sleeping sanctuaries and private study galleries.',
-        leftVal: 'Vasant Vihar & Jor Bagh',
-        leftLbl: 'Low-Density Corridors',
-        rightVal: '99.4%',
-        rightLbl: 'Valuation Precision',
-        side: 'left',
-        camZoom: 1.32,
-        camPanX: 0.07,
-        camPanY: -0.04,
-        cutawayOpenness: 1.0
+        id: '03',
+        code: 'H-03',
+        name: 'Hospitality',
+        cluster: 'human-spaces',
+        tag: 'EXPERIENTIAL SANCTUARIES',
+        image: 'image_generation_content/16280114781810282652',
+        statPrimaryVal: '94.8%',
+        statPrimaryLbl: 'Guest Return Index',
+        statSecondaryVal: '+38%',
+        statSecondaryLbl: 'RevPAR Uplift',
+        summary: 'Bespoke architectural hospitality, sensory material storytelling, and memorable guest rituals.',
+        beats: [
+          {
+            side: 'left',
+            caption: 'Beat 01 · Arrival Threshold & Warm Materiality',
+            copy: 'First impressions shaped by natural stone, warm timber, soft studio lighting, and unhurried spatial transitions.',
+            scale: 1.0,
+            x: 0,
+            y: 0
+          },
+          {
+            side: 'right',
+            caption: 'Beat 02 · Private Suites & Acoustic Calm',
+            copy: 'Intimate guest sanctuaries balancing tactile luxury with effortless indoor-outdoor breathing room.',
+            scale: 1.15,
+            x: -22,
+            y: 8
+          },
+          {
+            side: 'left',
+            caption: 'Beat 03 · Culinary & Social Gathering Courts',
+            copy: 'Signature dining and lounge choreography crafted for lingering evenings and elevated service.',
+            scale: 1.2,
+            x: 18,
+            y: -10
+          },
+          {
+            side: 'right',
+            caption: 'Beat 04 · Flagship Property Positioning',
+            copy: 'Distinctive brand identity and operational excellence that command lasting destination demand.',
+            scale: 1.07,
+            x: 0,
+            y: 5
+          }
+        ]
       },
       {
-        eyebrow: 'CHANAKYAPURI & SOVEREIGN ESTATES',
-        beatTag: '04 / 04',
-        title: 'PRIVATE TERRACE & ARCHITECTURAL SANCTUARY',
-        desc: 'Cantilevered terraces, acoustic glazing, and enduring structural craft tailored for diplomatic missions, family offices, and sovereign buyers.',
-        leftVal: 'Chanakyapuri & LBZ',
-        leftLbl: 'Trophy Enclaves',
-        rightVal: '100% Vetted',
-        rightLbl: 'Title & Provenance',
-        side: 'right',
-        camZoom: 1.16,
-        camPanX: 0.02,
-        camPanY: 0.02,
-        cutawayOpenness: 0.92
+        id: '04',
+        code: 'H-04',
+        name: 'Real Estate & Property',
+        cluster: 'human-spaces',
+        tag: 'ARCHITECTURAL CUTAWAY ESTATES',
+        image: 'image_generation_content/9472356938117602773',
+        statPrimaryVal: '₹4,200 Cr+',
+        statPrimaryLbl: 'Advisory Mandate Value',
+        statSecondaryVal: '#1',
+        statSecondaryLbl: 'Architectural Showcase',
+        summary: 'Scroll-scrubbed 3D cutaway residences, sovereign land advisory, and trophy architectural mandates.',
+        beats: [
+          {
+            side: 'left',
+            caption: 'Beat 01 · Two-Story Architectural Cutaway Model',
+            copy: 'Sculptural bronze louvers, vertical greenery, spiral stair geometry, and warm walnut interiors on a studio plinth.',
+            scale: 1.0,
+            x: 0,
+            y: 0
+          },
+          {
+            side: 'right',
+            caption: 'Beat 02 · Living Salon & Spiral Staircase Glide',
+            copy: 'Continuous camera choreography through double-height living spaces and illuminated floor contours.',
+            scale: 1.16,
+            x: -24,
+            y: 12
+          },
+          {
+            side: 'left',
+            caption: 'Beat 03 · Upper Sanctuary & Material Craft',
+            copy: 'Private sleeping suites, natural stone textures, and balanced daylighting across every level.',
+            scale: 1.24,
+            x: 20,
+            y: -10
+          },
+          {
+            side: 'right',
+            caption: 'Beat 04 · Sovereign & Institutional Mandates',
+            copy: 'Discreet acquisition and mandate execution for trophy residences and landmark developments.',
+            scale: 1.08,
+            x: 0,
+            y: 4
+          }
+        ]
+      },
+      {
+        id: '05',
+        code: 'H-05',
+        name: 'Technology / AI & Software',
+        cluster: 'frontier-knowledge',
+        tag: 'INTELLIGENT SYSTEMS & PLATFORMS',
+        image: 'image_generation_content/1101194995526979022',
+        statPrimaryVal: '99.98%',
+        statPrimaryLbl: 'Platform Reliability',
+        statSecondaryVal: '3.6x',
+        statSecondaryLbl: 'Automation Velocity',
+        summary: 'Applied AI architectures, resilient software platforms, and intelligent operational tooling.',
+        beats: [
+          {
+            side: 'left',
+            caption: 'Beat 01 · Modular System Topology',
+            copy: 'Clean, composable software and AI architectures built for clarity, auditability, and scale.',
+            scale: 1.0,
+            x: 0,
+            y: 0
+          },
+          {
+            side: 'right',
+            caption: 'Beat 02 · Real-Time Inference & Data Pipelines',
+            copy: 'Low-latency reasoning pipelines that turn complex operational signals into decisive action.',
+            scale: 1.14,
+            x: -18,
+            y: 10
+          },
+          {
+            side: 'left',
+            caption: 'Beat 03 · Human-in-the-Loop Command Surfaces',
+            copy: 'Calm, high-signal interfaces that keep domain experts in complete control of critical decisions.',
+            scale: 1.22,
+            x: 20,
+            y: -12
+          },
+          {
+            side: 'right',
+            caption: 'Beat 04 · Enterprise Deployment & Governance',
+            copy: 'Security-first rollout across distributed teams with measurable productivity gains.',
+            scale: 1.08,
+            x: 0,
+            y: 5
+          }
+        ]
+      },
+      {
+        id: '06',
+        code: 'H-06',
+        name: 'Business Consulting',
+        cluster: 'enterprise-capital',
+        tag: 'STRATEGIC & OPERATIONAL MANDATES',
+        image: 'image_generation_content/106167852766825899',
+        statPrimaryVal: '2.8x',
+        statPrimaryLbl: 'Margin Transformation',
+        statSecondaryVal: '140+',
+        statSecondaryLbl: 'Enterprise Mandates',
+        summary: 'C-suite strategy, capital allocation, operating-model transformation, and market entry execution.',
+        beats: [
+          {
+            side: 'left',
+            caption: 'Beat 01 · Structural Strategy & Capital Clarity',
+            copy: 'Sharpening strategic focus across core business lines with disciplined capital allocation.',
+            scale: 1.0,
+            x: 0,
+            y: 0
+          },
+          {
+            side: 'right',
+            caption: 'Beat 02 · Operating Model & Unit Economics',
+            copy: 'Diagnosing structural friction and redesigning workflows for durable profitability.',
+            scale: 1.15,
+            x: -22,
+            y: 10
+          },
+          {
+            side: 'left',
+            caption: 'Beat 03 · Cross-Functional Execution Cadence',
+            copy: 'Aligning executive leadership, finance, and operations around clear quarterly milestones.',
+            scale: 1.2,
+            x: 18,
+            y: -8
+          },
+          {
+            side: 'right',
+            caption: 'Beat 04 · Long-Term Value Compounding',
+            copy: 'Partnering with leadership teams from blueprint to sustained market leadership.',
+            scale: 1.08,
+            x: 0,
+            y: 4
+          }
+        ]
+      },
+      {
+        id: '07',
+        code: 'H-07',
+        name: 'Psychology & Wellbeing',
+        cluster: 'human-spaces',
+        tag: 'COGNITIVE CLARITY & RESTORATION',
+        image: 'image_generation_content/3886654350557522435',
+        statPrimaryVal: '92.6%',
+        statPrimaryLbl: 'Wellbeing Index Gain',
+        statSecondaryVal: '60+ Min',
+        statSecondaryLbl: 'Deep Focus Recovery',
+        summary: 'Evidence-based psychological frameworks, restorative spaces, and sustainable human performance.',
+        beats: [
+          {
+            side: 'left',
+            caption: 'Beat 01 · Restorative Spatial Calm',
+            copy: 'Designing environments and routines that lower cognitive load and restore mental equilibrium.',
+            scale: 1.0,
+            x: 0,
+            y: 0
+          },
+          {
+            side: 'right',
+            caption: 'Beat 02 · Resilience & Decision Hygiene',
+            copy: 'Practical psychological tools for clarity under pressure, burnout prevention, and emotional steadiness.',
+            scale: 1.13,
+            x: -20,
+            y: 8
+          },
+          {
+            side: 'left',
+            caption: 'Beat 03 · Team Psychological Safety',
+            copy: 'Cultivating candid communication, healthy boundaries, and high-trust collaboration.',
+            scale: 1.19,
+            x: 18,
+            y: -10
+          },
+          {
+            side: 'right',
+            caption: 'Beat 04 · Sustainable High Performance',
+            copy: 'Long-horizon vitality that sustains creativity and leadership across decades.',
+            scale: 1.07,
+            x: 0,
+            y: 5
+          }
+        ]
+      },
+      {
+        id: '08',
+        code: 'H-08',
+        name: 'Astrology & Jyotish Sciences',
+        cluster: 'frontier-knowledge',
+        tag: 'TIMING, CYCLES & JYOTISH WISDOM',
+        image: 'image_generation_content/4330923871508808950',
+        statPrimaryVal: '1,200+',
+        statPrimaryLbl: 'Cycle & Muhurta Studies',
+        statSecondaryVal: '24/7',
+        statSecondaryLbl: 'Celestial Ephemeris',
+        summary: 'Classical Jyotish analysis, planetary cycle mapping, and auspicious timing counsel for major milestones.',
+        beats: [
+          {
+            side: 'left',
+            caption: 'Beat 01 · Celestial Geometry & Classical Order',
+            copy: 'Framing classical Jyotish principles with refined contemporary clarity and structured interpretation.',
+            scale: 1.0,
+            x: 0,
+            y: 0
+          },
+          {
+            side: 'right',
+            caption: 'Beat 02 · Dasha & Transit Cycle Mapping',
+            copy: 'Reading multi-year planetary rhythms to contextualize transitions, launches, and turning points.',
+            scale: 1.15,
+            x: -22,
+            y: 11
+          },
+          {
+            side: 'left',
+            caption: 'Beat 03 · Muhurta & Alignment Counsel',
+            copy: 'Thoughtful timing alignment for significant personal, creative, and institutional undertakings.',
+            scale: 1.21,
+            x: 19,
+            y: -9
+          },
+          {
+            side: 'right',
+            caption: 'Beat 04 · Reflective Long-Arc Guidance',
+            copy: 'Grounded, contemplative advisory that honors tradition while supporting clear-eyed action.',
+            scale: 1.08,
+            x: 0,
+            y: 4
+          }
+        ]
+      },
+      {
+        id: '09',
+        code: 'H-09',
+        name: 'Education & Learning',
+        cluster: 'frontier-knowledge',
+        tag: 'MASTERY & CURRICULUM SYSTEMS',
+        image: 'image_generation_content/15186964331279698962',
+        statPrimaryVal: '4.9 / 5',
+        statPrimaryLbl: 'Learner Mastery Score',
+        statSecondaryVal: '3.1x',
+        statSecondaryLbl: 'Completion Momentum',
+        summary: 'First-principles learning architecture, studio academies, and adaptive mastery pathways.',
+        beats: [
+          {
+            side: 'left',
+            caption: 'Beat 01 · First-Principles Learning Studio',
+            copy: 'Structured learning environments where complex ideas are built visually from foundational principles.',
+            scale: 1.0,
+            x: 0,
+            y: 0
+          },
+          {
+            side: 'right',
+            caption: 'Beat 02 · Guided Practice & Feedback Loops',
+            copy: 'Hands-on critique, deliberate practice, and progressive milestones that build real fluency.',
+            scale: 1.14,
+            x: -20,
+            y: 9
+          },
+          {
+            side: 'left',
+            caption: 'Beat 03 · Cohort & Mentorship Craft',
+            copy: 'Small-group dialogue and mentorship that turn individual study into shared intellectual rigor.',
+            scale: 1.2,
+            x: 18,
+            y: -10
+          },
+          {
+            side: 'right',
+            caption: 'Beat 04 · Lifelong Capability Growth',
+            copy: 'Equipping learners and teams with enduring mental models for shifting industries.',
+            scale: 1.08,
+            x: 0,
+            y: 4
+          }
+        ]
+      },
+      {
+        id: '10',
+        code: 'H-10',
+        name: 'Retail',
+        cluster: 'enterprise-capital',
+        tag: 'FLAGSHIP COMMERCE & MERCHANDISING',
+        image: 'image_generation_content/6602870012952934505',
+        statPrimaryVal: '+46%',
+        statPrimaryLbl: 'Flagship Basket Value',
+        statSecondaryVal: '88%',
+        statSecondaryLbl: 'Repeat Patronage',
+        summary: 'Flagship retail environments, tactile merchandising, and omnichannel brand conversion systems.',
+        beats: [
+          {
+            side: 'left',
+            caption: 'Beat 01 · Flagship Spatial Merchandising',
+            copy: 'Curated sightlines, tactile displays, and warm lighting that invite unhurried discovery.',
+            scale: 1.0,
+            x: 0,
+            y: 0
+          },
+          {
+            side: 'right',
+            caption: 'Beat 02 · Customer Journey & Tactile Touchpoints',
+            copy: 'Every material sample, fitting zone, and consultation counter designed to build trust.',
+            scale: 1.15,
+            x: -22,
+            y: 10
+          },
+          {
+            side: 'left',
+            caption: 'Beat 03 · Phygital Continuity',
+            copy: 'Seamless bridge between physical flagship spaces and digital clienteling experiences.',
+            scale: 1.22,
+            x: 20,
+            y: -11
+          },
+          {
+            side: 'right',
+            caption: 'Beat 04 · Store-to-Portfolio Expansion',
+            copy: 'Repeatable flagship blueprints engineered for high-yield expansion across key districts.',
+            scale: 1.08,
+            x: 0,
+            y: 5
+          }
+        ]
+      },
+      {
+        id: '11',
+        code: 'H-11',
+        name: 'Future Industries',
+        cluster: 'frontier-knowledge',
+        tag: 'EMERGING FRONTIERS & VENTURES',
+        image: 'image_generation_content/18170814674707427411',
+        statPrimaryVal: '10-Yr+',
+        statPrimaryLbl: 'Horizon Thesis Window',
+        statSecondaryVal: '28',
+        statSecondaryLbl: 'Frontier Venture Tracks',
+        summary: 'Next-decade industrial shifts, spatial computing, clean infrastructure, and frontier venture architecture.',
+        beats: [
+          {
+            side: 'left',
+            caption: 'Beat 01 · Next-Decade Horizon Mapping',
+            copy: 'Identifying structural shifts early—where deep science, spatial design, and capital converge.',
+            scale: 1.0,
+            x: 0,
+            y: 0
+          },
+          {
+            side: 'right',
+            caption: 'Beat 02 · Prototype to Industrial Scale',
+            copy: 'Moving from experimental breakthroughs to repeatable, high-margin real-world systems.',
+            scale: 1.16,
+            x: -24,
+            y: 11
+          },
+          {
+            side: 'left',
+            caption: 'Beat 03 · Ecosystem & Partner Alignment',
+            copy: 'Connecting visionary builders, researchers, and patient capital around clear roadmaps.',
+            scale: 1.24,
+            x: 22,
+            y: -10
+          },
+          {
+            side: 'right',
+            caption: 'Beat 04 \u00B7 Shaping Tomorrow\u2019s Standards',
+            copy: 'Building enduring institutions for industries that do not yet exist at scale.',
+            scale: 1.09,
+            x: 0,
+            y: 5
+          }
+        ]
       }
     ];
 
-    const tourState = {
+    // Application State
+    const appState = {
+      activeHorizonIndex: 0,
       activeBeat: 0,
-      targetProgress: 0,
-      smoothProgress: 0,
-      pointerX: 0,
-      pointerY: 0,
-      targetPointerX: 0,
-      targetPointerY: 0,
-      time: 0,
-      autoTourRunning: false,
-      autoTourRaf: null,
-      selectedObjective: 'Acquire Delhi Estate'
+      selectedInquiryHorizon: 'Horizon 01 \u00B7 Recruitment & HR',
+      scrollProgress: 0,
+      scrollVelocity: 0,
+      lastScrollY: window.scrollY || 0,
+      pointerNormX: 0,
+      pointerNormY: 0,
+      smoothPointerX: 0,
+      smoothPointerY: 0,
+      autoTourActive: false,
+      autoTourRaf: null
     };
+    window.TOVENZA_HORIZONS = TOVENZA_HORIZONS;
+    window.appState = appState;
 
-    const canvas = document.getElementById('delhiCutawayCanvas');
-    const ctx = canvas.getContext('2d');
-    let viewW = 0;
-    let viewH = 0;
-    let dpr = 1;
-
-    function resizeDelhiCanvas() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      viewW = window.innerWidth;
-      viewH = window.innerHeight;
-      canvas.width = Math.floor(viewW * dpr);
-      canvas.height = Math.floor(viewH * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      positionDelhiGlassCard(tourState.activeBeat);
+    // Graceful SVG studio fallback if any image path is unavailable
+    function renderArchitecturalFallback(imgEl) {
+      if (!imgEl || imgEl.dataset.fallbackApplied) return;
+      imgEl.dataset.fallbackApplied = 'true';
+      const horizon = TOVENZA_HORIZONS[appState.activeHorizonIndex] || TOVENZA_HORIZONS[0];
+      const svgMarkup = '<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760">' +
+        '<defs>' +
+        '<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">' +
+        '<stop offset="0%" stop-color="' + STUDIO_THEME.warmWhite + '"/>' +
+        '<stop offset="100%" stop-color="#ECE8DF"/>' +
+        '</linearGradient>' +
+        '<linearGradient id="walnut" x1="0" y1="0" x2="0" y2="1">' +
+        '<stop offset="0%" stop-color="#6E472B"/>' +
+        '<stop offset="100%" stop-color="#3E2514"/>' +
+        '</linearGradient>' +
+        '</defs>' +
+        '<rect width="1280" height="760" fill="url(#bg)"/>' +
+        '<ellipse cx="640" cy="610" rx="410" ry="52" fill="rgba(13,31,45,0.14)"/>' +
+        '<polygon points="330,545 640,655 950,545 640,445" fill="#FFFFFF" stroke="' + STUDIO_THEME.slateTeal + '" stroke-opacity="0.14"/>' +
+        '<polygon points="360,245 640,155 920,245 920,475 640,565 360,475" fill="url(#walnut)" stroke="' + STUDIO_THEME.bronze + '" stroke-width="2"/>' +
+        '<line x1="360" y1="360" x2="920" y2="360" stroke="' + STUDIO_THEME.bronze + '" stroke-width="2" stroke-opacity="0.65"/>' +
+        '<text x="640" y="102" text-anchor="middle" fill="' + STUDIO_THEME.slateTeal + '" font-family="Georgia, serif" font-size="38" font-weight="600">TOVENZA ' + horizon.code + ' \u00B7 ' + horizon.name + '</text>' +
+        '<text x="640" y="136" text-anchor="middle" fill="' + STUDIO_THEME.bronzeDeep + '" font-family="sans-serif" font-size="14" letter-spacing="4">' + horizon.tag + '</text>' +
+        '</svg>';
+      imgEl.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgMarkup);
     }
+    window.renderArchitecturalFallback = renderArchitecturalFallback;
 
-    function lerp(a, b, t) {
-      return a + (b - a) * t;
-    }
+    // Build Header Dropdown, 11-Horizon Grid & Bottom Inquiry Horizon Pills
+    function populateHorizonControls() {
+      const selectEl = document.getElementById('headerHorizonSelect');
+      const gridEl = document.getElementById('horizonsGridContainer');
+      const inquiryPillsEl = document.getElementById('inquiryHorizonPills');
 
-    function clamp01(v) {
-      return Math.min(Math.max(v, 0), 1);
-    }
-
-    // Interpolate camera zoom, pan, and cutaway openness continuously across scroll progress
-    function getInterpolatedCamera(progress) {
-      const scaled = clamp01(progress) * (delhiBeats.length - 1);
-      const idxA = Math.min(delhiBeats.length - 1, Math.floor(scaled));
-      const idxB = Math.min(delhiBeats.length - 1, idxA + 1);
-      const frac = scaled - idxA;
-      // Smoothstep easing for cinematic camera glide
-      const ease = frac * frac * (3 - 2 * frac);
-
-      const a = delhiBeats[idxA];
-      const b = delhiBeats[idxB];
-
-      return {
-        camZoom: lerp(a.camZoom, b.camZoom, ease),
-        camPanX: lerp(a.camPanX, b.camPanX, ease),
-        camPanY: lerp(a.camPanY, b.camPanY, ease),
-        cutawayOpenness: lerp(a.cutawayOpenness, b.cutawayOpenness, ease),
-        nearestBeat: Math.round(scaled)
-      };
-    }
-
-    // Draw the shaded two-story Delhi cutaway residence on the studio cyclorama
-    function drawDelhiCutawayScene(t, progress) {
-      ctx.clearRect(0, 0, viewW, viewH);
-
-      const cam = getInterpolatedCamera(progress);
-
-      // 1. Bright Warm-Gray / Cream Studio Cyclorama Backdrop (#ECEAE4 -> #DFDDD6)
-      const bgGrad = ctx.createRadialGradient(
-        viewW * 0.5 + tourState.pointerX * 28,
-        viewH * 0.42 + tourState.pointerY * 18,
-        Math.min(viewW, viewH) * 0.08,
-        viewW * 0.5,
-        viewH * 0.5,
-        Math.max(viewW, viewH) * 0.78
-      );
-      bgGrad.addColorStop(0, '#F5F3EE');
-      bgGrad.addColorStop(0.55, '#ECEAE4');
-      bgGrad.addColorStop(1, '#DFDDD6');
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, viewW, viewH);
-
-      // Subtle studio cyclorama horizon sweep
-      const horizonY = viewH * 0.67 + tourState.pointerY * 12;
-      const floorGrad = ctx.createLinearGradient(0, horizonY - 90, 0, viewH);
-      floorGrad.addColorStop(0, 'rgba(223, 221, 214, 0)');
-      floorGrad.addColorStop(0.45, 'rgba(214, 211, 202, 0.45)');
-      floorGrad.addColorStop(1, 'rgba(198, 194, 184, 0.72)');
-      ctx.fillStyle = floorGrad;
-      ctx.fillRect(0, horizonY - 90, viewW, viewH - (horizonY - 90));
-
-      // Camera transform with smooth push-in, pan, and subtle 2.5D pointer depth parallax
-      const baseScale = Math.min(viewW / 1120, viewH / 700) * (viewW < 640 ? 1.12 : 1.0);
-      const totalScale = baseScale * cam.camZoom;
-      const centerX =
-        viewW * 0.5 +
-        cam.camPanX * viewW * 0.42 +
-        tourState.pointerX * -22;
-      const centerY =
-        viewH * 0.53 +
-        cam.camPanY * viewH * 0.32 +
-        tourState.pointerY * -14;
-
-      ctx.save();
-      ctx.translate(centerX, centerY);
-      ctx.scale(totalScale, totalScale);
-
-      // 2. Soft Global Illumination Studio Shadow Beneath Floating White Slab
-      ctx.save();
-      const shadowGrad = ctx.createRadialGradient(0, 182, 30, 0, 182, 390);
-      shadowGrad.addColorStop(0, 'rgba(13, 31, 45, 0.24)');
-      shadowGrad.addColorStop(0.55, 'rgba(13, 31, 45, 0.10)');
-      shadowGrad.addColorStop(1, 'rgba(13, 31, 45, 0)');
-      ctx.fillStyle = shadowGrad;
-      ctx.beginPath();
-      ctx.ellipse(12, 182, 385, 68, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-
-      // Isometric / Studio Oblique Projection Helper
-      // Origin (0, 0) is near the center of the two-story cutaway model
-      const isoX = (x, y, z) => (x - y) * 0.86;
-      const isoY = (x, y, z) => (x + y) * 0.36 - z;
-
-      // 3. Floating White Slab Base with Illuminated Floor Contours
-      const slabW = 330;
-      const slabD = 240;
-      const slabH = 18;
-      const slabZ = -135;
-
-      // Slab top surface
-      ctx.beginPath();
-      ctx.moveTo(isoX(-slabW, -slabD, slabZ + slabH), isoY(-slabW, -slabD, slabZ + slabH));
-      ctx.lineTo(isoX(slabW, -slabD, slabZ + slabH), isoY(slabW, -slabD, slabZ + slabH));
-      ctx.lineTo(isoX(slabW, slabD, slabZ + slabH), isoY(slabW, slabD, slabZ + slabH));
-      ctx.lineTo(isoX(-slabW, slabD, slabZ + slabH), isoY(-slabW, slabD, slabZ + slabH));
-      ctx.closePath();
-      ctx.fillStyle = '#F6F4EF';
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(13, 31, 45, 0.12)';
-      ctx.lineWidth = 1.2;
-      ctx.stroke();
-
-      // Slab front-left & front-right faces
-      ctx.beginPath();
-      ctx.moveTo(isoX(-slabW, slabD, slabZ + slabH), isoY(-slabW, slabD, slabZ + slabH));
-      ctx.lineTo(isoX(slabW, slabD, slabZ + slabH), isoY(slabW, slabD, slabZ + slabH));
-      ctx.lineTo(isoX(slabW, slabD, slabZ), isoY(slabW, slabD, slabZ));
-      ctx.lineTo(isoX(-slabW, slabD, slabZ), isoY(-slabW, slabD, slabZ));
-      ctx.closePath();
-      ctx.fillStyle = '#DCD9D0';
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.moveTo(isoX(slabW, -slabD, slabZ + slabH), isoY(slabW, -slabD, slabZ + slabH));
-      ctx.lineTo(isoX(slabW, slabD, slabZ + slabH), isoY(slabW, slabD, slabZ + slabH));
-      ctx.lineTo(isoX(slabW, slabD, slabZ), isoY(slabW, slabD, slabZ));
-      ctx.lineTo(isoX(slabW, -slabD, slabZ), isoY(slabW, -slabD, slabZ));
-      ctx.closePath();
-      ctx.fillStyle = '#C6C2B7';
-      ctx.fill();
-
-      // Warm Illuminated Floor Contour Lines on Ground Floor & Terrace
-      const floorZ = slabZ + slabH;
-      const glowPulse = 0.72 + Math.sin(t * 2.2) * 0.14;
-      ctx.save();
-      ctx.strokeStyle = `rgba(236, 194, 126, ${glowPulse})`;
-      ctx.lineWidth = 2.4;
-      ctx.shadowColor = 'rgba(224, 174, 96, 0.75)';
-      ctx.shadowBlur = 10;
-
-      ctx.beginPath();
-      ctx.moveTo(isoX(-245, 195, floorZ + 0.5), isoY(-245, 195, floorZ + 0.5));
-      ctx.lineTo(isoX(255, 195, floorZ + 0.5), isoY(255, 195, floorZ + 0.5));
-      ctx.lineTo(isoX(255, -165, floorZ + 0.5), isoY(255, -165, floorZ + 0.5));
-      ctx.stroke();
-      ctx.restore();
-
-      // 4. Back & Side Warm Walnut Walls + Living Vertical Greenery Wall
-      const wallH = 235;
-
-      // Back Walnut Wall (y = -185)
-      ctx.beginPath();
-      ctx.moveTo(isoX(-275, -185, floorZ), isoY(-275, -185, floorZ));
-      ctx.lineTo(isoX(275, -185, floorZ), isoY(275, -185, floorZ));
-      ctx.lineTo(isoX(275, -185, floorZ + wallH), isoY(275, -185, floorZ + wallH));
-      ctx.lineTo(isoX(-275, -185, floorZ + wallH), isoY(-275, -185, floorZ + wallH));
-      ctx.closePath();
-      const walnutGrad = ctx.createLinearGradient(0, isoY(0, -185, floorZ + wallH), 0, isoY(0, -185, floorZ));
-      walnutGrad.addColorStop(0, '#6B442A');
-      walnutGrad.addColorStop(0.5, '#52321E');
-      walnutGrad.addColorStop(1, '#3B2314');
-      ctx.fillStyle = walnutGrad;
-      ctx.fill();
-
-      // Subtle vertical walnut wood grain lines
-      ctx.strokeStyle = 'rgba(255, 224, 185, 0.08)';
-      ctx.lineWidth = 1;
-      for (let wx = -255; wx <= 255; wx += 18) {
-        ctx.beginPath();
-        ctx.moveTo(isoX(wx, -184.5, floorZ), isoY(wx, -184.5, floorZ));
-        ctx.lineTo(isoX(wx, -184.5, floorZ + wallH), isoY(wx, -184.5, floorZ + wallH));
-        ctx.stroke();
+      if (selectEl) {
+        selectEl.innerHTML = TOVENZA_HORIZONS.map((h, idx) =>
+          `<option value="${idx}">${h.code} &middot; ${h.name}</option>`
+        ).join('');
       }
 
-      // Living Vertical Greenery Wall along Left-Back Section (x = -275, y from -185 to +25)
-      ctx.beginPath();
-      ctx.moveTo(isoX(-275, -185, floorZ), isoY(-275, -185, floorZ));
-      ctx.lineTo(isoX(-275, 25, floorZ), isoY(-275, 25, floorZ));
-      ctx.lineTo(isoX(-275, 25, floorZ + wallH), isoY(-275, 25, floorZ + wallH));
-      ctx.lineTo(isoX(-275, -185, floorZ + wallH), isoY(-275, -185, floorZ + wallH));
-      ctx.closePath();
-      ctx.fillStyle = '#2B4631';
-      ctx.fill();
+      if (gridEl) {
+        gridEl.innerHTML = TOVENZA_HORIZONS.map((h, idx) => `
+          <article
+            id="horizon-card-${h.id}"
+            data-cluster="${h.cluster}"
+            class="studio-card rounded-2xl overflow-hidden flex flex-col justify-between ${idx === appState.activeHorizonIndex ? 'is-selected' : ''}"
+          >
+            <div>
+              <div class="relative h-48 w-full overflow-hidden bg-[#F2EFE9] border-b border-[#0D1F2D]/10">
+                <img
+                  src="${h.image}"
+                  alt="TOVENZA ${h.code} ${h.name}"
+                  class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  onerror="renderArchitecturalFallback(this)"
+                />
+                <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-bold tracking-[0.16em] uppercase bg-[#0D1F2D] text-[#C5A059]">
+                  ${h.code}
+                </span>
+                <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[9px] font-semibold tracking-[0.14em] uppercase bg-[#F9F8F5]/95 text-[#0D1F2D] border border-[#0D1F2D]/10">
+                  ${h.tag}
+                </span>
+              </div>
 
-      // Layered botanical foliage clusters on the vertical green wall
-      const leafPalette = ['#3D6B43', '#4F8252', '#2C4E33', '#689A63', '#365B3B'];
-      for (let gy = -172; gy <= 12; gy += 16) {
-        for (let gz = floorZ + 12; gz <= floorZ + wallH - 12; gz += 15) {
-          const sway = Math.sin(t * 1.6 + gy * 0.05 + gz * 0.04) * 1.6;
-          const px = isoX(-274, gy, gz) + sway;
-          const py = isoY(-274, gy, gz) + sway * 0.5;
-          const colIdx = Math.abs(Math.floor(gy + gz)) % leafPalette.length;
-          ctx.fillStyle = leafPalette[colIdx];
-          ctx.beginPath();
-          ctx.ellipse(px, py, 9.5, 6.2, -0.35, 0, Math.PI * 2);
-          ctx.fill();
+              <div class="p-5 sm:p-6">
+                <h3 class="font-serif-editorial text-2xl font-semibold text-[#0D1F2D] leading-snug">
+                  ${h.name}
+                </h3>
+                <p class="font-inter text-xs sm:text-[13px] text-[#4A5A66] mt-2 leading-relaxed">
+                  ${h.summary}
+                </p>
+
+                <div class="grid grid-cols-2 gap-2.5 mt-4 pt-4 border-t border-[#0D1F2D]/10">
+                  <div>
+                    <span class="block text-sm font-bold text-[#0D1F2D]">${h.statPrimaryVal}</span>
+                    <span class="block text-[9px] font-semibold uppercase tracking-[0.14em] text-[#8C6A2E]">${h.statPrimaryLbl}</span>
+                  </div>
+                  <div>
+                    <span class="block text-sm font-bold text-[#8C6A2E]">${h.statSecondaryVal}</span>
+                    <span class="block text-[9px] font-semibold uppercase tracking-[0.14em] text-[#4A5A66]">${h.statSecondaryLbl}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="px-5 sm:px-6 pb-5 sm:pb-6 flex items-center gap-2">
+              <button
+                type="button"
+                onclick="launchHorizonOnStage(${idx})"
+                class="flex-1 py-2.5 px-4 rounded-full text-xs font-semibold bg-[#0D1F2D] text-[#F9F8F5] hover:bg-[#C5A059] hover:text-[#0D1F2D] transition-colors cursor-pointer"
+              >
+                Launch Horizon Tour &uarr;
+              </button>
+              <a
+                href="#readyToGetStartedSection"
+                onclick="chooseInquiryHorizon(${idx})"
+                class="py-2.5 px-3.5 rounded-full text-xs font-semibold border border-[#0D1F2D]/20 text-[#0D1F2D] hover:border-[#8C6A2E] hover:text-[#8C6A2E] transition-colors"
+              >
+                Inquire
+              </a>
+            </div>
+          </article>
+        `).join('');
+      }
+
+      if (inquiryPillsEl) {
+        inquiryPillsEl.innerHTML = TOVENZA_HORIZONS.map((h, idx) => {
+          const active = idx === appState.activeHorizonIndex;
+          return `
+            <button
+              type="button"
+              onclick="chooseInquiryHorizon(${idx})"
+              class="inq-horizon-pill px-3 py-1.5 rounded-full text-[11px] font-medium transition-all cursor-pointer ${
+                active
+                  ? 'bg-[#C5A059] text-[#0D1F2D] font-semibold'
+                  : 'bg-white/[0.06] text-white/80 border border-white/15 hover:border-[#C5A059]'
+              }"
+            >
+              ${h.code} &middot; ${h.name}
+            </button>
+          `;
+        }).join('');
+      }
+    }
+
+    // Apply active horizon to stage, HUD, card, and directory highlight
+    function applyHorizonState(idx, beatIdx = 0) {
+      const clampedIdx = Math.max(0, Math.min(TOVENZA_HORIZONS.length - 1, Number(idx)));
+      const horizon = TOVENZA_HORIZONS[clampedIdx];
+      appState.activeHorizonIndex = clampedIdx;
+      appState.activeBeat = Math.max(0, Math.min(horizon.beats.length - 1, beatIdx));
+
+      const navLabelEl = document.getElementById('navActiveHorizonLabel');
+      const selectEl = document.getElementById('headerHorizonSelect');
+      const badgeEl = document.getElementById('stageHorizonBadge');
+
+      if (navLabelEl) {
+        navLabelEl.textContent = `HORIZON ${horizon.id} \u00B7 ${horizon.name.toUpperCase()}`;
+      }
+      if (selectEl) {
+        selectEl.value = String(clampedIdx);
+      }
+      if (badgeEl) {
+        badgeEl.textContent = `${horizon.code} \u00B7 ${horizon.name.toUpperCase()}`;
+      }
+
+      const imgEl = document.getElementById('stageHorizonImage');
+      if (imgEl) {
+        delete imgEl.dataset.fallbackApplied;
+        imgEl.alt = `TOVENZA ${horizon.code} ${horizon.name} Architectural Cutaway`;
+        imgEl.src = horizon.image;
+      }
+
+      const cardMetaEl = document.getElementById('cardHorizonMeta');
+      const cardHeadlineEl = document.getElementById('cardHorizonHeadline');
+      const statPValEl = document.getElementById('cardStatPrimaryVal');
+      const statPLblEl = document.getElementById('cardStatPrimaryLbl');
+      const statSValEl = document.getElementById('cardStatSecondaryVal');
+      const statSLblEl = document.getElementById('cardStatSecondaryLbl');
+
+      if (cardMetaEl) cardMetaEl.textContent = `HORIZON ${horizon.id} \u00B7 ${horizon.tag}`;
+      if (cardHeadlineEl) cardHeadlineEl.textContent = horizon.name;
+      if (statPValEl) statPValEl.textContent = horizon.statPrimaryVal;
+      if (statPLblEl) statPLblEl.textContent = horizon.statPrimaryLbl;
+      if (statSValEl) statSValEl.textContent = horizon.statSecondaryVal;
+      if (statSLblEl) statSLblEl.textContent = horizon.statSecondaryLbl;
+
+      document.querySelectorAll('#horizonsGridContainer article').forEach((card, cIdx) => {
+        card.classList.toggle('is-selected', cIdx === clampedIdx);
+      });
+
+      appState.selectedInquiryHorizon = `Horizon ${horizon.id} \u00B7 ${horizon.name}`;
+      syncInquiryPillsVisual();
+      applyBeatVisuals(appState.activeBeat);
+    }
+
+    // Update beat text, gliding card left/right position, and 2.5D camera transform
+    function applyBeatVisuals(beatIdx) {
+      const horizon = TOVENZA_HORIZONS[appState.activeHorizonIndex];
+      const safeBeat = Math.max(0, Math.min(horizon.beats.length - 1, beatIdx));
+      const beat = horizon.beats[safeBeat];
+      appState.activeBeat = safeBeat;
+
+      const beatIdxEl = document.getElementById('cardBeatIndex');
+      const beatCopyEl = document.getElementById('cardHorizonBeatCopy');
+      const captionEl = document.getElementById('stageBeatCaption');
+      const card = document.getElementById('glidingHorizonCard');
+      const layer = document.getElementById('cutawayVisualLayer');
+
+      if (beatIdxEl) beatIdxEl.textContent = `0${safeBeat + 1} / 04`;
+      if (beatCopyEl) beatCopyEl.textContent = beat.copy;
+      if (captionEl) captionEl.textContent = beat.caption;
+
+      if (card) {
+        if (window.innerWidth >= 768) {
+          const margin = window.innerWidth >= 1024 ? 48 : 32;
+          const travelX = Math.max(0, window.innerWidth - card.offsetWidth - margin * 2);
+          card.style.transform = beat.side === 'right'
+            ? `translate3d(${travelX}px, 0, 0)`
+            : 'translate3d(0px, 0, 0)';
+        } else {
+          card.style.transform = 'translate3d(0px, 0, 0)';
         }
       }
 
-      // 5. Sculptural Dark Bronze Vertical Louvers on Left Facade (x = -275, y from +25 to +175)
-      const louverCount = 15;
-      for (let i = 0; i < louverCount; i++) {
-        const ly = lerp(30, 172, i / (louverCount - 1));
-        const tilt = Math.sin(i * 0.45 + cam.cutawayOpenness * 1.2) * 8;
-        const p1 = { x: isoX(-275, ly, floorZ), y: isoY(-275, ly, floorZ) };
-        const p2 = { x: isoX(-275 + tilt, ly + 8, floorZ), y: isoY(-275 + tilt, ly + 8, floorZ) };
-        const p3 = { x: isoX(-275 + tilt, ly + 8, floorZ + wallH), y: isoY(-275 + tilt, ly + 8, floorZ + wallH) };
-        const p4 = { x: isoX(-275, ly, floorZ + wallH), y: isoY(-275, ly, floorZ + wallH) };
-
-        ctx.beginPath();
-        ctx.moveTo(p1.x, p1.y);
-        ctx.lineTo(p2.x, p2.y);
-        ctx.lineTo(p3.x, p3.y);
-        ctx.lineTo(p4.x, p4.y);
-        ctx.closePath();
-        ctx.fillStyle = i % 2 === 0 ? '#3A271C' : '#4E3526';
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(200, 169, 110, 0.25)';
-        ctx.lineWidth = 0.8;
-        ctx.stroke();
-      }
-
-      // 6. Ground Floor Interior: Lounge Sofa, Coffee Table & Warm Cove Lighting
-      // Low-profile architectural sofa
-      const sofaX = isoX(-110, 55, floorZ);
-      const sofaY = isoY(-110, 55, floorZ);
-      ctx.save();
-      ctx.fillStyle = '#E6DFD3';
-      ctx.beginPath();
-      ctx.roundRect(sofaX - 48, sofaY - 18, 96, 26, 8);
-      ctx.fill();
-      ctx.fillStyle = '#CFC5B6';
-      ctx.beginPath();
-      ctx.roundRect(sofaX - 46, sofaY - 28, 92, 12, 6);
-      ctx.fill();
-      // Travertine coffee table
-      ctx.fillStyle = '#F7F5F0';
-      ctx.beginPath();
-      ctx.ellipse(sofaX + 34, sofaY + 18, 22, 10, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-
-      // 7. Curved Spiral Staircase Rising Between Ground & Upper Level
-      const stairCenterX = isoX(35, -35, floorZ);
-      const stairCenterY = isoY(35, -35, floorZ);
-      const stairSteps = 26;
-      const stairTotalH = 114;
-
-      // Central bronze pole
-      ctx.strokeStyle = '#3A271C';
-      ctx.lineWidth = 5;
-      ctx.beginPath();
-      ctx.moveTo(stairCenterX, stairCenterY + 6);
-      ctx.lineTo(stairCenterX, stairCenterY - stairTotalH);
-      ctx.stroke();
-
-      for (let s = 0; s < stairSteps; s++) {
-        const stRatio = s / (stairSteps - 1);
-        const angle = stRatio * Math.PI * 1.55 - 0.5;
-        const radiusX = 42;
-        const radiusY = 20;
-        const stepZ = stRatio * stairTotalH;
-        const sx = stairCenterX + Math.cos(angle) * radiusX;
-        const sy = stairCenterY - stepZ + Math.sin(angle) * radiusY;
-
-        ctx.fillStyle = s % 2 === 0 ? '#7A5034' : '#5E3C25';
-        ctx.beginPath();
-        ctx.ellipse(sx, sy, 14, 5.5, Math.sin(angle) * 0.35, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Gold/bronze handrail accent
-        ctx.fillStyle = '#C8A96E';
-        ctx.fillRect(sx - 2, sy - 11, 3, 11);
-      }
-
-      // 8. Second-Floor Mezzanine Slab & Upper Walnut Bedroom Suite
-      const upperZ = floorZ + 114;
-
-      // Mezzanine floor slab
-      ctx.beginPath();
-      ctx.moveTo(isoX(-270, -180, upperZ), isoY(-270, -180, upperZ));
-      ctx.lineTo(isoX(265, -180, upperZ), isoY(265, -180, upperZ));
-      ctx.lineTo(isoX(265, 95, upperZ), isoY(265, 95, upperZ));
-      ctx.lineTo(isoX(-270, 95, upperZ), isoY(-270, 95, upperZ));
-      ctx.closePath();
-      ctx.fillStyle = '#EFECE6';
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(13, 31, 45, 0.15)';
-      ctx.lineWidth = 1;
-      ctx.stroke();
-
-      // Upper Bedroom Platform Bed & Warm Cove Backlight
-      const bedX = isoX(115, -105, upperZ);
-      const bedY = isoY(115, -105, upperZ);
-
-      // Warm architectural cove strip behind bed
-      const coveGrad = ctx.createLinearGradient(bedX - 70, bedY - 58, bedX + 70, bedY - 12);
-      coveGrad.addColorStop(0, 'rgba(255, 214, 145, 0.55)');
-      coveGrad.addColorStop(1, 'rgba(255, 214, 145, 0.05)');
-      ctx.fillStyle = coveGrad;
-      ctx.fillRect(bedX - 68, bedY - 58, 136, 42);
-
-      // Bed frame & linen
-      ctx.fillStyle = '#4A301F';
-      ctx.beginPath();
-      ctx.roundRect(bedX - 44, bedY - 22, 88, 34, 5);
-      ctx.fill();
-      ctx.fillStyle = '#F5F1EA';
-      ctx.beginPath();
-      ctx.roundRect(bedX - 38, bedY - 18, 76, 26, 4);
-      ctx.fill();
-
-      // 9. Cantilevered Roof Canopy Slab (Top of Two-Story Cutaway)
-      const roofZ = floorZ + wallH;
-      ctx.beginPath();
-      ctx.moveTo(isoX(-290, -195, roofZ + 12), isoY(-290, -195, roofZ + 12));
-      ctx.lineTo(isoX(280, -195, roofZ + 12), isoY(280, -195, roofZ + 12));
-      ctx.lineTo(isoX(280, 115, roofZ + 12), isoY(280, 115, roofZ + 12));
-      ctx.lineTo(isoX(-290, 115, roofZ + 12), isoY(-290, 115, roofZ + 12));
-      ctx.closePath();
-      ctx.fillStyle = '#FAF8F4';
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(13, 31, 45, 0.14)';
-      ctx.lineWidth = 1.2;
-      ctx.stroke();
-
-      // Roof front edge thickness
-      ctx.beginPath();
-      ctx.moveTo(isoX(-290, 115, roofZ + 12), isoY(-290, 115, roofZ + 12));
-      ctx.lineTo(isoX(280, 115, roofZ + 12), isoY(280, 115, roofZ + 12));
-      ctx.lineTo(isoX(280, 115, roofZ), isoY(280, 115, roofZ));
-      ctx.lineTo(isoX(-290, 115, roofZ), isoY(-290, 115, roofZ));
-      ctx.closePath();
-      ctx.fillStyle = '#D8D4CA';
-      ctx.fill();
-
-      ctx.restore();
-    }
-
-    // Update Gliding Frosted Glass Card Copy & Left/Right Position
-    function positionDelhiGlassCard(beatIdx) {
-      const beat = delhiBeats[beatIdx];
-      const card = document.getElementById('glidingDelhiGlassCard');
-
-      document.getElementById('delhiCardEyebrow').textContent = beat.eyebrow;
-      document.getElementById('delhiCardBeatTag').textContent = beat.beatTag;
-      document.getElementById('delhiCardTitle').textContent = beat.title;
-      document.getElementById('delhiCardDesc').textContent = beat.desc;
-      document.getElementById('delhiStatLeftVal').textContent = beat.leftVal;
-      document.getElementById('delhiStatLeftLbl').textContent = beat.leftLbl;
-      document.getElementById('delhiStatRightVal').textContent = beat.rightVal;
-      document.getElementById('delhiStatRightLbl').textContent = beat.rightLbl;
-
-      if (window.innerWidth >= 768) {
-        const margin = window.innerWidth >= 1024 ? 48 : 32;
-        const travelX = Math.max(0, window.innerWidth - card.offsetWidth - margin * 2);
-        card.style.transform = beat.side === 'right'
-          ? `translate3d(${travelX}px, 0, 0)`
-          : 'translate3d(0px, 0, 0)';
-      } else {
-        card.style.transform = 'translate3d(0px, 0, 0)';
-      }
-
-      document.querySelectorAll('.beat-pill').forEach((btn, idx) => {
-        if (idx === beatIdx) {
-          btn.className = 'beat-pill px-2.5 sm:px-3.5 py-1.5 rounded-full text-[10px] sm:text-[11px] font-semibold bg-[#C8A96E] text-[#0D1F2D] transition-all cursor-pointer';
+      document.querySelectorAll('.stage-beat-btn').forEach((btn, idx) => {
+        if (idx === safeBeat) {
+          btn.className = 'stage-beat-btn px-2.5 py-1 rounded-full text-[10px] font-semibold bg-white text-[#0D1F2D] transition-all cursor-pointer';
         } else {
-          btn.className = 'beat-pill px-2.5 sm:px-3.5 py-1.5 rounded-full text-[10px] sm:text-[11px] font-medium text-white/80 hover:text-white transition-all cursor-pointer';
+          btn.className = 'stage-beat-btn px-2.5 py-1 rounded-full text-[10px] font-medium text-white/80 hover:text-white transition-all cursor-pointer';
         }
       });
+
+      if (layer) {
+        const px = appState.smoothPointerX * 26;
+        const py = appState.smoothPointerY * 18;
+        layer.style.transform = `translate3d(${beat.x + px}px, ${beat.y + py}px, 0) scale(${beat.scale})`;
+      }
     }
 
-    // Main 60fps Animation & Scroll Scrub Loop
-    function animateDelhiTour() {
-      tourState.time += 0.016;
-
-      const track = document.getElementById('delhiTourTrack');
-      const rect = track.getBoundingClientRect();
-      const scrollableDistance = Math.max(rect.height - window.innerHeight, 1);
-      const currentScroll = clamp01(-rect.top / scrollableDistance);
-
-      tourState.targetProgress = currentScroll;
-      tourState.smoothProgress += (tourState.targetProgress - tourState.smoothProgress) * 0.12;
-      tourState.pointerX += (tourState.targetPointerX - tourState.pointerX) * 0.08;
-      tourState.pointerY += (tourState.targetPointerY - tourState.pointerY) * 0.08;
-
-      const cam = getInterpolatedCamera(tourState.smoothProgress);
-      if (cam.nearestBeat !== tourState.activeBeat) {
-        tourState.activeBeat = cam.nearestBeat;
-        positionDelhiGlassCard(cam.nearestBeat);
+    function selectHorizon(idx, scrollToTop = false) {
+      applyHorizonState(idx, 0);
+      if (scrollToTop) {
+        scrubToHorizonBeat(0);
       }
-
-      drawDelhiCutawayScene(tourState.time, tourState.smoothProgress);
-
-      // Hide fixed tour HUD cleanly after scrolling past the tour track
-      const pastTour = rect.bottom < window.innerHeight * 0.45;
-      const card = document.getElementById('glidingDelhiGlassCard');
-      const beatBar = document.getElementById('tourBeatBar');
-      const cue = document.getElementById('delhiScrollCue');
-
-      if (pastTour) {
-        card.style.opacity = '0';
-        card.style.pointerEvents = 'none';
-        beatBar.style.opacity = '0';
-        beatBar.style.pointerEvents = 'none';
-        cue.style.opacity = '0';
-      } else {
-        card.style.opacity = '1';
-        card.style.pointerEvents = 'auto';
-        beatBar.style.opacity = '1';
-        beatBar.style.pointerEvents = 'auto';
-        cue.style.opacity = '1';
-      }
-
-      requestAnimationFrame(animateDelhiTour);
     }
 
-    // Smoothly scrub/scroll to a specific Delhi tour beat (0..3)
-    function scrubToBeat(beatIdx) {
-      const track = document.getElementById('delhiTourTrack');
+    function launchHorizonOnStage(idx) {
+      applyHorizonState(idx, 0);
+      const track = document.getElementById('horizonStageTrack');
+      if (track) {
+        window.scrollTo({ top: track.offsetTop, behavior: 'smooth' });
+      }
+    }
+
+    function scrubToHorizonBeat(beatIdx) {
+      const track = document.getElementById('horizonStageTrack');
+      if (!track) return;
       const maxScroll = Math.max(track.offsetHeight - window.innerHeight, 1);
-      const targetY = track.offsetTop + (beatIdx / (delhiBeats.length - 1)) * maxScroll;
+      const targetY = track.offsetTop + (beatIdx / 3) * maxScroll;
       window.scrollTo({ top: targetY, behavior: 'smooth' });
     }
 
-    function tourDelhiBeat(beatIdx) {
-      scrubToBeat(beatIdx);
-    }
+    function toggleStageAutoTour() {
+      appState.autoTourActive = !appState.autoTourActive;
+      const textEl = document.getElementById('autoPlayText');
+      const dotEl = document.getElementById('autoPlayDot');
+      const track = document.getElementById('horizonStageTrack');
 
-    // Automated tour playback toggle
-    function toggleDelhiAutoTour() {
-      tourState.autoTourRunning = !tourState.autoTourRunning;
-      const label = document.getElementById('autoTourBtnLabel');
-      const pulse = document.getElementById('autoTourPulse');
-
-      if (tourState.autoTourRunning) {
-        label.textContent = 'Touring...';
-        pulse.classList.add('animate-ping');
-
-        const track = document.getElementById('delhiTourTrack');
+      if (appState.autoTourActive && track) {
+        if (textEl) textEl.textContent = 'Touring...';
+        if (dotEl) dotEl.classList.add('animate-ping');
         const maxScroll = Math.max(track.offsetHeight - window.innerHeight, 1);
         const totalFrames = 14 * 60;
 
@@ -1317,90 +1413,250 @@
         }
 
         function stepTour() {
-          if (!tourState.autoTourRunning) return;
+          if (!appState.autoTourActive) return;
           if (window.scrollY >= track.offsetTop + maxScroll - 4) {
-            tourState.autoTourRunning = false;
-            label.textContent = 'Auto-Tour';
-            pulse.classList.remove('animate-ping');
+            appState.autoTourActive = false;
+            if (textEl) textEl.textContent = 'Auto-Tour';
+            if (dotEl) dotEl.classList.remove('animate-ping');
             return;
           }
           window.scrollBy(0, maxScroll / totalFrames);
-          tourState.autoTourRaf = requestAnimationFrame(stepTour);
+          appState.autoTourRaf = requestAnimationFrame(stepTour);
         }
-
-        tourState.autoTourRaf = requestAnimationFrame(stepTour);
+        appState.autoTourRaf = requestAnimationFrame(stepTour);
       } else {
-        label.textContent = 'Auto-Tour';
-        pulse.classList.remove('animate-ping');
-        cancelAnimationFrame(tourState.autoTourRaf);
+        appState.autoTourActive = false;
+        if (textEl) textEl.textContent = 'Auto-Tour';
+        if (dotEl) dotEl.classList.remove('animate-ping');
+        cancelAnimationFrame(appState.autoTourRaf);
       }
     }
 
-    // Enclave filter in 'ICONIC RESIDENCES ACROSS DELHI'
-    function filterDelhiEnclaves(enclaveKey) {
-      document.querySelectorAll('.enclave-pill').forEach((btn) => {
-        if (btn.dataset.enclave === enclaveKey) {
-          btn.className = 'enclave-pill px-4 py-2 rounded-full text-xs font-semibold bg-[#0D1F2D] text-white transition-all cursor-pointer';
+    function filterHorizonCluster(clusterKey) {
+      document.querySelectorAll('.cluster-pill').forEach((btn) => {
+        if (btn.dataset.cluster === clusterKey) {
+          btn.className = 'cluster-pill px-4 py-2 rounded-full text-xs font-semibold bg-[#0D1F2D] text-[#F9F8F5] transition-all cursor-pointer';
         } else {
-          btn.className = 'enclave-pill px-4 py-2 rounded-full text-xs font-medium bg-white text-[#0D1F2D] border border-black/10 hover:border-[#0D1F2D] transition-all cursor-pointer';
+          btn.className = 'cluster-pill px-4 py-2 rounded-full text-xs font-medium bg-white text-[#0D1F2D] border border-[#0D1F2D]/15 hover:border-[#C5A059] transition-all cursor-pointer';
         }
       });
 
-      document.querySelectorAll('.delhi-estate-card').forEach((card) => {
-        if (enclaveKey === 'all' || card.dataset.enclave === enclaveKey) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
+      document.querySelectorAll('#horizonsGridContainer article').forEach((card) => {
+        card.style.display = (clusterKey === 'all' || card.dataset.cluster === clusterKey) ? 'flex' : 'none';
       });
     }
 
-    // Mandate objective selector in 'READY TO GET STARTED?'
-    function selectObjectivePill(btn) {
-      tourState.selectedObjective = btn.dataset.objective;
-      document.querySelectorAll('.obj-pill').forEach((pill) => {
-        pill.className = 'obj-pill px-4 py-2 rounded-full text-xs font-medium bg-white/[0.06] text-white/85 border border-white/15 hover:border-[#C8A96E] transition-all cursor-pointer';
+    function syncInquiryPillsVisual() {
+      const pills = document.querySelectorAll('.inq-horizon-pill');
+      pills.forEach((pill, idx) => {
+        const h = TOVENZA_HORIZONS[idx];
+        const label = `Horizon ${h.id} \u00B7 ${h.name}`;
+        const isMatch = label === appState.selectedInquiryHorizon;
+        pill.className = `inq-horizon-pill px-3 py-1.5 rounded-full text-[11px] font-medium transition-all cursor-pointer ${
+          isMatch
+            ? 'bg-[#C5A059] text-[#0D1F2D] font-semibold'
+            : 'bg-white/[0.06] text-white/80 border border-white/15 hover:border-[#C5A059]'
+        }`;
       });
-      btn.className = 'obj-pill px-4 py-2 rounded-full text-xs font-semibold bg-[#C8A96E] text-[#0D1F2D] transition-all cursor-pointer';
     }
 
-    function setMandateObjective(objectiveText) {
-      const match = document.querySelector(`.obj-pill[data-objective="${objectiveText}"]`);
-      if (match) {
-        selectObjectivePill(match);
-      } else {
-        tourState.selectedObjective = objectiveText;
-      }
+    function chooseInquiryHorizon(idx) {
+      const h = TOVENZA_HORIZONS[idx];
+      if (!h) return;
+      appState.selectedInquiryHorizon = `Horizon ${h.id} \u00B7 ${h.name}`;
+      syncInquiryPillsVisual();
     }
 
-    function submitDelhiMandate(e) {
+    function syncInquiryWithActiveHorizon() {
+      const h = TOVENZA_HORIZONS[appState.activeHorizonIndex];
+      appState.selectedInquiryHorizon = `Horizon ${h.id} \u00B7 ${h.name}`;
+      syncInquiryPillsVisual();
+    }
+
+    function handleInlineMandateSubmit(e) {
       e.preventDefault();
-      const name = document.getElementById('delhiInqName').value.trim();
-      const enclave = document.getElementById('delhiInqEnclave').value.trim();
+      const nameEl = document.getElementById('mandateFullName');
+      const orgEl = document.getElementById('mandateOrganization');
+      const formEl = document.getElementById('inlineMandateForm');
+      const confEl = document.getElementById('inlineMandateConfirmation');
+      const sumEl = document.getElementById('inlineMandateSummary');
 
-      document.getElementById('delhiInquiryForm').classList.add('hidden');
-      document.getElementById('delhiInquiryConfirmed').classList.remove('hidden');
-      document.getElementById('delhiConfirmedSummary').textContent =
-        `Thank you, ${name}. Your "${tourState.selectedObjective}" inquiry for ${enclave}, Delhi has been logged with TOVENZA Horizon 04.`;
+      if (!nameEl || !orgEl || !formEl || !confEl || !sumEl) return;
+      sumEl.textContent =
+        `Thank you, ${nameEl.value.trim()}. Your inquiry for ${appState.selectedInquiryHorizon} (${orgEl.value.trim()}) has been registered with TOVENZA.`;
+      formEl.classList.add('hidden');
+      confEl.classList.remove('hidden');
     }
 
-    function resetDelhiMandateForm() {
-      document.getElementById('delhiInquiryForm').reset();
-      document.getElementById('delhiInquiryConfirmed').classList.add('hidden');
-      document.getElementById('delhiInquiryForm').classList.remove('hidden');
+    function resetInlineMandate() {
+      const formEl = document.getElementById('inlineMandateForm');
+      const confEl = document.getElementById('inlineMandateConfirmation');
+      if (formEl) formEl.reset();
+      if (confEl) confEl.classList.add('hidden');
+      if (formEl) formEl.classList.remove('hidden');
+    }
+
+    // GSAP ScrollTrigger for scrubbing beats 0..3 across #horizonStageTrack
+    function setupScrollScrubTrigger() {
+      const triggerEl = document.getElementById('horizonStageTrack');
+      if (!triggerEl) return;
+
+      ScrollTrigger.create({
+        trigger: triggerEl,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.45,
+        onUpdate: (self) => {
+          appState.scrollProgress = self.progress;
+          const pctEl = document.getElementById('stageScrollPercent');
+          if (pctEl) {
+            pctEl.textContent = `SCRUB ${Math.round(self.progress * 100)}%`;
+          }
+
+          const nextBeat = Math.min(3, Math.round(self.progress * 3));
+          if (nextBeat !== appState.activeBeat) {
+            applyBeatVisuals(nextBeat);
+          }
+
+          const hud = document.getElementById('stageTopHud');
+          const card = document.getElementById('glidingHorizonCard');
+          const hideFixed = self.progress > 0.96;
+          if (hud) {
+            hud.style.opacity = hideFixed ? '0' : '1';
+            hud.style.pointerEvents = hideFixed ? 'none' : 'auto';
+          }
+          if (card) {
+            card.style.opacity = hideFixed ? '0' : '1';
+            card.style.pointerEvents = hideFixed ? 'none' : 'auto';
+          }
+        }
+      });
+    }
+
+    // Never-ending full-page cinematic live background canvas (#live-cinematic-bg)
+    const bgCanvas = document.getElementById('live-cinematic-bg');
+    const bgCtx = bgCanvas ? bgCanvas.getContext('2d') : null;
+    let bgW = 0;
+    let bgH = 0;
+    let bgDpr = 1;
+    let bgTime = 0;
+
+    function resizeLiveBackground() {
+      if (!bgCanvas || !bgCtx) return;
+      bgDpr = Math.min(window.devicePixelRatio || 1, 2);
+      bgW = window.innerWidth;
+      bgH = window.innerHeight;
+      bgCanvas.width = Math.floor(bgW * bgDpr);
+      bgCanvas.height = Math.floor(bgH * bgDpr);
+      bgCtx.setTransform(bgDpr, 0, 0, bgDpr, 0, 0);
+      applyBeatVisuals(appState.activeBeat);
+    }
+
+    function renderNeverEndingLiveBackground() {
+      if (!bgCanvas || !bgCtx) return;
+      bgTime += 0.008 + Math.min(Math.abs(appState.scrollVelocity) * 0.0004, 0.025);
+
+      const currentY = window.scrollY || 0;
+      const instVel = currentY - appState.lastScrollY;
+      appState.lastScrollY = currentY;
+      appState.scrollVelocity += (instVel - appState.scrollVelocity) * 0.1;
+
+      appState.smoothPointerX += (appState.pointerNormX - appState.smoothPointerX) * 0.06;
+      appState.smoothPointerY += (appState.pointerNormY - appState.smoothPointerY) * 0.06;
+
+      // 1. Unified Warm-White Studio Ground with Subtle Horizon Shift
+      const horizonShift = appState.activeHorizonIndex * 0.55;
+      const docHeight = Math.max(document.documentElement.scrollHeight - bgH, 1);
+      const pageRatio = Math.min(Math.max(currentY / docHeight, 0), 1);
+
+      const cx = bgW * (0.5 + appState.smoothPointerX * 0.14 + Math.cos(bgTime * 0.35 + horizonShift) * 0.08);
+      const cy = bgH * (0.45 + appState.smoothPointerY * 0.12 + Math.sin(bgTime * 0.28) * 0.07);
+
+      const baseGrad = bgCtx.createRadialGradient(cx, cy, 40, bgW * 0.5, bgH * 0.5, Math.max(bgW, bgH) * 0.85);
+      baseGrad.addColorStop(0, STUDIO_THEME.warmHighlight);
+      baseGrad.addColorStop(0.55, STUDIO_THEME.warmWhite);
+      baseGrad.addColorStop(1, STUDIO_THEME.warmShadow);
+      bgCtx.fillStyle = baseGrad;
+      bgCtx.fillRect(0, 0, bgW, bgH);
+
+      // 2. Ambient Slate-Teal & Burnished Bronze Depth Orbs
+      const orb1X = bgW * (0.18 + Math.sin(bgTime * 0.42 + horizonShift) * 0.12) + appState.smoothPointerX * 45;
+      const orb1Y = bgH * (0.28 + Math.cos(bgTime * 0.31 + pageRatio * 4) * 0.14) + appState.smoothPointerY * 35;
+      const orb1 = bgCtx.createRadialGradient(orb1X, orb1Y, 10, orb1X, orb1Y, Math.max(bgW, bgH) * 0.34);
+      orb1.addColorStop(0, 'rgba(197, 160, 89, 0.11)');
+      orb1.addColorStop(1, 'rgba(197, 160, 89, 0)');
+      bgCtx.fillStyle = orb1;
+      bgCtx.fillRect(0, 0, bgW, bgH);
+
+      const orb2X = bgW * (0.82 + Math.cos(bgTime * 0.36 - horizonShift * 0.6) * 0.12) - appState.smoothPointerX * 40;
+      const orb2Y = bgH * (0.68 + Math.sin(bgTime * 0.29 + pageRatio * 5) * 0.14) - appState.smoothPointerY * 30;
+      const orb2 = bgCtx.createRadialGradient(orb2X, orb2Y, 10, orb2X, orb2Y, Math.max(bgW, bgH) * 0.38);
+      orb2.addColorStop(0, 'rgba(13, 31, 45, 0.065)');
+      orb2.addColorStop(1, 'rgba(13, 31, 45, 0)');
+      bgCtx.fillStyle = orb2;
+      bgCtx.fillRect(0, 0, bgW, bgH);
+
+      // 3. Flowing Architectural Contour Ribbons (Never-Ending Parametric Waves)
+      const ribbonCount = 5;
+      for (let r = 0; r < ribbonCount; r++) {
+        const phaseOffset = r * 0.72 + horizonShift * 0.35 + pageRatio * 3.2;
+        const isBronze = r % 2 === 0;
+        bgCtx.beginPath();
+        const steps = 64;
+        for (let s = 0; s <= steps; s++) {
+          const u = s / steps;
+          const x = u * bgW;
+          const waveA = Math.sin(u * Math.PI * 2.2 + bgTime * 0.9 + phaseOffset) * (34 + r * 8);
+          const waveB = Math.cos(u * Math.PI * 1.3 - bgTime * 0.55 + r) * 18;
+          const yBase = bgH * (0.2 + r * 0.15) + appState.smoothPointerY * (16 + r * 4);
+          const y = yBase + waveA + waveB;
+          if (s === 0) bgCtx.moveTo(x, y);
+          else bgCtx.lineTo(x, y);
+        }
+        bgCtx.strokeStyle = isBronze
+          ? 'rgba(140, 106, 46, 0.11)'
+          : 'rgba(13, 31, 45, 0.065)';
+        bgCtx.lineWidth = isBronze ? 1.35 : 1.05;
+        bgCtx.stroke();
+      }
+
+      // 4. Subtle Architectural Grid & Floating Light Motes
+      const gridStep = 96;
+      const gridOffsetX = ((currentY * 0.08 + appState.smoothPointerX * 18) % gridStep + gridStep) % gridStep;
+      const gridOffsetY = ((currentY * 0.16 + bgTime * 10) % gridStep + gridStep) % gridStep;
+
+      bgCtx.strokeStyle = 'rgba(13, 31, 45, 0.032)';
+      bgCtx.lineWidth = 1;
+      for (let gx = -gridStep + gridOffsetX; gx < bgW + gridStep; gx += gridStep) {
+        bgCtx.beginPath();
+        bgCtx.moveTo(gx, 0);
+        bgCtx.lineTo(gx, bgH);
+        bgCtx.stroke();
+      }
+      for (let gy = -gridStep + gridOffsetY; gy < bgH + gridStep; gy += gridStep) {
+        bgCtx.beginPath();
+        bgCtx.moveTo(0, gy);
+        bgCtx.lineTo(bgW, gy);
+        bgCtx.stroke();
+      }
+
+      requestAnimationFrame(renderNeverEndingLiveBackground);
     }
 
     window.addEventListener('pointermove', (e) => {
-      tourState.targetPointerX = (e.clientX / window.innerWidth) - 0.5;
-      tourState.targetPointerY = (e.clientY / window.innerHeight) - 0.5;
+      appState.pointerNormX = (e.clientX / window.innerWidth) - 0.5;
+      appState.pointerNormY = (e.clientY / window.innerHeight) - 0.5;
     });
 
-    window.addEventListener('resize', resizeDelhiCanvas);
+    window.addEventListener('resize', resizeLiveBackground);
 
-    window.onload = function () {
-      resizeDelhiCanvas();
-      animateDelhiTour();
-    };
+    window.addEventListener('DOMContentLoaded', () => {
+      populateHorizonControls();
+      resizeLiveBackground();
+      applyHorizonState(0, 0);
+      setupScrollScrubTrigger();
+      renderNeverEndingLiveBackground();
+    });
   </script>
 </body>
 </html>
