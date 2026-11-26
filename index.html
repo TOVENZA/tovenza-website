@@ -2221,6 +2221,50 @@ html, body {
       }
     ]);
 
+    const FUTURE_INDUSTRIES_TRACKS = Object.freeze([
+      {
+        id: 'frontier-observatory',
+        badge: 'HORIZON 11 · FRONTIER RESEARCH OBSERVATORY',
+        title: 'Long-Horizon Industrial Shift Radar',
+        track: 'observatory',
+        summary: 'Tracks emerging industrial shifts, capital-cycle timing, and regulatory readiness—separating disciplined long-horizon observation from premature hype.',
+        stages: [
+          {
+            name: 'Signal vs. Hype Filtering',
+            dimensions: 'Evidence Before Capital Allocation',
+            desc: 'Distinguish durable structural shifts from short-term technology narratives by examining real cost curves, physical bottlenecks, and institutional readiness.',
+            corners: {
+              nw: 'Multi-year cost curves & physical/infrastructure constraints',
+              ne: 'Separation of media hype from verifiable adoption',
+              sw: 'Downside protection & stage-gate capital discipline',
+              se: 'Clear criteria for when a thesis merits deeper study'
+            },
+            points: [
+              '• Evaluates frontier sectors without chasing unverified trends',
+              '• Keeps capital exposure ring-fenced during early observation',
+              '• Anchored in TOVENZA’s Four Permanent Foundations'
+            ]
+          },
+          {
+            name: 'Stage-Gate Readiness & Governance',
+            dimensions: 'Compliance, Ethics & Long-Duration Fit',
+            desc: 'Assess regulatory clarity, ethical boundaries, and cross-horizon synergy before any future industrial thesis can graduate to development.',
+            corners: {
+              nw: 'Jurisdictional rules & safety/compliance prerequisites',
+              ne: 'Ethical & consent alignment under Sovereign Identity',
+              sw: 'Capital & risk evaluation under Financial Sophistication',
+              se: 'Cross-border readiness under Global Ecosystem'
+            },
+            points: [
+              '• Prevents entering regulated or capital-heavy domains early',
+              '• Connects frontier research to TOVENZA’s governance gates',
+              '• Remains a disciplined Research horizon until validated'
+            ]
+          }
+        ]
+      }
+    ]);
+
     const WALKTHROUGH_PHOTOS = Object.freeze([
       'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80',
       'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80',
@@ -3609,12 +3653,56 @@ html, body {
             ]}
           />
         );
+      } else if (matchedRoute.path === '/horizons/psychology-wellbeing') {
+        activeView = (
+          <HorizonWalkthroughSuite
+            badgeLabel="Horizon 07 of 11 • Psychology & Wellbeing"
+            statusBadge="Strategic Thesis"
+            heading="Behavioral Clarity, Resilience & Non-Clinical Boundaries."
+            lead="Walk through TOVENZA’s non-clinical reflection and sustainable-pacing framework—designed with strict privacy and clear clinical referral boundaries."
+            tracksSectionEyebrow="Horizon 07 Tracks"
+            tracksSectionTitle="Clarity & Sustainable Pacing"
+            filterOptions={[
+              { key: 'all', label: 'All Tracks' },
+              { key: 'clarity', label: 'Clarity & Resilience' }
+            ]}
+            tracks={PSYCHOLOGY_WELLBEING_TRACKS}
+            photos={WALKTHROUGH_PHOTOS}
+            inquiryEyebrow="Strategic Thesis Note • Horizon 07"
+            inquiryTitle="Connect on Psychology & Wellbeing"
+            inquiryOptions={[
+              'Decision Calm, Burnout Prevention & Boundaries'
+            ]}
+          />
+        );
       } else if (matchedRoute.path === '/horizons/astrology-jyotish') {
         activeView = <JyotishHorizonTemplate />;
       } else if (matchedRoute.path === '/horizons/education-learning') {
         activeView = <EducationHorizonTemplate />;
       } else if (matchedRoute.path === '/horizons/retail') {
         activeView = <RetailHorizonTemplate />;
+      } else if (matchedRoute.path === '/horizons/future-industries') {
+        activeView = (
+          <HorizonWalkthroughSuite
+            badgeLabel="Horizon 11 of 11 • Future Industries"
+            statusBadge="Research"
+            heading="Frontier Research & Long-Horizon Industrial Radar."
+            lead="Walk through TOVENZA’s frontier research approach—filtering signal from hype, mapping regulatory & capital prerequisites, and keeping long-horizon bets disciplined."
+            tracksSectionEyebrow="Horizon 11 Tracks"
+            tracksSectionTitle="Frontier Research Observatory"
+            filterOptions={[
+              { key: 'all', label: 'All Tracks' },
+              { key: 'observatory', label: 'Industrial Radar' }
+            ]}
+            tracks={FUTURE_INDUSTRIES_TRACKS}
+            photos={WALKTHROUGH_PHOTOS}
+            inquiryEyebrow="Research Note • Horizon 11"
+            inquiryTitle="Connect on Future Industries Research"
+            inquiryOptions={[
+              'Long-Horizon Industrial Shift Radar'
+            ]}
+          />
+        );
       } else if (matchedRoute.group === 'horizons') {
         activeView = <HorizonBlueprintTemplate slug={matchedRoute.slug} onNavigate={navigate} />;
       } else if (matchedRoute.path === '/capabilities') {
