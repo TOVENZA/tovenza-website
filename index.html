@@ -22,10 +22,10 @@
   <div id="root"></div>
 
   <script type="text/babel">
-    const { Component, useState, useEffect, useCallback } = React;
+    const { Component, useState, useEffect, useCallback, useRef } = React;
 
     /* ==========================================================================
-       0A. OBSIDIAN SOVEREIGNTY DESIGN TOKENS
+       0A. OBSIDIAN SOVEREIGNTY DESIGN TOKENS & THREEUI SIGNUPBUTTON STYLES
        ========================================================================== */
     const OBSIDIAN_SOVEREIGNTY_CSS = `
 :root {
@@ -109,14 +109,37 @@ html, body {
 }
 
 .tvz-monolith-card {
-  background: linear-gradient(180deg, rgba(32, 35, 33, 0.48) 0%, rgba(8, 9, 9, 0.94) 100%);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(32, 35, 33, 0.56) 0%, rgba(8, 9, 9, 0.92) 100%);
   border: 1px solid var(--tvz-border-hairline);
+  backdrop-filter: blur(8px);
   transition: border-color var(--tvz-duration-base) var(--tvz-ease-architectural),
+              transform var(--tvz-duration-base) var(--tvz-ease-architectural),
               background-color var(--tvz-duration-base) var(--tvz-ease-architectural);
+}
+
+.tvz-monolith-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background-image:
+    linear-gradient(to right, rgba(185, 157, 107, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(185, 157, 107, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), #000 0%, transparent 78%);
+  -webkit-mask-image: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), #000 0%, transparent 78%);
+  transition: opacity 280ms ease;
 }
 
 .tvz-monolith-card:hover {
   border-color: var(--tvz-border-champagne);
+}
+
+.tvz-monolith-card:hover::before {
+  opacity: 1;
 }
 
 .tvz-focus-ring:focus-visible {
@@ -130,6 +153,395 @@ html, body {
 @media (min-width: 1024px) {
   .tvz-mobile-toggle { display: none !important; }
 }
+
+/* ==========================================================================
+   THREEUI SIGNUPBUTTON EXACT SOURCE CSS (SHA-256 976fe58bea0d)
+   ========================================================================== */
+@font-face{font-family:"RM";font-style:normal;font-weight:100 700;src:url(data:font/woff2;base64,d09GMgABAAAAAAnQABEAAAAAD0wAAAluAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHDQ/SFZBUi8GYD9TVEFUgRwnHgBkL2oRCAqFbIUNCxIAMIgOATYCJAMSBCAFiBgHIBuxDVFUk35IppGycP5+Pjx/88996w1hZIMcJjRU24ebv6oPyA8fdj78u+mfGxKkDaEGtOAVOqNzuorN3L5X8tzYm6lSUQUGFfPrl87e2qhEZeJCeTKD8EiF5Dbpe5/Wa5qMpQiFUEwkpVRLN64KrZpCsYhnk1mXOmXKpWEgAISI028gyMkrqYZ35376FrjX63XNcG/paOwGd6gBQZBrMi2FOOQW4wjFIDvFHpX4BIauAsElMhU02Oj5dLzh47WZXUMdVdGwsrWhVO8vMgNSvEJ+eXk+ZJBCbdnpHwtYdqLCpSBLyomoFaTRW2WERDmWqKfYEZZqzwBQfeobjO2eudHYsYXYgMAWnghBAnKgQhs09EwjGV2G0kjMcHZpoUkEmdkpUGRqIXVwf6UV+QpWEVUjkuN+M6OSIrbj9jAwij6Ko3i94eFqTyd1oI8MMlQUhThW4sIigKrUFrb7VpciH4UogwpVUE/9TFv7mB6ZDpj2m3abdpl2mLZTTQsZV7IFBQJHWEDICo/YOyJdCxDk7RyK0PnPgllAaGagjpgTC0kbsSRW/q9oFhIRj7uOiImkiRxirdWaTLBBscyYA7+F7n9sqpb+RAuuFo64Vz8uyREL7WyKvAe0E0NSs5FJ2MkkcVzWYS5uO+dHhvH+K/jsI7xoApt5iPUVcVzldU44nim5yFQzTDVYVs2ypZdYNctrD/ADILEUw46IrSTEYYCwb39hP9GAfs0SntfyPBnGaThOI+4nomnJKTbzEIuhTMZBJmfAUCZlLyMcz2Ud5jRCllWzrGgCr+V5MozTcJzmNJe2n/Mbxqcf4EUT2C6YNJxu5mCouoL6HJu6jx0g7MvU525mTn9hX+M/JvfoEcrp5sIQktdBGdLcXGmhkqM+QtcrubOLi63RfEOSxPDjR2wXtVoXocitD1PnRjZt3mOpK135+9eGrLo2MxIXba4a7FHoUei+FKp1qPBe6l3gVVg76NDh2Qm1qMGykNzQMcUyCJ9tXaburl7aY2nb7m2XIQv01gNIyPKvzjoIeusBJMj8q2Xok+/TEZtT5UnypJKljY0ly+RJ8qTNqR3JTdBb9z1M8fnYEmzsEtGoUETUGQzNQR+RNqxHRrxmwsQG96QcfcDOHckNlspDVNuSufKUQvnZ3AbtppicmJxozbROHVUz5HGKpGV5KlfrbsHv/mVqrNOitIO6dvFKVDSEVFdH1g0+TDpXLFOmKFO2ZLXXrEtQxCniKme0a1c5Xh4ni12cV+Iq04f+N2W0Rg69dQfibxNZYJ/Msuak/PyW5MzSoD6QQXl7K/xvQ5e7PVOeqdhU3NSwqSRLkSXP31YHAABBwveYCroijbCdx8QMbMAZYkM2kc8yHMVQCmJMhBebCCD7zr0fP2pbq1IjfATf33AXj2/fuHrJkiVL12/be5F78Pm3VXCCXNv2zs3bD558/kPbu3hK/fzDq0i93O0lln9/3DHbtW4/OyL03pEjAQEn9q1buWSe2HrxijW7j5y59yoqpVClad9J1yCesG1VYYyvr5OFgAwXU2a02N4lMOrVx19//g8DGSYgr9nrzIhsW/tHj9Zv2HP1zvNf/4VeAamVNdqqavE1qqvUrTRF0v9fH/EX9u+2s3F2cZX8FPxQzLASusfpcjk7CS0RCbudboGrmVHy/Rv8/YuKNENGj5s4fty4qOGGpvRPeQ5OKRPQrprMhw8fvrXnOrq6egkhVoWXVGG2RIZxjuzHj17mVbT0gXQ2tjh5HKDAggMBBwgZQlEURTGmRFPho0Jm0z/4ZxMY/wz/pogm5slojH4CRklO8juUFBWt3fR/WNjh/zbw1sTeJj6RBHwlYZgz56Y0Nk6ddJ63JuJfPrFvy1cUlKSN/jNCf03pS3V9aWhocHcL/JTDh1+7dk3Zb+Lcldu3b18+e7xJyXvr9XqDXidnBd09PV9xj1evXjVnYqyO7SrOfP/4Ma+3tDKKwCC5XB4UqGBas7MtFktrY87nlzdv3nxpz21s5Vm7/XNOUXlNaWm9o43iOdWtW7fvPnyaVuphfRVBKv4ABRb/gOA/AAlbty6ZGqeknfZn148cMYUHa5UimvI4GsrLy8urq+sa8+9fOWU7ePDGi4x2kWLk6BkrV+ZkldY5BSKpShccZgqXRAwdaFQNmDhn+Tbetyn7zqWTNpvt+Pkb9oqKygaHx2rs6Wx3NDWUFeekp2VXtnQE9IuZu2T1rfIFm7VaBSumrZxYJg/pbzANGJE0LmlYuParhJSUiuYObwkXqA8bHl1RWu9qpyXGwRHmkJAQrpPWhcpkSsNIi8Wk8WfEAndzdU5aWLjZbDZI3RVlJZWVlZJPrx5nEZUPcaTwFtYYGTt6zJgx0cPNwQaDtLejmxDCiL05VjUkzhysCzaF6L2+lH16+/zJkydv7Fn17e2e9q4eq6y7s93TLpTQvTUlBZnZua08eKN4iv9ttcXLVqyYNXaUgmr+9PTGqVNnQ8PCNAofmiLultrCQj6Z7Wt8e/+izWY7f+9NQ18y3UcLGdpKC2iG7uO10vMXL9158r660y9y9NSFC5c4XU6H0+XpFPn4+rIsn8zKZeqwoePGjYswKqXyZFpO3J52K93mcRM5DxAAAoz+O3/U2BWyWLfYWwwAeNXqGwEAlT7G2m6mJ0s4QbwagATUW9z19RE3/bmb6f1GOOEdW0roz8Vqa3EFv+Ip9uPH4/GJcR0KfAtG2vWmLwkiw+YB+tun4BblgUBBaUCBozgIEE0yQcNEroCBivwFIULJzmQOFhLtQACWRIBATEygoCNiCBCAL6AxAB/AwAvPIIQBx6JE/YohYkoHIgGLv+CFYOyGN3ywGixMiIUUYowABx0UxTKwhgtu4wMvALOxA9uwCtsxCXuxCluxCWv2HGc1dmAvdmAadmA7dsCM0aJyK9YWQUiknIN12IZNM64HUYGm0dq5+7BtGYTk8lOxCRuwEXvdIKTSHscD+sIIPTrOuh1ExcHVaEAjuhWVWuikORluRA8YkIZofXR39IAO3VBXURlZ5K1mA3SIgsXoUU+RDqfToR690IKO0EMDHfQwoPHYa6WIRxRiEIPYiplSIzXpFNnPno58lKMc+UgnnXFtViJRjrKyH/QslEoRh6WJkLIkut4E0ctiFfRITdK5UqkcvXhkZpY2QIoQTkvr0Xi0dy90QhQ636q8p7k7uqMeMnVslxoQ3bCHUnXVJfSbX7dyTU1/JjOHAA==) format("woff2")}
+
+.shader-frame {
+  position: relative;
+  width: 100%;
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--tvz-border-hairline);
+  background: radial-gradient(circle at 50% 50%, #f5f5f4 0%, #e4e5e4 100%);
+  overflow: hidden;
+}
+
+.tvz-threeui-signup {
+  --s: 0.72;
+  --ease: cubic-bezier(.22,.61,.36,1);
+  --spring: cubic-bezier(.34,1.45,.64,1);
+  position: relative;
+  width: calc(340px * var(--s));
+  height: calc(170px * var(--s));
+  display: grid;
+  place-items: center;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tvz-threeui-signup .stage {
+  position: relative;
+  width: 540px;
+  height: 540px;
+  flex: none;
+  transform: scale(var(--s));
+  transform-origin: center center;
+}
+
+.tvz-threeui-signup .btn {
+  position: absolute;
+  left: 117.5px;
+  top: 211.75px;
+  width: 305px;
+  height: 116px;
+  border-radius: 200px;
+  outline: none;
+  cursor: pointer;
+}
+
+.tvz-threeui-signup .btn * { pointer-events: none; }
+
+.tvz-threeui-signup .sh {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transition: opacity .5s var(--ease) .05s, transform .45s var(--spring);
+}
+.tvz-threeui-signup .sh-idle {
+  box-shadow: 0 17px 16px rgba(0,0,0,.15), 0 62px 63px rgba(0,0,0,.35), 0 80px 90px rgba(0,0,0,.06);
+  opacity: 1;
+}
+.tvz-threeui-signup .sh-hover {
+  box-shadow: 0 3px 4px rgba(0,0,0,.3), 0 12px 10px -3px rgba(0,0,0,.5), 0 44px 27px rgba(0,0,0,.15);
+  opacity: 0;
+  transition: opacity .45s var(--ease), transform .45s var(--spring);
+}
+.tvz-threeui-signup .btn.hover .sh-idle {
+  opacity: 0;
+  transition: opacity .45s var(--ease), transform .45s var(--spring);
+}
+.tvz-threeui-signup .btn.hover .sh-hover { opacity: 1; }
+.tvz-threeui-signup .btn.press .sh-idle,
+.tvz-threeui-signup .btn.press .sh-hover {
+  opacity: 0;
+  transition: opacity .15s var(--ease), transform .12s var(--ease);
+}
+.tvz-threeui-signup .btn.press .sh,
+.tvz-threeui-signup .btn.press .body { transform: scale(.985); }
+
+.tvz-threeui-signup .body {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  transition: transform .45s var(--spring);
+  background: linear-gradient(to bottom,#000 0,#797979 1.7%,#838383 5%,#969696 8.7%,#9b9b9b 12%,#989898 15.6%,#909090 20%,#808080 24%,#6b6b6b 28.5%,#5c5c5c 33%,#4d4d4d 37%,#414141 42%,#353535 45%,#333 48.5%,#2e2e2e 52%,#2a2a2a 55%,#222 59%,#1e1e1e 62%,#181818 66%,#161616 69%,#111 73%,#101010 76%,#0a0a0a 80%,#080808 83%,#070707 87%,#030303 90%,#020202 93%,#000 96%);
+}
+.tvz-threeui-signup .btn.press .body { transition: transform .12s var(--ease); }
+
+.tvz-threeui-signup .grain {
+  position: absolute;
+  inset: 0;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  -webkit-mask-image: linear-gradient(to bottom,rgba(0,0,0,.03) 0,rgba(0,0,0,.1) 5%,rgba(0,0,0,.22) 12%,rgba(0,0,0,.3) 16%,rgba(0,0,0,.5) 20%,rgba(0,0,0,.66) 24%,rgba(0,0,0,.8) 28%,rgba(0,0,0,.88) 33%,rgba(0,0,0,.95) 40%,rgba(0,0,0,.82) 46%,rgba(0,0,0,.72) 52%,rgba(0,0,0,.72) 58%,rgba(0,0,0,.7) 65%,rgba(0,0,0,.7) 69%,rgba(0,0,0,.48) 73%,rgba(0,0,0,.42) 78%,rgba(0,0,0,.38) 85%,rgba(0,0,0,.25) 91%,rgba(0,0,0,0) 96%);
+  mask-image: linear-gradient(to bottom,rgba(0,0,0,.03) 0,rgba(0,0,0,.1) 5%,rgba(0,0,0,.22) 12%,rgba(0,0,0,.3) 16%,rgba(0,0,0,.5) 20%,rgba(0,0,0,.66) 24%,rgba(0,0,0,.8) 28%,rgba(0,0,0,.88) 33%,rgba(0,0,0,.95) 40%,rgba(0,0,0,.82) 46%,rgba(0,0,0,.72) 52%,rgba(0,0,0,.72) 58%,rgba(0,0,0,.7) 65%,rgba(0,0,0,.7) 69%,rgba(0,0,0,.48) 73%,rgba(0,0,0,.42) 78%,rgba(0,0,0,.38) 85%,rgba(0,0,0,.25) 91%,rgba(0,0,0,0) 96%);
+}
+
+.tvz-threeui-signup .endl,
+.tvz-threeui-signup .endr { position: absolute; inset: 0; }
+.tvz-threeui-signup .endl {
+  background: radial-gradient(circle 62px at 58px 50%,rgba(0,0,0,0) 62%,rgba(0,0,0,.06) 72%,rgba(0,0,0,.14) 78%,rgba(0,0,0,.22) 84%,rgba(0,0,0,.26) 90%,rgba(0,0,0,.32) 95%,rgba(0,0,0,.4) 100%);
+  -webkit-mask-image: linear-gradient(90deg,#000 0,#000 44px,rgba(0,0,0,0) 62px);
+  mask-image: linear-gradient(90deg,#000 0,#000 44px,rgba(0,0,0,0) 62px);
+}
+.tvz-threeui-signup .endr {
+  background: radial-gradient(circle 62px at calc(100% - 58px) 50%,rgba(0,0,0,0) 74%,rgba(0,0,0,.1) 84%,rgba(0,0,0,.22) 92%,rgba(0,0,0,.45) 100%);
+  -webkit-mask-image: linear-gradient(270deg,#000 0,#000 44px,rgba(0,0,0,0) 62px);
+  mask-image: linear-gradient(270deg,#000 0,#000 44px,rgba(0,0,0,0) 62px);
+}
+.tvz-threeui-signup .rim {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1.5px #000;
+}
+.tvz-threeui-signup .label {
+  position: absolute;
+  left: 52px;
+  top: -0.75px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font: 340 25.1px/1 "RM","Roboto Mono",ui-monospace,Menlo,monospace;
+  letter-spacing: 2px;
+  color: #d0d0d0;
+  white-space: nowrap;
+  transition: color .35s var(--ease) .1s;
+}
+.tvz-threeui-signup .btn.hover .label,
+.tvz-threeui-signup .btn.press .label {
+  color: #fff;
+  transition: color .25s var(--ease);
+}
+
+.tvz-threeui-signup .well,
+.tvz-threeui-signup .gap,
+.tvz-threeui-signup .gapb,
+.tvz-threeui-signup .pressdark { position: absolute; }
+.tvz-threeui-signup .well,
+.tvz-threeui-signup .gap,
+.tvz-threeui-signup .gapb {
+  right: 12.75px;
+  top: 14.5px;
+  width: 90.5px;
+  height: 90.5px;
+  border-radius: 50%;
+}
+.tvz-threeui-signup .well { background: #000; }
+.tvz-threeui-signup .gap {
+  background: conic-gradient(from 0deg,rgba(255,255,255,.05) 0,rgba(255,255,255,.07) 40deg,rgba(255,255,255,.3) 75deg,rgba(255,255,255,.47) 90deg,rgba(255,255,255,.3) 105deg,rgba(255,255,255,.18) 120deg,rgba(255,255,255,.1) 150deg,rgba(255,255,255,.06) 180deg,rgba(255,255,255,.1) 210deg,rgba(255,255,255,.18) 240deg,rgba(255,255,255,.3) 255deg,rgba(255,255,255,.47) 270deg,rgba(255,255,255,.3) 285deg,rgba(255,255,255,.07) 320deg,rgba(255,255,255,.05) 360deg);
+  -webkit-mask-image: radial-gradient(circle,rgba(0,0,0,0) 42.3px,rgba(0,0,0,.5) 43.2px,#000 44px,#000 45px,rgba(0,0,0,0) 45.6px);
+  mask-image: radial-gradient(circle,rgba(0,0,0,0) 42.3px,rgba(0,0,0,.5) 43.2px,#000 44px,#000 45px,rgba(0,0,0,0) 45.6px);
+}
+.tvz-threeui-signup .gapb {
+  background: linear-gradient(to top,rgba(255,255,255,.25) 0,rgba(255,255,255,.25) 22%,rgba(255,255,255,0) 50%);
+  -webkit-mask-image: radial-gradient(circle,rgba(0,0,0,0) 41.6px,#000 42.4px,#000 45px,rgba(0,0,0,0) 45.6px);
+  mask-image: radial-gradient(circle,rgba(0,0,0,0) 41.6px,#000 42.4px,#000 45px,rgba(0,0,0,0) 45.6px);
+}
+.tvz-threeui-signup .pressdark {
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 17px 15px rgba(0,0,0,.95);
+  background: linear-gradient(to bottom,rgba(0,0,0,.35) 0,rgba(0,0,0,.25) 10%,rgba(0,0,0,0) 26%);
+  opacity: 0;
+  transition: opacity .4s var(--ease);
+}
+.tvz-threeui-signup .btn.press .pressdark {
+  opacity: 1;
+  transition: opacity .12s var(--ease);
+}
+
+.tvz-threeui-signup .sphere {
+  position: absolute;
+  right: 16px;
+  top: 17.75px;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: radial-gradient(circle closest-side at 50% 50%,#0b0c0b 0,#0b0c0b 80%,#070707 90%,#040404 96%,#030303 100%);
+  transition: box-shadow .5s var(--ease);
+}
+.tvz-threeui-signup .btn.hover .sphere {
+  box-shadow: 0 0 3px 0 rgba(20,150,90,.6), 0 0 8px 1px rgba(30,200,120,.3);
+}
+.tvz-threeui-signup .btn.press .sphere {
+  box-shadow: 0 0 3px 1px rgba(40,210,130,.8), 0 0 10px 2px rgba(60,240,150,.45);
+  transition: box-shadow .12s var(--ease);
+}
+
+.tvz-threeui-signup .sph-hover,
+.tvz-threeui-signup .sph-press,
+.tvz-threeui-signup .rimlite,
+.tvz-threeui-signup .rimglow,
+.tvz-threeui-signup .glow,
+.tvz-threeui-signup .potion {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+.tvz-threeui-signup .sph-hover {
+  opacity: 0;
+  transition: opacity .5s var(--ease);
+  background: radial-gradient(ellipse 45% 25% at 50% 24%,rgba(8,14,10,.85) 0,rgba(8,14,10,.75) 55%,rgba(8,14,10,0) 100%),
+    linear-gradient(to bottom,rgba(0,40,24,.82) 0,rgba(0,40,24,.58) 6%,rgba(0,40,24,.3) 12%,rgba(0,40,24,0) 22%),
+    radial-gradient(ellipse 65% 45% at 50% 100%,rgba(30,200,120,.5) 0,rgba(30,200,120,.28) 50%,rgba(30,200,120,0) 100%),
+    radial-gradient(circle closest-side at 50% 50%,#15191a 0,#15191a 43%,#13241d 50%,#123027 57%,#123c2e 64%,#124a37 71%,#125a40 79%,#147a50 86%,#14925c 93%,#1fa86a 100%);
+}
+.tvz-threeui-signup .btn.hover .sph-hover {
+  opacity: 1;
+  transition: opacity .4s var(--ease);
+}
+.tvz-threeui-signup .sph-press {
+  opacity: 0;
+  transition: opacity .3s var(--ease);
+  background: radial-gradient(ellipse 45% 25% at 50% 24%,rgba(8,16,12,.85) 0,rgba(8,16,12,.75) 55%,rgba(8,16,12,0) 100%),
+    linear-gradient(to bottom,rgba(0,60,35,.75) 0,rgba(0,60,35,.55) 6%,rgba(0,60,35,.3) 12%,rgba(0,60,35,0) 22%),
+    radial-gradient(ellipse 65% 45% at 50% 100%,rgba(40,230,140,.55) 0,rgba(40,230,140,.32) 50%,rgba(40,230,140,0) 100%),
+    radial-gradient(circle closest-side at 50% 50%,#101a15 0,#101a15 36%,#0f2a1e 43%,#0f3626 50%,#0f442f 57%,#0f5a3c 64%,#0f6c47 71%,#128757 79%,#16a869 86%,#18c078 93%,#28d48a 100%);
+}
+.tvz-threeui-signup .btn.press .sph-press {
+  opacity: 1;
+  transition: opacity .12s var(--ease);
+}
+
+.tvz-threeui-signup .potion { width: 84px; height: 84px; opacity: .85; }
+.tvz-threeui-signup .glow {
+  opacity: 0;
+  transition: opacity .5s var(--ease);
+  background: radial-gradient(circle closest-side at 50% 50%,rgba(130,255,195,0) 75%,rgba(130,255,195,.32) 88%,rgba(100,235,170,.4) 100%);
+  -webkit-mask-image: linear-gradient(to top,#000 0,#000 30%,rgba(0,0,0,0) 50%);
+  mask-image: linear-gradient(to top,#000 0,#000 30%,rgba(0,0,0,0) 50%);
+}
+.tvz-threeui-signup .btn.hover .glow,
+.tvz-threeui-signup .btn.press .glow {
+  opacity: 1;
+  transition: opacity .4s var(--ease);
+}
+
+.tvz-threeui-signup .rimlite,
+.tvz-threeui-signup .rimglow {
+  -webkit-mask-image: linear-gradient(to top,#000 0,#000 10%,rgba(0,0,0,.5) 18%,rgba(0,0,0,.18) 32%,rgba(0,0,0,0) 50%);
+  mask-image: linear-gradient(to top,#000 0,#000 10%,rgba(0,0,0,.5) 18%,rgba(0,0,0,.18) 32%,rgba(0,0,0,0) 50%);
+}
+.tvz-threeui-signup .rimlite {
+  background: radial-gradient(circle at 50% 50%,rgba(220,232,226,0) 27px,rgba(220,232,226,.25) 31px,rgba(220,232,226,.6) 34px,rgba(220,232,226,.97) 37px,rgba(220,232,226,.6) 39.5px,rgba(220,232,226,.45) 42px);
+  transition: opacity .5s var(--ease);
+}
+.tvz-threeui-signup .btn.hover .rimlite,
+.tvz-threeui-signup .btn.press .rimlite { opacity: 0; }
+
+.tvz-threeui-signup .rimglow {
+  background: radial-gradient(circle at 50% 50%,rgba(150,255,205,0) 30px,rgba(150,255,205,.5) 32.5px,rgba(150,255,205,.9) 33.5px,rgba(160,255,210,1) 36.5px,rgba(90,235,160,.4) 39.5px,rgba(70,220,145,.3) 42px);
+  opacity: 0;
+  transition: opacity .5s var(--ease);
+}
+.tvz-threeui-signup .btn.hover .rimglow,
+.tvz-threeui-signup .btn.press .rimglow {
+  opacity: 1;
+  transition: opacity .4s var(--ease);
+}
+
+.tvz-threeui-signup .blob {
+  position: absolute;
+  left: 24.5px;
+  top: 4.75px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  filter: blur(.5px);
+  background: linear-gradient(to bottom,rgba(255,255,255,.33) 0,rgba(255,255,255,.19) 40%,rgba(255,255,255,.07) 75%,rgba(255,255,255,.02) 100%);
+  transition: opacity .4s var(--ease);
+}
+.tvz-threeui-signup .btn.hover .blob,
+.tvz-threeui-signup .btn.press .blob { opacity: .78; }
+
+.tvz-threeui-signup .ring {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(.86);
+  transition: opacity .35s var(--ease), transform .45s var(--ease);
+}
+.tvz-threeui-signup .ring svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  animation: tvzThreeUISpin 2.93s linear infinite;
+}
+.tvz-threeui-signup .ring circle {
+  fill: none;
+  stroke: rgba(205,255,228,.62);
+  stroke-width: 1.15;
+  stroke-dasharray: 5 3;
+  transition: stroke .2s var(--ease), stroke-width .2s var(--ease);
+}
+.tvz-threeui-signup .btn.hover .ring {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity .35s var(--ease) .08s, transform .55s var(--spring) .08s;
+}
+.tvz-threeui-signup .btn.press .ring {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity .12s var(--ease), transform .12s var(--ease);
+}
+.tvz-threeui-signup .btn.press .ring circle {
+  stroke: #d6ff5c;
+  stroke-width: 1.4;
+}
+@keyframes tvzThreeUISpin { to { transform: rotate(360deg); } }
+
+.tvz-threeui-signup .icon { position: absolute; inset: 0; }
+.tvz-threeui-signup .icon svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.tvz-threeui-signup .mail { transform: translate(42px,40px); }
+.tvz-threeui-signup .mail path,
+.tvz-threeui-signup .mail rect,
+.tvz-threeui-signup .mail line {
+  fill: none;
+  stroke: rgba(255,255,255,.42);
+  stroke-width: 1.7;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  transition: stroke .4s var(--ease);
+}
+.tvz-threeui-signup .btn.hover .mail path,
+.tvz-threeui-signup .btn.hover .mail rect,
+.tvz-threeui-signup .btn.hover .mail line,
+.tvz-threeui-signup .btn.press .mail path,
+.tvz-threeui-signup .btn.press .mail rect,
+.tvz-threeui-signup .btn.press .mail line { stroke: rgba(228,255,240,.96); }
+.tvz-threeui-signup .mail .env { fill: rgba(5,12,9,.66); }
+.tvz-threeui-signup .mail .flapo {
+  transform: scaleY(0);
+  opacity: 0;
+  transform-origin: 0 -7.5px;
+  transition: transform .45s var(--spring), opacity .2s var(--ease);
+}
+.tvz-threeui-signup .mail .flapc {
+  transform-origin: 0 -7.5px;
+  transition: transform .3s var(--ease), opacity .2s var(--ease) .05s;
+}
+.tvz-threeui-signup .mail .letter {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform .5s var(--spring) .05s, opacity .3s var(--ease);
+}
+.tvz-threeui-signup .mail .letter rect { fill: rgba(18,26,22,.95); }
+.tvz-threeui-signup .mail .letter line { stroke-width: 1.2; stroke: rgba(255,255,255,.32); }
+.tvz-threeui-signup .btn.hover .mail .letter line { stroke: rgba(200,255,225,.7); }
+.tvz-threeui-signup .btn.hover .mail .flapc { opacity: 0; transform: scaleY(.15); }
+.tvz-threeui-signup .btn.hover .mail .flapo { opacity: 1; transform: scaleY(1); }
+.tvz-threeui-signup .btn.hover .mail .letter {
+  transform: translateY(-9px);
+  animation: tvzThreeUIBob 2.6s ease-in-out .6s infinite;
+}
+.tvz-threeui-signup .btn.sent .mail .letter {
+  transform: translateY(-34px);
+  opacity: 0;
+  transition: transform .38s cubic-bezier(.45,0,.85,.5), opacity .2s var(--ease) .15s;
+  animation: none;
+}
+.tvz-threeui-signup .btn.press .mail .flapo { transform: scaleY(1.08); }
+@keyframes tvzThreeUIBob { 0%,100% { transform: translateY(-9px); } 50% { transform: translateY(-11.5px); } }
+
+.tvz-threeui-signup .prints {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.tvz-threeui-signup .print {
+  position: absolute;
+  width: 110px;
+  height: 140px;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  transform: scale(.96);
+  transition: opacity .22s var(--ease), transform .32s var(--ease);
+}
+.tvz-threeui-signup .print.show { opacity: .32; transform: scale(1); }
+.tvz-threeui-signup .print.fade { opacity: 0; transition: opacity .8s var(--ease); }
+.tvz-threeui-signup .print canvas { position: absolute; inset: 0; width: 110px; height: 140px; display: block; }
 `;
 
     /* ==========================================================================
@@ -216,6 +628,8 @@ html, body {
         secondaryFoundations: ['sovereign-identity', 'global-ecosystem'],
         priorityTier: 'Near-Term',
         lifecycleStatus: 'In Development',
+        atmosphereMode: 'constellation-bridges',
+        atmosphereLabel: 'Concept 01 • Talent Constellation & Consent Bridges',
         summary: 'Structured compensation benchmarking, offer evaluation architecture, and consent-first talent intelligence.'
       },
       {
@@ -227,6 +641,8 @@ html, body {
         secondaryFoundations: ['architectural-authority', 'global-ecosystem'],
         priorityTier: 'Long-Term',
         lifecycleStatus: 'Research',
+        atmosphereMode: 'biometric-pulse',
+        atmosphereLabel: 'Concept 02 • Laminar Biometric Waveform',
         summary: 'Long-horizon diagnostic and preventative health infrastructure subject to clinical and regulatory licensing.'
       },
       {
@@ -238,6 +654,8 @@ html, body {
         secondaryFoundations: ['financial-sophistication', 'global-ecosystem'],
         priorityTier: 'Long-Term',
         lifecycleStatus: 'Research',
+        atmosphereMode: 'lantern-ripples',
+        atmosphereLabel: 'Concept 03 • Courtyard Sanctuary & Tranquil Water Ripples',
         summary: 'Architectural hospitality concepts anchored in understated luxury, operational precision, and asset discipline.'
       },
       {
@@ -249,6 +667,8 @@ html, body {
         secondaryFoundations: ['architectural-authority', 'sovereign-identity'],
         priorityTier: 'Long-Term',
         lifecycleStatus: 'Research',
+        atmosphereMode: 'cad-blueprint-warp',
+        atmosphereLabel: 'Concept 04 • Gravity-Well Architectural CAD & Golden Ratio Light-Table',
         summary: 'Delhi NCR & Horizon 01 architectural walkthroughs, space inspection, and long-duration physical asset stewardship.'
       },
       {
@@ -260,6 +680,8 @@ html, body {
         secondaryFoundations: ['global-ecosystem', 'financial-sophistication'],
         priorityTier: 'Near-Term',
         lifecycleStatus: 'In Development',
+        atmosphereMode: 'neural-lattice',
+        atmosphereLabel: 'Concept 05 • Spacetime Gravity-Well & Deterministic Circuit Lattice',
         summary: 'Deterministic decision instruments, human-in-the-loop AI workflows, and modular institutional software systems.'
       },
       {
@@ -271,6 +693,8 @@ html, body {
         secondaryFoundations: ['sovereign-identity', 'financial-sophistication'],
         priorityTier: 'Near-Term',
         lifecycleStatus: 'In Development',
+        atmosphereMode: 'vector-compass',
+        atmosphereLabel: 'Concept 06 • Strategic Vector Field & Precision Compass',
         summary: 'Structured operator clinics, cash-runway diagnostics, and organisational execution frameworks.'
       },
       {
@@ -282,6 +706,8 @@ html, body {
         secondaryFoundations: ['architectural-authority', 'global-ecosystem'],
         priorityTier: 'Medium-Term',
         lifecycleStatus: 'Strategic Thesis',
+        atmosphereMode: 'breath-topography',
+        atmosphereLabel: 'Concept 07 • Acoustic Stillness & Cognitive Breath Contours',
         summary: 'Behavioral clarity, cognitive resilience, and non-clinical performance frameworks.'
       },
       {
@@ -293,6 +719,8 @@ html, body {
         secondaryFoundations: ['global-ecosystem'],
         priorityTier: 'Medium-Term',
         lifecycleStatus: 'In Development',
+        atmosphereMode: 'chronos-astrolabe',
+        atmosphereLabel: 'Concept 08 • Chronos Sidereal Astrolabe & 27-Nakshatra Ephemeris',
         summary: 'Ancient wisdom, structured interpretation, and informed reflection with explicit non-claim boundaries.'
       },
       {
@@ -304,6 +732,8 @@ html, body {
         secondaryFoundations: ['sovereign-identity', 'global-ecosystem'],
         priorityTier: 'Medium-Term',
         lifecycleStatus: 'Strategic Thesis',
+        atmosphereMode: 'fibonacci-stairway',
+        atmosphereLabel: 'Concept 09 • Golden-Spiral Mastery Progression',
         summary: 'From learning to real capability — personalized learning pathways, milestones, and demonstrable skill building.'
       },
       {
@@ -315,6 +745,8 @@ html, body {
         secondaryFoundations: ['global-ecosystem', 'sovereign-identity'],
         priorityTier: 'Long-Term',
         lifecycleStatus: 'Research',
+        atmosphereMode: 'prism-showcase',
+        atmosphereLabel: 'Concept 10 • Atelier Vitrine & Curation Crosshairs',
         summary: 'Product discovery, buying assistance, transparent product comparisons, and request tracking.'
       },
       {
@@ -326,6 +758,8 @@ html, body {
         secondaryFoundations: ['financial-sophistication', 'architectural-authority'],
         priorityTier: 'Long-Term',
         lifecycleStatus: 'Research',
+        atmosphereMode: 'quantum-horizon',
+        atmosphereLabel: 'Concept 11 • Deep-Time Frontier Radar & Gravitational Singularity',
         summary: 'Long-horizon frontier research observatory evaluating emerging industrial shifts.'
       }
     ]);
@@ -368,6 +802,849 @@ html, body {
       { index: '20', path: '/gateway', group: 'control', title: 'Institutional Gateway', template: 'GatewayPortalTemplate' },
       { index: '21', path: '/legal', group: 'control', title: 'Legal & Disclosures', template: 'LegalDocumentTemplate' }
     ]);
+
+    /* ==========================================================================
+       0C. THREEUI <SignUpButton /> EXACT IMPLEMENTATION (SHA-256 976fe58bea0d)
+       ========================================================================== */
+    function SignUpButton({ onPress }) {
+      const stageRef = useRef(null);
+      const btnRef = useRef(null);
+      const grainRef = useRef(null);
+      const potionRef = useRef(null);
+      const printsRef = useRef(null);
+      const onPressRef = useRef(onPress);
+      onPressRef.current = onPress;
+
+      useEffect(() => {
+        const btn = btnRef.current;
+        const prints = printsRef.current;
+        const grainEl = grainRef.current;
+        const stage = stageRef.current;
+        const cv = potionRef.current;
+        if (!btn || !prints || !grainEl || !stage || !cv) return undefined;
+
+        let alive = true;
+        let rafId = 0;
+        let sentTimer = 0;
+        const timers = [];
+
+        function mulberry32(a) {
+          return function () {
+            a |= 0;
+            a = (a + 0x6D2B79F5) | 0;
+            let t = Math.imul(a ^ (a >>> 15), 1 | a);
+            t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+            return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+          };
+        }
+
+        /* grain texture: 2x speckle field with a skewed brightness distribution */
+        (function makeGrain() {
+          const W = Math.round((btn.offsetWidth || 305) * 2);
+          const H = Math.round((btn.offsetHeight || 116) * 2);
+          const c = document.createElement('canvas');
+          c.width = W;
+          c.height = H;
+          const g = c.getContext('2d');
+          const img = g.createImageData(W, H);
+          const d = img.data;
+          const r = mulberry32(1337);
+          for (let i = 0; i < W * H; i++) {
+            const u = r();
+            const a = 0.30 * Math.pow(u, 1.7);
+            d[i * 4] = 255;
+            d[i * 4 + 1] = 255;
+            d[i * 4 + 2] = 255;
+            d[i * 4 + 3] = Math.round(a * 255);
+          }
+          g.putImageData(img, 0, 0);
+          grainEl.style.backgroundImage = 'url(' + c.toDataURL() + ')';
+        })();
+
+        /* potion: liquid with rising bubbles and sparkles inside the glass sphere */
+        const potion = (function () {
+          const S = 84;
+          const D = 2;
+          const g = cv.getContext('2d');
+          g.setTransform(1, 0, 0, 1, 0, 0);
+          g.scale(D, D);
+          const rnd = mulberry32(4242);
+          function np(init) {
+            return {
+              x: 8 + rnd() * 68,
+              y: init ? 26 + rnd() * 54 : 80 + rnd() * 5,
+              r: 0.35 + rnd() * rnd() * 1.6,
+              v: 0.05 + rnd() * 0.15,
+              ph: rnd() * 6.28,
+              sw: 0.25 + rnd() * 0.7,
+              a: 0.3 + rnd() * 0.7
+            };
+          }
+          const P = [];
+          for (let i = 0; i < 46; i++) P.push(np(true));
+          let glow = 0;
+          let target = 0;
+          let level = 52;
+          let tLevel = 52;
+          let t = 0;
+          let last = performance.now();
+          const burst = [];
+          let running = false;
+          const surf = (x) => level + Math.sin(x * 0.18 + t * 2.1) * 1.1 + Math.sin(x * 0.31 - t * 1.4) * 0.7;
+
+          function draw(dt) {
+            t += dt / 60;
+            glow += (target - glow) * Math.min(1, 0.07 * dt);
+            level += (tLevel - level) * Math.min(1, 0.05 * dt);
+            g.clearRect(0, 0, S, S);
+            g.beginPath();
+            g.moveTo(-2, surf(-2));
+            for (let x = 1; x <= S + 2; x += 3) g.lineTo(x, surf(x));
+            g.lineTo(S + 2, S + 2);
+            g.lineTo(-2, S + 2);
+            g.closePath();
+            const A = 0.32 + glow * 0.45;
+            const lg = g.createLinearGradient(0, level - 4, 0, S);
+            lg.addColorStop(0, 'rgba(70,225,150,' + A + ')');
+            lg.addColorStop(0.35, 'rgba(22,150,92,' + A * 0.9 + ')');
+            lg.addColorStop(1, 'rgba(4,42,28,' + A * 0.85 + ')');
+            g.fillStyle = lg;
+            g.fill();
+            g.beginPath();
+            for (let x = -2; x <= S + 2; x += 2) {
+              const y = surf(x);
+              x === -2 ? g.moveTo(x, y) : g.lineTo(x, y);
+            }
+            g.strokeStyle = 'rgba(175,255,215,' + (0.25 + glow * 0.45) + ')';
+            g.lineWidth = 1;
+            g.stroke();
+            g.globalCompositeOperation = 'lighter';
+            for (const p of P) {
+              p.y -= p.v * dt * (1 + glow * 0.7);
+              p.x += Math.sin(t * p.sw * 3 + p.ph) * 0.12 * dt;
+              if (p.y < surf(p.x) + 1.5) Object.assign(p, np(false));
+              const al = p.a * (0.3 + glow * 0.7) * Math.min(1, (S - p.y) / 6);
+              g.beginPath();
+              g.arc(p.x, p.y, p.r, 0, 6.283);
+              g.fillStyle = 'rgba(165,255,208,' + al + ')';
+              g.shadowColor = 'rgba(120,255,190,.9)';
+              g.shadowBlur = 3 + glow * 4;
+              g.fill();
+            }
+            g.shadowBlur = 0;
+            for (let i = 0; i < 7; i++) {
+              const x = 14 + ((i * 11.3 + t * 4 * (i % 2 ? 1 : -1) + 300) % 56);
+              const y = level - 6 - ((i * 7 + t * 6) % Math.max(8, level - 14));
+              const tw = 0.5 + 0.5 * Math.sin(t * 5 + i * 1.7);
+              g.beginPath();
+              g.arc(x, y, 0.6 + tw * 0.5, 0, 6.283);
+              g.fillStyle = 'rgba(195,255,225,' + (0.12 + glow * 0.5) * tw + ')';
+              g.fill();
+            }
+            for (let i = burst.length - 1; i >= 0; i--) {
+              const b = burst[i];
+              b.x += b.vx * dt;
+              b.y += b.vy * dt;
+              b.vy += 0.02 * dt;
+              b.l -= dt / 38;
+              if (b.l <= 0) {
+                burst.splice(i, 1);
+                continue;
+              }
+              g.beginPath();
+              g.arc(b.x, b.y, b.r * b.l, 0, 6.283);
+              g.fillStyle = 'rgba(205,255,228,' + 0.9 * b.l + ')';
+              g.shadowColor = 'rgba(120,255,190,.9)';
+              g.shadowBlur = 4;
+              g.fill();
+            }
+            g.shadowBlur = 0;
+            g.globalCompositeOperation = 'source-over';
+          }
+
+          function frame(now) {
+            if (!alive) return;
+            const dt = Math.min(40, now - last) / 16.67;
+            last = now;
+            if (!document.hidden) draw(dt);
+            rafId = requestAnimationFrame(frame);
+          }
+
+          function start() {
+            if (running) return;
+            running = true;
+            last = performance.now();
+            rafId = requestAnimationFrame(frame);
+          }
+
+          draw(1);
+          start();
+
+          return {
+            set(s) {
+              target = s === 'press' ? 1.3 : s === 'hover' ? 1 : 0;
+              tLevel = s === 'idle' ? 52 : 47;
+            },
+            burst() {
+              for (let i = 0; i < 18; i++) {
+                const a = -Math.PI / 2 + (rnd() - 0.5) * 1.5;
+                const sp = 0.7 + rnd() * 1.5;
+                burst.push({
+                  x: 42 + (rnd() - 0.5) * 22,
+                  y: level + 8,
+                  vx: Math.cos(a) * sp,
+                  vy: Math.sin(a) * sp,
+                  r: 0.8 + rnd() * 1.4,
+                  l: 1
+                });
+              }
+            }
+          };
+        })();
+
+        /* fingerprint generator: ridge field (loop / whorl / arch) rasterised with domain warping, breaks and pressure falloff */
+        function makePrint(fpSeed) {
+          const r = mulberry32(fpSeed);
+          const W = 110;
+          const H = 140;
+          const D = 2;
+          const c = document.createElement('canvas');
+          c.width = W * D;
+          c.height = H * D;
+          const g = c.getContext('2d');
+          const LS = 32;
+          const latA = new Float32Array(LS * LS);
+          const latB = new Float32Array(LS * LS);
+          for (let i = 0; i < LS * LS; i++) {
+            latA[i] = r() * 2 - 1;
+            latB[i] = r() * 2 - 1;
+          }
+          function vn(lat, x, y) {
+            const xi = Math.floor(x);
+            const yi = Math.floor(y);
+            const fx = x - xi;
+            const fy = y - yi;
+            const sx = fx * fx * (3 - 2 * fx);
+            const sy = fy * fy * (3 - 2 * fy);
+            const x0 = ((xi % LS) + LS) % LS;
+            const x1 = (x0 + 1) % LS;
+            const y0 = ((yi % LS) + LS) % LS;
+            const y1 = (y0 + 1) % LS;
+            return (
+              (lat[y0 * LS + x0] * (1 - sx) + lat[y0 * LS + x1] * sx) * (1 - sy) +
+              (lat[y1 * LS + x0] * (1 - sx) + lat[y1 * LS + x1] * sx) * sy
+            );
+          }
+          function fbm(lat, x, y) {
+            return (
+              vn(lat, x, y) * 0.6 +
+              vn(lat, x * 2.1 + 3.7, y * 2.1 + 1.3) * 0.28 +
+              vn(lat, x * 4.3 + 9.1, y * 4.3 + 5.2) * 0.12
+            );
+          }
+          const ss = (a, b, x) => {
+            const t = Math.max(0, Math.min(1, (x - a) / (b - a)));
+            return t * t * (3 - 2 * t);
+          };
+          const tr = r();
+          const type = tr < 0.58 ? 'loop' : tr < 0.85 ? 'whorl' : 'arch';
+          const cx = 55;
+          const cy = 48;
+          const sp = 2.55 + r() * 0.45;
+          const wAmp = 3.5 + r() * 3.5;
+          const wF = 1 / (34 + r() * 10);
+          const tilt = (r() - 0.5) * 0.4;
+          const ct = Math.cos(tilt);
+          const st = Math.sin(tilt);
+          const spiral = r() < 0.5 ? 0 : r() < 0.5 ? 1 : -1;
+          const ell = 1.05 + r() * 0.2;
+          const archA = 10 + r() * 6;
+          const archS = 15 + r() * 8;
+          const diverge = 0.002 + r() * 0.003;
+          const img = g.createImageData(W * D, H * D);
+          const d = img.data;
+          for (let py = 0; py < H * D; py++) {
+            for (let px = 0; px < W * D; px++) {
+              const x = px / D;
+              const y = py / D;
+              const wx = x + fbm(latA, x * wF, y * wF) * wAmp;
+              const wy = y + fbm(latB, x * wF + 5, y * wF + 7) * wAmp;
+              const dx = wx - cx;
+              const dy = wy - cy;
+              const ux = dx * ct - dy * st;
+              const uy = dx * st + dy * ct;
+              let f;
+              if (type === 'loop') {
+                f = uy < 0 ? Math.hypot(ux, uy) : Math.abs(ux) / (1 + uy * diverge);
+              } else if (type === 'whorl') {
+                f = Math.hypot(ux, uy / ell) + (spiral * Math.atan2(uy, ux) * sp) / (2 * Math.PI);
+              } else {
+                f = uy + archA * Math.exp(-(ux * ux) / (archS * archS));
+              }
+              const ph = (2 * Math.PI * f) / sp;
+              const ridge = ss(-0.12, 0.5, Math.cos(ph));
+              const br = fbm(latB, x * 0.11 + 40, y * 0.11 + 40);
+              const cut = ss(-0.52, -0.34, br);
+              const ex = (x - cx) / 43;
+              const ey = (y - cy - 16) / 58;
+              const re = Math.hypot(ex, ey);
+              const en = fbm(latA, x * 0.05 + 20, y * 0.05 + 20) * 0.16;
+              const mask = ss(1.08 + en, 0.78 + en, re);
+              const pr = 0.55 + 0.45 * (1 - Math.min(1, re));
+              const gr = 0.82 + 0.18 * vn(latA, x * 0.9 + 11, y * 0.9 + 3);
+              const a = Math.min(1, ridge * cut * mask * pr * gr + mask * 0.05);
+              const o = (py * W * D + px) * 4;
+              d[o] = 255;
+              d[o + 1] = 255;
+              d[o + 2] = 255;
+              d[o + 3] = Math.round(a * 255);
+            }
+          }
+          g.putImageData(img, 0, 0);
+          return c;
+        }
+
+        let seed = 7;
+        function addPrint(x, y, rot, hold) {
+          const el = document.createElement('div');
+          el.className = 'print';
+          seed += 1;
+          const cvPrint = makePrint(seed);
+          cvPrint.style.transform = 'rotate(' + rot + 'deg)';
+          cvPrint.style.transformOrigin = '55px 55px';
+          el.appendChild(cvPrint);
+          el.style.left = x - 55 - 2 + 'px';
+          el.style.top = y - 48 - 15 + 'px';
+          el.style.transformOrigin = '55px 55px';
+          prints.appendChild(el);
+          requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('show')));
+          timers.push(setTimeout(() => el.classList.add('fade'), hold));
+          timers.push(setTimeout(() => el.remove(), hold + 900));
+          return el;
+        }
+
+        let pressed = false;
+        const rnd = mulberry32(99);
+        function setState() {
+          potion.set(btn.classList.contains('press') ? 'press' : btn.classList.contains('hover') ? 'hover' : 'idle');
+        }
+        function localPoint(e) {
+          const r = stage.getBoundingClientRect();
+          const s = r.width / 540 || 1;
+          const br = btn.getBoundingClientRect();
+          return { x: (e.clientX - br.left) / s, y: (e.clientY - br.top) / s };
+        }
+        function release(withPrint, e) {
+          if (!pressed) return;
+          pressed = false;
+          btn.classList.remove('press');
+          if (withPrint) {
+            const p = e ? localPoint(e) : { x: btn.offsetWidth * 0.45, y: btn.offsetHeight * 0.5 };
+            addPrint(p.x, p.y, -35 + rnd() * 70, 3000);
+            potion.burst();
+            btn.classList.add('sent');
+            clearTimeout(sentTimer);
+            sentTimer = setTimeout(() => btn.classList.remove('sent'), 480);
+            if (typeof onPressRef.current === 'function') onPressRef.current();
+          }
+          setState();
+        }
+
+        const onEnter = () => {
+          btn.classList.add('hover');
+          setState();
+        };
+        const onLeave = () => {
+          btn.classList.remove('hover');
+          release(false);
+          setState();
+        };
+        const onDown = (e) => {
+          if (e.button !== undefined && e.button !== 0) return;
+          pressed = true;
+          btn.classList.add('press');
+          btn.classList.add('hover');
+          setState();
+          try {
+            btn.setPointerCapture(e.pointerId);
+          } catch (_) {}
+        };
+        const onUp = (e) => release(true, e);
+        const onCancel = () => release(false);
+        const onKeyDown = (e) => {
+          if (e.key === ' ' || e.key === 'Enter') {
+            if (!pressed) {
+              pressed = true;
+              btn.classList.add('press');
+              setState();
+            }
+            e.preventDefault();
+          }
+        };
+        const onKeyUp = (e) => {
+          if ((e.key === ' ' || e.key === 'Enter') && pressed) release(true, null);
+        };
+        const onContext = (e) => e.preventDefault();
+
+        btn.addEventListener('pointerenter', onEnter);
+        btn.addEventListener('pointerleave', onLeave);
+        btn.addEventListener('pointerdown', onDown);
+        btn.addEventListener('pointerup', onUp);
+        btn.addEventListener('pointercancel', onCancel);
+        btn.addEventListener('keydown', onKeyDown);
+        btn.addEventListener('keyup', onKeyUp);
+        btn.addEventListener('contextmenu', onContext);
+
+        return () => {
+          alive = false;
+          cancelAnimationFrame(rafId);
+          clearTimeout(sentTimer);
+          timers.forEach(clearTimeout);
+          btn.removeEventListener('pointerenter', onEnter);
+          btn.removeEventListener('pointerleave', onLeave);
+          btn.removeEventListener('pointerdown', onDown);
+          btn.removeEventListener('pointerup', onUp);
+          btn.removeEventListener('pointercancel', onCancel);
+          btn.removeEventListener('keydown', onKeyDown);
+          btn.removeEventListener('keyup', onKeyUp);
+          btn.removeEventListener('contextmenu', onContext);
+        };
+      }, []);
+
+      return (
+        <div className="tvz-threeui-signup">
+          <div className="stage" ref={stageRef}>
+            <div className="btn" ref={btnRef} role="button" tabIndex={0} aria-label="Sign up">
+              <div className="sh sh-idle"></div>
+              <div className="sh sh-hover"></div>
+              <div className="body">
+                <div className="grain" ref={grainRef}></div>
+                <div className="endl"></div>
+                <div className="endr"></div>
+                <div className="rim"></div>
+                <div className="well"></div>
+                <div className="gap"></div>
+                <div className="gapb"></div>
+                <div className="pressdark"></div>
+                <div className="sphere">
+                  <div className="sph-hover"></div>
+                  <div className="sph-press"></div>
+                  <canvas className="potion" ref={potionRef} width="168" height="168"></canvas>
+                  <div className="glow"></div>
+                  <div className="rimlite"></div>
+                  <div className="rimglow"></div>
+                  <div className="blob"></div>
+                  <div className="ring">
+                    <svg viewBox="0 0 84 84">
+                      <circle cx="42" cy="42" r="35" />
+                    </svg>
+                  </div>
+                  <div className="icon">
+                    <svg viewBox="0 0 84 84">
+                      <g className="mail">
+                        <path className="flapo" d="M-11,-7.5 L0,-16 L11,-7.5" />
+                        <g className="letter">
+                          <rect x="-7.5" y="-5" width="15" height="12" rx="1.5" />
+                          <line x1="-4.5" y1="-1.5" x2="4.5" y2="-1.5" />
+                          <line x1="-4.5" y1="1.8" x2="2" y2="1.8" />
+                        </g>
+                        <rect className="env" x="-11" y="-7.5" width="22" height="15" rx="2.5" />
+                        <path className="flapc" d="M-11,-5.5 L0,2.5 L11,-5.5" />
+                      </g>
+                    </svg>
+                  </div>
+                </div>
+                <div className="label">SIGN UP</div>
+                <div className="prints" ref={printsRef}></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    /* ==========================================================================
+       0D. AUTOMATED ROUTE-ADAPTIVE LIVE ATMOSPHERE & ARCHITECTURAL X-RAY ENGINE
+       ========================================================================== */
+    function resolveAtmosphereConfig(currentPath) {
+      const matchedHorizon = ELEVEN_HORIZONS.find((h) => h.path === currentPath);
+      if (matchedHorizon) {
+        return {
+          mode: matchedHorizon.atmosphereMode,
+          label: matchedHorizon.atmosphereLabel,
+          horizonIndex: matchedHorizon.index
+        };
+      }
+      if (currentPath.startsWith('/foundations/')) {
+        return {
+          mode: 'sovereign-pillars',
+          label: 'Foundation Monolith • Four Architectural Columns',
+          horizonIndex: 'F'
+        };
+      }
+      return {
+        mode: 'living-meridian',
+        label: 'Sovereign Core • 11-Horizon Meridian & IST Solar Alignment',
+        horizonIndex: '00'
+      };
+    }
+
+    function SovereignAtmosphereCanvas({ currentPath, preset }) {
+      const canvasRef = useRef(null);
+      const pointerRef = useRef({ x: -9999, y: -9999, vx: 0, vy: 0, active: false });
+      const scrollRef = useRef({ y: 0, velocity: 0 });
+      const config = resolveAtmosphereConfig(currentPath);
+
+      useEffect(() => {
+        if (typeof window === 'undefined') return undefined;
+
+        const handlePointerMove = (e) => {
+          const p = pointerRef.current;
+          if (p.active) {
+            p.vx = e.clientX - p.x;
+            p.vy = e.clientY - p.y;
+          }
+          p.x = e.clientX;
+          p.y = e.clientY;
+          p.active = true;
+
+          const card = e.target && e.target.closest ? e.target.closest('.tvz-monolith-card') : null;
+          if (card) {
+            const rect = card.getBoundingClientRect();
+            card.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+            card.style.setProperty('--my', `${e.clientY - rect.top}px`);
+          }
+        };
+
+        const handlePointerLeave = () => {
+          pointerRef.current.active = false;
+        };
+
+        let lastScrollY = window.scrollY || 0;
+        const handleScroll = () => {
+          const nowY = window.scrollY || 0;
+          scrollRef.current.velocity = Math.min(Math.abs(nowY - lastScrollY), 90);
+          scrollRef.current.y = nowY;
+          lastScrollY = nowY;
+        };
+
+        window.addEventListener('pointermove', handlePointerMove, { passive: true });
+        window.addEventListener('pointerleave', handlePointerLeave, { passive: true });
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        return () => {
+          window.removeEventListener('pointermove', handlePointerMove);
+          window.removeEventListener('pointerleave', handlePointerLeave);
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }, []);
+
+      useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas || typeof window === 'undefined') return undefined;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return undefined;
+
+        const prefersReduced =
+          window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const intensity = preset === 'still' || prefersReduced ? 0 : preset === 'showcase' ? 1.35 : 1.0;
+
+        let width = (canvas.width = window.innerWidth);
+        let height = (canvas.height = window.innerHeight);
+
+        const handleResize = () => {
+          width = canvas.width = window.innerWidth;
+          height = canvas.height = window.innerHeight;
+        };
+        window.addEventListener('resize', handleResize);
+
+        const istHour = (new Date().getUTCHours() + 5.5) % 24;
+        const isTwilight = (istHour >= 5.5 && istHour <= 7.5) || (istHour >= 17.5 && istHour <= 19.5);
+        const baseAlpha = isTwilight ? 0.24 : 0.18;
+
+        const nodes = Array.from({ length: 28 }, (_, i) => ({
+          angle: (i * 137.508 * Math.PI) / 180,
+          radiusFactor: 0.14 + (i / 28) * 0.34,
+          speed: (0.00025 + (i % 5) * 0.00008) * (i % 2 === 0 ? 1 : -1),
+          size: 1.2 + (i % 3) * 0.65
+        }));
+
+        let animId = 0;
+        let t = 0;
+
+        const draw = () => {
+          if (document.hidden) {
+            animId = requestAnimationFrame(draw);
+            return;
+          }
+
+          scrollRef.current.velocity *= 0.92;
+          pointerRef.current.vx *= 0.88;
+          pointerRef.current.vy *= 0.88;
+
+          const speedBoost = 1 + scrollRef.current.velocity * 0.035;
+          t += 0.012 * intensity * speedBoost;
+
+          ctx.clearRect(0, 0, width, height);
+
+          const cx = width * 0.5;
+          const cy = height * 0.46;
+          const minDim = Math.min(width, height);
+          const px = pointerRef.current.x;
+          const py = pointerRef.current.y;
+          const pActive = pointerRef.current.active;
+
+          const aura = ctx.createRadialGradient(
+            pActive ? px : cx,
+            pActive ? py : cy,
+            10,
+            pActive ? px : cx,
+            pActive ? py : cy,
+            minDim * 0.55
+          );
+          aura.addColorStop(0, `rgba(185, 157, 107, ${(baseAlpha * 0.34).toFixed(3)})`);
+          aura.addColorStop(1, 'rgba(8, 9, 9, 0)');
+          ctx.fillStyle = aura;
+          ctx.fillRect(0, 0, width, height);
+
+          ctx.save();
+          ctx.strokeStyle = `rgba(185, 157, 107, ${baseAlpha})`;
+          ctx.fillStyle = `rgba(209, 185, 138, ${baseAlpha * 1.4})`;
+          ctx.lineWidth = 0.75;
+
+          const mode = config.mode;
+
+          if (mode === 'living-meridian' || mode === 'sovereign-pillars') {
+            ctx.beginPath();
+            ctx.moveTo(cx, 0);
+            ctx.lineTo(cx, height);
+            ctx.stroke();
+
+            const ringCount = mode === 'sovereign-pillars' ? 4 : 3;
+            for (let r = 1; r <= ringCount; r++) {
+              const rad = minDim * (0.14 * r) + Math.sin(t + r) * 4;
+              ctx.beginPath();
+              ctx.arc(cx, cy, rad, 0, Math.PI * 2);
+              ctx.stroke();
+            }
+
+            for (let i = 0; i < 11; i++) {
+              const a = t * 0.35 + (i * Math.PI * 2) / 11;
+              const orbitR = minDim * 0.28;
+              const nx = cx + Math.cos(a) * orbitR;
+              const ny = cy + Math.sin(a) * orbitR * 0.62;
+              ctx.beginPath();
+              ctx.arc(nx, ny, i === 0 || i === 3 ? 2.6 : 1.5, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          } else if (mode === 'constellation-bridges') {
+            const pts = nodes.slice(0, 18).map((n, idx) => {
+              const a = n.angle + t * 0.45;
+              const r = minDim * n.radiusFactor;
+              let x = cx + Math.cos(a) * r * 1.25;
+              let y = cy + Math.sin(a) * r * 0.75;
+              if (pActive) {
+                const dx = px - x;
+                const dy = py - y;
+                const d = Math.hypot(dx, dy);
+                if (d < 190 && d > 1) {
+                  x += (dx / d) * 14;
+                  y += (dy / d) * 14;
+                }
+              }
+              return { x, y, size: n.size, idx };
+            });
+
+            for (let i = 0; i < pts.length; i++) {
+              for (let j = i + 1; j < pts.length; j++) {
+                const dist = Math.hypot(pts[i].x - pts[j].x, pts[i].y - pts[j].y);
+                if (dist < 145) {
+                  ctx.globalAlpha = (1 - dist / 145) * 0.45;
+                  ctx.beginPath();
+                  ctx.moveTo(pts[i].x, pts[i].y);
+                  ctx.lineTo(pts[j].x, pts[j].y);
+                  ctx.stroke();
+                }
+              }
+              ctx.globalAlpha = 0.7;
+              ctx.beginPath();
+              ctx.arc(pts[i].x, pts[i].y, pts[i].size, 0, Math.PI * 2);
+              ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+          } else if (mode === 'biometric-pulse') {
+            for (let lane = -2; lane <= 2; lane++) {
+              ctx.beginPath();
+              const baseY = cy + lane * 44;
+              for (let x = 0; x <= width; x += 14) {
+                const wave =
+                  Math.sin(x * 0.008 + t * 1.6 + lane) * 12 +
+                  Math.exp(-Math.pow((x - ((t * 140) % (width + 200))) / 38, 2)) * 28;
+                const y = baseY - wave;
+                if (x === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+              }
+              ctx.stroke();
+            }
+          } else if (mode === 'lantern-ripples') {
+            const foci = [
+              { x: cx - minDim * 0.18, y: cy - 30, phase: 0 },
+              { x: cx + minDim * 0.2, y: cy + 40, phase: 2.1 }
+            ];
+            if (pActive) foci.push({ x: px, y: py, phase: 1.0 });
+            foci.forEach((f) => {
+              for (let k = 0; k < 4; k++) {
+                const r = ((t * 36 + f.phase * 40 + k * 55) % 220) + 12;
+                ctx.globalAlpha = (1 - r / 232) * 0.48;
+                ctx.beginPath();
+                ctx.arc(f.x, f.y, r, 0, Math.PI * 2);
+                ctx.stroke();
+              }
+            });
+            ctx.globalAlpha = 1;
+          } else if (mode === 'cad-blueprint-warp' || mode === 'neural-lattice') {
+            const spacing = mode === 'cad-blueprint-warp' ? 68 : 56;
+            for (let gx = spacing; gx < width; gx += spacing) {
+              for (let gy = spacing; gy < height; gy += spacing) {
+                let dx = 0;
+                let dy = 0;
+                let highlight = 0;
+                if (pActive) {
+                  const dist = Math.hypot(px - gx, py - gy);
+                  if (dist < 220) {
+                    const pull = 1 - dist / 220;
+                    highlight = pull;
+                    const factor = mode === 'neural-lattice' ? 16 : -10;
+                    dx = ((px - gx) / (dist || 1)) * pull * factor;
+                    dy = ((py - gy) / (dist || 1)) * pull * factor;
+                  }
+                }
+                const x = gx + dx;
+                const y = gy + dy;
+                ctx.globalAlpha = 0.16 + highlight * 0.55;
+                ctx.beginPath();
+                ctx.moveTo(x - 4, y);
+                ctx.lineTo(x + 4, y);
+                ctx.moveTo(x, y - 4);
+                ctx.lineTo(x, y + 4);
+                ctx.stroke();
+              }
+            }
+            ctx.globalAlpha = 1;
+          } else if (mode === 'vector-compass') {
+            const step = 76;
+            for (let x = step; x < width; x += step) {
+              for (let y = step; y < height; y += step) {
+                const angle = pActive ? Math.atan2(py - y, px - x) : Math.sin(x * 0.004 + t) * 0.6;
+                ctx.beginPath();
+                ctx.moveTo(x - Math.cos(angle) * 9, y - Math.sin(angle) * 9);
+                ctx.lineTo(x + Math.cos(angle) * 9, y + Math.sin(angle) * 9);
+                ctx.stroke();
+              }
+            }
+          } else if (mode === 'breath-topography') {
+            const breath = 0.85 + Math.sin(t * 0.85) * 0.15;
+            for (let c = 1; c <= 6; c++) {
+              ctx.beginPath();
+              for (let a = 0; a <= Math.PI * 2 + 0.1; a += 0.12) {
+                const wobble = Math.sin(a * 3 + t + c) * 10;
+                const r = (minDim * 0.075 * c + wobble) * breath;
+                const x = cx + Math.cos(a) * r * 1.3;
+                const y = cy + Math.sin(a) * r * 0.82;
+                if (a === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+              }
+              ctx.stroke();
+            }
+          } else if (mode === 'chronos-astrolabe') {
+            const outerR = minDim * 0.36;
+            const innerR = minDim * 0.22;
+            ctx.beginPath();
+            ctx.arc(cx, cy, outerR, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(cx, cy, innerR, 0, Math.PI * 2);
+            ctx.stroke();
+
+            for (let n = 0; n < 27; n++) {
+              const a = t * 0.18 + (n * Math.PI * 2) / 27;
+              ctx.beginPath();
+              ctx.moveTo(cx + Math.cos(a) * innerR, cy + Math.sin(a) * innerR);
+              ctx.lineTo(cx + Math.cos(a) * outerR, cy + Math.sin(a) * outerR);
+              ctx.stroke();
+            }
+          } else if (mode === 'fibonacci-stairway') {
+            ctx.beginPath();
+            for (let i = 0; i < 160; i++) {
+              const theta = i * 0.14 + t * 0.4;
+              const rad = i * (minDim * 0.0022);
+              const x = cx + Math.cos(theta) * rad;
+              const y = cy + Math.sin(theta) * rad * 0.78;
+              if (i === 0) ctx.moveTo(x, y);
+              else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+          } else if (mode === 'prism-showcase') {
+            const boxW = minDim * 0.56;
+            const boxH = minDim * 0.36;
+            ctx.strokeRect(cx - boxW / 2, cy - boxH / 2, boxW, boxH);
+            ctx.strokeRect(cx - boxW * 0.34, cy - boxH * 0.34, boxW * 0.68, boxH * 0.68);
+            if (pActive) {
+              ctx.beginPath();
+              ctx.moveTo(px - 24, py);
+              ctx.lineTo(px + 24, py);
+              ctx.moveTo(px, py - 24);
+              ctx.lineTo(px, py + 24);
+              ctx.stroke();
+            }
+          } else if (mode === 'quantum-horizon') {
+            for (let ring = 1; ring <= 5; ring++) {
+              ctx.beginPath();
+              ctx.ellipse(
+                cx,
+                cy,
+                minDim * 0.09 * ring,
+                minDim * 0.042 * ring,
+                Math.sin(t * 0.25) * 0.22,
+                0,
+                Math.PI * 2
+              );
+              ctx.stroke();
+            }
+            const sweepAngle = t * 0.85;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + Math.cos(sweepAngle) * minDim * 0.45, cy + Math.sin(sweepAngle) * minDim * 0.22);
+            ctx.stroke();
+          }
+
+          ctx.restore();
+          animId = requestAnimationFrame(draw);
+        };
+
+        animId = requestAnimationFrame(draw);
+
+        return () => {
+          cancelAnimationFrame(animId);
+          window.removeEventListener('resize', handleResize);
+        };
+      }, [config.mode, preset]);
+
+      return (
+        <canvas
+          ref={canvasRef}
+          aria-hidden="true"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            width: '100vw',
+            height: '100vh',
+            pointerEvents: 'none',
+            zIndex: 0
+          }}
+        />
+      );
+    }
 
     /* ==========================================================================
        1. ERROR BOUNDARY & SHARED UI PRIMITIVES
@@ -533,7 +1810,7 @@ html, body {
             position: 'sticky',
             top: 0,
             zIndex: 40,
-            backgroundColor: 'rgba(8, 9, 9, 0.92)',
+            backgroundColor: 'rgba(8, 9, 9, 0.88)',
             backdropFilter: 'blur(14px)'
           }}
           onMouseLeave={() => setOpenMenu(null)}
@@ -708,7 +1985,7 @@ html, body {
               <div className="tvz-container">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
                   <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>
-                    Eleven Strategic Horizons — Phased Portfolio Index
+                    Eleven Strategic Horizons — Distinct Concepts &amp; Live Atmospheres
                   </span>
                   <span className="tvz-mono" style={{ color: 'var(--tvz-color-ivory-muted)', fontSize: '0.58rem' }}>
                     Lifecycle Status Disclosed Per Horizon
@@ -831,9 +2108,11 @@ html, body {
       );
     }
 
-    function InstitutionalFooter({ onNavigate }) {
+    function InstitutionalFooter({ onNavigate, currentPath, preset, onChangePreset }) {
+      const atmosphere = resolveAtmosphereConfig(currentPath);
+
       return (
-        <footer className="tvz-hairline-t" style={{ backgroundColor: 'var(--tvz-color-obsidian-deep)', paddingBlock: '4rem 2.5rem' }}>
+        <footer className="tvz-hairline-t" style={{ backgroundColor: 'rgba(5, 6, 6, 0.92)', paddingBlock: '4rem 2.5rem' }}>
           <div className="tvz-container">
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '2.5rem', paddingBottom: '3rem' }}>
               <div>
@@ -844,6 +2123,29 @@ html, body {
                 <p className="tvz-mono" style={{ fontSize: '0.58rem', color: 'var(--tvz-color-champagne)', marginTop: '1rem' }}>
                   {INSTITUTION_META.creativeDirection} • support.tovenza@gmail.com
                 </p>
+                <div style={{ marginTop: '1rem', display: 'flex', flexWrap: 'wrap', gap: '0.35rem', alignItems: 'center' }}>
+                  <span className="tvz-mono" style={{ fontSize: '0.52rem', color: 'var(--tvz-color-ivory-muted)', marginRight: '0.35rem' }}>
+                    Atmosphere:
+                  </span>
+                  {['still', 'standard', 'showcase'].map((modeKey) => (
+                    <button
+                      key={modeKey}
+                      type="button"
+                      onClick={() => onChangePreset(modeKey)}
+                      className="tvz-mono tvz-focus-ring"
+                      style={{
+                        padding: '0.25rem 0.5rem',
+                        fontSize: '0.5rem',
+                        cursor: 'pointer',
+                        border: '1px solid var(--tvz-border-champagne)',
+                        backgroundColor: preset === modeKey ? 'var(--tvz-color-champagne)' : 'transparent',
+                        color: preset === modeKey ? 'var(--tvz-color-obsidian)' : 'var(--tvz-color-ivory-secondary)'
+                      }}
+                    >
+                      {modeKey}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               <div>
@@ -893,7 +2195,7 @@ html, body {
 
             <div className="tvz-hairline-t" style={{ paddingTop: '1.5rem', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '1rem', color: 'var(--tvz-color-ivory-muted)' }}>
               <span className="tvz-mono">© {new Date().getFullYear()} TOVENZA. Beyond Business. Built to Endure.</span>
-              <span className="tvz-mono">21 Canonical Routes • Horizons 01–11 Architecture</span>
+              <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne-light)' }}>{atmosphere.label}</span>
             </div>
           </div>
         </footer>
@@ -1582,11 +2884,12 @@ html, body {
     }
 
     /* ==========================================================================
-       4. SHARED INTERACTIVE WALKTHROUGH BUILDER FOR HORIZONS 01, 02, 03 & 05
+       4. SHARED INTERACTIVE WALKTHROUGH BUILDER FOR HORIZONS 01–03 & 05–11
        ========================================================================== */
     function HorizonWalkthroughSuite({
       badgeLabel,
       statusBadge,
+      conceptLabel,
       heading,
       lead,
       tracksSectionEyebrow,
@@ -1715,6 +3018,11 @@ html, body {
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', alignItems: 'center', marginBottom: '1.1rem' }}>
               <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>{badgeLabel}</span>
               <LifecycleStatusBadge status={statusBadge} />
+              {conceptLabel && (
+                <span className="tvz-mono" style={{ fontSize: '0.56rem', color: 'var(--tvz-color-champagne-light)', padding: '0.24rem 0.55rem', border: '1px solid var(--tvz-border-hairline)' }}>
+                  {conceptLabel}
+                </span>
+              )}
             </div>
             <h1 className="tvz-display" style={{ fontSize: 'var(--tvz-text-hero)', margin: '0 0 0.9rem' }}>{heading}</h1>
             <p style={{ fontSize: 'var(--tvz-text-body)', color: 'var(--tvz-color-ivory-secondary)', maxWidth: '62ch', margin: '0 0 1.65rem' }}>{lead}</p>
@@ -2221,6 +3529,62 @@ html, body {
       }
     ]);
 
+    const BUSINESS_CONSULTING_TRACKS = Object.freeze([
+      {
+        id: 'operator-clinics',
+        badge: 'HORIZON 06 · STRUCTURED OPERATOR CLINICS',
+        title: 'Cash-Runway, Pricing & Execution Diagnostics',
+        track: 'clinics',
+        summary: 'Structured working sessions for founders and operators diagnosing unit economics, pricing structure, and operating cadence without agency bloat.',
+        stages: [
+          {
+            name: 'Baseline Cash & Bottleneck Audit',
+            dimensions: 'Runway Floor & Constraint Mapping',
+            desc: 'Separate gross pipeline from cleared operating cash, identify the single tightest execution bottleneck, and define a 30-day diagnostic sprint.',
+            corners: {
+              nw: 'Contribution margin & cleared-cash floor check',
+              ne: 'Single-bottleneck isolation across sales & delivery',
+              sw: 'Clear scope boundaries (non-SEBI / non-legal)',
+              se: 'Written 30-day operator action ledger'
+            },
+            points: [
+              '• Replaces vague slide decks with concrete unit-economic clarity',
+              '• Separates operational advisory from regulated financial/legal practice',
+              '• Built for lean founders preserving runway'
+            ]
+          }
+        ]
+      }
+    ]);
+
+    const PSYCHOLOGY_WELLBEING_TRACKS = Object.freeze([
+      {
+        id: 'decision-calm',
+        badge: 'HORIZON 07 · NON-CLINICAL CLARITY & RESILIENCE',
+        title: 'Decision Calm, Burnout Prevention & Boundaries',
+        track: 'clarity',
+        summary: 'Explores structured reflection, cognitive pacing, and sustainable workload boundaries—with explicit clinical referral guardrails.',
+        stages: [
+          {
+            name: 'Cognitive Load & Pacing Audit',
+            dimensions: 'Sustainable Cadence & Non-Clinical Scope',
+            desc: 'Identify decision fatigue, chronic urgency loops, and recovery deficits while maintaining a strict boundary between coaching and clinical therapy.',
+            corners: {
+              nw: 'Decision-fatigue & energy-drain mapping',
+              ne: 'Explicit non-clinical scope & licensed referral path',
+              sw: 'Private self-reflection with zero invasive tracking',
+              se: 'Grounded weekly cadence & recovery anchors'
+            },
+            points: [
+              '• Never substitutes for licensed psychiatric or psychological treatment',
+              '• Protects mental privacy with zero behavioral ad profiling',
+              '• Anchored in Foundation I human-dignity standards'
+            ]
+          }
+        ]
+      }
+    ]);
+
     const FUTURE_INDUSTRIES_TRACKS = Object.freeze([
       {
         id: 'frontier-observatory',
@@ -2308,7 +3672,7 @@ html, body {
       const [birthTime, setBirthTime] = useState('');
       const [birthplace, setBirthplace] = useState('');
       const [confidence, setConfidence] = useState('Exact');
-      const [service, setService] = useState('TOVENZA Personal Jyotish Analysis');
+      const [service] = useState('TOVENZA Personal Jyotish Analysis');
       const [area, setArea] = useState('Career & Vocation Themes');
       const [context, setContext] = useState('');
       const [consent, setConsent] = useState(false);
@@ -2385,7 +3749,7 @@ html, body {
       return (
         <div className="tvz-container" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
           <SectionHeaderBlock
-            indexLabel="Horizon 08 • Astrology & Jyotish Sciences"
+            indexLabel="Horizon 08 • Astrology & Jyotish Sciences • Chronos Sidereal Astrolabe"
             title="Ancient Wisdom. Structured Interpretation. Informed Reflection."
             subtitle="TOVENZA Personal Jyotish Analysis pairs transparent methodology disclosure and responsible birth-data handling with calm, non-deterministic reflection—never fear-based claims or LLM-only chart math."
           />
@@ -2581,13 +3945,13 @@ html, body {
       const [ageBand, setAgeBand] = useState('Adult (18+)');
       const [guardianConsent, setGuardianConsent] = useState(false);
       const [location, setLocation] = useState('');
-      const [background, setBackground] = useState('');
+      const [background] = useState('');
       const [area, setArea] = useState('Career and Professional Skills');
       const [goal, setGoal] = useState('');
       const [level, setLevel] = useState('Beginner');
       const [timePerWeek, setTimePerWeek] = useState('4–6 hours / week');
-      const [format, setFormat] = useState('Structured Self-Paced + Practical Exercises');
-      const [budget, setBudget] = useState('Exploring / Pilot');
+      const [format] = useState('Structured Self-Paced + Practical Exercises');
+      const [budget] = useState('Exploring / Pilot');
       const [notes, setNotes] = useState('');
       const [consent, setConsent] = useState(false);
       const [msg, setMsg] = useState('');
@@ -2649,7 +4013,7 @@ html, body {
       return (
         <div className="tvz-container" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
           <SectionHeaderBlock
-            indexLabel="Horizon 09 • Education & Learning"
+            indexLabel="Horizon 09 • Education & Learning • Golden-Spiral Mastery Progression"
             title="From Learning to Real Capability."
             subtitle="TOVENZA Learning Pathway turns what you want to learn, your starting level, and your available time into structured practice, real-world assignments, and measurable progress—without unverified job guarantees or fake accreditation claims."
           />
@@ -2894,7 +4258,7 @@ html, body {
       return (
         <div className="tvz-container" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
           <SectionHeaderBlock
-            indexLabel="Horizon 10 • Retail"
+            indexLabel="Horizon 10 • Retail • Atelier Vitrine & Curation Crosshairs"
             title="TOVENZA Product Discovery & Buying Assistance."
             subtitle="Explore product options across Directions A–D with clear distinction between verified and estimated pricing, transparent pros and limitations, and unique Request ID tracking—without live checkout or unverified claims."
           />
@@ -3036,151 +4400,162 @@ html, body {
     }
 
     /* ==========================================================================
-       6. HOMEPAGE, INSTITUTION, FOUNDATIONS, HORIZONS & CONTROL TEMPLATES
+       6. HOMEPAGE, INSTITUTION, FOUNDATIONS & CONTROL TEMPLATES
        ========================================================================== */
     function HomeFlagshipTemplate({ onNavigate }) {
-      const [selectedTier, setSelectedTier] = useState('ALL');
-      const visibleHorizons =
-        selectedTier === 'ALL'
-          ? ELEVEN_HORIZONS
-          : ELEVEN_HORIZONS.filter((h) => h.priorityTier === selectedTier);
+      const [allowMotion, setAllowMotion] = useState(() => {
+        if (typeof window === 'undefined') return true;
+        const reduced =
+          window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const saveData =
+          typeof navigator !== 'undefined' &&
+          navigator.connection &&
+          Boolean(navigator.connection.saveData);
+        return !reduced && !saveData;
+      });
+
+      useEffect(() => {
+        if (typeof window === 'undefined' || !window.matchMedia) return undefined;
+        const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const onChange = () => setAllowMotion(!mq.matches);
+        if (mq.addEventListener) mq.addEventListener('change', onChange);
+        else if (mq.addListener) mq.addListener(onChange);
+        return () => {
+          if (mq.removeEventListener) mq.removeEventListener('change', onChange);
+          else if (mq.removeListener) mq.removeListener(onChange);
+        };
+      }, []);
+
+      const naturePosterUrl =
+        'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1920&q=80';
+      const natureVideoUrl =
+        'https://assets.mixkit.co/videos/preview/mixkit-sunlight-through-the-trees-in-a-forest-32820-large.mp4';
 
       return (
-        <div>
-          <section className="tvz-container" style={{ paddingBlock: 'clamp(5rem, 10vw, 8.5rem)' }}>
-            <div style={{ maxWidth: '54rem' }}>
-              <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', marginBottom: '1.1rem' }}>
-                01 • {INSTITUTION_META.identity} — {INSTITUTION_META.creativeDirection}
-              </p>
-              <h1 className="tvz-display" style={{ fontSize: 'var(--tvz-text-hero)', margin: 0 }}>
-                {INSTITUTION_META.statement}
-              </h1>
-              <p style={{ fontSize: 'var(--tvz-text-body)', color: 'var(--tvz-color-ivory-secondary)', marginTop: '1.5rem', maxWidth: '62ch' }}>
-                {INSTITUTION_META.governanceDisclosure}
-              </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.9rem', marginTop: '2.25rem' }}>
-                <InstitutionalLink
-                  to="/horizons/real-estate-property"
-                  onNavigate={onNavigate}
-                  className="tvz-mono"
-                  style={{
-                    padding: '0.85rem 1.4rem',
-                    backgroundColor: 'var(--tvz-color-champagne)',
-                    color: 'var(--tvz-color-obsidian)',
-                    textDecoration: 'none',
-                    fontWeight: 500
-                  }}
-                >
-                  Horizon 04: Delhi NCR Walkthrough →
-                </InstitutionalLink>
-                <InstitutionalLink
-                  to="/horizons/human-capital"
-                  onNavigate={onNavigate}
-                  className="tvz-mono"
-                  style={{
-                    padding: '0.85rem 1.4rem',
-                    border: '1px solid var(--tvz-border-champagne)',
-                    color: 'var(--tvz-color-ivory)',
-                    textDecoration: 'none'
-                  }}
-                >
-                  Horizon 01: Human Capital →
-                </InstitutionalLink>
-              </div>
-            </div>
-          </section>
+        <section
+          aria-label="TOVENZA Entrance"
+          style={{
+            position: 'relative',
+            width: '100%',
+            minHeight: '100dvh',
+            overflow: 'hidden',
+            display: 'grid',
+            placeItems: 'center',
+            backgroundColor: '#0c0e0c'
+          }}
+        >
+          {/* Scoped Living Nature Background (Poster + Muted Looping Video when Motion Allowed) */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              zIndex: 0,
+              backgroundImage: `url("${naturePosterUrl}")`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center center'
+            }}
+          >
+            {allowMotion && (
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                poster={naturePosterUrl}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  display: 'block'
+                }}
+              >
+                <source src={natureVideoUrl} type="video/mp4" />
+              </video>
+            )}
+            {/* Restrained atmospheric depth veil for legibility and contrast */}
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background:
+                  'radial-gradient(circle at 50% 50%, rgba(8, 9, 9, 0.34) 0%, rgba(8, 9, 9, 0.72) 100%)'
+              }}
+            />
+          </div>
 
-          <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
-            <div className="tvz-container">
-              <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>02 • Permanent Strategic Pillars</p>
-              <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h1)', margin: '0.5rem 0 2.5rem' }}>
-                The Four Institutional Foundations
-              </h2>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem' }}>
-                {FOUR_FOUNDATIONS.map((f) => (
-                  <InstitutionalLink
-                    key={f.id}
-                    to={f.path}
-                    onNavigate={onNavigate}
-                    className="tvz-monolith-card"
-                    style={{ padding: '2rem', textDecoration: 'none', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
-                  >
-                    <div>
-                      <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>Foundation {f.numeral}</div>
-                      <h3 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h3)', color: 'var(--tvz-color-ivory)', margin: '0.6rem 0 0.4rem' }}>{f.title}</h3>
-                      <p style={{ fontSize: '0.82rem', color: 'var(--tvz-color-champagne-light)', margin: '0 0 1rem' }}>{f.subtitle}</p>
-                      <p style={{ fontSize: '0.9rem', color: 'var(--tvz-color-ivory-secondary)', margin: 0 }}>{f.thesis}</p>
-                    </div>
-                    <div className="tvz-mono" style={{ marginTop: '1.5rem', color: 'var(--tvz-color-champagne)', fontSize: '0.6rem' }}>
-                      Examine Foundation →
-                    </div>
-                  </InstitutionalLink>
-                ))}
-              </div>
-            </div>
-          </section>
+          {/* Top-Right — Sign In */}
+          <div
+            style={{
+              position: 'fixed',
+              top: 'clamp(1.25rem, 3vw, 2.25rem)',
+              right: 'clamp(1.25rem, 4vw, 3rem)',
+              zIndex: 10
+            }}
+          >
+            <InstitutionalLink
+              to="/gateway"
+              onNavigate={onNavigate}
+              className="tvz-mono"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '0.68rem 1.35rem',
+                fontSize: '0.68rem',
+                letterSpacing: '0.24em',
+                color: '#FFFCFA',
+                backgroundColor: 'rgba(8, 9, 9, 0.56)',
+                border: '1px solid rgba(255, 252, 250, 0.28)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                textDecoration: 'none',
+                transition: 'border-color 280ms ease, background-color 280ms ease'
+              }}
+            >
+              Sign In
+            </InstitutionalLink>
+          </div>
 
-          <section className="tvz-hairline-t" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
-            <div className="tvz-container">
-              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-end', gap: '1rem', marginBottom: '2.5rem' }}>
-                <div>
-                  <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>03 • Phased Portfolio Architecture</p>
-                  <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h1)', margin: '0.5rem 0 0' }}>
-                    Eleven Strategic Horizons
-                  </h2>
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  {['ALL', 'Near-Term', 'Medium-Term', 'Long-Term'].map((tier) => (
-                    <button
-                      key={tier}
-                      type="button"
-                      onClick={() => setSelectedTier(tier)}
-                      className="tvz-mono tvz-focus-ring"
-                      style={{
-                        padding: '0.55rem 0.9rem',
-                        cursor: 'pointer',
-                        backgroundColor: selectedTier === tier ? 'var(--tvz-color-champagne)' : 'transparent',
-                        color: selectedTier === tier ? 'var(--tvz-color-obsidian)' : 'var(--tvz-color-ivory-secondary)',
-                        border: '1px solid var(--tvz-border-champagne)'
-                      }}
-                    >
-                      {tier}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: '1rem' }}>
-                {visibleHorizons.map((h) => (
-                  <InstitutionalLink
-                    key={h.slug}
-                    to={h.path}
-                    onNavigate={onNavigate}
-                    className="tvz-monolith-card"
-                    style={{ padding: '1.75rem', textDecoration: 'none', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
-                  >
-                    <div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', gap: '0.75rem', alignItems: 'center' }}>
-                        <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>Horizon {h.index}</span>
-                        <LifecycleStatusBadge status={h.lifecycleStatus} />
-                      </div>
-                      <h3 className="tvz-display" style={{ fontSize: '1.5rem', color: 'var(--tvz-color-ivory)', margin: '0.75rem 0 0.5rem' }}>{h.title}</h3>
-                      <p style={{ fontSize: '0.88rem', color: 'var(--tvz-color-ivory-secondary)', margin: '0 0 1.25rem' }}>{h.summary}</p>
-                    </div>
-                    <div className="tvz-mono" style={{ fontSize: '0.6rem', color: 'var(--tvz-color-champagne-light)', display: 'flex', justifyContent: 'space-between' }}>
-                      <span>{h.priorityTier}</span>
-                      <span>Open Horizon →</span>
-                    </div>
-                  </InstitutionalLink>
-                ))}
-              </div>
-            </div>
-          </section>
-        </div>
+          {/* Centre — Explore */}
+          <div
+            style={{
+              position: 'relative',
+              zIndex: 10,
+              padding: '1rem'
+            }}
+          >
+            <InstitutionalLink
+              to="/institution"
+              onNavigate={onNavigate}
+              className="tvz-mono"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '1.05rem 2.75rem',
+                fontSize: '0.78rem',
+                letterSpacing: '0.32em',
+                fontWeight: 500,
+                color: '#FFFCFA',
+                backgroundColor: 'rgba(8, 9, 9, 0.62)',
+                border: '1px solid rgba(185, 157, 107, 0.65)',
+                boxShadow: '0 20px 50px rgba(0, 0, 0, 0.45)',
+                backdropFilter: 'blur(14px)',
+                WebkitBackdropFilter: 'blur(14px)',
+                textDecoration: 'none',
+                transition: 'border-color 280ms ease, background-color 280ms ease'
+              }}
+            >
+              Explore
+            </InstitutionalLink>
+          </div>
+        </section>
       );
     }
 
-    function EditorialEssayTemplate({ onNavigate }) {
+    function EditorialEssayTemplate() {
       return (
         <div className="tvz-container" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
           <SectionHeaderBlock
@@ -3289,63 +4664,6 @@ html, body {
       );
     }
 
-    function HorizonBlueprintTemplate({ slug, onNavigate }) {
-      const horizon = ELEVEN_HORIZONS.find((h) => h.slug === slug) || ELEVEN_HORIZONS[0];
-      const primaryF = FOUR_FOUNDATIONS.find((f) => f.id === horizon.primaryFoundation);
-      const secondaryFs = FOUR_FOUNDATIONS.filter((f) => horizon.secondaryFoundations.includes(f.id));
-
-      return (
-        <div className="tvz-container" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', alignItems: 'center', marginBottom: '1rem' }}>
-            <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>
-              Horizon {horizon.index} of 11 • {horizon.priorityTier} Priority
-            </span>
-            <LifecycleStatusBadge status={horizon.lifecycleStatus} />
-          </div>
-          <h1 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h1)', margin: '0 0 1.25rem' }}>{horizon.title}</h1>
-          <p style={{ fontSize: 'var(--tvz-text-body)', color: 'var(--tvz-color-ivory-secondary)', maxWidth: '64ch', marginBottom: '2.5rem' }}>
-            {horizon.summary}
-          </p>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
-            <article className="tvz-monolith-card" style={{ padding: '1.85rem' }}>
-              <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>Foundation Governance</div>
-              <h2 className="tvz-display" style={{ fontSize: '1.45rem', margin: '0.6rem 0 1rem' }}>Institutional Anchors</h2>
-              {primaryF && (
-                <div style={{ marginBottom: '0.9rem' }}>
-                  <div className="tvz-mono" style={{ fontSize: '0.56rem', color: 'var(--tvz-color-ivory-muted)' }}>Primary Anchor</div>
-                  <InstitutionalLink to={primaryF.path} onNavigate={onNavigate} style={{ color: 'var(--tvz-color-champagne-light)', textDecoration: 'none' }}>
-                    Foundation {primaryF.numeral}: {primaryF.title} →
-                  </InstitutionalLink>
-                </div>
-              )}
-              <div>
-                <div className="tvz-mono" style={{ fontSize: '0.56rem', color: 'var(--tvz-color-ivory-muted)', marginBottom: '0.35rem' }}>
-                  Secondary Enablers
-                </div>
-                {secondaryFs.map((sf) => (
-                  <div key={sf.id} style={{ marginBottom: '0.3rem' }}>
-                    <InstitutionalLink to={sf.path} onNavigate={onNavigate} style={{ color: 'var(--tvz-color-ivory)', textDecoration: 'none', fontSize: '0.88rem' }}>
-                      Foundation {sf.numeral}: {sf.title} →
-                    </InstitutionalLink>
-                  </div>
-                ))}
-              </div>
-            </article>
-
-            <article className="tvz-monolith-card" style={{ padding: '1.85rem' }}>
-              <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>Stage-Gate Discipline</div>
-              <h2 className="tvz-display" style={{ fontSize: '1.45rem', margin: '0.6rem 0 1rem' }}>Development &amp; Regulatory Prerequisites</h2>
-              <p style={{ fontSize: '0.9rem', color: 'var(--tvz-color-ivory-secondary)', margin: 0 }}>
-                Current classification: <strong style={{ color: 'var(--tvz-color-ivory)' }}>{horizon.lifecycleStatus}</strong>. Operational deployment requires ratified unit economics, regulatory compliance verification, and capability system alignment.
-              </p>
-            </article>
-          </div>
-          <InstitutionalNoticeBanner />
-        </div>
-      );
-    }
-
     function CapabilityFrameworkTemplate({ onNavigate }) {
       return (
         <div className="tvz-container" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
@@ -3412,9 +4730,11 @@ html, body {
       const [track, setTrack] = useState('Institutional Dispatch');
       const [statusMsg, setStatusMsg] = useState('');
 
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        if (!email.trim()) return;
+      const recordRegistration = () => {
+        if (!email.trim()) {
+          setStatusMsg('Enter your email address above before pressing Sign Up.');
+          return;
+        }
         try {
           window.localStorage.setItem(
             'tovenza_gateway_dispatch_preview',
@@ -3423,6 +4743,11 @@ html, body {
         } catch {}
         setStatusMsg(`Recorded locally in preview storage for ${email.trim()} (${track}).`);
         setEmail('');
+      };
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        recordRegistration();
       };
 
       return (
@@ -3451,13 +4776,9 @@ html, body {
               placeholder="name@institution.org"
               style={{ padding: '0.75rem', backgroundColor: 'var(--tvz-color-obsidian)', border: '1px solid var(--tvz-border-hairline)', color: 'var(--tvz-color-ivory)' }}
             />
-            <button
-              type="submit"
-              className="tvz-mono tvz-focus-ring"
-              style={{ padding: '0.85rem 1.25rem', backgroundColor: 'var(--tvz-color-champagne)', color: 'var(--tvz-color-obsidian)', border: 'none', cursor: 'pointer', fontWeight: 500 }}
-            >
-              Record Dispatch Interest
-            </button>
+            <div className="shader-frame">
+              <SignUpButton onPress={recordRegistration} />
+            </div>
             <p style={{ fontSize: '0.78rem', color: 'var(--tvz-color-ivory-muted)', margin: 0 }}>
               Preview Disclosure: Entries are stored locally in browser storage during preview mode.
             </p>
@@ -3508,6 +4829,7 @@ html, body {
     }
 
     function App() {
+      const [atmospherePreset, setAtmospherePreset] = useState('standard');
       const [currentPath, setCurrentPath] = useState(() => {
         if (typeof window === 'undefined') return '/';
         if (window.location.protocol === 'blob:' || window.location.origin === 'null') return '/';
@@ -3544,6 +4866,8 @@ html, body {
       }, []);
 
       const matchedRoute = ROUTE_REGISTRY.find((r) => r.path === currentPath);
+      const activePath = matchedRoute ? matchedRoute.path : '/';
+      const isMinimalHome = activePath === '/';
 
       useEffect(() => {
         if (typeof document === 'undefined') return;
@@ -3556,7 +4880,7 @@ html, body {
       if (!matchedRoute || matchedRoute.path === '/') {
         activeView = <HomeFlagshipTemplate onNavigate={navigate} />;
       } else if (matchedRoute.path === '/institution') {
-        activeView = <EditorialEssayTemplate onNavigate={navigate} />;
+        activeView = <EditorialEssayTemplate />;
       } else if (matchedRoute.group === 'foundations') {
         activeView = <FoundationDetailTemplate slug={matchedRoute.slug} onNavigate={navigate} />;
       } else if (matchedRoute.path === '/horizons/human-capital') {
@@ -3564,6 +4888,7 @@ html, body {
           <HorizonWalkthroughSuite
             badgeLabel="Horizon 01 of 11 • Recruitment & HR / Human Capital"
             statusBadge="In Development"
+            conceptLabel="Concept 01 • Talent Constellation & Consent Bridges"
             heading="Career Direction, Offer Clarity & Consent-First Hiring."
             lead="Walk through TOVENZA’s human-capital architecture for adults (18+) and employers—structured career clarity, transparent positioning, and fair role scorecards."
             tracksSectionEyebrow="Horizon 01 Tracks"
@@ -3588,6 +4913,7 @@ html, body {
           <HorizonWalkthroughSuite
             badgeLabel="Horizon 02 of 11 • Healthcare & Diagnostics"
             statusBadge="Research"
+            conceptLabel="Concept 02 • Laminar Biometric Waveform"
             heading="Diagnostic & Preventative Governance Research."
             lead="Explores how structured health information, diagnostic clarity, and clinical licensing guardrails fit TOVENZA’s long-term research horizon."
             tracksSectionEyebrow="Horizon 02 Tracks"
@@ -3610,6 +4936,7 @@ html, body {
           <HorizonWalkthroughSuite
             badgeLabel="Horizon 03 of 11 • Hospitality"
             statusBadge="Research"
+            conceptLabel="Concept 03 • Courtyard Sanctuary & Tranquil Water Ripples"
             heading="Hospitality Architecture & Calm Stewardship."
             lead="Walk through TOVENZA’s hospitality concepts—unhurried guest space, acoustic rest, and reliable service standards—with cursor-guided depth."
             tracksSectionEyebrow="Horizon 03 Tracks"
@@ -3636,6 +4963,7 @@ html, body {
           <HorizonWalkthroughSuite
             badgeLabel="Horizon 05 of 11 • Technology, AI & Software"
             statusBadge="In Development"
+            conceptLabel="Concept 05 • Spacetime Gravity-Well & Deterministic Circuit Lattice"
             heading="Technology, AI & Software Architecture."
             lead="Walk through TOVENZA’s software and human-in-the-loop AI principles—structured intake, validation, clear states, and human accountability."
             tracksSectionEyebrow="Horizon 05 Tracks"
@@ -3653,11 +4981,35 @@ html, body {
             ]}
           />
         );
+      } else if (matchedRoute.path === '/horizons/business-consulting') {
+        activeView = (
+          <HorizonWalkthroughSuite
+            badgeLabel="Horizon 06 of 11 • Business Consulting"
+            statusBadge="In Development"
+            conceptLabel="Concept 06 • Strategic Vector Field & Precision Compass"
+            heading="Operator Clinics, Runway Clarity & Execution."
+            lead="Walk through TOVENZA’s structured operator clinics—cash-runway diagnostics, pricing discipline, and bottleneck resolution."
+            tracksSectionEyebrow="Horizon 06 Tracks"
+            tracksSectionTitle="Operator & Execution Pathways"
+            filterOptions={[
+              { key: 'all', label: 'All Tracks' },
+              { key: 'clinics', label: 'Operator Clinics' }
+            ]}
+            tracks={BUSINESS_CONSULTING_TRACKS}
+            photos={WALKTHROUGH_PHOTOS}
+            inquiryEyebrow="Operator Briefing • Horizon 06"
+            inquiryTitle="Connect on Business Consulting"
+            inquiryOptions={[
+              'Cash-Runway, Pricing & Execution Diagnostics'
+            ]}
+          />
+        );
       } else if (matchedRoute.path === '/horizons/psychology-wellbeing') {
         activeView = (
           <HorizonWalkthroughSuite
             badgeLabel="Horizon 07 of 11 • Psychology & Wellbeing"
             statusBadge="Strategic Thesis"
+            conceptLabel="Concept 07 • Acoustic Stillness & Cognitive Breath Contours"
             heading="Behavioral Clarity, Resilience & Non-Clinical Boundaries."
             lead="Walk through TOVENZA’s non-clinical reflection and sustainable-pacing framework—designed with strict privacy and clear clinical referral boundaries."
             tracksSectionEyebrow="Horizon 07 Tracks"
@@ -3686,6 +5038,7 @@ html, body {
           <HorizonWalkthroughSuite
             badgeLabel="Horizon 11 of 11 • Future Industries"
             statusBadge="Research"
+            conceptLabel="Concept 11 • Deep-Time Frontier Radar & Gravitational Singularity"
             heading="Frontier Research & Long-Horizon Industrial Radar."
             lead="Walk through TOVENZA’s frontier research approach—filtering signal from hype, mapping regulatory & capital prerequisites, and keeping long-horizon bets disciplined."
             tracksSectionEyebrow="Horizon 11 Tracks"
@@ -3703,8 +5056,6 @@ html, body {
             ]}
           />
         );
-      } else if (matchedRoute.group === 'horizons') {
-        activeView = <HorizonBlueprintTemplate slug={matchedRoute.slug} onNavigate={navigate} />;
       } else if (matchedRoute.path === '/capabilities') {
         activeView = <CapabilityFrameworkTemplate onNavigate={navigate} />;
       } else if (matchedRoute.path === '/governance') {
@@ -3718,10 +5069,32 @@ html, body {
       return (
         <InstitutionalErrorBoundary>
           <style>{OBSIDIAN_SOVEREIGNTY_CSS}</style>
-          <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--tvz-color-obsidian)', color: 'var(--tvz-color-ivory)' }}>
-            <InstitutionalHeader currentPath={matchedRoute ? matchedRoute.path : '/'} onNavigate={navigate} />
+          {!isMinimalHome && (
+            <SovereignAtmosphereCanvas currentPath={activePath} preset={atmospherePreset} />
+          )}
+          <div
+            style={{
+              position: 'relative',
+              zIndex: 1,
+              minHeight: '100vh',
+              display: 'flex',
+              flexDirection: 'column',
+              backgroundColor: 'transparent',
+              color: 'var(--tvz-color-ivory)'
+            }}
+          >
+            {!isMinimalHome && (
+              <InstitutionalHeader currentPath={activePath} onNavigate={navigate} />
+            )}
             <main style={{ flex: 1 }}>{activeView}</main>
-            <InstitutionalFooter onNavigate={navigate} />
+            {!isMinimalHome && (
+              <InstitutionalFooter
+                onNavigate={navigate}
+                currentPath={activePath}
+                preset={atmospherePreset}
+                onChangePreset={setAtmospherePreset}
+              />
+            )}
           </div>
         </InstitutionalErrorBoundary>
       );
