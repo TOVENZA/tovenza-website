@@ -25,7 +25,7 @@
     const { Component, useState, useEffect, useCallback, useRef } = React;
 
     /* ==========================================================================
-       0A. OBSIDIAN SOVEREIGNTY DESIGN TOKENS & THREEUI SIGNUPBUTTON STYLES
+       0A. OBSIDIAN SOVEREIGNTY & BURGUNDY × OBSIDIAN HYBRID DESIGN TOKENS
        ========================================================================== */
     const OBSIDIAN_SOVEREIGNTY_CSS = `
 :root {
@@ -33,6 +33,12 @@
   --tvz-color-obsidian-deep: #050606;
   --tvz-color-basalt: #202321;
   --tvz-color-basalt-elevated: #282c29;
+  --tvz-color-burgundy: #4B0F1F;
+  --tvz-color-wine: #7A3F56;
+  --tvz-color-dusty-rose: #B78793;
+  --tvz-color-rose-quartz: #E8C9D0;
+  --tvz-color-soft-blush: #F7EFEF;
+  --tvz-color-porcelain: #FFFCFA;
   --tvz-color-champagne: #B99D6B;
   --tvz-color-champagne-light: #D1B98A;
   --tvz-color-champagne-muted: rgba(185, 157, 107, 0.28);
@@ -42,6 +48,7 @@
 
   --tvz-border-hairline: rgba(233, 228, 217, 0.12);
   --tvz-border-champagne: rgba(185, 157, 107, 0.36);
+  --tvz-border-wine: rgba(122, 63, 86, 0.42);
   --tvz-surface-glass: rgba(32, 35, 33, 0.42);
 
   --tvz-font-display: 'Cormorant Garamond', Georgia, serif;
@@ -140,6 +147,39 @@ html, body {
 
 .tvz-monolith-card:hover::before {
   opacity: 1;
+}
+
+/* Scoped Page 03 — TOVENZA VENTURES (Burgundy × Obsidian Hybrid Structure-Only) */
+.tvz-ventures-shell {
+  min-height: 100dvh;
+  background:
+    radial-gradient(ellipse 75% 45% at 50% 0%, rgba(75, 15, 31, 0.42) 0%, rgba(8, 9, 9, 0) 70%),
+    linear-gradient(180deg, #0b0709 0%, #080909 55%, #050606 100%);
+  color: var(--tvz-color-porcelain);
+}
+
+.tvz-ventures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.tvz-venture-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 14.5rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border: 1px solid var(--tvz-border-wine);
+  border-top: 2px solid var(--tvz-color-champagne);
+  transition: border-color var(--tvz-duration-base) var(--tvz-ease-architectural),
+              transform var(--tvz-duration-base) var(--tvz-ease-architectural);
+}
+
+.tvz-venture-panel:hover {
+  border-color: var(--tvz-color-champagne);
+  transform: translateY(-2px);
 }
 
 .tvz-focus-ring:focus-visible {
@@ -764,6 +804,14 @@ html, body {
       }
     ]);
 
+    const TOVENZA_VENTURES_SECTIONS = Object.freeze([
+      { index: '01', name: 'RECRUITMENT', accent: 'rgba(75, 15, 31, 0.44)' },
+      { index: '02', name: 'CAREER', accent: 'rgba(122, 63, 86, 0.36)' },
+      { index: '03', name: 'ASTROLOGY', accent: 'rgba(75, 15, 31, 0.34)' },
+      { index: '04', name: 'FASHION', accent: 'rgba(122, 63, 86, 0.30)' },
+      { index: '05', name: 'REAL ESTATE', accent: 'rgba(75, 15, 31, 0.40)' }
+    ]);
+
     const CAPABILITY_SYSTEMS_CHARTER = Object.freeze({
       ratified: false,
       statusLabel: 'Pending Founder Ratification — Six Capability Systems Charter',
@@ -781,6 +829,7 @@ html, body {
     const ROUTE_REGISTRY = Object.freeze([
       { index: '01', path: '/', group: 'core', title: 'Homepage', template: 'HomeFlagshipTemplate' },
       { index: '02', path: '/institution', group: 'core', title: 'The Institution', template: 'EditorialEssayTemplate' },
+      { index: '03A', path: '/ventures', group: 'core', title: 'TOVENZA VENTURES', template: 'TovenzaVenturesTemplate' },
       ...FOUR_FOUNDATIONS.map((f, idx) => ({
         index: String(idx + 3).padStart(2, '0'),
         path: f.path,
@@ -4400,7 +4449,7 @@ html, body {
     }
 
     /* ==========================================================================
-       6. HOMEPAGE, INSTITUTION, FOUNDATIONS & CONTROL TEMPLATES
+       6. HOMEPAGE, PAGE 02 (FOUR FOUNDATIONS ONLY), FOUNDATIONS & CONTROL TEMPLATES
        ========================================================================== */
     function HomeFlagshipTemplate({ onNavigate }) {
       const [allowMotion, setAllowMotion] = useState(() => {
@@ -4555,31 +4604,219 @@ html, body {
       );
     }
 
+    const FOUR_FOUNDATIONS_PAGE02_SPEC = Object.freeze([
+      {
+        number: 'FOUNDATION 01',
+        proposedName: 'ORIGIN',
+        legacyId: 'sovereign-identity',
+        legacyTitle: 'Sovereign Identity',
+        purpose: 'Why we exist.',
+        detailedExplanation:
+          'ORIGIN (reversibly mapped to Sovereign Identity) defines TOVENZA’s institutional identity, founding purpose, and non-negotiable ethical spine. Conceived as an India-origin, globally oriented institutional group ("Beyond Business. Built to Endure."), TOVENZA exists to architect enduring human-centered enterprises and structured decision systems that give people the right support at the right time—without sacrificing human dignity, privacy, or informed consent.',
+        importanceToTovenza:
+          'Without an unshakeable institutional identity, a multi-horizon institution fragments into opportunistic ventures. ORIGIN anchors every branch to one unified standard of aesthetic restraint (Obsidian Sovereignty), epistemic honesty (separating long-term vision from active operations), and centralized brand/IP stewardship.',
+        principlesAndAreasCovered: [
+          'Institutional Identity & Purpose: India-origin Global Institutional Group built for multi-decade permanence rather than short-cycle hype.',
+          'Purpose & Mission: Translating long-horizon institutional principles into disciplined, human-centered initiatives validated by empirical evidence.',
+          'Core Values & Red Lines: Dignity & consent first (zero unconsented data scraping or sale), architectural restraint, epistemic honesty, and human-in-the-loop accountability.',
+          'Founder’s Institutional Philosophy: Profit is indispensable oxygen for sustainability, never the sole purpose of existence; technology assists human judgment without issuing unreviewed verdicts on people.',
+          'Gap & Legal Boundary Note: TOVENZA is currently in pre-incorporation architectural validation; formal corporate registration and trademark filings remain pending trigger-based execution.'
+        ]
+      },
+      {
+        number: 'FOUNDATION 02',
+        proposedName: 'ORDER',
+        legacyId: 'architectural-authority',
+        legacyTitle: 'Architectural Authority',
+        purpose: 'How we are built.',
+        detailedExplanation:
+          'ORDER (reversibly mapped to Architectural Authority) establishes TOVENZA’s structural architecture, governance authority, and Stage-Gate execution discipline. Designed as a Hybrid Institutional Group, it separates Central Institutional Authority (constitutional governance, brand/IP custody, capital allocation, and risk thresholds) from future Operating Business Authority (delegated commercial delivery once an initiative passes validation).',
+        importanceToTovenza:
+          'Ambition across eleven strategic horizons fails when ventures launch simultaneously without structure. ORDER prevents premature organizational bloat and ensures no horizon advances to commercial launch or legal entity creation without passing sequential Stage-Gate verification (Gates 0 through 5).',
+        principlesAndAreasCovered: [
+          'Institutional Architecture: Clear hierarchy separating TOVENZA’s permanent institutional core from future operating divisions, ring-fenced subsidiaries, and joint ventures.',
+          'Governance & Authority: Founder retains final constitutional and reserve authority during pre-incorporation validation; future operating leaders are governed by written Operating Business Charters.',
+          'Organisational Structure & Accountability: Lean functional disciplines during early validation—avoiding premature C-suite titles or multi-department bureaucracy until scale triggers occur.',
+          'Decision-Making Discipline: Six-Gate Stage-Gate sequence (Strategic Fit -> Feasibility -> Commercial Validation -> Legal/Operational Readiness -> Authorized Launch -> Post-Launch Review).',
+          'Institutional Controls & Gap Note: Consent-first data handling and human oversight controls are active in design; formal statutory boards, MoA/AoA, and corporate officers do not exist yet prior to incorporation.'
+        ]
+      },
+      {
+        number: 'FOUNDATION 03',
+        proposedName: 'PROSPERITY',
+        legacyId: 'financial-sophistication',
+        legacyTitle: 'Financial Sophistication',
+        purpose: 'How we sustain and grow.',
+        detailedExplanation:
+          'PROSPERITY (reversibly mapped to Financial Sophistication) governs how TOVENZA generates, protects, allocates, and compounds financial resources. It enforces strict separation between Founder personal finances and institutional records, distinguishes gross billing from operating profit and cleared free cash flow, and requires empirical unit-economic proof before capital commitment.',
+        importanceToTovenza:
+          'An institution cannot endure if it depends on speculative debt, unhedged fixed overhead, or premature CapEx. PROSPERITY ensures low-capital validation wedges (beginning with TOVENZA CAREER) establish healthy cash conversion and downside buffers before capital-intensive horizons are ever pursued.',
+        principlesAndAreasCovered: [
+          'Business Sustainability: Sequencing low-CapEx, fast-cash validation initiatives ahead of capital-heavy or regulated industries.',
+          'Revenue, Profitability & Cash Flow: Separating booked revenue, contribution margin, and actual cleared bank cash after statutory tax/GST reserves and working-capital cycles.',
+          'Financial Discipline: Zero-fixed-overhead pre-incorporation posture; no unauthorized parent corporate guarantees or unhedged liabilities.',
+          'Capital Allocation & Liquidity Floors: Phased tranche capital release tied to Stage-Gate proof, maintaining explicit runway buffers before discretionary expansion.',
+          'Strategic Reinvestment & Gap Note: Surplus waterfall (Statutory/Tax Reserve -> Liquidity Floor -> Core IP & Tech -> Validated Horizon Expansion). Zero revenue, profit, corporate bank accounts, or external funding are claimed as existing facts today.'
+        ]
+      },
+      {
+        number: 'FOUNDATION 04',
+        proposedName: 'CONTINUUM',
+        legacyId: 'global-ecosystem',
+        legacyTitle: 'Global Ecosystem',
+        purpose: 'How we endure and evolve.',
+        detailedExplanation:
+          'CONTINUUM (reversibly mapped to Global Ecosystem) defines how TOVENZA preserves institutional knowledge, connects capabilities across markets, and evolves across generations. Anchored permanently in India as its intended institutional headquarters, TOVENZA expands progressively from domestic validation into cross-border digital delivery, vetted alliances, and compliant international entities.',
+        importanceToTovenza:
+          'Short-term ventures reset to zero after every project or leadership transition. CONTINUUM ensures every validated playbook, benchmark, and software primitive compounds inside TOVENZA’s shared intelligence spine while protecting long-term succession and cross-border compliance.',
+        principlesAndAreasCovered: [
+          'Institutional Continuity & Succession: Centralized IP and brand custody, documented Standard Operating Procedures (SOPs), and future deputy/succession protocols so operations outlast single-person bottlenecks.',
+          'Knowledge Preservation: Capturing anonymized domain benchmarks, decision models, and post-launch review lessons into reusable institutional architecture.',
+          'Long-Term Evolution: Modular replication of charters, design tokens, and governance controls as validated horizons mature across decades.',
+          'Ecosystem Development & Global Integration: Progressive international pathway from India HQ (Non-Binding Discovery -> Legal/Tax/FEMA-Cleared Validation Pilots -> Vetted Alliances -> Authorized Market Entry).',
+          'Generational Sustainability & Gap Note: Multi-generational stewardship designed to outlast single market cycles. TOVENZA does not currently claim established overseas offices, foreign subsidiaries, or active international operations.'
+        ]
+      }
+    ]);
+
     function EditorialEssayTemplate() {
       return (
-        <div className="tvz-container" style={{ paddingBlock: 'var(--tvz-section-py)' }}>
-          <SectionHeaderBlock
-            indexLabel="Route 02 • The Institution"
-            title="Beyond Business. Built to Endure."
-            subtitle="TOVENZA is conceived as an India-origin, globally operating institutional group engineered for multi-decade durability, ethical consent, and disciplined capital allocation."
-          />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
-            <article className="tvz-monolith-card" style={{ padding: '2rem' }}>
-              <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>01 • Institutional Identity</div>
-              <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h3)', margin: '0.6rem 0' }}>What TOVENZA Is</h2>
-              <p style={{ color: 'var(--tvz-color-ivory-secondary)', fontSize: '0.92rem', margin: 0 }}>
-                A structured institutional architecture organizing Four Permanent Foundations and Eleven Strategic Horizons under unified governance and technology standards.
-              </p>
-            </article>
-            <article className="tvz-monolith-card" style={{ padding: '2rem' }}>
-              <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>02 • Non-Negotiable Restraint</div>
-              <h2 className="tvz-display" style={{ fontSize: 'var(--tvz-text-h3)', margin: '0.6rem 0' }}>What TOVENZA Rejects</h2>
-              <p style={{ color: 'var(--tvz-color-ivory-secondary)', fontSize: '0.92rem', margin: 0 }}>
-                We do not conflate long-term strategic theses with current operational claims, nor do we launch capital-intensive or regulated industries before licensing and governance gates are satisfied.
-              </p>
-            </article>
+        <article aria-labelledby="page-02-foundations-heading" className="tvz-container" style={{ paddingBlock: 'clamp(3.75rem, 7vw, 6rem)' }}>
+          <header style={{ maxWidth: '52rem', marginBottom: '3rem' }}>
+            <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', margin: 0 }}>
+              Page 02 • The Four Foundations of TOVENZA
+            </p>
+            <h1 id="page-02-foundations-heading" className="tvz-display" style={{ fontSize: 'var(--tvz-text-h1)', margin: '0.6rem 0 0' }}>
+              Origin, Order, Prosperity &amp; Continuum
+            </h1>
+            <p style={{ fontSize: 'var(--tvz-text-body)', color: 'var(--tvz-color-ivory-secondary)', marginTop: '1rem', maxWidth: '64ch' }}>
+              The four permanent pillars governing why TOVENZA exists, how it is built, how it sustains and grows, and how it endures across generations. Proposed Legacy Framework names remain reversibly mapped to their canonical foundation records pending formal Founder ratification.
+            </p>
+          </header>
+
+          <div style={{ display: 'grid', gap: '1.75rem' }}>
+            {FOUR_FOUNDATIONS_PAGE02_SPEC.map((item) => (
+              <section
+                key={item.legacyId}
+                aria-labelledby={`foundation-${item.legacyId}`}
+                className="tvz-monolith-card"
+                style={{ padding: 'clamp(1.75rem, 3.5vw, 2.5rem)', display: 'grid', gap: '1.25rem' }}
+              >
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: '0.75rem' }}>
+                  <span className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)' }}>
+                    {item.number} — {item.proposedName}
+                  </span>
+                  <span className="tvz-mono" style={{ fontSize: '0.56rem', color: 'var(--tvz-color-ivory-muted)' }}>
+                    Mapped Record: {item.legacyTitle} ({item.legacyId})
+                  </span>
+                </div>
+
+                <div>
+                  <h2 id={`foundation-${item.legacyId}`} className="tvz-display" style={{ fontSize: 'var(--tvz-text-h2)', margin: 0 }}>
+                    {item.proposedName}
+                  </h2>
+                  <p className="tvz-mono" style={{ color: 'var(--tvz-color-champagne-light)', fontSize: '0.62rem', margin: '0.45rem 0 0' }}>
+                    Purpose: {item.purpose}
+                  </p>
+                </div>
+
+                <div className="tvz-hairline-t" style={{ paddingTop: '1.15rem', display: 'grid', gap: '1rem' }}>
+                  <div>
+                    <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.56rem', marginBottom: '0.4rem' }}>
+                      Detailed Explanation
+                    </div>
+                    <p style={{ fontSize: '0.95rem', color: 'var(--tvz-color-ivory-secondary)', margin: 0, maxWidth: '72ch' }}>
+                      {item.detailedExplanation}
+                    </p>
+                  </div>
+
+                  <div>
+                    <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.56rem', marginBottom: '0.4rem' }}>
+                      Importance to TOVENZA
+                    </div>
+                    <p style={{ fontSize: '0.92rem', color: 'var(--tvz-color-ivory)', margin: 0, maxWidth: '72ch' }}>
+                      {item.importanceToTovenza}
+                    </p>
+                  </div>
+
+                  <div>
+                    <div className="tvz-mono" style={{ color: 'var(--tvz-color-champagne)', fontSize: '0.56rem', marginBottom: '0.5rem' }}>
+                      Principles &amp; Areas Covered
+                    </div>
+                    <ul style={{ margin: 0, paddingLeft: '1.2rem', color: 'var(--tvz-color-ivory-secondary)', fontSize: '0.9rem', display: 'grid', gap: '0.5rem' }}>
+                      {item.principlesAndAreasCovered.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </section>
+            ))}
           </div>
-          <InstitutionalNoticeBanner />
+        </article>
+      );
+    }
+
+    function TovenzaVenturesTemplate() {
+      return (
+        <div className="tvz-ventures-shell">
+          <article
+            aria-labelledby="page-03-ventures-heading"
+            className="tvz-container"
+            style={{ paddingBlock: 'clamp(4.5rem, 9vw, 8rem)' }}
+          >
+            <header style={{ marginBottom: 'clamp(2.75rem, 6vw, 4.5rem)' }}>
+              <p
+                className="tvz-mono"
+                style={{ color: 'var(--tvz-color-champagne)', margin: '0 0 0.75rem' }}
+              >
+                PAGE 03
+              </p>
+              <h1
+                id="page-03-ventures-heading"
+                className="tvz-display"
+                style={{
+                  fontSize: 'var(--tvz-text-hero)',
+                  color: 'var(--tvz-color-porcelain)',
+                  margin: 0
+                }}
+              >
+                TOVENZA VENTURES
+              </h1>
+            </header>
+
+            <div className="tvz-ventures-grid">
+              {TOVENZA_VENTURES_SECTIONS.map((venture) => (
+                <section
+                  key={venture.index}
+                  aria-labelledby={`venture-${venture.index}`}
+                  className="tvz-venture-panel"
+                  style={{
+                    background: `linear-gradient(180deg, ${venture.accent} 0%, rgba(8, 9, 9, 0.94) 100%)`
+                  }}
+                >
+                  <div
+                    className="tvz-mono"
+                    style={{ color: 'var(--tvz-color-champagne-light)', fontSize: '0.62rem' }}
+                  >
+                    {venture.index}
+                  </div>
+                  <h2
+                    id={`venture-${venture.index}`}
+                    className="tvz-display"
+                    style={{
+                      fontSize: 'clamp(1.65rem, 2.6vw, 2.25rem)',
+                      color: 'var(--tvz-color-porcelain)',
+                      margin: 0,
+                      letterSpacing: '0.04em'
+                    }}
+                  >
+                    {venture.name}
+                  </h2>
+                </section>
+              ))}
+            </div>
+          </article>
         </div>
       );
     }
@@ -4821,7 +5058,7 @@ html, body {
     }
 
     /* ==========================================================================
-       7. UNIFIED 21-ROUTE APPLICATION ROOT
+       7. UNIFIED APPLICATION ROOT
        ========================================================================== */
     function normalizePathname(rawPath) {
       if (!rawPath || rawPath === '') return '/';
@@ -4865,14 +5102,24 @@ html, body {
         return () => window.removeEventListener('popstate', handlePopState);
       }, []);
 
-      const matchedRoute = ROUTE_REGISTRY.find((r) => r.path === currentPath);
+      const isHorizonsCollectionAlias = currentPath === '/horizons' || currentPath === '/ventures';
+      const matchedRoute = isHorizonsCollectionAlias
+        ? { path: '/ventures', title: 'TOVENZA VENTURES' }
+        : ROUTE_REGISTRY.find((r) => r.path === currentPath);
       const activePath = matchedRoute ? matchedRoute.path : '/';
       const isMinimalHome = activePath === '/';
+      const isPage02FoundationsOnly = activePath === '/institution';
+      const isPage03VenturesOnly = activePath === '/ventures';
+      const hideGlobalChrome = isMinimalHome || isPage02FoundationsOnly || isPage03VenturesOnly;
 
       useEffect(() => {
         if (typeof document === 'undefined') return;
         document.title = !matchedRoute || matchedRoute.path === '/'
           ? 'TOVENZA — Global Institutional Group'
+          : matchedRoute.path === '/institution'
+          ? 'Four Foundations — Origin, Order, Prosperity & Continuum — TOVENZA'
+          : matchedRoute.path === '/ventures'
+          ? 'TOVENZA VENTURES — TOVENZA'
           : `${matchedRoute.title} — TOVENZA`;
       }, [matchedRoute]);
 
@@ -4881,6 +5128,8 @@ html, body {
         activeView = <HomeFlagshipTemplate onNavigate={navigate} />;
       } else if (matchedRoute.path === '/institution') {
         activeView = <EditorialEssayTemplate />;
+      } else if (matchedRoute.path === '/ventures') {
+        activeView = <TovenzaVenturesTemplate />;
       } else if (matchedRoute.group === 'foundations') {
         activeView = <FoundationDetailTemplate slug={matchedRoute.slug} onNavigate={navigate} />;
       } else if (matchedRoute.path === '/horizons/human-capital') {
@@ -5069,7 +5318,7 @@ html, body {
       return (
         <InstitutionalErrorBoundary>
           <style>{OBSIDIAN_SOVEREIGNTY_CSS}</style>
-          {!isMinimalHome && (
+          {!hideGlobalChrome && (
             <SovereignAtmosphereCanvas currentPath={activePath} preset={atmospherePreset} />
           )}
           <div
@@ -5083,11 +5332,11 @@ html, body {
               color: 'var(--tvz-color-ivory)'
             }}
           >
-            {!isMinimalHome && (
+            {!hideGlobalChrome && (
               <InstitutionalHeader currentPath={activePath} onNavigate={navigate} />
             )}
             <main style={{ flex: 1 }}>{activeView}</main>
-            {!isMinimalHome && (
+            {!hideGlobalChrome && (
               <InstitutionalFooter
                 onNavigate={navigate}
                 currentPath={activePath}
